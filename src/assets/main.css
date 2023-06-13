@@ -1,0 +1,116 @@
+body {
+    letter-spacing: normal !important;
+}
+
+#app {
+    overflow-x: hidden;
+}
+
+.hidden {
+    display: none;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.container-wide {
+    padding: 0 20px;
+    max-width: 1840px;
+    margin: 0 auto;
+}
+
+.container-wide--medium {
+    max-width: calc(1440px + 7.5rem);
+}
+
+.container-wide--smaller {
+    max-width: 1060px;
+}
+
+.relative {
+    position: relative;
+}
+
+.absolute-img {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    object-fit: cover;
+}
+
+.absolute-img.contain {
+    object-fit: contain;
+}
+
+.btn--reset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+}
+
+.section-title {
+    font-size: 2.285rem;
+    line-height: 2.714rem;
+    text-align: center;
+    font-weight: 600;
+    margin: 0;
+}
+
+@media only screen and (min-width: 480px) {
+    .sm-d-block {
+        display: block;
+    }
+
+    .sm-hidden {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .md-d-block {
+        display: block;
+    }
+
+    .md-hidden {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 1280px) {
+    .section-title {
+        font-size: 3.125rem;
+        line-height: 3.75rem;
+    }
+
+    .xl-d-block {
+        display: block;
+    }
+
+    .xl-hidden {
+        display: none;
+    }
+
+    .xl-flex {
+        display: flex;
+    }
+
+    .xl-inline {
+        display: inline;
+    }
+
+    .container-wide {
+        padding: 0 3.75rem;
+    }
+} 

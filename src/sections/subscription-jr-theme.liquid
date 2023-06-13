@@ -1,0 +1,167 @@
+{%- liquid
+  assign image = section.settings.image
+  assign date_picker = section.settings.date_picker
+  assign info = section.settings.info
+  assign title = section.settings.title
+  assign text = section.settings.text
+  assign links = section.settings.links
+  assign planType = section.settings.planType
+  assign button_type = section.settings.button_type
+  assign button_label = section.settings.button_label
+  assign bg_color = section.settings.bg_color
+%}
+
+{{ 'section-subscription-jr-theme.css' | asset_url | stylesheet_tag }}
+
+<section id="section-{{ section.id }}" class="hiw__wrapper" {% if bg_color != blank %}style="background-color:{{ bg_color }}"{% endif %}>
+  <div class="container-wide container-wide--medium subscription-jr-theme">
+    <div class="subscription-jr-theme__lside">
+      <img src="{{ image | img_url: 'master' }}" alt="">
+
+      <div class="hero-banner__clock-box text-center relative" id="countdown">
+        <div>27 <span>days</span></div>
+        <div>10 <span>hours</span></div>
+        <div>08 <span>min</span></div>
+        <div>10 <span>sec</span></div>
+      </div>
+
+      <div class="subscription-jr-theme__lside__info">{{ info }}</div>
+    </div>
+    <div class="subscription-jr-theme__rside relative">
+      {{ title }}
+
+      {{ text }}
+
+      <div class="subscription-jr-theme__rside__links">
+        {{ links }}
+      </div>
+
+      {% if button_label != ''
+      and planType != blank -%}
+        <div>
+          {% if settings.jr_soldout %}
+            <a href="#" @click.prevent="_soldoutProduct('plan_jr', 'type-normal')" class="button button--{{ button_type }}">{{ button_label }}</a>
+          {% else %}
+            <a href="#" @click.prevent="_chooseProductOnPage('{{ planType }}', 2, 'type-normal')" class="button button--{{ button_type }}">{{ button_label }}</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<script>
+    var end = new Date('{{ date_picker }} 10:1 AM');
+    var _second = 1000;
+    var _minute = _second * 60;
+    var _hour = _minute * 60;
+    var _day = _hour * 24;
+    var timer;
+
+    function showRemaining() {
+      var now = new Date();
+      var distance = end - now;
+      if (distance < 0) {
+        
+        end.setUTCMonth(end.getUTCMonth() + 1);
+        end.setUTCDate(19);
+        end.setUTCHours(4); 
+        distance = end - now;
+      }
+      if (distance < 0) {
+        distance = 0;
+      }
+      var days = Math.floor(distance / _day);
+      var hours = Math.floor((distance % _day) / _hour);
+      var minutes = Math.floor((distance % _hour) / _minute);
+      var seconds = Math.floor((distance % _minute) / _second);
+
+      document.getElementById('countdown').innerHTML = '<div>' + days + '<span>days</span></div>';
+      document.getElementById('countdown').innerHTML += '<div>' + hours + '<span>hours</span></div>';
+      document.getElementById('countdown').innerHTML += '<div>' + minutes + '<span>min</span></div>';
+      document.getElementById('countdown').innerHTML += '<div>' + seconds + '<span>sec</span></div>';
+    }
+
+    timer = setInterval(showRemaining, 1000);
+</script>
+
+{% schema %}
+{
+  "name": "JR Theme",
+  "settings":[
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "date_picker",
+      "label": "Choose date",
+      "default": "12/24/2022",
+      "info": "e.g. mm/dd/yyyy"
+    },
+    {
+      "type": "text",
+      "id": "info",
+      "label": "Info"
+    },
+    {
+      "type": "html",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "html",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "richtext",
+      "id": "links",
+      "label": "Links"
+    },
+    {
+      "type": "text",
+      "id": "planType",
+      "label": "Plan Type",
+      "default": "plan_jr"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "select",
+      "id": "button_type",
+      "label": "Button Type",
+      "options": [
+        {
+          "value": "white",
+          "label": "White"
+        },
+        {
+          "value": "green",
+          "label": "Green"
+        },
+        {
+          "value": "greendark",
+          "label": "Dark Green"
+        }
+      ],
+      "default": "white"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color"
+    }
+  ],
+  "presets": [
+    {
+      "name": "JR Theme"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,248 @@
+.newsletter__wrapper {
+    padding: 30px 0 40px 0;
+}
+
+.newsletter__inner {
+    position: relative;
+}
+
+.newsletter__container {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.newsletter__logo {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.newsletter__logo > svg {
+    max-width: 138px;
+    height: auto;
+}
+
+.newsletter__subtitle {
+    font-family: 'Barlow';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #282560;
+    max-width: 477px;
+    margin: 9px auto 0 auto;
+    opacity: .7;
+}
+
+.newsletter__moon-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.newsletter__moon-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.subscription-jr .newsletter__moon-left,
+.subscription-jr .newsletter__moon-right {
+    display: none;
+}
+
+.newsletter__formWrapper {
+    margin-top: 26px;
+}
+
+.newsletter__inputWrapper {
+    width: 100%;
+    position: relative;
+}
+
+.newsletter__input {
+    background: #FBFFFF;
+    border: 1px solid #CCE8E7;
+    border-radius: 10px;
+    height: 55px;
+    padding: 10px 19px;
+    font-family: 'Barlow';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #282560;
+    width: 100%;
+}
+
+.newsletter__btn {
+    height: 55px;
+    background: #5BB9B3;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    width: 100%;
+    padding: 5px;
+    margin: 20px auto 0 auto;
+    border: none;
+    transition: all .15s linear;
+}
+
+.newsletter__btn:hover {
+    opacity: .7;
+}
+
+.newsletter__selector {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 29px;
+}
+
+.newsletter__checkbox {
+    margin: 0;
+    cursor: pointer;
+    transition: all .15s linear;
+}
+
+.newsletter__checkbox:hover {
+    opacity: .7;
+}
+
+.newsletter__checkbox-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px auto;
+    background: #EBFBFA;
+    border: 1px dashed #5BB9B3;
+    border-radius: 50%;
+    width: 46px;
+    height: 46px;
+    transition: all .15s linear;
+}
+
+.newsletter__checkbox-check svg {
+    transition: all .15s linear;
+    opacity: 0;
+}
+
+.newsletter__checkbox-title {
+    display: inline-block;
+    font-family: 'Barlow';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #282560;
+}
+
+.custom-radio2 {
+    width: 88px;
+    text-align: center;
+}
+
+.custom-radio2 input:checked ~ label .newsletter__checkbox-check {
+    border: 2px solid #282560;
+}
+
+.custom-radio2 input:checked ~ label svg {
+    opacity: 1;
+}
+
+@media only screen and (max-width: 1440px) and (min-width: 1367px) {
+    .newsletter__wrapper {
+        zoom: .7;
+    }
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 1025px) {
+    .newsletter__wrapper {
+        zoom: .6;
+    }
+}
+
+@media only screen and (min-width: 480px) {
+    .newsletter__selector {
+        justify-content: center;
+    }
+}
+
+@media only screen and (min-width: 569px) {
+    .custom-radio2 {
+        width: 108px;
+    }
+}
+
+@media only screen and (min-width: 1280px) {
+    .newsletter__wrapper {
+        padding: 100px 0 31px 0;
+    }
+
+    .newsletter__selector {
+        justify-content: center;
+        margin-top: 39px;
+    }
+
+    .newsletter__logo {
+        margin-bottom: 50px;
+    }
+
+    .newsletter__logo > svg {
+        max-width: initial;
+    }
+
+    .newsletter__subtitle {
+        font-size: 24px;
+        line-height: 29px;
+        margin: 32px auto 0 auto;
+        opacity: 1;
+    }
+
+    .newsletter__formWrapper {
+        margin-top: 57px;
+    }
+
+    .newsletter__input {
+        border-radius: 20px;
+        height: 70px;
+        padding: 10px 216px 10px 30px;
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    .newsletter__btn {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        height: 100%;
+        border-radius: 20px;
+        font-size: 20px;
+        line-height: 24px;
+        width: 186px;
+        margin: 0;
+    }
+
+    .newsletter__inputWrapper {
+        display: flex;
+    }
+
+    .newsletter__checkbox-title {
+        font-size: 20px;
+        line-height: 24px;
+    }
+}

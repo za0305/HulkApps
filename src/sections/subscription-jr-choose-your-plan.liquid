@@ -1,0 +1,198 @@
+{%- liquid
+  assign title = section.settings.heading
+  assign text = section.settings.text
+  assign bg_color = section.settings.bg_color
+%}
+
+{{ 'section-subscription-jr-choose-your-plan.css' | asset_url | stylesheet_tag }}
+
+{%- assign isJrSoldout = false -%}
+{%- if settings.jr_soldout -%}
+  {%- assign isJrSoldout = true -%}
+{%- endif -%}
+
+<section id="section-{{ section.id }}" class="hiw__wrapper subscription-jr-choose-your-plan relative" data-template="box-subscription" {% if bg_color != blank %}style="background-color:{{ bg_color }}"{% endif %}>
+  <div class="container-wide choose-your-plan__body relative">
+    <div class="choose-your-plan__body__head relative text-center">
+      {%- if title != blank -%}
+        <h2 class="section-title">{{ title }}</h2>
+      {%- endif -%}
+      {{ text }}
+    </div>
+    {%- if section.blocks.size > 0 -%}
+      <p class="d-none" data-selectedPlanType="plan_jr"></p>
+      <div class="choose-your-plan__body__plans sp__plan-wrapper">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign product = block.settings.product
+            assign label = block.settings.label
+          -%}
+          <div class="sp__plan">
+            <div class="sp__plan-inner">
+              <div class="sp__plan-bg"></div>
+
+              {% if label != blank %}
+                {% if label contains 'MOST' %}
+                  {% assign style = 'style-most' %}
+                {% elsif label contains 'BEST' %}
+                  {% assign style = 'style-best' %}
+                {% endif %}
+                <div class="sp__plan-label {{ style }}">{{ label }}</div>
+              {% endif %}
+
+              <h3 class="sp__plan-title">
+                {% if product.variants[0].title contains 'Prepay' %}
+                  {{ product.variants[0].title | replace: 'Prepay', '' }} <span>Prepay</span>
+                {% else %}
+                  {{ product.variants[0].title }}
+                {% endif %}
+              </h3>
+              <div class="sp__plan-price-wrapper">
+                <p class="sp__plan-price">
+                  {{- product.variants[0].price | divided_by: product.variants[0].metafields.subscription.charge_internal_frequency | money -}}
+                  {%- if product.variants[0].metafields.subscription.charge_internal_frequency > 1 -%}
+                    <span>/box</span>
+                  {%- endif -%}
+                </p>
+                <p class="sp__plan-price--old">
+                  {%- if product.variants[0].metafields.subscription.charge_internal_frequency > 1 -%}
+                    {{ product.metafields.c_f.original_price | money }}
+                  {%- endif -%}
+                </p>
+              </div>
+              <div class="sp__plan-image-wrapper">
+                <div class="sp__plan-image">
+                  {%- assign customImage = product.metafields.custom.image_for_hp -%}
+                  {%- assign customImage2 = images[customImage] -%}
+                  {{ customImage2.width }}
+                  {%- if customImage != blank -%}
+                    <img src="{{ customImage | image_url: width: customImage.width }}"
+                         width="{{ customImage.width }}"
+                         height="{{ customImage.height }}"
+                         loading="Lazy"
+                         alt="{{ product.variants[0].title }}"/>
+                  {%- else -%}
+                    {%- if product.variants[0].featured_image !=  blank -%}
+                      <img src="{{product.variants[0].featured_image | image_url: width: product.variants[0].featured_image.width }}"
+                           width="{{ product.variants[0].featured_image.width }}"
+                           height="{{ product.variants[0].featured_image.height }}"
+                           loading="Lazy"
+                           alt="{{product.variants[0].title}}"/>
+                    {%- elsif product.variants[0].title contains '3' -%}
+                      <img src="{{ '3-month-plan.jpg' | file_img_url: '280x'}}" alt="{{product.variants[0].title}}" loading="lazy" />
+                    {%- elsif product.variants[0].title contains '6' -%}
+                      <img src="{{ '6-month-plan.jpg' | file_img_url: '280x'}}" alt="{{product.variants[0].title}}" loading="lazy" />
+                    {%- else -%}
+                      <img src="{{ 'owl-pack.jpg' | file_img_url: '280x'}}" alt="{{product.variants[0].title}}" loading="lazy" />
+                    {%- endif -%}
+                  {%- endif -%}
+                </div>
+              </div>
+              <div class="sp__plan-total-price-wrapper">
+                <div class="sp__plan-total-price">
+                  Total Price: <strong>{{ product.variants[0].price | money }}</strong> <span>+ Shipping</span> <small>*</small>
+                </div>
+                <p class="sp__plan-total-shipping"><small>*</small> Charged {% if product.variants[0].metafields.subscription.charge_internal_frequency > 1 %}Every <strong>{{ product.variants[0].metafields.subscription.charge_internal_frequency }} Months</strong>{% else %}<strong>Monthly</strong>{% endif %}</p>
+              </div>
+
+              {%- if isJrSoldout -%}
+                <template v-if="isUtmJr">
+                  <a href="#" @click.prevent="_choosePagePlan({{product.id}},'plan_jr');" class="sp__plan-btn">Select</a>
+                </template>
+              {%- else -%}
+                <a href="#" @click.prevent="_choosePagePlan({{product.id}},'plan_jr');" class="sp__plan-btn">Select</a>
+              {%- endif -%}
+            </div>
+          </div>
+          <script type="application/json" data-plan-json data-sub-json data-product-id="{{product.id}}">
+                                        {
+                                            "type": "plan_jr",
+                                            "variant": {{ product.variants[0] | json }},
+                                            "product": {
+                                                "product_id": {{product.id}},
+                                                "product_title": "{{product.title}}",
+                                                "product_price": {{product.metafields.c_f.original_price}},
+                                                "product_featured_image": "{{product.featured_image.src}}",
+                                                "product_type": "{% if product.tags contains 'plan_adult' %}plan_adult{% else %}plan_jr{% endif %}",
+                                                "addonType": "{% if product.tags contains 'plan_adult' %}box_adult{% else %}box_junior{% endif %}",
+                                                "product_tags": [{% if product.tags.size > 0 %}{% for tag in product.tags %}"{{tag}}"{% unless forloop.last%},{% endunless %}{% endfor %}{% endif %}]
+                                            },
+                                            "metafields": {
+                                                "subscription_id": {{ product.metafields.subscriptions.subscription_id }},
+                                                "shipping_interval_unit_type": "{{ product.metafields.subscriptions.shipping_interval_unit_type }}",
+                                                "charge_internal_frequency": {{ product.variants[0].metafields.subscription.charge_internal_frequency }},
+                                                "shipping_interval_frequency": {{ product.variants[0].metafields.subscription.shipping_interval_frequency }},
+                                                "discount_variant_id": {{ product.variants[0].metafields.subscriptions.discount_variant_id }},
+                                                "is_hidden": {% if product.variants[0].metafields.subscription.is_hidden != '' %}{{ product.variants[0].metafields.subscription.is_hidden }}{% else %}null{% endif %}
+                                            }
+                                        }
+                                    </script>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+
+
+{% schema %}
+{
+  "name": "Choose Plan (JR)",
+  "max_blocks": 3,
+  "settings":[
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "plan",
+      "name": "Plan",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "select",
+          "id": "label",
+          "label": "Label",
+          "options": [
+            {
+              "value": "",
+              "label": "Empty"
+            },
+            {
+              "value": "MOST POPULAR!",
+              "label": "MOST POPULAR!"
+            },
+            {
+              "value": "BEST VALUE!",
+              "label": "BEST VALUE!"
+            }
+          ],
+          "default": ""
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Choose Plan (JR)"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,241 @@
+{%- if section.settings.enable_plan -%}
+	<section class="jr-choose-your-plan section-content pb-0 position-relative" data-template="box-subscription" id="box-subscription">
+		<div class="section-padding" {% if section.settings.bg_imag %}style="background: url('{{ section.settings.bg_imag | img_url: 'master' }}') center no-repeat;" {%- else -%} style="background: url('https://cdn.shopify.com/s/files/1/0085/2174/4450/files/Group_511_ec197e65-891f-49da-b7b4-1c611e5782ff.png?v=1639049765') center no-repeat;"{% endif %}>
+			<div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+				<div class="text-center">
+						{% if section.settings.plan_heading != '' %}
+							<div class="row justify-content-center mb-2">
+								<div class="col-12 col-md-7 text-center">
+									<h2 class="text-blurple-100 font-weight-semibold f-heading mb-0 h1">{{ section.settings.plan_heading }}</h2>
+								</div>
+							</div>
+						{% endif %}
+						<div class="row">
+							<div class="col-lg-12 col-11 mx-auto">
+								<div class="row carousel" id="choose-plan">
+									<div class="carousel-cell col-lg-4 col-md-6 mt-lg-6 mt-3" v-for="(variant, index) in subscriptionFlow.subscriptionPlanJson"  v-if="variant.is_hidden != 'true'" >
+											<div class="plan-wrapper overflow-hidden position-relative" :class="index == 0 ?'border1': 'border2'">
+												<div class="best-values position-absolute w-100" v-if="variant.save > 0">
+													<p v-if="variant.title.includes('3')" class="font-weight-bolder text-white mb-0 text-uppercase font-size-lg" v-text="'Most Popular!'"></p>
+													<p v-if="variant.title.includes('6')" class="font-weight-bolder text-white mb-0 text-uppercase font-size-lg" v-text="'Best Value!'"></p>
+												</div>
+													<div class="plan-content py-xl-9 py-lg-7 py-md-8 py-7">
+															<div class="text-center">
+																<p class="text-uppercase font-weight-bold mb-0" v-text="variant.title"></p>
+																<template v-if="variant.save > 0">
+																	<h5 v-if="variant.title.includes('3')" class="font-weight-bold mb-ex-lg-4 mb-2 text-orange" v-text="_formatMoney(variant.price / 3) +'/box'"></h5>
+																	<h5 v-if="variant.title.includes('6')" class="font-weight-bold mb-ex-lg-4 mb-2 text-orange" v-text="_formatMoney(variant.price / 6) +'/box'"></h5>
+																</template>
+																<template v-else>
+																		<h5 class="font-weight-bold mb-ex-lg-4 mb-2 text-orange" v-text="_formatMoney(variant.price)+'/box'"></h5>
+																</template>
+                                  <div class="d-md-none plan-mobile-img">
+                                    <div class="product-img mb-md-0 mb-3">
+                                      <img v-if="variant.featured_image != null" :src="_getSizedImageUrl(variant.featured_image, 'pico')"
+                                      :data-src="_getSizedImageUrl(variant.featured_image, '480x')"
+                                      class="img-fluid h-100 lazyload"
+                                      :alt="variant.title"/>
+                                      <img v-else-if="variant.title.includes('3')" src="{{'3-month-plan.jpg' | file_img_url: 'pico'}}" data-src="{{'3-month-plan.jpg' | file_img_url: '480x'}}" :alt="variant.title" class="img-fluid h-100 lazyload" />
+                                      <img v-else-if="variant.title.includes('6')" src="{{'6-month-plans.jpg' | file_img_url: 'pico'}}" data-src="{{'6-month-plans.jpg' | file_img_url: '480x'}}" :alt="variant.title" class="img-fluid h-100 lazyload" />
+                                      <img v-else src="{{'owl-pack.jpg' | file_img_url: 'pico'}}" data-src="{{'owl-pack.jpg' | file_img_url: '480x'}}" :alt="variant.title" class="img-fluid h-100 lazyload" />
+                                    </div>
+                                  </div>
+																	<div class="box-wrapper d-none d-md-block">
+                                    <img v-if="variant.featured_image != null" :src="_getSizedImageUrl(variant.featured_image, 'pico')"
+                                    :data-src="_getSizedImageUrl(variant.featured_image, '480x')"
+                                    class="img-fluid h-100 lazyload"
+                                    :alt="variant.title"/>
+                                    <img v-else-if="variant.title.includes('3')" src="{{'3-month-plan.jpg' | file_img_url: 'pico'}}" data-src="{{'3-month-plan.jpg' | file_img_url: '480x'}}" class="img-fluid h-100 lazyload" />
+                                    <img v-else-if="variant.title.includes('6')" src="{{'6-month-plans.jpg' | file_img_url: 'pico'}}" data-src="{{'6-month-plans.jpg' | file_img_url: '480x'}}" class="img-fluid h-100 lazyload" />
+                                    <img v-else src="{{'owl-pack.jpg' | file_img_url: 'pico'}}" data-src="{{'owl-pack.jpg' | file_img_url: '480x'}}" class="img-fluid h-100 lazyload" />
+																	</div>
+																	<p class="d-block mr-1 font-weight-bold" v-match-heights="{el: ['.card-total']}" v-if="variant.title.includes('Monthly')">
+																		<span class="text-orange" v-text="_formatMoney(variant.price)"></span><span>&nbsp; One-Time Box</span><span class="text-orange">*</span>
+																	</p>
+																	<p class="d-block mr-1 font-weight-bold" v-match-heights="{el: ['.card-total']}" v-if="variant.title.includes('3')">
+																		<span class="text-orange" v-if="variant.save > 0" v-text="_formatMoney(variant.price)"></span><span>&nbsp; One-Time 3-Month Subscription</span><span class="text-orange">*</span>
+																	</p>
+																	<p class="d-block mr-1 font-weight-bold" v-match-heights="{el: ['.card-total']}" v-if="variant.title.includes('6')">
+																		<span class="text-orange" v-if="variant.save > 0" v-text="_formatMoney(variant.price)"></span><span>&nbsp; One-Time 6-Month Subscription</span><span class="text-orange">*</span>
+																	</p>
+																	<!-- <template v-if="variant.metafields.charge_internal_frequency != null">
+																			<p class="mb-0 font-size-ex-sm" v-if="variant.metafields.charge_internal_frequency == 1" >Charged Every Month</p>
+																			<p class="mb-0 font-size-ex-sm" v-else v-text="'Charged Every '+variant.metafields.charge_internal_frequency+' '+variant.metafields.shipping_interval_unit_type"></p>
+																	</template> -->
+																	<template v-if="isUtmJr">
+																			<a href="#"  @click.prevent="_selectedPagePlan(variant)" class="btn btn-sm btn-primary mt-2 mt-md-3">Select</a>
+																	</template>
+																	<template v-else>
+																			{% if settings.jr_soldout == false %}
+																			<a href="#"  @click.prevent="_selectedPagePlan(variant)" class="btn btn-sm btn-primary mt-2 mt-md-3">Select</a>
+																			{% endif %}
+																	</template>
+															</div>
+													</div>
+											</div>
+									</div>
+								</div>
+								<div class="row">
+									{% if settings.jr_soldout %}
+									<div class="col-12 text-center" v-show="isUtmJr == false">
+											<a href="#" @click.prevent="_soldoutProduct('plan_jr', 'type-normal')"  class="btn btn-sm btn-primary mt-2 mt-md-3">{{ settings.modal_jr_btn_txt }}</a>
+									</div>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{%- endif -%}
+
+{%- if section.settings.enable_box -%}
+	<section class="jr-shipping section-content pb-0">
+		<div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+			<div class="row">
+				{%- for block in section.blocks limit: section.blocks.size -%}
+					{%- if block.type == 'ship_box' -%}
+						{%- if block.settings.box_img != blank or block.settings.desc != '' -%}
+							<div class="col-md-6 mt-lg-3 mt-3">
+									<div class="shipping-wrapper py-lg-5 py-4 px-lg-5 px-4 h-100" style="background-color: {{ block.settings.back_color }};">
+											<div class="d-flex align-items-center h-100">
+													{%- if block.settings.box_img != blank -%}
+														<div class="img-icon-wrapper d-lg-block d-none">
+																<img src="{{ block.settings.box_img | img_url: 'master' }}" alt="" class="" />
+														</div>
+													{%- endif -%}
+													{%- if block.settings.desc != '' -%}
+														{{ block.settings.desc }}
+													{%- endif -%}
+											</div>
+									</div>
+							</div>
+						{%- endif -%}
+					{%- endif -%}
+				{%- endfor -%}
+			</div>
+		</div>
+	</section>
+{%- endif -%}
+
+{% if section.blocks.size > 0 %}
+      <p class="d-none" data-selectedPlanType="plan_jr"></p>
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'plan_product' -%}
+            {%- assign subProd = all_products[block.settings.main_product] -%}
+            {%- if subProd.title != blank -%}
+                {%- unless subProd.variants[0].metafields.subscription.is_hidden == true -%}
+                <script type="application/json" data-sub-json>
+                    {
+                        "variant": {{ subProd.variants[0] | json }},
+                        "product": {
+                            "product_id": {{subProd.id}},
+                            "product_title": "{{subProd.title}}",
+                            "product_price": {{subProd.metafields.c_f.original_price}},
+                            "product_featured_image": "{{subProd.featured_image.src}}",
+                            "selling_plan": "{{subProd.selling_plan_groups[0].selling_plans[0].id}}",
+                            "product_type": "{% if subProd.tags contains 'plan_adult' %}plan_adult{% else %}plan_jr{% endif %}",
+                            "addonType": "{% if subProd.tags contains 'plan_adult' %}box_adult{% else %}box_junior{% endif %}",
+                            "product_tags": [{% if subProd.tags.size > 0 %}{% for tag in subProd.tags %}"{{tag}}"{% unless forloop.last%},{% endunless %}{% endfor %}{% endif %}]
+                        },
+                        "metafields": {
+                            "subscription_id": {{ subProd.metafields.subscriptions.subscription_id }},
+                            "shipping_interval_unit_type": "{{ subProd.metafields.subscriptions.shipping_interval_unit_type }}",
+                            "charge_internal_frequency": {{ subProd.variants[0].metafields.subscription.charge_internal_frequency }},
+                            "shipping_interval_frequency": {{ subProd.variants[0].metafields.subscription.shipping_interval_frequency }},
+                            "discount_variant_id": {{ subProd.variants[0].metafields.subscriptions.discount_variant_id }},
+                            "is_hidden": {% if subProd.variants[0].metafields.subscription.is_hidden != '' %}{{ subProd.variants[0].metafields.subscription.is_hidden }}{% else %}null{% endif %}
+                        }
+                    }
+                </script>
+                {%- endunless -%}
+            {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+{% schema %}
+  {
+    "name": "Choose Plan & Shipping",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+			{
+        "type": "checkbox",
+        "id": "fluid_layout",
+        "label": "Full Width Layout?",
+        "default": false
+      },
+			{
+				"type": "header",
+				"content": "Choose Your Plan"
+			},
+			{
+				"type": "checkbox",
+				"id": "enable_plan",
+				"label": "Enable Section?"
+			},
+			{
+				"type": "image_picker",
+				"id": "bg_imag",
+				"label": "Background Image",
+				"info": "Please add image with size 1500x700"
+			},
+			{
+				"type": "text",
+				"id": "plan_heading",
+				"label": "Heading"
+			},
+			{
+				"type": "header",
+				"content": "Shipping & Subscription"
+			},
+			{
+				"type": "checkbox",
+				"id": "enable_box",
+				"label": "Shipping & Subscription Enabled?",
+				"default": true
+			}
+    ],
+    "blocks": [
+      {
+				"type": "plan_product",
+				"name": "Plan Products",
+				"settings": [
+					{
+						"type": "product",
+						"id": "main_product",
+						"label": "Choose Product"
+					}
+				]
+			},
+			{
+        "type": "ship_box",
+        "name": "Shipping & Subscription",
+        "limit": 2,
+        "settings": [
+					{
+						"type": "image_picker",
+						"id": "box_img",
+						"label": "Box Image",
+						"info": "Please add image with size 160x75"
+					},
+					{
+						"type": "color",
+						"id": "back_color",
+						"label": "Background Color",
+						"default": "#EFFBFB"
+					},
+					{
+						"type": "textarea",
+						"id": "desc",
+						"label": "Description"
+					}
+        ]
+      }
+    ]
+  }
+{% endschema %}

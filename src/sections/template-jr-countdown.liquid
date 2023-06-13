@@ -1,0 +1,205 @@
+{%- if section.settings.enable -%}
+	<section class="jr-countdown section-content">
+			<div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+					<div class="row align-items-center">
+							<div class="col-md-6">
+									<div class="d-md-none d-block text-center px-2 mb-3">
+										{%- if section.settings.timer_title != '' -%}
+											<h2 class="text-blurple-100 font-weight-semi-bold">{{ section.settings.timer_title }}</h2>
+										{%- endif -%}
+										{%- if section.settings.mobile_timer_desc != '' -%}
+											{{ section.settings.mobile_timer_desc }}
+										{%- endif -%}
+									</div>
+									<img data-sizes="auto"
+										 src="{{ section.settings.timer_img | img_url: 'master' }}"
+										 data-srcset="{{ section.settings.timer_img | img_url: '420x' }} 320w,
+													  {{ section.settings.timer_img | img_url: '580x' }} 520w,
+												      {{ section.settings.timer_img | img_url: '800x' }} 767w"
+											alt="{{ section.settings.timer_title }}" class="lazyload img-fluid mw-100" />
+							</div>
+							<div class="col-md-6">
+									<div class="countdown-content pl-md-4 pr-lg-8 pr-md-4">
+											<div class="d-md-block d-none">
+												{%- if section.settings.timer_title != '' -%}
+													<h4 class="text-blurple-100 font-weight-medium f-heading mb-1">{{ section.settings.timer_title }}</h4>
+												{%- endif -%}
+												{%- if section.settings.timer_desc != '' -%}
+													{{ section.settings.timer_desc }}
+												{%- endif -%}
+												{%- if section.settings.enable_timer and section.settings.choose_date != blank and section.settings.sale_text != '' -%}
+													<p class="font-weight-semi-bold font-size-ex-lg text-blurple-100 mb-md-2 d-md-block d-none">{{ section.settings.sale_text }}</p>
+												{%- endif -%}
+											</div>
+											{%- if section.settings.enable_timer and section.settings.choose_date != blank and section.settings.sale_text != '' -%}
+												{%- assign now =  "now" | date: "%s" -%}
+												{%- assign choose_date = section.settings.choose_date | date: "%s" -%}
+												<div class="pt-md-0 pb-md-0 pt-4 pb-6 for-bg-color w-100 text-md-left text-center">
+														<p class="font-weight-semi-bold font-size-ex-lg text-orange mb-2 d-md-none d-block">{{ section.settings.sale_text }}</p>
+														{%- if choose_date > now -%}
+															<div class="countdown mb-md-5">
+																	<template>
+																			<Countdown end="{{section.settings.choose_date}}"></Countdown>
+																	</template>
+															</div>
+														{%- endif -%}
+												</div>
+											{%- endif -%}
+											{%- if section.settings.btn_txt != '' and section.settings.btn_url != '' -%}
+												<div class="text-md-left text-center">
+														<a href="{{ section.settings.btn_url }}" class="btn btn{% if section.settings.btn_type == 'outline' %}-{% endif %}{{ section.settings.btn_type }}-{{ section.settings.btn_variant }} {{ section.settings.btn_size }} mt-md-0 mt-5">{{ section.settings.btn_txt }}</a>
+												</div>
+											{%- endif -%}
+									</div>
+							</div>
+					</div>
+			</div>
+	</section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Countdown Banner",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+			{
+        "type": "checkbox",
+        "id": "fluid_layout",
+        "label": "Full Width Layout?",
+        "default": false
+      },
+			{
+				"type": "header",
+				"content": "Timer Banner"
+			},
+			{
+				"type": "checkbox",
+				"id": "enable",
+				"label": "Section Enabled?",
+				"default": true
+			},
+			{
+				"type": "image_picker",
+				"id": "timer_img",
+				"label": "Timer Section Desktop Image",
+				"info": "Please add image with size 710x610"
+			},
+			{
+				"type": "text",
+				"id": "timer_title",
+				"label": "Heading"
+			},
+			{
+				"type": "textarea",
+				"id": "timer_desc",
+				"label": "Description"
+			},
+			{
+				"type": "textarea",
+				"id": "mobile_timer_desc",
+				"label": "Mobile Description"
+			},
+			{
+				"type": "checkbox",
+				"id": "enable_timer",
+				"label": "Enable Timer"
+			},
+			{
+				"type": "text",
+				"id": "choose_date",
+				"label": "Enter Sales End Date",
+				"info": "Example. November 01, 2021"
+			},
+			{
+				"type": "text",
+				"id": "sale_text",
+				"label": "Sale Content"
+			},
+			{
+				"type": "header",
+				"content": "Button"
+			},
+			{
+				"type": "text",
+				"id": "btn_txt",
+				"label": "Button Text"
+			},
+			{
+				"type": "url",
+				"id": "btn_url",
+				"label": "Button URL"
+			},
+			{
+				"type": "select",
+				"id": "btn_type",
+				"label": "Button Type",
+				"options": [
+					{
+						"value": "outline",
+						"label": "Outline"
+					},
+					{
+						"value": "",
+						"label": "Solid"
+					}
+				],
+				"default": ""
+			},
+			{
+				"type": "select",
+				"id": "btn_variant",
+				"label": "Button Variant",
+				"options": [
+					{
+						"value": "primary",
+						"label": "Primary"
+					},
+					{
+						"value": "secondary",
+						"label": "Secondary"
+					},
+					{
+						"value": "accent",
+						"label": "Accent"
+					},
+					{
+						"value": "light",
+						"label": "Light"
+					},
+					{
+						"value": "dark",
+						"label": "Dark"
+					},
+					{
+						"value": "purple",
+						"label": "Purple"
+					}
+				],
+				"default": "purple"
+			},
+			{
+				"type": "select",
+				"id": "btn_size",
+				"label": "Button Size",
+				"options": [
+					{
+						"value": "",
+						"label": "Default"
+					},
+					{
+						"value": "btn-sm",
+						"label": "Small"
+					},
+					{
+						"value": "btn-lg",
+						"label": "Large"
+					}
+				],
+				"default": ""
+			}
+		]
+  }
+{% endschema %}

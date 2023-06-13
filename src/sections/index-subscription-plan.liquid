@@ -1,0 +1,364 @@
+{{ 'section-index-subscription-plan.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.enable_section -%}
+    {%- liquid
+        assign heading_txt = section.settings.heading_txt | escape
+        assign caption_txt = section.settings.caption_txt
+    -%}
+    <section class="sp__wrapper" data-section-id="{{ section.id }}">
+        <div class="sp__bg sp__bg--left hidden xl-d-block">
+            {%- render 'bg-sp-left' -%}
+        </div>
+
+        <div class="sp__bg sp__bg--right hidden xl-d-block">
+            {%- render 'bg-sp-right' -%}
+        </div>
+
+        <div class="sp__bg sp__bg--center xl-hidden">
+            {%- render 'bg-sp-center' -%}
+        </div>
+
+        <div class="container-wide sp__header-wrapper">
+            {%- render 'sp-star-mobile-2' -%}
+            {%- render 'sp-star-mobile' -%}
+            {%- render 'sp-mobile-pluses' -%}
+            {%- if heading_txt != blank -%}
+                <div class="sp__header">
+                    <h2 class="section-title">{{ heading_txt }}</h2>
+                    {%- if caption_txt != blank -%}
+                        <p class="sp__subtitle">{{ caption_txt }}</p>
+                    {%- endif -%}
+                </div>
+            {%- endif -%}
+
+            <div class="sp__switcher">
+                <div class="sp__switcher-item" data-plan-logo="plan_adult" :class="{'active': !subscriptionFlow.isCurrentTab}">
+                    <a href="javascript:void(0);" class="sp__switcher-item-inner" @click.prevent="_changeIndexTab('plan_adult');">
+                        <div class="hidden xl-flex sp__switcher-item-inner--desktop sp__switcher-item-inner--desktop-v2">
+                            <span>
+                                {%- render 'icon-owl-black-bigger' -%}
+                            </span>
+                            owlcrate subscription plan
+                        </div>
+
+                        <div class="sp__switcher-item-inner--mobile xl-hidden">
+                            <div class="flex align-items-center justify-content-center">
+                                {%- render 'icon-owl-black-bigger' -%}
+                            </div>
+                            <p>Owlcrate</p>
+                        </div>
+                    </a>
+                </div>
+        
+                <div class="sp__switcher-item" data-plan-logo="plan_jr" :class="{'active': subscriptionFlow.isCurrentTab}">
+                    <a href="javascript:void(0);" class="sp__switcher-item-inner" @click.prevent="_changeIndexTab('plan_jr');">
+                        <div class="hidden xl-flex sp__switcher-item-inner--desktop sp__switcher-item-inner--desktop-v2">
+                            <span>
+                                {%- render 'icon-owl-green-bigger' -%}
+                            </span>
+                            owlcrate jr subscription plan
+                        </div>
+
+                        <div class="sp__switcher-item-inner--mobile xl-hidden">
+                            <div class="flex align-items-center justify-content-center">
+                                {%- render 'icon-owl-green-bigger' -%}
+                            </div>
+                            <p>Owlcrate Jr</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="sp__plans-wrapper">
+            {%- render 'sp-sun' -%}
+            {%- comment -%}
+            {%- render 'sp-waves' -%}
+            {%- endcomment -%}
+            <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/Subtract.png?v=1664463337"
+                alt="Waves BG Image"
+                width="1920"
+                height="666"
+                loading="lazy"
+                class="sp__waves"
+            >
+            {%- render 'sp-i-1' -%}
+            {%- render 'sp-i-2' -%}
+
+            <div class="container-wide">
+                <div class="sp__plans">
+                    {%- render 'sp-lines-left' -%}
+                    {%- render 'sp-lines-right' -%}
+                    {%- render 'sp-bigstar' -%}
+                    {%- render 'sp-sm-pluses' -%}
+                    {%- for block in section.blocks -%}
+                        {%- capture planListsJson -%}
+                        {{block.type}}--{{block.settings.plan_product_1}},
+                        {{block.type}}--{{block.settings.plan_product_2}},
+                        {{block.type}}--{{block.settings.plan_product_3}}{% if forloop.first%},{% endif %}
+                        {%- endcapture -%}
+                        {%- assign planType = '' -%}
+                        {%- assign isJrSoldout = false -%}
+                        {%- assign isAdultSoldout = false -%}
+                        {%- if block.type == 'owlcrate-plan' -%}
+                        {%- if settings.adult_soldout -%}
+                            {%- assign isAdultSoldout = true -%}
+                        {%- endif -%}
+                        {%- assign planType = 'plan_adult' -%}
+                        {%- else -%}
+                        {%- if settings.jr_soldout -%}
+                            {%- assign isJrSoldout = true -%}
+                        {%- endif -%}
+                        {%- assign planType = 'plan_jr' -%}
+                        {%- endif -%}
+                        <div class="sp__plans-inner {% if forloop.last %}d-none{% endif %}" data-plan-type="{{planType}}" >
+                            {%- assign planLists = planListsJson | split: ',' -%}
+            
+                            {%- for plan in planLists -%}
+                            {%- assign name = plan | split: '--' -%}
+                            {%- assign product = name[1] | strip -%}
+                            {%- assign subProd = all_products[product] -%}
+                            {%- if subProd.title != blank -%}
+                            {%- unless subProd.variants[0].metafields.subscription.is_hidden == true  -%}
+                                <div class="sp__plan-wrapper">
+                                    <div class="sp__plan">
+                                        {%- comment -%}
+                                        {%- assign save = subProd.metafields.c_f.original_price | times: subProd.variants[0].metafields.subscription.charge_internal_frequency | minus: subProd.variants[0].price -%}
+                                        {%- if save > 0 -%}
+                                        <p class="{% if planType == 'plan_jr'%} bg-primary {% else %} bg-blurple-100 {% endif %} text-center py-1 mb-0 text-white ls-1 font-weight-semi-bold font-size-xs offer-text" >You Save {{save | money }}!</p>
+                                        {%- endif -%}
+                                        {%- endcomment -%}
+                                        <div class="sp__plan-inner">
+                                            <div class="sp__plan-bg"></div>
+
+                                            <h3 class="sp__plan-title">{{subProd.variants[0].title}}</h3>
+                                            <div class="sp__plan-price-wrapper">
+                                                <p class="sp__plan-price">
+                                                    {{- subProd.variants[0].price | divided_by: subProd.variants[0].metafields.subscription.charge_internal_frequency | money -}}
+                                                    {%- if subProd.variants[0].metafields.subscription.charge_internal_frequency > 1 -%}
+                                                        <span>/box</span>
+                                                    {%- endif -%}
+                                                </p>
+                                                {%- if subProd.variants[0].metafields.subscription.charge_internal_frequency > 1 -%}
+                                                    <p class="sp__plan-price--old">{{ subProd.metafields.custom.compare_at_price_per_box | money }}</p>
+                                                {%- endif -%}
+                                            </div>
+                                            <div class="sp__plan-image-wrapper">
+                                                {%- render 'sp-stars' -%}
+                                                <div class="sp__plan-image">
+                                                    {%- assign customImage = subProd.metafields.custom.image_for_hp -%}
+                                                    {%- assign customImage2 = images[customImage] -%}
+                                                    {{ customImage2.width }}
+                                                    {%- if customImage != blank -%}
+                                                        <img src="{{ customImage | image_url: width: customImage.width }}"
+                                                            width="{{ customImage.width }}"
+                                                            height="{{ customImage.height }}"
+                                                            loading="Lazy"
+                                                            alt="{{ subProd.variants[0].title }}"/>
+                                                    {%- else -%}
+                                                        {%- if subProd.variants[0].featured_image !=  blank -%}
+                                                            <img src="{{subProd.variants[0].featured_image | image_url: width: subProd.variants[0].featured_image.width }}"
+                                                                width="{{ subProd.variants[0].featured_image.width }}"
+                                                                height="{{ subProd.variants[0].featured_image.height }}"
+                                                                loading="Lazy"
+                                                                alt="{{subProd.variants[0].title}}"/>
+                                                            {%- elsif subProd.variants[0].title contains '3' -%}
+                                                                <img src="{{ '3-month-plan.jpg' | file_img_url: '280x'}}" alt="{{subProd.variants[0].title}}" loading="lazy" />
+                                                            {%- elsif subProd.variants[0].title contains '6' -%}
+                                                                <img src="{{ '6-month-plan.jpg' | file_img_url: '280x'}}" alt="{{subProd.variants[0].title}}" loading="lazy" />
+                                                            {%- else -%}
+                                                                <img src="{{ 'owl-pack.jpg' | file_img_url: '280x'}}" alt="{{subProd.variants[0].title}}" loading="lazy" />
+                                                        {%- endif -%}
+                                                    {%- endif -%}
+                                                </div>
+                                            </div>
+                                            <div class="sp__plan-total-price-wrapper">
+                                                <div class="sp__plan-total-price">
+                                                    Total Price: <strong>{{ subProd.variants[0].price | money }}</strong> <span>+ Shipping</span>
+                                                </div>
+                                                <p class="sp__plan-total-shipping">Charged {% if subProd.variants[0].metafields.subscription.charge_internal_frequency > 1 %}Every <strong>{{ subProd.variants[0].metafields.subscription.charge_internal_frequency }} Months</strong>{% else %}<strong>Monthly</strong>{% endif %}</p>
+                                            </div>
+
+                                            {%- if planType == 'plan_jr' -%}
+                                                {%- if isJrSoldout -%}
+                                                    <template v-if="isUtmJr">
+                                                        <a href="#" @click.prevent="_choosePagePlan({{subProd.id}},'{{planType}}');" class="sp__plan-btn">Select</a>
+                                                    </template>
+                                                {%- else -%}
+                                                    <a href="#" @click.prevent="_choosePagePlan({{subProd.id}},'{{planType}}');" class="sp__plan-btn">Select</a>
+                                                {%- endif -%}
+                                            {%- elsif planType == 'plan_adult'-%}
+                                                {%- if isAdultSoldout -%}
+                                                    <template v-if="isUtmAdult">
+                                                        <a href="#" @click.prevent="_choosePagePlan({{subProd.id}},'{{planType}}');" class="sp__plan-btn">Select</a>    
+                                                    </template>
+                                                {%- else -%}
+                                                    <a href="#" @click.prevent="_choosePagePlan({{subProd.id}},'{{planType}}');" class="sp__plan-btn">Select</a>
+                                                {%- endif -%}
+                                            {%- endif -%}
+                                        </div>
+                                    </div>
+                                    <script type="application/json" data-plan-json  data-product-id="{{subProd.id}}">
+                                        {
+                                            "type": "{% if name[0] == 'owlcratejr-plan' %}plan_jr{% else %}plan_adult{% endif %}",
+                                            "variant": {{ subProd.variants[0] | json }},
+                                            "product": {
+                                                "product_id": {{subProd.id}},
+                                                "product_title": "{{subProd.title}}",
+                                                "product_price": {{subProd.metafields.c_f.original_price}},
+                                                "product_featured_image": "{{subProd.featured_image.src}}",
+                                                "product_type": "{% if subProd.tags contains 'plan_adult' %}plan_adult{% else %}plan_jr{% endif %}",
+                                                "addonType": "{% if subProd.tags contains 'plan_adult' %}box_adult{% else %}box_junior{% endif %}",
+                                                "product_tags": [{% if subProd.tags.size > 0 %}{% for tag in subProd.tags %}"{{tag}}"{% unless forloop.last%},{% endunless %}{% endfor %}{% endif %}]
+                                            },
+                                            "metafields": {
+                                                "subscription_id": {{ subProd.metafields.subscriptions.subscription_id }},
+                                                "shipping_interval_unit_type": "{{ subProd.metafields.subscriptions.shipping_interval_unit_type }}",
+                                                "charge_internal_frequency": {{ subProd.variants[0].metafields.subscription.charge_internal_frequency }},
+                                                "shipping_interval_frequency": {{ subProd.variants[0].metafields.subscription.shipping_interval_frequency }},
+                                                "discount_variant_id": {{ subProd.variants[0].metafields.subscriptions.discount_variant_id }},
+                                                "is_hidden": {% if subProd.variants[0].metafields.subscription.is_hidden != '' %}{{ subProd.variants[0].metafields.subscription.is_hidden }}{% else %}null{% endif %}
+                                            }
+                                        }
+                                    </script>
+                                </div>
+                            {%- endunless -%}
+                            {%- endif -%}
+                            {%- endfor -%}
+                            {%- if isAdultSoldout -%}
+                            <div class="col-12 text-center" v-if="isUtmAdult == false">
+                                <a href="#" @click.prevent="_soldoutProduct('{{planType}}', 'type-normal')"  class="btn btn-sm btn-dark mt-2 mt-md-3">{{ settings.modal_adult_btn_txt}}</a>
+                            </div>
+                            {%- elsif isJrSoldout -%}
+                            <div class="col-12 text-center" v-if="isUtmJr == false">
+                                <a href="#" @click.prevent="_soldoutProduct('{{planType}}', 'type-normal')"  class="btn btn-sm btn-dark mt-2 mt-md-3">{{ settings.modal_jr_btn_txt}}</a>
+                            </div>
+                            {%- endif -%}
+                        </div>
+                    {%- endfor -%}
+                </div>
+            </div>
+        </div>
+    </section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Subscription Plan",
+    "class": "index-owlCrate-plan",
+    "max_blocks": 3,
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_section",
+        "label": "Enable Section"
+      },
+      {
+        "type": "text",
+        "id": "heading_txt",
+        "label": "Heading Text"
+      },
+      {
+        "type": "textarea",
+        "id": "caption_txt",
+        "label": "Caption Text"
+      },
+      {
+        "type": "header",
+        "content": "Box Category Logo"
+      },
+      {
+        "type": "text",
+        "id": "category_Logo_first_svg",
+        "label": "Category Logo First Svg Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "category_Logo_first",
+        "label": "Category Logo First Logo"
+      },
+      {
+        "type": "text",
+        "id": "category_Logo_second_svg",
+        "label": "Category Logo Second Svg Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "category_Logo_second",
+        "label": "Category Logo Second Logo"
+      },
+      {
+        "type": "range",
+        "id": "category_logo_width",
+        "min": 5,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "category Logo width",
+        "default": 140
+      }
+    ],
+    "blocks": [
+      {
+        "type": "owlcrate-plan",
+        "name": "Adult Plan Products",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "product",
+            "id": "plan_product_1",
+            "label": "Choose Product 1"
+          },
+          {
+            "type": "product",
+            "id": "plan_product_2",
+            "label": "Choose Product 2"
+          },
+          {
+            "type": "product",
+            "id": "plan_product_3",
+            "label": "Choose Product 3"
+          }
+        ]
+      },
+      {
+        "type": "owlcratejr-plan",
+        "name": "Junior Plan Products",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "product",
+            "id": "plan_product_1",
+            "label": "Choose Product 1"
+          },
+          {
+            "type": "product",
+            "id": "plan_product_2",
+            "label": "Choose Product 2"
+          },
+          {
+            "type": "product",
+            "id": "plan_product_3",
+            "label": "Choose Product 3"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Subscription plan",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

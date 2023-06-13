@@ -1,0 +1,201 @@
+.inside-subscription {
+  margin-top: -30px;
+  z-index: 1;
+}
+
+.inside-subscription__text {
+  width: 100%;
+  position: absolute;
+  top: 47px;
+  left: 0;
+  z-index: 3;
+}
+.inside-subscription__text h2 {
+  color: #fff;
+  font-size: 32px;
+  line-height: 38px;
+  font-weight: 600;
+}
+
+.inside-subscription__text__buttons {
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inside-subscription__text__btn {
+  width: 221px;
+  height: 55px;
+  border-radius: 10px;
+  padding: 0.714rem 1.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: normal;
+  font-family: "Barlow", sans-serif;
+  transition: all .15s linear;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.inside-subscription__text__btn:hover {
+  box-shadow: 0 0 60px rgba(38, 188, 180, 0.4);
+}
+
+.inside-subscription__text__btn--green {
+  background-color: #26BCB4;
+  color: #fff !important;
+}
+
+.inside-subscription__imgWrapper {
+  height: 604px;
+}
+
+.inside-subscription__imgWrapper img {
+  object-position: bottom;
+}
+
+.inside-subscription__elements {
+  width: 100%;
+  position: absolute;
+  top: 195px;
+  left: 0;
+  z-index: 3;
+}
+
+.inside-subscription__elements__element {
+  width: 314px;
+  min-height: 128px;
+  margin: 0 5px 52px;
+  padding: 25px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid #26BCB4;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  color: #fff;
+  font-size: 20px;
+  line-height: 24px;
+  font-family: "Barlow", sans-serif;
+}
+.inside-subscription__elements__element img {
+  max-width: 50px;
+  position: absolute;
+  bottom: -32px;
+  right: calc(50% - 25px);
+}
+
+@media only screen and (min-width: 769px) {
+  .inside-subscription__text {
+    top: 93px;
+  }
+
+  .inside-subscription__imgWrapper {
+    height: 925px;
+  }
+}
+
+@media only screen and (min-width: 1100px) {
+  .inside-subscription__elements {
+    position: static;
+  }
+  .inside-subscription__elements__element {
+    position: absolute;
+    z-index: 3;
+    min-height: 1px;
+    margin: 0;
+  }
+  .inside-subscription__elements__element#isee-1 {
+    top: 340px;
+    left: 207px;
+  }
+  .inside-subscription__elements__element#isee-2 {
+    bottom: 100px;
+    left: 236px;
+  }
+  .inside-subscription__elements__element#isee-3 {
+    bottom: 353px;
+    right: 237px;
+  }
+  .inside-subscription__elements__element img {
+    max-width: 82px;
+    top: -102px;
+    right: 0;
+  }
+  .inside-subscription__elements__element#isee-3 img {
+    left: 0;
+  }
+  .inside-subscription__text__buttons {
+    margin-top: 3rem;
+  }
+  .inside-subscription__text__btn {
+    border-radius: 20px;
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .inside-subscription__text h2 {
+    font-size: 50px;
+    line-height: 60px;
+  }
+
+  .inside-subscription__text__btn {
+    height: 70px;
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .inside-subscription__elements__element {
+    font-size: 24px;
+    line-height: 28px;
+  }
+}
+
+@media only screen and (min-width: 1921px) {
+  .inside-subscription {
+    margin-top: -56px
+  }
+  .inside-subscription__imgWrapper {
+    height: 1165px;
+  }
+  .inside-subscription__imgWrapper img {
+    object-position: initial;
+  }
+  .inside-subscription__elements__element#isee-1 {
+    top: 340px;
+    left: 50%;
+    margin-left: -700px;
+  }
+  .inside-subscription__elements__element#isee-2 {
+    bottom: initial;
+    top: 630px;
+    left: 50%;
+    margin-left: -650px;
+  }
+  .inside-subscription__elements__element#isee-3 {
+    bottom: initial;
+    top: 380px;
+    right: 50%;
+    margin-right: -650px;
+  }
+}
+
+@media only screen and (max-width: 1440px) and (min-width: 1367px) {
+  .inside-subscription {
+    zoom: .7;
+  }
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 569px) {
+  .inside-subscription {
+    zoom: .6;
+  }
+}
+
+@media only screen and (max-width: 568px) {
+  .inside-subscription__imgWrapperMobile > div {
+
+  }
+}

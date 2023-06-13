@@ -1,0 +1,67 @@
+{% assign productExcludeTag = settings.product_exclude_tag_text %}
+
+<section class="section-content">
+  <div class="container">
+
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <div class="fancy-heading active">
+                <h1 class="page-title mb-0">{{ page_title }}</h1>
+                {% if collection.description != '' %}
+                  <p class="mb-0">{{ collection.description }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% for collection in collections %}
+      {% unless collection.handle == 'addons-adult' or collection.handle == 'addon-jr' or collection.handle == 'onetime-collection' or collection.handle == 'subscribe-box' %}
+      {% if collection.products.count > 0 %}
+
+        <div class="row no-gutters my-3">
+          <div class="col">
+
+          {% unless collection.handle == 'frontpage' %}
+
+            <div class="d-flex justify-content-between align-items-center">
+              <h3 class="mb-0">{{ collection.title }}</h3>
+              <a href="{{ collection.url }}" class="font-weight-bold text-nowrap" title="{{ 'collections.general.link_title' | t: title: title }}">
+                View All
+              </a>
+            </div>
+
+            <hr>
+
+            <div class="carousel mb-md-5" role="tree"
+               data-flickity='{
+                 "adaptiveHeight": true,
+                 "contain": true,
+                 "wrapAround": true,
+                 "freeScroll": false,
+                 "groupCells": "100%",
+                 "cellAlign": "left",
+                 "accessibility": true,
+                 "setGallerySize": true,
+                 "dragThreshold": 20,
+                 "prevNextButtons": false,
+                 "pageDots": false,
+                 "arrowShape": {"x0": 10, "x1": 60, "y1": 50, "x2": 60, "y2": 45, "x3": 15}
+               }'>
+
+                {% for product in collection.products limit: 9 %}
+                  {% unless product.tags contains productExcludeTag %}
+                    <div class="carousel-cell d-flex equal-height col-12 col-sm-6 col-lg-4 col-xl-3 p-2" role="treeitem">
+                      {% include 'card-product-style-generic' %}
+                    </div>
+                  {% endunless %}
+                {% endfor %}
+            </div>
+          {% endunless %}
+          </div>
+        </div>
+      {% endif %}
+      {% endunless %}
+    {% endfor %}
+
+  </div>
+</section>

@@ -1,0 +1,121 @@
+{
+  "wrapper": "div#ambassador-onlyforthebooks",
+  "sections": {
+    "main": {
+      "type": "ambassador-hero",
+      "blocks": {
+        "90c17522-9bd4-4aae-8364-7194faa9fe3b": {
+          "type": "default",
+          "settings": {
+            "sub_title": "OwlCrate Collective",
+            "title": "@onlyforthebooks",
+            "title_link": "https:\/\/www.instagram.com\/onlyforthebooks",
+            "html": "",
+            "follow_text": "2.4k Followers",
+            "join_link_text": "About Me",
+            "join_link_url": "",
+            "quote": "Insert optional personalized quote here"
+          }
+        },
+        "6c523b24-46b0-4899-9835-a787f5250923": {
+          "type": "details",
+          "settings": {
+            "about_title": "About Me",
+            "data": "<p>Age 31<br\/>City Los Angeles<br\/>Fav Book Harry Potter <\/p>",
+            "join_link_text": "Back",
+            "join_link_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "90c17522-9bd4-4aae-8364-7194faa9fe3b",
+        "6c523b24-46b0-4899-9835-a787f5250923"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/Header.jpg",
+        "title": "@onlyforthebooks"
+      }
+    },
+    "13d9017d-6f6a-4072-a2d7-c49ebdcf4e74": {
+      "type": "ambassador-gallery",
+      "blocks": {
+        "c85410fe-807e-4b11-ae79-e94038faa93e": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/post_bWVkaWE6MTkzMTQ5ODIw.jpg"
+          }
+        },
+        "f703aa1b-2543-463a-8d74-7ff5d7469c25": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/post_bWVkaWE6MTkyMTMzMzcz.jpg"
+          }
+        },
+        "3c8d8c7a-7475-4f8f-b2e0-e9818461e6c2": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/post_bWVkaWE6MTk0NDU5ODkw.jpg"
+          }
+        },
+        "d08b8908-8199-43eb-8199-5e6e32b9ad0f": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Header.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "c85410fe-807e-4b11-ae79-e94038faa93e",
+        "f703aa1b-2543-463a-8d74-7ff5d7469c25",
+        "3c8d8c7a-7475-4f8f-b2e0-e9818461e6c2",
+        "d08b8908-8199-43eb-8199-5e6e32b9ad0f"
+      ],
+      "settings": {
+        "heading": "Check out @onlyforthebooks favorite products"
+      }
+    },
+    "03e8b662-8552-434c-b35e-1589ccbf0de7": {
+      "type": "ambassador-subscription-plan",
+      "blocks": {
+        "d1eaa124-c115-41cf-aec4-5e6b60e7fed3": {
+          "type": "owlcrate-plan",
+          "settings": {
+            "plan_product_1": "owlcrate-monthly",
+            "plan_product_2": "owlcrate-3-month-prepay",
+            "plan_product_3": "owlcrate-6-month-prepay"
+          }
+        }
+      },
+      "block_order": [
+        "d1eaa124-c115-41cf-aec4-5e6b60e7fed3"
+      ],
+      "settings": {
+        "enable_section": true,
+        "heading": "Shop @onlyforthebooks' picks"
+      }
+    },
+    "bbc74135-a0ea-467c-80ec-13f4f3e1cb57": {
+      "type": "ambassador-collection",
+      "settings": {
+        "heading": "",
+        "product_list": [
+          "follow-your-destiny-socks",
+          "malvern-stables-blanket-scarf",
+          "comic-zipper-pull"
+        ]
+      }
+    },
+    "5e2a5b30-403d-4d29-aaa2-47b509f3fa9a": {
+      "type": "ambassador-script",
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "main",
+    "13d9017d-6f6a-4072-a2d7-c49ebdcf4e74",
+    "03e8b662-8552-434c-b35e-1589ccbf0de7",
+    "bbc74135-a0ea-467c-80ec-13f4f3e1cb57",
+    "5e2a5b30-403d-4d29-aaa2-47b509f3fa9a"
+  ]
+}

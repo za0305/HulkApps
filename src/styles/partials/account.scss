@@ -1,0 +1,472 @@
+.account-email{
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.account-heading-wrapper{
+    .account-link{
+        li{
+            a{
+                position: relative;
+                &.active{
+                    color: $primary;
+                }
+            }
+            &:not(:last-child){
+                a{
+                    &::after{
+                        content: '';
+                        position: absolute;
+                        top: 50%;
+                        right: 0;
+                        transform: translateY(-50%);
+                        width: 1px;
+                        height: 20px;
+                        background-color: $secondary;
+                    }
+                }
+            }
+        }
+    }
+
+}
+.subcription-infobar{
+    background-color: #dff5f4;
+}
+.subscription-order-table{
+    .subscription-header{
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+    .subscription-body{
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        .subscription-item{
+            padding-top: 2.375rem;
+            padding-bottom: 2.375rem;
+            @include media-breakpoint-down(sm) {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+            &:not(:last-child){
+                border-bottom: 1px solid $secondary;
+            }
+            .subscription-img{
+                img{
+                    max-width: 95px;
+                }
+                svg{
+                    width: 95px;
+                }
+            }
+        }
+    }
+    &.order-history{
+        .subscription-body{
+            .subscription-item{
+                padding-top: 1.1rem;
+                padding-bottom: 1.1rem;
+                @include media-breakpoint-down(sm) {
+                    padding-top: 1rem;
+                    padding-bottom: 1rem;
+                }
+            }
+        }
+    }
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  MySubscriptions_Recharge
+
+/*--------------------------------------------------------------------------------- */
+.mb-custom{
+    margin-bottom: 1.875rem;
+    @include media-breakpoint-down(sm) {
+        margin-bottom: 1.5rem;
+    }
+}
+.change-subscription-box{
+    .subscription-product{
+        width: 42%;
+        @include media-breakpoint-down(sm) {
+            width: 50%;
+        }
+        img,svg{
+            width: 5.75rem;
+            object-fit: contain;
+        }
+    }
+}
+.subscription-card{
+    .card-body{
+        padding: 0.8rem 1rem;
+    }
+}
+.font-size-ex-sm.membership-options-link{
+    @include media-breakpoint-down(sm) {
+       font-size: 1rem !important;
+    }
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  custom-radio
+
+/*--------------------------------------------------------------------------------- */
+.custom-radio{
+    input{
+        display: none;
+        &:checked ~ label{
+            span{
+                &::after{
+                    transform: scale(1);
+                }
+            }
+        }
+    }
+    label{
+        cursor: pointer;
+        span{
+            min-width: 1.1875rem;
+            height: 1.1875rem;
+            border:1px solid #cccccc;
+            border-radius: 50%;
+            display: inline-block;
+            vertical-align: middle;
+            position: relative;
+            &::after{
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 0.6875rem;
+                height: 0.6875rem;
+                border-radius: 50%;
+                margin: auto;
+                background-color: $primary;
+                transform: scale(0);
+                transition: all ease-in-out 0.3s;
+            }
+        }
+    }
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  Popup
+
+/*--------------------------------------------------------------------------------- */
+.subscription-popup{
+    @include media-breakpoint-between(sm, md) {
+        max-width: 875px;
+        width: 90%;
+    }
+    .fade:not(.show){
+        visibility: hidden;
+        display: none;
+    }
+}
+.modal-address{
+    @include media-breakpoint-between(sm, md) {
+        max-width: 875px;
+        width: 90%;
+    }
+    .fade:not(.show){
+        visibility: hidden;
+        display: none;
+    }
+}
+.popup-head{
+    position: relative;
+    padding: 1.5rem 1rem 1.1rem;
+
+    @include media-breakpoint-down(sm) {
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+        padding-bottom: 1.2rem;
+    }
+    .popup-close{
+        position: absolute;
+        top:50%;
+        right: 1.7rem;
+        transform: translateY(-50%);
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        opacity: 1;
+        @include media-breakpoint-down(md) {
+           right: 1rem;
+        }
+        img{
+            width: 1rem;
+        }
+    }
+    .go-back-link{
+        position: absolute;
+        top:50%;
+        left: 1.8rem;
+        transform: translateY(-50%);
+        cursor: pointer;
+        p{
+            display: flex;
+            align-items: center;
+            span{
+                margin-left: 0.2rem;
+            }
+        }
+    }
+}
+.popup-body{
+    padding: 1.8rem;
+}
+
+.mission-selector{
+    .mission-selector-input{
+        &:checked ~ .mission-selector-label{
+            opacity: 1;
+            &::after{
+                border: 2px solid $primary;
+            }
+            > div{
+                z-index: 2;
+                position: relative;
+            }
+            .custom-radio label {
+                span::after{
+                    background-color: $primary;
+                }                            
+            }
+        }
+    }
+    .mission-selector-label{
+        position: relative;
+        cursor: pointer;
+        opacity: 0.6;
+        &::after{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 1px solid $gray-200;
+            z-index: 1;
+        }
+        .mission-img-block{
+            img{
+                width: 8rem;
+                min-width: 8rem;
+            }
+        }
+        .custom-radio{
+            label {
+                span{
+                    &::after{
+                        background-color: #d4d4d4;
+                    }
+                }
+            }
+        }
+    }
+}
+.custom-shipping-row{
+    margin-left: -8px;
+    margin-right: -8px;
+    .custom-shipping-col{
+        padding-left: 8px;
+        padding-right: 8px;
+        margin-bottom: 1.25rem;
+    }
+}
+.membership-item{
+    img{
+        width: 4.3rem;
+    }
+    .btn{
+        min-width: 155px;
+        padding-left: 10px;
+        padding-right: 10px;
+        @include media-breakpoint-down(sm) {
+            min-width: 120px;
+        }
+    }
+}
+.cancel-popup{
+    .popup-head{
+        .go-back-link,.popup-close{
+            top: 2.4rem !important;
+            display: inline-flex;
+        }
+    }
+}
+.cancel-prepaid-popup{
+    .popup-head{
+        .go-back-link,.popup-close{
+            top: 2.4rem !important;
+            display: inline-flex;
+        }
+    }
+    .billed-box{
+        img{
+            width: 6rem;
+            min-width: 6rem;
+        }
+    }
+}
+.cancel-pause-popup{
+    .popup-head{
+        .go-back-link,.popup-close{
+            top: 2.4rem !important;
+            display: inline-flex;
+        }
+    }
+    .cancel-sub-item{
+        img{
+            width: 6rem;
+        }
+    }
+}
+.skip-popup{
+    .border-right{
+        @include media-breakpoint-down(sm) {
+            border-right: 0 !important;
+        }
+    }
+}
+.cancel-prepaid-popup{
+    .border-right{
+        @include media-breakpoint-down(sm) {
+            border-right: 0 !important;
+        }
+    }
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  Proxy Css
+
+/*--------------------------------------------------------------------------------- */
+.user-customer{
+    padding: 4rem 0 3rem;
+    min-height: 500px;
+}
+.rc_layout__container{
+    max-width: 1310px !important;
+    hr{
+        display: none;
+    }
+    h2{
+        font-size: 2rem;
+    }
+    h4{
+        font-size: 1.5rem;
+    }
+    .rc_customer__name{
+        font-size: 1.5rem;
+        font-family: $font-family-base;
+        font-weight: 600;
+        margin-bottom:1rem;
+    }
+    .rc_sidebar__menu{
+        display: block;
+        @include media-breakpoint-down(sm) {
+            display: none;
+        }
+        li{
+            margin-bottom: 1rem;
+        }
+    }
+    #ReCharge-Mobile-Nav{
+        display: none;
+        @include media-breakpoint-down(sm) {
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+    }
+    .purchase-address{
+        font-family: $font-family-base;
+        font-size: 1.2rem;
+        text-transform: capitalize;
+        letter-spacing: 0.05em;
+        margin-bottom: 1rem;
+    }
+    .rc_table__container{
+        thead{
+            border: 1px solid $secondary;
+            background-color: $secondary;
+            color: $white;
+            th{
+                font-family: $font-barlow;
+                font-size: 0.9375rem;
+                font-weight: 500;
+                border: 0;
+                white-space: nowrap;
+            }
+        }
+        tbody{
+            border: 1px solid $secondary;
+            td{
+                border: 0;
+                &.td-product{
+                    min-width: 17rem;
+                    p{
+                        margin-bottom: 0.5rem;
+                    }
+                }
+                &:last-child{
+                    white-space: normal;
+                }
+            }
+        }
+    }
+    .rc_table{
+        p{
+            margin-bottom: 0.5rem;
+            a{
+                border-bottom: 1px solid $secondary;
+                &:hover{
+                    border-color: $primary;
+                }
+            }
+        }
+    }
+}
+#rc_navigation{
+    .rc_menu__item {
+        &:last-child{
+            display: none;
+        }
+    }
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  gift Css
+
+/*--------------------------------------------------------------------------------- */
+.arrives-img{
+    width: 8.4rem;
+}
+
+
+.form-message.form-success.form-message--success {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.form-message.form-errors {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    color: #832421;
+    background-color: #fedad9;
+    border-color: #fecbca;
+}

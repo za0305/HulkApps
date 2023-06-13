@@ -1,0 +1,139 @@
+<section class="section-content mt-md-7" data-section-id="{{ section.id }}">
+  <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+      <div class="row">
+          <div class="col-12 text-center">
+
+              {%- if section.settings.heading_txt != '' -%}
+                <h2 class="section-title mb-3 mb-md-5">{{- section.settings.heading_txt -}}</h2>
+              {%- endif -%}
+
+              {%- if section.settings.lead_txt != '' -%}
+                <p class="lead px-lg-6">
+                    {{- section.settings.lead_txt -}}
+                </p>
+              {%- endif -%}
+
+          </div>
+      </div>
+
+      {%- assign blocks_size = section.blocks | size -%}
+      {%- if blocks_size > 0 -%}
+        <div class="row">
+            {%- for block in section.blocks -%}
+            <div class="{% unless section.settings.grid_size == '12' %}col-sm-12{% endunless %} col-md-{{ section.settings.grid_size }}">
+                <div class="feature my-3">
+                    <div class="card-img text-center d-flex justify-content-center align-items-end mb-3 mb-md-4">
+                      {%- if block.settings.icon_class != blank -%}
+                          <img src="{{block.settings.icon_class}}" alt="{{ block.settings.heading | escape }}" class="mh-100 mw-10" /> 
+                      {%- elsif block.settings.image != blank -%}
+                          <img src="{{block.settings.image | img_url :'165x112' }}" alt="{{ block.settings.heading | escape }}" class="mh-100 mw-10" /> 
+                      {%- endif -%}
+                    </div>
+                    <div class="text-center px-lg-3">
+                      <h5 class="mb-1 mb-md-2">{{ block.settings.heading }}</h5>
+                      <div class="feature-details">{{ block.settings.txt }}</div>
+                    </div>
+                </div>
+            </div>
+            {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+  </div>
+</section>
+
+
+
+{% schema %}
+{
+  "name": "Features Grid",
+  "class": "index-features-grid",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "fluid_layout",
+      "label": "Full Width Layout?",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "grid_size",
+      "label": "Grid Size",
+      "options": [{
+          "value": "12",
+          "label": "1 Column"
+        },
+        {
+          "value": "6",
+          "label": "2 Columns"
+        },
+        {
+          "value": "4",
+          "label": "3 Columns"
+        }
+      ],
+      "default": "6"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading_txt",
+      "label": "Heading Text",
+      "default": "Awesome Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "lead_txt",
+      "label": "Lead Text",
+      "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pulvinar ac tortor imperdiet commodo."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Features Grid",
+      "category": "Content"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "content",
+      "name": "Feature Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon_class",
+          "label": "SVG URL"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Select Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "txt",
+          "label": "Text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

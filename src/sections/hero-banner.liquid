@@ -1,0 +1,233 @@
+{%- liquid
+    assign image = section.settings.image
+    assign image_mobile = section.settings.image_mobile
+    assign title = section.settings.title
+    assign subtitle = section.settings.subtitle
+    assign footer_button_label = section.settings.footer_button_label
+    assign footer_button_link = section.settings.footer_button_link
+%}
+
+{{ 'section-hero-banner.css' | asset_url | stylesheet_tag }}
+
+<section id="section-{{ section.id }}">
+    <div class="hero-banner relative">
+
+        <div class="hero-banner__content d-flex justify-content-center">
+            <div>
+                {%- if title != blank -%}
+                    <h2 class="hero-banner__title">{{ title }}</h2>
+                {%- endif -%}
+
+                {%- if subtitle != blank -%}
+                    <p class="hero-banner__subtitle">{{ subtitle }}</p>
+                {%- endif -%}
+
+                <div class="hero-banner__buttons">
+                    {% assign isJrSoldout = false %}
+                    {% assign isAdultSoldout = false %}
+                    {% if section.settings.select_product != '' and settings.adult_soldout and section.settings.select_product == 'plan_adult' %}
+                        {% assign isAdultSoldout = true %}
+                    {% endif %}
+                    {% if section.settings.select_product1 != '' and settings.jr_soldout and section.settings.select_product1 == 'plan_jr' %}
+                        {% assign isJrSoldout = true %}
+                    {% endif %}
+  
+                    <template v-if="isUtmAdult">
+                        {% if section.settings.btn_txt != '' %}
+                        <a {% if section.settings.page_link %} href="{{section.settings.page_link}}"{%else%}href="#" @click.prevent="_chooseProductOnPage('{{section.settings.select_product}}', 2, 'type-normal')"{% endif %} class="hero-banner__btn hero-banner__btn--{{ section.settings.btn_type }}">
+                            <span class="hero-banner__btnIcon">
+                                {%- render 'icon-owl-black' -%}
+                            </span>
+                            {{ section.settings.btn_txt }}
+                        </a>
+                        {% endif %}
+                    </template>
+                    <template v-else>
+                        {% if section.settings.btn_txt != '' %}
+                        <a {% if section.settings.page_link %} href="{{section.settings.page_link}}"{%else%}href="#" {% if isAdultSoldout %} @click.prevent="_soldoutProduct('{{section.settings.select_product}}', 'type-normal')" {% else %} @click.prevent="_chooseProductOnPage('{{section.settings.select_product}}', 2, 'type-normal')" {% endif %}{% endif %} class="hero-banner__btn hero-banner__btn--{{ section.settings.btn_type }}">
+                            {% if isAdultSoldout %}
+                                JOIN OWLCRATE WAIT LIST
+                            {% else %}
+                                <span class="hero-banner__btnIcon">
+                                    {%- render 'icon-owl-black' -%}
+                                </span>
+                                {{ section.settings.btn_txt }}
+                            {% endif %}
+                        </a>
+                        {% endif %}
+                    </template>
+
+                    <template v-if="isUtmJr">
+                        {% if section.settings.btn_txt_second != '' %}
+                        <a {% if section.settings.page_link1 %}href="{{ section.settings.page_link1}}" {% else %} href="#" @click.prevent="_chooseProductOnPage('{{section.settings.select_product1}}', 2, 'type-normal')"{% endif %} class="hero-banner__btn hero-banner__btn--{{ section.settings.btn_type_second }} test-jr-1">
+                            <span class="hero-banner__btnIcon">
+                                {%- render 'icon-owl-green' -%}
+                            </span>
+                            {{ section.settings.btn_txt_second }}
+                        </a>
+                        {% endif %}
+                    </template>
+                    <template v-else>
+                        {% if section.settings.btn_txt_second != '' %}
+                        <a data-link="{{section.settings.btn_txt_second}}" 
+                            {% if section.settings.page_link1 %}href="{{ section.settings.page_link1}}" {% else %} href="#" {% if isJrSoldout %} @click.prevent="_soldoutProduct('{{section.settings.select_product1}}', 'type-normal')" {% else %} @click.prevent="_chooseProductOnPage('{{section.settings.select_product1}}', 2, 'type-normal')" {% endif %}{% endif %} class="hero-banner__btn hero-banner__btn--{{ section.settings.btn_type_second }} test-jr-2">
+                            {% if isJrSoldout %}
+                                JOIN OWLCRATE JR WAIT LIST
+                            {% else %}
+                                <span class="hero-banner__btnIcon">
+                                    {%- render 'icon-owl-green' -%}
+                                </span>
+                                {{ section.settings.btn_txt_second }}
+                            {% endif %}
+                        </a>
+                        {% endif %}
+                    </template>
+                </div>
+
+                {%- if footer_button_label != blank
+                    and footer_button_link != blank -%}
+                    <div class="hero-banner__footer-link-wrapper">
+                        <a href="{{ footer_button_link }}" class="hero-banner__footer-link">{{ footer_button_label }}</a>
+                    </div>
+                {%- endif -%}
+            </div>
+        </div>
+
+        <div class="hidden sm-d-block relative hero-banner__imgWrapper">
+            <a href="#" class="reviews__customBtn">
+                <span class="flex">
+                    {%- render 'reviews-book' -%}
+                </span>
+                Reviews
+            </a>
+            {%- if image -%}
+                {%- render 'img', image: image, responsive: false, min_wrapper_height: '35.8125rem', loading: 'eager' -%}
+            {%- endif -%}
+        </div>
+
+        <div class="sm-hidden">
+            {%- if image_mobile -%}
+                {%- render 'img', image: image_mobile, responsive: true, loading: 'eager' -%}
+            {%- endif -%}
+        </div>
+    </div>
+</section>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        setTimeout(() => {
+            document.querySelector('.reviews__customBtn').addEventListener('click', (event) => {
+                event.preventDefault()
+                const yotpo_testimonials_btn = document.getElementById('yotpo_testimonials_btn')
+                if (yotpo_testimonials_btn !== null) yotpo_testimonials_btn.click()
+            })
+        })
+    })
+</script>
+
+{% schema %}
+{
+	"name": "Hero Banner",
+	"settings":[
+        {
+			"type": "image_picker",
+			"id": "image",
+			"label": "Image"
+		},
+        {
+			"type": "image_picker",
+			"id": "image_mobile",
+			"label": "Image mobile (< 1279px)"
+		},
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title"
+		},
+        {
+			"type": "text",
+			"id": "subtitle",
+			"label": "Subtitle"
+		},
+        {
+            "type": "text",
+            "id": "select_product",
+            "label": "Select Product Tag",
+            "default": "plan_adult",
+            "info": "Use 'plan_adult or plan_jr' for product."
+        },
+        {
+            "type": "text",
+            "id": "btn_txt",
+            "label": "Button Text"
+        },
+        {
+            "type": "select",
+            "id": "btn_type",
+            "label": "Button Type",
+            "options": [{
+                "value": "white",
+                "label": "White"
+              },
+              {
+                "value": "green",
+                "label": "Green"
+              }
+            ],
+            "default": "white"
+        },
+        {
+            "type": "url",
+            "id": "page_link",
+            "label": "Page link"
+        },
+        {
+            "type": "text",
+            "id": "btn_txt_second",
+            "label": "Button Text"
+        },
+        {
+            "type": "select",
+            "id": "btn_type_second",
+            "label": "Button Type",
+            "options": [{
+                "value": "white",
+                "label": "White"
+              },
+              {
+                "value": "green",
+                "label": "Green"
+              }
+            ],
+            "default": "white"
+        },
+        {
+            "type": "text",
+            "id": "select_product1",
+            "label": "Select Product Tag",
+            "default": "plan_jr",
+            "info": "Use 'plan_adult or plan_jr' for product."
+        },
+        {
+            "type": "url",
+            "id": "page_link1",
+            "label": "Page link"
+        },
+        {
+			"type": "text",
+			"id": "footer_button_label",
+			"label": "Footer button label"
+		},
+        {
+			"type": "text",
+			"id": "footer_button_link",
+			"label": "Footer button link"
+		}
+	],
+	"presets":[
+		{
+			"name": "Hero Banner"
+		}
+	]
+}
+{% endschema %}

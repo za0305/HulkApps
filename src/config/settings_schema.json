@@ -1,0 +1,433 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "WPF",
+    "theme_version": "1.0",
+    "theme_author": "Wolfpoint Agency",
+    "theme_documentation_url": "https:\/\/www.wolfpointagency.com",
+    "theme_support_url": "https:\/\/www.wolfpointagency.com",
+    "theme_packaged_with": "@shopify\/slate-tools@1.0.0-beta.19"
+  },
+  {
+    "name": "Logo Images",
+    "settings": [
+      {
+        "type": "html",
+        "id": "primary_logo_svg",
+        "label": "Primary Logo (SVG)"
+      },
+      {
+        "type": "html",
+        "id": "primary_logo_svg_green",
+        "label": "Primary Logo Green (SVG)"
+      },
+      {
+        "type": "html",
+        "id": "primary_logo_svg_mobile",
+        "label": "Primary Logo Mobile (SVG)"
+      },
+      {
+        "type": "html",
+        "id": "primary_logo_svg_mobile_green",
+        "label": "Primary Logo Mobile Green (SVG)"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_logo",
+        "label": "Select Adult main logo"
+      },
+      {
+        "type": "text",
+        "id": "main_svg_logo",
+        "label": "Select Adult svg logo"
+      },
+      {
+        "type": "range",
+        "id": "logo_max_width",
+        "min": 5,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Logo Adult width",
+        "default": 180
+      },
+      {
+        "type": "image_picker",
+        "id": "main_jr_logo",
+        "label": "Select Jr main logo"
+      },
+      {
+        "type": "text",
+        "id": "main_jr_svg_logo",
+        "label": "Select Jr svg logo"
+      },
+      {
+        "type": "range",
+        "id": "logo_jr_max_width",
+        "min": 5,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Logo Jr width",
+        "default": 180
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_logo",
+        "label": "Select Adult Mobile main logo"
+      },
+      {
+        "type": "text",
+        "id": "main_mobile_svg_logo",
+        "label": "Select Adult Mobile svg logo"
+      },
+      {
+        "type": "range",
+        "id": "logo_mobile_max_width",
+        "min": 5,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Logo Adult Mobile width",
+        "default": 180
+      },
+      {
+        "type": "image_picker",
+        "id": "main_jr_mobile_logo",
+        "label": "Select Jr Mobile main logo"
+      },
+      {
+        "type": "text",
+        "id": "main_jr_mobile_svg_logo",
+        "label": "Select Jr Mobile svg logo"
+      },
+      {
+        "type": "range",
+        "id": "logo_jr_mobile_max_width",
+        "min": 5,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Logo Jr Mobile width",
+        "default": 180
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon_image",
+        "label": "Favicon"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon_image_retina",
+        "label": "Favicon retina image"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Logo Image for Socials"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_logo_socials",
+        "label": "Select image",
+        "info": "Minimum size in pixels is 600x315. Recommended size is 1200x630 - Images this size will get a larger display treatment. Aspect ratio should be 1.91:1"
+      },
+      {
+        "type": "header",
+        "content": "Social accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook",
+        "info": "https:\/\/facebook.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter",
+        "info": "https:\/\/twitter.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_googleplus_link",
+        "label": "Google Plus",
+        "info": "https:\/\/plus.google.com\/+shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest",
+        "info": "https:\/\/pinterest.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "info": "http:\/\/instagram.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok_link",
+        "label": "TikTok",
+        "info": "http:\/\/instagram.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_goodreads_link",
+        "label": "Goodreads",
+        "info": "http:\/\/goodreads.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_tumblr_link",
+        "label": "Tumblr",
+        "info": "http:\/\/shopify.tumblr.com"
+      },
+      {
+        "type": "text",
+        "id": "social_snapchat_link",
+        "label": "Snapchat",
+        "info": "https:\/\/www.snapchat.com\/add\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "YouTube",
+        "info": "https:\/\/www.youtube.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_vimeo_link",
+        "label": "Vimeo",
+        "info": "https:\/\/vimeo.com\/shopify"
+      }
+    ]
+  },
+  {
+    "name": "Theme Features",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Select to enable"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_on_product",
+        "label": "Enable Onclick ProductPage?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_meta_noindex",
+        "label": "Enable No Index Meta?",
+        "info": "If you enable this the site will no be indexed by search engines.",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "Soldout Plan",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Subscription Box"
+      },
+      {
+        "type": "checkbox",
+        "id": "adult_soldout",
+        "label": "Soldout Adult Box",
+        "info": "Enable\/disable Adult Box For Soldout."
+      },
+      {
+        "type": "checkbox",
+        "id": "jr_soldout",
+        "label": "Soldout JR Box",
+        "info": "Enable\/disable JR Box For Soldout."
+      },
+      {
+        "type": "text",
+        "id": "modal_adult_heading",
+        "label": "Heading Adult Box",
+        "default": "Join To Wait List"
+      },
+      {
+        "type": "text",
+        "id": "modal_jr_heading",
+        "label": "Heading JR Box",
+        "default": "Join To Wait List"
+      },
+      {
+        "type": "textarea",
+        "id": "modal_adult_lead_txt",
+        "label": "Title Adult Box"
+      },
+      {
+        "type": "textarea",
+        "id": "modal_Jr_lead_txt",
+        "label": "Title JR Box"
+      },
+      {
+        "type": "text",
+        "id": "modal_adult_btn_txt",
+        "label": "Button Adult Text",
+        "default": "Join Wait List"
+      },
+      {
+        "type": "text",
+        "id": "modal_jr_btn_txt",
+        "label": "Button JR Text",
+        "default": "Join Wait List"
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_adult",
+        "label": "Klaviyo List ID For Adult"
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_jr",
+        "label": "Klaviyo List ID For JR"
+      },
+      {
+        "type": "header",
+        "content": "URL\/UTM parameters"
+      },
+      {
+        "type": "text",
+        "id": "utm_adult",
+        "label": "UTM For Adult"
+      },
+      {
+        "type": "text",
+        "id": "utm_jr",
+        "label": "UTM For JR"
+      }
+    ]
+  },
+  {
+    "name": "Misc Settings",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Product Exclude Tag"
+      },
+      {
+        "type": "text",
+        "id": "product_exclude_tag_text",
+        "label": "Product Tag",
+        "info": "Products with the above tag will be excluded from collections and search results."
+      }
+    ]
+  },
+  {
+    "name": "3rd Party Apps",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Select to enable"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_recharge",
+        "label": "Enable ReCharge?",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_utilities_app",
+        "label": "Enable Store Utilities?",
+        "default": false
+      }
+    ]
+  },
+  {
+    "name": "Account Page",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Alert Message"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_alert_msg",
+        "label": "Enable Alert Message"
+      },
+      {
+        "type": "text",
+        "id": "alert_head_txt",
+        "label": "Header Text"
+      },
+      {
+        "type": "textarea",
+        "id": "alert_caption_txt",
+        "label": "Caption Text"
+      },
+      {
+        "type": "text",
+        "id": "alert_link_txt",
+        "label": "Link Text"
+      },
+      {
+        "type": "url",
+        "id": "alert_link_url",
+        "label": "Link Url"
+      },
+      {
+        "type": "header",
+        "content": "Discount Content"
+      },
+      {
+        "type": "text",
+        "id": "discount_pause",
+        "label": "Add Discount Per.(%) For Pause Subscription"
+      },
+      {
+        "type": "text",
+        "id": "discount_switch",
+        "label": "Add Discount Per.(%) For Switch Subscription"
+      },
+      {
+        "type": "header",
+        "content": "Product Section"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_productaddon",
+        "label": "Enable Section"
+      },
+      {
+        "type": "collection",
+        "id": "choose_collection",
+        "label": "Choose Collection"
+      },
+      {
+        "type": "range",
+        "id": "product_limit",
+        "min": 4,
+        "max": 10,
+        "step": 1,
+        "label": "Product Limit",
+        "default": 4
+      },
+      {
+        "type": "header",
+        "content": "Subscription Product Content"
+      },
+      {
+        "type": "collection",
+        "id": "choose_ac_collection",
+        "label": "Choose Collection"
+      }
+    ]
+  }
+]

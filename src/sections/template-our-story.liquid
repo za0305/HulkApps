@@ -1,0 +1,447 @@
+<section  data-section-id="{{ section.id }}" class="mt-md-3">
+    <div class="section-content pb-0">
+        <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+            <div class="row">
+                <div class="col-12 text-center">
+                    {% if section.settings.heading_txt != '' %}
+                        <h1 class="page-title mb-0">{{ section.settings.heading_txt }}</h1>
+                    {% else %}
+                        <h1 class="page-title mb-0">{{ page.title }}</h1>
+                    {% endif %}
+                    {% if section.settings.lead_txt != '' %}
+                        <p class="lead mb-0">{{ section.settings.lead_txt }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% for block in section.blocks %}
+        {% if block.type == 'story_block' %}
+            {% if block.settings.story_check %}
+            <div class="section-content our_story">
+                <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+                    <div class="row align-items-xl-center">
+                        <div class="col-md-5 col-lg-4 mb-4 mb-md-0">
+                            <div class="product-img overflow-hidden mb-3">
+                                <img
+                                    data-sizes="auto"
+                                    src="{{ block.settings.image | img_url: 'small'}}"
+                                    data-srcset="
+                                        {{ block.settings.image | img_url: '1024x' }} 576w,
+                                        {{ block.settings.image | img_url: '1280x' }} 768w,
+                                        {{ block.settings.image | img_url: '1440x' }} 992w,
+                                        {{ block.settings.image | img_url: '1920x' }} 1200w
+                                        "
+                                    class="lazyload img-fluid h-100" alt="our_story" />
+                            </div>
+                            {% if block.settings.teamsubtitle != '' %}
+                                <p class="mb-md-0 text-center">{{ block.settings.teamsubtitle }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-7 col-lg-8">
+                            {% if block.settings.txt != '' %}
+                                <p class="mb-0">{{ block.settings.txt }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {% if section.settings.enable_our_journey %}  
+        <div class="section-content our_journey pb-0">
+            <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+                {% if section.settings.journey_heading != '' %}
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h2 class="section-title mb-3">{{ section.settings.journey_heading }}</h2>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="carousel row" role="tree" data-flickity='{
+                    "contain": true,
+                    "wrapAround": true,
+                    "accessibility": true,
+                    "setGallerySize": true,
+                    "cellAlign": "left",
+                    "dragThreshold": 20,
+                    "lazyLoad": false,
+                    "prevNextButtons": true,
+                    "pageDots": false,
+                    "arrowShape": {"x0": 10, "x1": 60, "y1": 50, "x2": 65, "y2": 40, "x3": 25}
+                    }'>
+                    {% for block in section.blocks %}
+                        {% if block.type == 'journey_block' %}
+                            {% if block.settings.journey_check %}
+                                <div class="carousel-cell col-12 col-sm-6 col-md-4 my-1 my-md-3" role="treeitem">
+                                    <div class="card shadow-none border-0">
+                                        <div class="card-img">
+                                            <img
+                                                data-sizes="auto"
+                                                src="{{ block.settings.image | img_url: 'small'}}"
+                                                data-srcset="
+                                                    {{ block.settings.image | img_url: '1024x' }} 576w,
+                                                    {{ block.settings.image | img_url: '1280x' }} 768w,
+                                                    {{ block.settings.image | img_url: '1440x' }} 992w,
+                                                    {{ block.settings.image | img_url: '1920x' }} 1200w
+                                                    "
+                                                class="lazyload img-fluid h-100" alt="{{ block.settings.heading | escape }}" />
+                                        </div>
+                                        <div class="card-body text-center">
+                                            <h5 class="mb-2 display-4 ls-base">{{ block.settings.heading }}</h5>
+                                            <p class="mb-0">{{ block.settings.txt | escape }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if section.settings.enable_our_team %} 
+        <div class="section-content our_team pb-0">
+            <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+                {% if section.settings.team_heading != '' %}
+                    <div class="row mb-4">
+                        <div class="col-12 text-center">
+                            <h2 class="section-title mb-3">{{ section.settings.team_heading }}</h2>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="carousel row" role="tree" >
+                    {% for block in section.blocks %}
+                        {% if block.type == 'team_block' %}
+                            {% if block.settings.team_check %}
+                                <div class="carousel-cell col-12 col-sm-6 col-md-4 col-lg-3 my-1 my-md-3" role="treeitem">
+                                    <div class="card card-team shadow-none border-0">
+                                        <div class="card-img">
+                                            <img
+                                                data-sizes="auto"
+                                                src="{{ block.settings.image | img_url: 'small'}}"
+                                                data-srcset="
+                                                    {{ block.settings.image | img_url: '1024x' }} 576w,
+                                                    {{ block.settings.image | img_url: '1280x' }} 768w,
+                                                    {{ block.settings.image | img_url: '1440x' }} 992w,
+                                                    {{ block.settings.image | img_url: '1920x' }} 1200w
+                                                    "
+                                                class="lazyload img-fluid h-100" alt="{{ block.settings.heading | escape }}" />
+                                        </div>
+                                        <div class="card-body text-center">
+                                            <h5 class="mb-2 display-4 ls-base">{{ block.settings.heading }}</h5>
+                                            <p class="mb-1">{{ block.settings.txt }}</p>
+                                            <p class="mb-0 font-weight-bold ls-1 font-size-ex-sm font-barlow">{{ block.settings.meet_txt }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% for block in section.blocks %}
+    {% if block.type == 'manifesto_block' %}
+    {% if block.settings.manifesto_check %}
+    <div class="section-content crudleys_story">
+        <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+            {% if block.settings.crudleys_heading != '' %}
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <h2 class="section-title mb-0">{{ block.settings.crudleys_heading }}</h2>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    {% assign caption = block.settings.steps_captions | split: '--' %}
+                    <ul class="list-unstyled d-inline-block">
+                        {% for cap in caption %}
+                          <li class="mb-2 mb-md-3 text-left">{{ cap }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p class="text-left mb-4">{{ block.settings.txt }}</p>
+                    {% if block.settings.btn_txt != '' %}
+                      <a {% if block.settings.btn_link %} href="{{ block.settings.btn_link }}" {% endif %} class="btn btn{% if block.settings.btn_type == 'outline' %}-{% endif %}{{ block.settings.btn_type }}-{{ block.settings.btn_variant }} {{ block.settings.btn_size }}">{{ block.settings.btn_txt }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    
+
+</section>
+
+{% schema %}
+  {
+    "name": "our story Template",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "fluid_layout",
+        "label": "Full Width Layout?",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "heading_txt",
+        "label": "Heading Text"
+      },
+      {
+        "type": "textarea",
+        "id": "lead_txt",
+        "label": "Lead Text",
+        "default": "Lorem ipsum dolor sit amet."
+      },
+      {
+        "type": "header",
+        "content": "Our Journey Section"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_our_journey",
+        "label": "Enable Section?"
+      },
+      {
+        "type": "text",
+        "id": "journey_heading",
+        "label":"Journey Heading Text"
+      },
+      {
+        "type": "header",
+        "content": "Our Team Section"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_our_team",
+        "label": "Enable Section?"
+      },
+      {
+        "type": "text",
+        "id": "team_heading",
+        "label":"Team Heading Text"
+      }
+    ],
+    "blocks": [
+        {
+            "type": "story_block",
+            "name": "Story Block",
+            "settings": [
+                {
+                    "type": "checkbox",
+                    "id": "story_check",
+                    "label": "Enabled?",
+                    "default": true
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Select Image"
+                },
+                {
+                    "type": "header",
+                    "content": "Description"
+                },
+                {
+                    "type": "text",
+                    "id": "teamsubtitle",
+                    "label": "Team Subtitle"
+                },
+                {
+                    "type": "textarea",
+                    "id": "txt",
+                    "label": "Text"
+                }
+            ]
+        },
+        {
+            "type": "journey_block",
+            "name": "Journey Block",
+            "settings": [
+                {
+                    "type": "checkbox",
+                    "id": "journey_check",
+                    "label": "Enabled?",
+                    "default": true
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Select Image"
+                },
+                {
+                    "type": "header",
+                    "content": "Description"
+                },
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "Heading"
+                },
+                {
+                    "type": "text",
+                    "id": "txt",
+                    "label": "Text"
+                }
+            ]
+        },
+        {
+            "type": "team_block",
+            "name": "Team Block",
+            "settings": [
+                {
+                    "type": "checkbox",
+                    "id": "team_check",
+                    "label": "Enabled?",
+                    "default": true
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Select Image"
+                },
+                {
+                    "type": "header",
+                    "content": "Description"
+                },
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "Heading"
+                },
+                {
+                    "type": "text",
+                    "id": "txt",
+                    "label": "Text"
+                },
+                {
+                    "type": "textarea",
+                    "id": "meet_txt",
+                    "label": "Meet Text"
+                }
+            ]
+        },
+        {
+            "type": "manifesto_block",
+            "name": "Manifesto Block",
+            "settings": [
+                {
+                    "type": "checkbox",
+                    "id": "manifesto_check",
+                    "label": "Enabled?",
+                    "default": true
+                },
+                {
+                    "type": "text",
+                    "id": "crudleys_heading",
+                    "label":"manifesto Heading Text"
+                },
+                {
+                    "type": "header",
+                    "content": "Description"
+                },
+                {
+                    "type": "textarea",
+                    "id": "steps_captions",
+                    "label": "Stepts captions",
+                    "info":"Each entry must be on a new line"
+                },
+                {
+                    "type": "text",
+                    "id": "txt",
+                    "label": "Text"
+                },
+                {
+                    "type": "header",
+                    "content": "Button"
+                },
+                {
+                    "type": "text",
+                    "id": "btn_txt",
+                    "label": "Button Text"
+                },
+                {
+                    "type": "url",
+                    "id": "btn_link",
+                    "label": "Button Link"
+                },
+                {
+                    "type": "select",
+                    "id": "btn_type",
+                    "label": "Button Type",
+                    "options": [{
+                        "value": "outline",
+                        "label": "Outline"
+                        },
+                        {
+                        "value": "",
+                        "label": "Solid"
+                        }
+                    ],
+                    "default": ""
+                },
+                {
+                    "type": "select",
+                    "id": "btn_variant",
+                    "label": "Button Variant",
+                    "options": [
+                        {
+                            "value": "primary",
+                            "label": "Primary"
+                        },
+                        {
+                            "value": "secondary",
+                            "label": "Secondary"
+                        },
+                        {
+                            "value": "accent",
+                            "label": "Accent"
+                        },
+                        {
+                            "value": "light",
+                            "label": "Light"
+                        },
+                        {
+                            "value": "dark",
+                            "label": "Dark"
+                        }
+                    ],
+                    "default": "dark"
+                },
+                {
+                    "type": "select",
+                    "id": "btn_size",
+                    "label": "Button Size",
+                    "options": [{
+                            "value": "",
+                            "label": "Default"
+                        },
+                        {
+                            "value": "btn-sm",
+                            "label": "Small"
+                        },
+                        {
+                            "value": "btn-lg",
+                            "label": "Large"
+                        }
+                    ],
+                    "default": ""
+                }
+            ]
+        }  
+    ]
+  }
+{% endschema %}

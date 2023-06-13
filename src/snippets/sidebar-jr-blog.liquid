@@ -1,0 +1,181 @@
+<div class="sidebar-blog {% if sidebar_is_sticky %}sticky-top{% endif %}">
+
+  <form action="/search" method="get" role="search">
+    <div class="input-group mb-5 shadow mt-2">
+      <input type="hidden" name="type" value="article">
+      <input type="text" name="q" id="Search" aria-label="search" value="" placeholder="Search our blog" class="form-control border-0">
+      <div class="input-group-append">
+        <button type="search" class="border-0 bg-white">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="27.374px" height="27.315px" viewBox="0 0 27.374 27.315" enable-background="new 0 0 27.374 27.315" xml:space="preserve"><g><path fill="none" stroke="#000000" stroke-width="1.5" stroke-miterlimit="10" d="M10.831,1.086c5.157,0,9.339,4.182,9.339,9.34
+                s-4.182,9.34-9.339,9.34c-5.159,0-9.34-4.182-9.34-9.34"></path> <path fill="none" stroke="#000000" stroke-width="1.5" stroke-miterlimit="10" d="M1.491,10.426c0-5.158,4.181-9.34,9.34-9.34"></path> <line fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="25.883" y1="26.23" x2="17.486" y2="17.833"></line> <path fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+                M8.416,4.711c0.742-0.314,1.558-0.487,2.415-0.487c2.821,0,5.203,1.884,5.955,4.464"></path></g></svg>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  {% if section.settings.main_blog_url != blank %}<a href="{{ section.settings.main_blog_url }}" class="text-primary border-primary border-bottom pb-1 font-size-sm">{{ section.settings.return_main_blog | default: 'Return To Main Blog' }}</a>{% endif %}
+
+  {%- if section.settings.categories -%}
+    <div class="card card-recent-articles mt-3 border-0">
+      <div class="card-header display-4 text-uppercase bg-white font-barlow font-weight-semi-bold px-0">{{ linklists[section.settings.categories].title }}</div>
+      <ul class="list-unstyled pt-3 m-0">
+        {%- for link in linklists[section.settings.categories].links -%}
+          <li class="font-weight-light py-2"><a href="{{ link.url }}" title="{{link.title}}">{{ link.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- endif -%}
+
+
+  {% for block in section.blocks %}
+
+    {% comment %} social sharing {% endcomment %}
+    {% if block.settings.enable_socials %}
+      <div class="card card-socials mt-3" {{ block.shopify_attributes }}>
+        <div class="card-header">{{ block.settings.socials_title }}</div>
+        <div class="card-body text-center">
+          <ul class="list-unstyled social-icons list-inline my-0">
+            {% if block.settings.social_icon_facebook %}
+              <li class="list-inline-item mx-2">
+                <a href="{{ settings.social_facebook_link }}" name="Facebook" title="Facebook" rel="nofollow" aria-label="Facebook"><i class="icon ion-logo-facebook"></i></a>
+              </li>
+            {% endif %}
+
+            {% if block.settings.social_icon_twitter %}
+              <li class="list-inline-item mx-2">
+                <a href="{{ settings.social_twitter_link }}" name="Twitter" title="Twitter" rel="nofollow" aria-label="Twitter"><i class="icon ion-logo-twitter"></i></a>
+              </li>
+            {% endif %}
+
+            {% if block.settings.social_icon_googleplus %}
+              <li class="list-inline-item mx-2">
+                <a href="{{ settings.social_googleplus_link }}" name="Google+" title="Google+" rel="nofollow" aria-label="Google+"><i class="icon ion-logo-googleplus"></i></a>
+              </li>
+            {% endif %}
+
+            {% if block.settings.social_icon_instagram %}
+              <li class="list-inline-item mx-2">
+                <a href="{{ settings.social_instagram_link }}" name="Instagram" title="Instagram" rel="nofollow" aria-label="Instagram"><i class="ion-social-instagram"></i></a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    {% endif %}
+
+    {% comment %} recent articles {% endcomment %}
+    {%- if block.type == 'recent_articles' and block.settings.enable_recent_articles -%}
+      <div class="card card-recent-articles mt-3 border-0">
+        <div class="card-header font-barlow font-weight-semi-bold bg-white display-4 text-uppercase px-0 p-2">{{ block.settings.recent_articles_title }}</div>
+        <ul class="list-group list-group-flush">
+          {%- assign total_recent_articles = block.settings.total_recent_articles -%}
+          {%- for article in blogs[blog.handle].articles limit:total_recent_articles -%}
+            <li class="list-group-item border-bottom-0">
+              <div class="media d-flex">
+                <div class="media-body">
+                  <div class="row">
+                    <div class="col-4 px-0">
+                      {%- if article.image -%}
+                        <a href="{{ article.url }}"><img src="{{ article.image | img_url: 'pico' }}"
+                                                         data-srcset="{{ article.image | img_url: '140x140', crop: 'center' }}, 100w" class="d-flex img-fluid w-100 lazyload" alt="{{ article.title | remove: '"' | remove: "'" }}">
+                        </a>
+                      {%- endif -%}
+                    </div>
+                    <div class="col-8">
+                      <p class="font-size-ex-xs text-gray-800 mb-0 text-uppercase font-weight-semi-bold">{{ article.published_at | date: "%a, %b %d, %Y" }}</p>
+                      <h6 class="small mt-0 font-weight-bold" style="text-transform: none;"><a href="{{ article.url }}">{{ article.title }}</a></h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+
+    {% comment %} tags list {% endcomment %}
+    {%- if block.type == 'tags' and block.settings.enabled_tags -%}
+      <div class="card card-tags mt-3 border-0">
+        <div class="card-header bg-white font-barlow font-weight-semi-bold display-4 text-uppercase px-0">{{ block.settings.tags_title }}</div>
+        <div class="card-body px-0">
+          {%- for tag in blog.all_tags -%}
+            {%- unless tag contains "enable_purchase" -%}
+              {%- unless tag contains "product_" or tag contains "photo_by_"  -%}
+                {%- if current_tags contains tag -%}
+                  <span class="contains-teg btn-primary btn-sm d-inline-block my-1{% unless forloop.last %} mr-2{% endunless %}">{{ tag | remove:'year_' }}</span>
+                {%- else -%}
+                  <span class="contains-teg btn-primary btn-sm d-inline-block my-1{% unless forloop.last %} mr-2{% endunless %}">{{ tag | remove:'year_' | link_to_tag: tag }}</span>
+                {%- endif -%}
+              {%- endunless -%}
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if block.type == 'newsletter' -%}
+      <div class="bg-gray-100 pt-5 d-none d-lg-block">
+        <div class="footer_newsletter text-center text-uppercase">
+          {%- if block.settings.show_newsletter -%}
+            <p class="font-weight-bold m-0">{{ block.settings.newsletter_heading | default: 'Subscribe to the' }}</p>
+            <h3 class="mb-2 ls-0 display-3 font-weight-bold font-barlow mb-5">{{ block.settings.newsletter_subHeading | default: 'OwlCrate Newsletter' }}</h3>
+            <p class="mb-1 footer-title font-weight-bold font-size-sm font-weight-semi-bold ">{{ block.settings.which_product | default: 'Which do you want to subscribe to?'}}</p>
+            <div class="d-flex justify-content-center mb-3">
+              <div class="custom-radio">
+                <input type="radio" id="owlcrate-1" checked name="payment_plan_adult" checked class="d-none" value="{{ block.settings.klaviyo_adult | default: 'JGasas' }}" @click="_selectNewsletter('type_adult','{{block.settings.klaviyo_adult | default: 'JGasas' }}','{{block.settings.klaviyo_jr | default: 'RgMy4A'}}');">
+                <label class="mb-0 font-size-sm font-barlow mx-2" for="owlcrate-1">
+                  <span class="mr-2"></span>OwlCrate
+                </label>
+              </div>
+              <div class="custom-radio">
+                <input type="radio" id="owlcratejr-1" name="payment_plan_adult" class="d-none" value="{{block.settings.klaviyo_jr | default: 'RgMy4A' }}" @click="_selectNewsletter('type_jr','{{block.settings.klaviyo_jr | default: 'RgMy4A' }}','{{block.settings.klaviyo_adult | default: 'JGasas' }}');">
+                <label class="mb-0 font-size-sm font-barlow mx-2" for="owlcratejr-1">
+                  <span class="mr-2"></span>OwlCrate Jr
+                </label>
+              </div>
+              <div class="custom-radio">
+                <input type="radio" id="both_opt-1" name="payment_plan_adult" class="d-none"  value="{{block.settings.klaviyo_adult | default: 'JGasas' }}" @click="_selectNewsletter('both','{{block.settings.klaviyo_adult | default: 'JGasas' }}','{{block.settings.klaviyo_jr | default: 'RgMy4A' }}');">
+                <label class="mb-0 font-size-sm font-barlow mx-2" for="both_opt-1">
+                  <span class="mr-2"></span>Both
+                </label>
+              </div>
+            </div>
+
+            <div class="klaviyo-form-wrap">
+              <form data-klaviyo-footer-form id="klaviyo_sidebar_form" class="validate contact-form klaviyo_gdpr_embed_{{block.settings.klaviyo_adult}}"  action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+                <input type="hidden" name="g" value="{{block.settings.klaviyo_adult}}" data-input-hidden>
+                <div class="input-group input-group-sm px-3">
+                  <input type="email" value="" name="email" class="form-control font-base ls-base" id="k_id_email-1" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" aria-label="email">
+                  <div class="input-group-append">
+                    <input type="submit" value="SUBMIT" name="subscribe" class="btn btn-dark font-size-ex-sm px-lg-3 py-2" @click="_submitNewsletter($event);">
+                  </div>
+                </div>
+                <div class="klaviyo_messages mt-3 mb-5 text-center">
+                  <div class="success_message text-success" style="display:none;" data-success_message></div>
+                  <div class="error_message text-danger" style="display:none;" data-error_message></div>
+                </div>
+              </form>
+              <form data-klaviyo-footer-jr-1 id="klaviyo_sidebar_jr" class="validate contact-form klaviyo_gdpr_embed_{{block.settings.klaviyo_jr}} d-none"  action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+                <input type="hidden" name="g" value="{{block.settings.klaviyo_jr}}" data-input-hidden>
+                <div class="input-group input-group-sm px-3">
+                  <input type="email" value="" name="email" class="form-control font-base ls-base" id="k_jr_id_email-1" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" aria-label="email">
+                  <div class="input-group-append"><input type="submit" value="SUBMIT" name="subscribe" class="btn btn-dark font-size-ex-sm px-lg-3 py-2" data-submit></div>
+                </div>
+              </form>
+              {%- if block.settings.background_image != blank -%}
+                <img src="{{ block.settings.background_image | img_url: 'original' }}" class="img-fluid">
+              {%- endif -%}
+            </div>
+
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+  {% endfor %}
+    
+       
+    

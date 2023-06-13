@@ -1,0 +1,179 @@
+{%- liquid
+  assign bg_color = section.settings.color
+  assign heading = section.settings.heading
+  assign button_label = section.settings.button_label
+  assign planType = section.settings.planType
+  assign button_type = section.settings.button_type
+
+%}
+
+{{ 'section-subscription-jr.css' | asset_url | stylesheet_tag }}
+{{ 'section-subscription-jr-love-of-reading.css' | asset_url | stylesheet_tag }}
+
+<section id="section-{{ section.id }}"
+         class="subscription-jr-love-of-reading relative"
+        {% if bg_color != blank %}
+          style="background-color:{{ bg_color }}"
+        {% endif %}
+>
+
+  <h2 class="section-title">{{ heading }}</h2>
+
+  {%- if section.blocks.size > 1 -%}
+    <div class="container-wide subscription-jr-love-of-reading__info flex flex-wrap justify-content-between">
+      {% for block in section.blocks %}
+        <div class="love-of-reading__element relative">
+          <div class="love-of-reading__element__imgs relative">
+            <img src="{{ block.settings.image | img_url: 'master' }}" alt="">
+            <img src="{{ block.settings.image_shadow | img_url: 'master' }}" alt="">
+          </div>
+          <div class="love-of-reading__element__number">0{{ forloop.index }}</div>
+          <div class="love-of-reading__element__text" style="background-image: url({{ block.settings.image_bg | img_url: 'master' }})">
+            <h3>{{ block.settings.heading }}</h3>
+            {{ block.settings.text }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {%- endif -%}
+
+  {% if button_label != ''
+  and planType != blank -%}
+    <div class="jr-love-of-reading__buttons text-center">
+      {% if settings.jr_soldout %}
+        <a href="#" @click.prevent="_soldoutProduct('plan_jr', 'type-normal')" class="button button--{{ button_type }}">{{ button_label }}</a>
+      {% else %}
+        <a href="#" @click.prevent="_chooseProductOnPage('{{ planType }}', 2, 'type-normal')" class="button button--{{ button_type }}">{{ button_label }}</a>
+      {% endif %}
+    </div>
+  {% endif %}
+</section>
+
+<script src="https://cdn.jsdelivr.net/gh/phucbm/flickity-responsive@latest/flickity-responsive.min.js"></script>
+<script>
+    $( document ).ready(function() {
+        function doFlickityCarousel() {
+            let $carousel = $('.subscription-jr-love-of-reading__info').flickity({
+                freeScroll: false,
+                wrapAround: true,
+                pageDots: false,
+                prevNextButtons: true,
+                autoPlay: true,
+                groupCells: 1
+            });
+            let isFlickity = true;
+
+            // Default state
+            if ( matchMedia('screen and (max-width: 1189px)').matches ) {
+                if ( !isFlickity ) {
+                    $carousel.flickity();
+                }
+            }
+
+            if ( matchMedia('screen and (min-width: 1190px)').matches ) {
+                if ( isFlickity ) {
+                    // destroy Flickity
+                    $carousel.flickity('destroy');
+                }
+            }
+            isFlickity = !isFlickity;
+        } doFlickityCarousel();
+
+        $(window).on('resize', function(){
+            doFlickityCarousel();
+        });
+    });
+</script>
+
+{% schema %}
+{
+  "name": "Love of reading",
+  "max_blocks": 4,
+  "settings":[
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Background Color"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "planType",
+      "label": "Plan Type",
+      "default": "plan_jr"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "select",
+      "id": "button_type",
+      "label": "Button Type",
+      "options": [
+        {
+          "value": "white",
+          "label": "White"
+        },
+        {
+          "value": "green",
+          "label": "Green"
+        },
+        {
+          "value": "greendark",
+          "label": "Dark Green"
+        }
+      ],
+      "default": "white"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_shadow",
+          "label": "Image Shadow"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_bg",
+          "label": "Background"
+        }
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name": "Love of reading",
+      "blocks": [
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

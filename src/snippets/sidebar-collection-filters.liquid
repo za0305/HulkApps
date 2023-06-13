@@ -1,0 +1,199 @@
+<aside class="collection-filters">
+{% comment %} {% assign currentColl = collection.handle %} {% endcomment %}
+
+  {% for block in section.blocks %}
+
+      
+      {% comment %} colors filter {% endcomment %}
+      {% if block.settings.enable_colors_filter %}
+        <div class="card mt-3" {{ block.shopify_attributes }} data-filter-content data-filter-tag>
+          <div class="card-header">{{ block.settings.colors_filter_title }}</div>
+          <div class="card-body">
+          	<ul class="list-unstyled list-inline my-0 py-0 colors-list" data-filter-ui>
+              {% assign colors_list = block.settings.colors_list | newline_to_br | split:'<br />' %}
+              {% for color in colors_list %}
+                <li class="list-inline-item">
+                  <div class="color-swatch">
+                    <label
+                        data-toggle="tooltip"
+                        data-trigger="hover"
+                        :title="_unhandleize('{{ color | handle }}')"
+                        :style="_getSwatchStyle('{{ color | handle }}')">
+                        <input type="{% if settings.filters_logic == 'or_logic' %}radio{% else %}checkbox{% endif %}"
+                        name="colors" aria-label="{{ block.settings.colors_filter_title }}" value="{{ color | handle }}" @change="_parseFilters($event)" data-filter data-filter-type="tag" v-model="collection.activeFilters">
+                    </label>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+
+      {% comment %} prices filter {% endcomment %}
+      {% if block.settings.enable_prices_filter %}
+        <div class="card mt-3" {{ block.shopify_attributes }} data-filter-content data-filter-tag>
+          <div class="card-header">{{ block.settings.prices_filter_title }}</div>
+          <div class="card-body">
+          	<ul class="list-unstyled prices-list my-0 py-0" data-filter-ui>
+              {% assign prices_list = block.settings.prices_list | newline_to_br | split:'<br />' %}
+              {% for price in prices_list %}
+                {% assign filter_price = price | strip_newlines | remove: " " %}
+                <li class="list-inline-item d-block">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" name="prices" aria-label="{{ block.settings.prices_filter_title }}" value="{{ filter_price }}" class="form-check-input" @change="_parseFilters($event)" data-filter data-filter-type="tag" v-model="collection.activeFilters">{{ filter_price }}
+                    </label>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+  {% endfor %}
+
+  {% for block in section.blocks %}
+    {% comment %} collections filter {% endcomment %}
+    {% if block.settings.enable_collections_filter %}
+      {% assign collection_link_list = block.settings.collection_link_list %}
+      <div class="bg-gray-100 p-4 mt-3 mt-lg-2 mb-5 collections-filter d-none d-lg-block test" {{ block.shopify_attributes }} data-filter-content>
+        <h6 class="font-barlow font-weight-semi-bold mb-3">{{ block.settings.collections_filter_title }}</h6>
+        {% if linklists[collection_link_list].links.size > 0 %}
+          <ul class="list-unstyled mb-0" data-filter-ui>
+            {% for link in linklists[collection_link_list].links %}
+                {% comment %} {% if link.type == 'collection_link' %}
+                {% assign collHandle = link.url | split: '/collections/' | handle %}
+                {% endif %}  {% endcomment %}
+              <li>
+                <a href="{{ link.url }}"  @click.prevent="_parseFilters($event)" rel="nofollow" data-filter data-filter-type="collection" data-handle="{{ link.url }}" class="font-barlow font-size-sm ls-1 {% if link.active %} active{% endif %}"><span>{{ link.title }}</span></a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endfor %}
+  
+    <div class="accordion border-top border-bottom border-gray-500" id="fillter">
+      {% for block in section.blocks %}
+        {% if block.settings.enable_collections_filter %}
+          <div class="border-0 shadow-none fillter-accordion d-lg-none tets22" {{ block.shopify_attributes }} data-filter-content>
+            <div class="card-header border-bottom-0 p-0 bg-transparent" id="heading-{{ block.id }}">
+              <h6 class="m-0 font-barlow font-weight-semi-bold">
+                <button class="btn w-100 px-4 py-2 d-flex align-items-center justify-content-between" type="button" data-toggle="collapse" data-target="#collapse-{{ block.id }}" aria-expanded="true" aria-controls="collapseOne" aria-hidden="true" data-filter-type="tag" data-filter-btn>
+                  <span class="heading">{{ block.settings.collections_filter_title }}</span>
+                  <i class="ion ion-ios-add h5 mb-0"></i>
+                  <i class="ion ion-ios-remove h5 mb-0"></i>
+                </button>
+              </h6>
+            </div>
+            <div id="collapse-{{ block.id }}" class="collapse show" aria-labelledby="heading-{{ block.id }}" data-parent="#fillter" data-collapse-content>
+              <div class="card-body collections-filter py-3 py-lg-0 px-4">
+                {% if linklists[collection_link_list].links.size > 0 %}
+                  <ul class="list-unstyled mb-0" data-filter-ui>
+                    {% for link in linklists[collection_link_list].links %}
+                      <li>
+                        <a href="{{ link.url }}" @click.prevent="_parseFilters($event)" rel="nofollow" data-filter data-filter-type="collection" data-handle="{{ link.url }}" class="font-barlow font-size-sm ls-1 {% if link.active %}active{% endif %}"><span>{{ link.title }}</span></a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        
+        {% if block.settings.enable_tags_filter %}
+          <div class="border-left-0 border-right-0 border-top-0 border-gray-500 shadow-none fillter-accordion" {{ block.shopify_attributes }} data-filter-content data-category-filter>
+            <div class="card-header border-bottom-0 p-0 bg-transparent" id="heading-{{ block.id }}">
+              <h6 class="m-0 font-barlow font-weight-semi-bold">
+                <button class="btn w-100 px-4 py-2 d-flex align-items-center justify-content-between collapsed" type="button" data-toggle="collapse" data-target="#collapse-{{ block.id }}" aria-expanded="false" aria-controls="collapseTwo" aria-hidden="true" data-filter-btn data-filter-type="tag">
+                  <span class="heading">{{ block.settings.tags_filter_title }}</span>
+                  <i class="ion ion-ios-add h5 mb-0"></i>
+                  <i class="ion ion-ios-remove h5 mb-0"></i>
+                </button>
+              </h6>
+            </div>
+            <div id="collapse-{{ block.id }}" class="collapse" aria-labelledby="heading-{{ block.id }}" data-parent="#fillter" data-collapse-content>
+              <div class="card-body py-3 pt-lg-0 pb-lg-3 px-4">
+                <ul class="list-unstyled tags-list my-0 py-0" data-filter-ui>
+                  {% assign tags_list = block.settings.tags_list | newline_to_br | split:'<br />' %}
+                  {% for tag in tags_list %}
+                    {% assign filter_tag = tag | strip_newlines | remove: " " %}      
+                    {% assign filtertag_handle = filter_tag | handle %}                
+                    <li class="d-block">
+                      <div class="fillter-option">
+                        <input id="tag-{{ filter_tag | replace: '&', '-' | replace: ' ', '' | downcase }}" type="radio" name="{{ block.settings.tags_filter_title }}" aria-label="{{ block.settings.tags_filter_title }}" value="{{ filtertag_handle }}" class="form-check-input d-none {% if current_tags contains filtertag_handle %}active{% endif %}" @change="_parseFilters($event)" {% if current_tags contains filter_tag %}checked{% endif %} data-filter data-filter-type="tag" v-model="collection.activeFilters">
+                        <label for="tag-{{ filter_tag | replace: '&', '-' | replace: ' ', '' | downcase }}" class="font-barlow font-size-sm ls-1 text-capitalize cursor-pointer mb-0">
+                          {{ tag }}
+                        </label>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+       
+        {% if block.settings.enable_vendor_filter %}
+          <div class="border-0 shadow-none fillter-accordion fillter-accordion-vendor {% unless collection.handle != 'owlcrate-jr' %}d-none{% endunless %}" {{ block.shopify_attributes }} data-filter-content data-filter-tag>
+            <div class="card-header border-bottom-0 p-0 bg-transparent" id="heading-{{ block.id }}">
+              <h6 class="m-0 font-barlow font-weight-semi-bold">
+                <button class="btn w-100 px-4 py-2 d-flex align-items-center justify-content-between" type="button" data-toggle="collapse" data-target="#collapse-{{ block.id }}" aria-expanded="true" aria-controls="collapseThree" aria-hidden="true" data-filter-btn data-filter-type="tag">
+                  <span class="heading">{{ block.settings.vendor_filter_title }}</span>
+                  <i class="ion ion-ios-add h5 mb-0"></i>
+                  <i class="ion ion-ios-remove h5 mb-0"></i>
+                </button>
+              </h6>
+            </div>
+            <div id="collapse-{{ block.id }}" class="collapse show" aria-labelledby="heading-{{ block.id }}" data-parent="#fillter" data-collapse-content>
+              <div class="card-body py-3 pt-lg-0 pb-lg-3 px-4 px-lg-1">
+                <ul class="list-unstyled tags-list my-0 py-0" data-filter-ui>
+                  {% assign tags_list = block.settings.vendor_list | newline_to_br | split:'<br />' %}
+                  {% for vendor in tags_list %}
+                    {% assign filter_tag = vendor | strip_newlines | remove: " " %}
+                    {% assign filtertag_handle = filter_tag | handle %}
+                    <li class="list-inline-item d-block">
+                      <div class="mb-0">
+                        <input id="tag-{{ filter_tag | replace: '&', '-' | replace: ' ', '' | downcase }}" type="checkbox" name="{{ block.settings.vendor_filter_title }}" aria-label="{{ block.settings.tags_filter_title }}" value="{{ filtertag_handle }}" class="custom_checkbox {% if current_tags contains filtertag_handle %}active{% endif %}" @change="_parseFilters($event)" data-filter data-filter-type="tag" v-model="collection.activeFilters">
+                        <label for="tag-{{ filter_tag | replace: '&', '-' | replace: ' ', '' | downcase }}" class="font-barlow font-size-sm ls-1 text-capitalize cursor-pointer mb-0 d-flex align-items-center">
+                          <span class="check-box mr-2"></span>
+                          {{ filter_tag | replace: "-", " " }}
+                        </label>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+     {% if collection.handle == 'pick-a-product' %}
+      {% for block in section.blocks %}
+        {% comment %} past boxes {% endcomment %}
+        {% if block.type == 'past-box' %}
+          {% if block.settings.enable_past_box %}
+            <div class="w-100 bg-teal-100 px-6 py-7 text-center past-box mt-5 d-none d-lg-block">
+              <div class="position-relative product-img mb-6">
+              <img
+                    data-sizes="auto"
+                    src="{{ block.settings.block_img | img_url: 'small'}}"
+                    data-srcset="
+                      {{ block.settings.block_img | img_url: '576x' }} 576w,
+                      {{ block.settings.block_img | img_url: '768x' }} 768w,
+                      {{ block.settings.block_img | img_url: '992x' }} 992w,
+                      {{ block.settings.block_img | img_url: '1200x' }} 1200w"
+                    class="img-fluid w-auto h-100 lazyload" alt="{{ block.settings.block_heading }}" />
+              </div>
+              <h5 class="ls-1 font-weight-light mb-4">{{ block.settings.block_heading }}</h5>
+              <a href="{{ block.settings.block_link_url }}" class="font-barlow line-hover-primary font-weight-semi-bold ls-3 text-uppercase font-size-sm">{{ block.settings.block_link }}</a>
+            </div>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+</aside>

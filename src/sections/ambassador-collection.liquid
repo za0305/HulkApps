@@ -1,0 +1,174 @@
+<style>
+/* ambassador-collection-section CSS Start   ||   ambassador-collection-list CSS Start */
+  .ambassador-collection-section,
+  .ambassador-collection-list {
+    padding: 35px 0px;
+    position: relative;
+  }
+
+  .ambassador-collection-section .row-custom,
+  .ambassador-collection-list .row-custom {
+    margin: 0px -15px;
+  }
+
+  .ambassador-collection-section .col-custom-4,
+  .ambassador-collection-list .col-custom-4 {
+    padding: 0px 15px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ambassador-collection-section .col-custom-4 .ProductItem__LabelList {
+    top: 0px;
+  }
+
+  .ambassador-collection-list .image-wrapper {
+    position: relative;
+    padding-bottom: 70%;
+  }
+
+  .ambassador-collection-list .image-wrapper .image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ambassador-collection-list .collection-title {
+    font-family: 'Kanit';
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin: 10px 0;
+  }
+
+  .ambassador-collection-section .image-wrapper {
+    position: relative;
+    padding-bottom: 100%;
+  }
+
+  .ambassador-collection-section .image-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .ambassador-collection-section,
+    .ambassador-collection-list {
+      padding: 15px 0px;
+    }
+    .ambassador-collection-section .row-custom,
+    .ambassador-collection-list .row-custom {
+      margin: 0px -7px;
+    }
+    .ambassador-collection-section .col-custom-4,
+    .ambassador-collection-list .col-custom-4 {
+      flex: 0 0 50%;
+      max-width: 50%;
+      padding: 0px 7px;
+    }
+    .ambassador-collection-list .collection-title {
+      font-size: 18px;
+      line-height: 26px;
+    }
+  }
+
+  @media only screen and (max-width: 480px) {
+    .ambassador-collection-section .col-custom-4,
+    .ambassador-collection-list .col-custom-4 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+
+  .wrapper {
+    position: relative;
+    height: 100%;
+  }
+/* ambassador-collection-section CSS End   ||   ambassador-collection-list CSS End */
+</style>
+  
+<section class="ambassador-collection-section">
+  <div class="container-custom">
+    <h2 class="section-heading">{{ section.settings.heading }}</h2>
+    
+    <div class="row-custom">
+                  {% comment %}
+                  <transition-group name="collection-tween" tag="div" class="row-custom custom-mobile-grid">
+                    <div v-for="(product, index, key) in collection.products" :key="product.id"
+                         class="col-custom-6 col-custom-md-4 custom-mobile-griditem {% unless filters_enabled and filters_type == 'sidebar' %} col-custom-xl-3 {% endunless %} my-2 d-flex align-items-stretch justify-content-around">               
+                      {% include 'card-product-style-1' %}                                   
+                    </div>
+                  </transition-group>
+                  {% for product in section.settings.product_list %}
+                    <div class="col-custom-4">
+                      {%- render 'product-item', product: product, show_product_info: true, show_vendor: false, show_color_swatch: true, show_labels: true -%}
+                    </div>
+                  {% endfor %}
+                  {% endcomment %}
+      {%- for product in section.settings.product_list -%}
+        <div class="col-custom-4">
+          <a class="product-card" href="{{ product.url | within: collection }}">
+            <div class="image-wrapper">
+              <img src="{{ product.featured_image.src | img_url: '1024x' }}" alt="">
+            </div>
+            <p class="product-vendor"></p>
+            <p class="font-weight-semi-bold text-uppercase ls-2 vendor-text mb-1">{{ product.vendor }}</p>
+            <h5 class="display-4 ls-base">{{ product.title }}</h5>
+            {% comment %}<div class="yotpo bottomLine my-2" v-show = "product.review.catalog_bottomline != undefined" :data-product-id="product.id" v-html="product.review.catalog_bottomline"></div>{% endcomment %}
+            <div class="yotpo bottomLine" data-product-id="{{ product.id }}"></div>
+            <div class="price-availabel-wrapper {% if product.compare_at_price_max > product.price %} compare-at-price-availabel{% endif %}">
+              <span class="single-regular-price">
+                {{ product.price | money }}
+              </span>
+        
+              {% if product.compare_at_price_max > product.price %}
+                <s class="compare-at-price compare-price">
+                  {% if product.compare_at_price > product.price %}
+                    {{ product.compare_at_price | money }}
+                  {% endif %}
+                </s>
+              {% endif %}
+            </div>
+            
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Ambassador collection",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Shop @wyattstonepickleballjr x onix pickleball "
+      },
+      {
+        "type": "product_list",
+        "id": "product_list",
+        "label": "Products",
+        "limit": 18
+      }
+    ],
+     "presets": [
+      {
+        "category": "Ambassador collection",
+        "name": "Ambassador collection"
+      }
+    ]
+  }
+{% endschema %}

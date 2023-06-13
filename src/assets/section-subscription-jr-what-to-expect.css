@@ -1,0 +1,209 @@
+.subscription-jr-what-to-expect {
+  padding-top: 130px;
+  height: 1055px;
+  background: url(want-to-expect.png) no-repeat 50% 0;
+  background-size: cover;
+}
+.subscription-jr-what-to-expect::before,
+.subscription-jr-what-to-expect::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+}
+.subscription-jr-what-to-expect::before {
+  width: 257px;
+  height: 583px;
+  top: 230px;
+  left: 104px;
+  background: url(bg-what-to-expect-before.png) no-repeat 50% 50%;
+}
+.subscription-jr-what-to-expect::after {
+  width: 245px;
+  height: 698px;
+  bottom: 0;
+  right: 182px;
+  background: url(bg-what-to-expect-after.png) no-repeat 50% 50%;
+}
+
+.subscription-jr-what-to-expect .section-title {
+  color: #282560;
+  font-family: 'Grandstander', cursive;
+}
+
+.subscription-jr-what-to-expect .section-title span {
+  color: #F15D31;
+}
+
+.subscription-jr-what-to-expect__info {
+  width: 818px;
+  height: 764px;
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 409px);
+  z-index: 2;
+}
+
+.what-to-expect__element {
+  position: absolute;
+}
+
+@media only screen and (min-width: 1025px) {
+  .what-to-expect__element#wtee-1 {
+    top: 140px;
+    left: -130px;
+  }
+
+  .what-to-expect__element#wtee-2 {
+    top: 100px;
+    right: -75px;
+  }
+
+  .what-to-expect__element#wtee-3 {
+    top: 440px;
+    left: -45px;
+  }
+
+  .what-to-expect__element#wtee-4 {
+    top: 430px;
+    right: -20px;
+  }
+}
+
+.what-to-expect__element::before {
+  content: '';
+  width: 96px;
+  height: 90px;
+  position: absolute;
+  top: 0;
+  left: calc(50% - 48px);
+  z-index: 2;
+  background: url(icon-cloud-peach.svg) no-repeat 50% 50%;
+}
+
+.what-to-expect__element__text {
+  width: 405px;
+  padding: 27px 30px;
+  position: absolute;
+  top: 50px;
+  left: -202px;
+  z-index: 1;
+  border-radius: 30px;
+  background: #fff;
+}
+
+.active .what-to-expect__element__text {
+  display: block;
+}
+.what-to-expect__element__text p {
+  color: rgba(40, 37, 96, 0.7);
+  font-family: 'Barlow', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  margin: 0;
+}
+
+@media only screen and (max-width: 1795px) and (min-width: 1441px) {
+  .subscription-jr-what-to-expect {
+    zoom: .85;
+  }
+}
+
+@media only screen and (max-width: 1440px) and (min-width:1025px) {
+  .subscription-jr-what-to-expect {
+    zoom: .7;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .subscription-jr-what-to-expect {
+    height: 765px;
+  }
+  .subscription-jr-what-to-expect:before,
+  .subscription-jr-what-to-expect:after {
+    display: none;
+  }
+  .subscription-jr-what-to-expect__info {
+    display: block !important;
+    width: 100%;
+    height: 72%;
+    left: 0;
+    text-align: center;
+  }
+  .subscription-jr-what-to-expect__info > img {
+    max-width: 64%;
+    position: absolute;
+    bottom: 0;
+    left: 16%;
+  }
+  .what-to-expect__elements {
+    width: 100%;
+    position: absolute;
+    top: 130px;
+  }
+  .what-to-expect__element {
+    width: 405px;
+    margin: 0 10px;
+  }
+  .what-to-expect__element:before {
+    display: none;
+  }
+  .what-to-expect__element__text {
+    display: block;
+    width: 405px;
+    min-height: 140px;
+    position: static;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 25px 40px rgba(149, 169, 207, 0.1), inset 0 0 50px #FFFFFF;
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+  }
+}
+
+@media only screen and (max-width: 568px) {
+  .subscription-jr-what-to-expect .section-title span {
+    display: inline-block;
+    width: 100%;
+  }
+  .subscription-jr-what-to-expect {
+    height: 895px;
+  }
+
+  .subscription-jr-what-to-expect__info {
+    height: 515px;
+  }
+  .subscription-jr-what-to-expect__info img {
+    max-width: 100%;
+    left: 0;
+  }
+  .what-to-expect__elements {
+    top: 70px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .subscription-jr-what-to-expect {
+    height: 755px;
+  }
+  .subscription-jr-what-to-expect__info {
+    height: 435px;
+  }
+}
+
+@media only screen and (max-width: 390px) {
+  .subscription-jr-what-to-expect {
+    padding-top: 80px;
+  }
+  .what-to-expect__element {
+    width: 86%;
+  }
+  .what-to-expect__element__text {
+    width: 100%;
+  }
+  .subscription-jr-what-to-expect {
+    height: 615px;
+  }
+  .subscription-jr-what-to-expect__info {
+    height: 353px;
+  }
+}

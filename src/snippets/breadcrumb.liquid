@@ -1,0 +1,12 @@
+<section>
+<div class="container">
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb d-flex justify-content-center py-0 mb-2">
+        <li class="breadcrumb-item font-poppins-regular"><a href="/" class="font-size-ex-sm">Home</a></li>
+        {% if collection %}
+            <li class="breadcrumb-item"><span class="font-size-ex-sm">{{ collection.title }}</span></li>
+        {% endif %}
+    </ol>
+    </nav>
+</div>
+</section>

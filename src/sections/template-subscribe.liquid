@@ -1,0 +1,521 @@
+<section  data-section-id="{{ section.id }}" data-template="subscribe-page">
+
+    {% for block in section.blocks %}
+        {% if block.type == 'gift_banner' %}
+            {% if block.settings.gift_banner_check %}
+                 <div class="bg-img lazyload section-content gift-banner" data-bg="{{ block.settings.image | img_url: 'master' }}" style="background-image:url({{ block.settings.image | img_url: 'master' }})">
+                    <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+                        <div class="text-center mt-5">
+                            {% if block.settings.heading != '' %}<h1 class="mb-0 text-white">{{ block.settings.heading }}</h1>{% endif %}
+                            {% if block.settings.txt != '' %}<p class="lead text-white">{{ block.settings.txt }}</p>{% endif %}
+                            {% if block.settings.sub_txt != '' %}
+                            <hr class="w-100 bg-white mx-auto" />
+                            <div class="text-white font-size-ex-sm sub-txt">{{ block.settings.sub_txt }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+   
+    <div class="section-content giftbox-wrap">
+        <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+            <div class="row">
+                {% for block in section.blocks %}
+                    {% if block.type == 'giftbox_wrap' %}
+                        {% if block.settings.giftbox_wrap_check %}
+                            <div class="col-12 col-md-6 mb-4 mb-md-0">
+                                <div class="bg-white shadow p-3 p-lg-5 h-100">
+                                  <div class="row align-items-center custom-mobile-grid">
+                                    <div class="col-6 custom-mobile-griditem">
+                                            <div class="position-relative product-img comparebox-img">
+                                                 <img
+                                                    data-sizes="auto"
+                                                    src="{{ block.settings.image | img_url: 'small'}}"
+                                                    data-srcset="
+                                                        {{ block.settings.image | img_url: '1024x' }} 576w,
+                                                        {{ block.settings.image | img_url: '1280x' }} 768w,
+                                                        {{ block.settings.image | img_url: '1440x' }} 992w,
+                                                        {{ block.settings.image | img_url: '1920x' }} 1200w
+                                                        "
+                                                    class="lazyload img-fluid w-auto" alt="{{ block.settings.heading | escape }}" />
+                                                    <div class="comparebox-img-text d-flex align-items-center p-2">
+                                                      <div class="box-h" v-match-heights="{el: ['.box-h']}">
+                                                          <h6 class="mb-2">{{ block.settings.img_heading }}</h6>
+                                                          {% assign img_caption = block.settings.img_captions | split: '--' %}
+                                                          <ul class="mb-0 list-unstyled list-dotted">
+                                                              {% for cap_img in img_caption %}
+                                                              <li class="mb-1">{{ cap_img }}</li>
+                                                              {% endfor %}
+                                                          </ul>
+                                                      </div>
+                                                    </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-6 custom-mobile-griditem">
+                                            {% if block.settings.logo_svg != blank %}
+                                                <img src="{{ block.settings.logo_svg}}" alt="Logo-icon" class="log-gift mb-3 mb-lg-4" style="width: {{ block.settings.box_logo_widths }}rem" />
+                                            {% elsif block.settings.image != blank %}
+                                                <img src="{{ block.settings.logo_png | img_url :'165x' }}" alt="Logo-icon" class="log-gift mb-3 mb-lg-4" style="width: {{ block.settings.box_logo_widths }}rem"  />
+                                            {% endif %}
+                                            {% if block.settings.txt != '' %}
+                                                <p class="mb-3 mb-lg-5 txt-height" v-match-heights="{el: ['.txt-h']}">{{ block.settings.txt }}</p>
+                                            {% endif %}
+                                            {% if block.settings.btn_txt != '' %}
+                                              {% assign isSoldout = false %}
+                                              {% if block.settings.select_product != '' %}
+                                                {% if settings.adult_soldout and block.settings.select_product == 'plan_adult' %}
+                                                  {% assign isSoldout = true %}
+                                                {% elsif settings.jr_soldout and block.settings.select_product == 'plan_jr' %}
+                                                  {% assign isSoldout = true %}
+                                                {% endif %}
+                                              {% endif %}
+
+                                              {% if block.settings.select_product == 'plan_jr'%}
+                                                <template v-if="isUtmJr">
+                                                  <a href="#" @click.prevent="_chooseProductOnPage('{{block.settings.select_product}}', 2, 'type-normal')"
+                                                    class="btn btn{% if block.settings.btn_type == 'outline' %}-{% endif %}{{ block.settings.btn_type }}-{{ block.settings.btn_variant }} {{ block.settings.btn_size }}">{{ block.settings.btn_txt }}</a>
+                                                </template>
+                                                <template v-else>
+                                                  <a href="#"
+                                                  {% if isSoldout %} @click.prevent="_soldoutProduct('{{block.settings.select_product}}', 'type-normal')" {% else %} @click.prevent="_chooseProductOnPage('{{block.settings.select_product}}', 2, 'type-normal')" {% endif %}
+                                                  class="btn btn{% if block.settings.btn_type == 'outline' %}-{% endif %}{{ block.settings.btn_type }}-{{ block.settings.btn_variant }} {{ block.settings.btn_size }}">{% if isSoldout %}{% if block.settings.select_product == 'plan_adult' %}{{ settings.modal_adult_btn_txt }}{% else %}{{ settings.modal_jr_btn_txt }}{% endif %}{% else %} {{ block.settings.btn_txt }} {% endif %}</a>
+                                                </template>
+                                              {% elsif block.settings.select_product == 'plan_adult'%}
+                                                <template v-if="isUtmAdult">
+                                                  <a href="#" @click.prevent="_chooseProductOnPage('{{block.settings.select_product}}', 2, 'type-normal')"
+                                                    class="btn btn{% if block.settings.btn_type == 'outline' %}-{% endif %}{{ block.settings.btn_type }}-{{ block.settings.btn_variant }} {{ block.settings.btn_size }}">{{ block.settings.btn_txt }}</a>
+                                                </template>
+                                                <template v-else>
+                                                  <a href="#"
+                                                  {% if isSoldout %} @click.prevent="_soldoutProduct('{{block.settings.select_product}}', 'type-normal')" {% else %} @click.prevent="_chooseProductOnPage('{{block.settings.select_product}}', 2, 'type-normal')" {% endif %}
+                                                  class="btn btn{% if block.settings.btn_type == 'outline' %}-{% endif %}{{ block.settings.btn_type }}-{{ block.settings.btn_variant }} {{ block.settings.btn_size }}">{% if isSoldout %}{% if block.settings.select_product == 'plan_adult' %}{{ settings.modal_adult_btn_txt }}{% else %}{{ settings.modal_jr_btn_txt }}{% endif %}{% else %} {{ block.settings.btn_txt }} {% endif %}</a>
+                                                </template>
+                                              {% endif %}
+
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-12 custom-mobile-griditem">
+                                          <div class="px-3 px-lg-4 border-top border-secondary mt-6 pt-6 pb-3">
+                                                {% if block.settings.step_heading != '' %}<h6 class="mb-2">{{ block.settings.step_heading }}</h6>{% endif %}
+                                                {% assign caption = block.settings.steps_captions | split: '--' %}
+                                                {% if caption != '' %}
+                                                <ul class="mb-0 list-unstyled list-steps list-dotted">
+                                                    {% for cap in caption %}
+                                                    <li class="mb-1">{{ cap }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% if section.settings.gift_review_carousel %}
+      <div class="section-content sub-review-carousel">
+          <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+              <div class="row justify-content-center">
+                <div class="col-12 col-lg-10">
+                  <div class="row carousel" role="tree" data-flickity='{
+                          "contain": true,
+                          "wrapAround": false,
+                          "groupCells": "100%",
+                          "dragThreshold": 20,
+                          "lazyLoad": false,
+                          "prevNextButtons": true,
+                          "cellAlign": "center",
+                          "pageDots": true,
+                          "autoPlay": 3000,
+                          "fade": true,
+                          "arrowShape": {"x0": 10, "x1": 60, "y1": 50, "x2": 65, "y2": 40, "x3": 25}
+                          }'>
+                      {% for block in section.blocks %}
+                      {% if block.type == 'review_carousel' %}
+                      {% if block.settings.review_carousel_check %}
+                      <div class="carousel-cell col-12" role="treeitem">
+                          <div class="row align-items-center">
+                              
+                              <div class="col-md-6 pl-xl-9 order-md-2 text-center text-md-left mb-3 mb-md-0 slide-h" v-match-heights="{el: ['.slide-h']}">
+                                  {% if block.settings.icon_class != blank %}
+                                      <img src="{{block.settings.icon_class}}" alt="Logo-icon" class="mb-4 mb-lg-5" /> 
+                                  {% elsif block.settings.image_review != blank %}
+                                      <img src="{{block.settings.image_review | img_url :'165x' }}" alt="Logo-icon" class="mb-4 mb-lg-5" /> 
+                                  {% endif %}
+                                  {% if block.settings.txt != '' %}<div class="mb-6 lead">{{ block.settings.txt }}</div>{% endif %}
+                                  {% if block.settings.review_cre != '' %}<h3 class="text-capitalize mb-1 font-bad-script display-3 ls-0">- {{ block.settings.review_cre }}</h3>{% endif %}
+                                  {% if block.settings.happly != '' %}<p class="mb-0 text-uppercase text-gray-800 font-weight-semi-bold small ls-2 ml-3 pl-1">{{ block.settings.happly }}</p>{% endif %}
+                              </div>
+                              <div class="col-md-6 order-md-1">
+                                  <div class="position-relative product-img">
+                                          <img
+                                          data-sizes="auto"
+                                          src="{{ block.settings.image | img_url: 'small'}}"
+                                          data-srcset="
+                                              {{ block.settings.image | img_url: '1024x' }} 576w,
+                                              {{ block.settings.image | img_url: '1280x' }} 768w,
+                                              {{ block.settings.image | img_url: '1440x' }} 992w,
+                                              {{ block.settings.image | img_url: '1920x' }} 1200w
+                                              "
+                                          class="lazyload h-100" alt="{{ block.settings.review_cre | escape }}" />
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      {% endif %}
+                      {% endif %}
+                      {% endfor %}
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+    {% endif %}
+
+    {% if section.settings.gift_faq %}
+      <div class="section-content gift-faq mb-lg-7 mt-lg-4">
+          <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+              {% if section.settings.faq_heading != '' %}
+              <div class="text-center">
+                <h2 class="mb-4">{{ section.settings.faq_heading }}</h2>
+              </div>
+              {% endif %}
+              <div class="row justify-content-center">
+                  <div class="col-12 px-xl-7">
+                      <div class="accordion" id="faq">
+                          {% for block in section.blocks %}
+                          {% if block.type == 'faq' %}
+                          {% if block.settings.faq_check and block.settings.heading != '' %}
+                              <div class="border-top border-secondary faq-item">
+                                  <div class="py-3 px-4" id="heading{{ forloop.index }}">
+                                      <h6 class="m-0 text-capitalize ls-base">
+                                          <div class="d-flex align-items-center justify-content-between w-100 collapsed" data-toggle="collapse" data-target="#collapse{{ forloop.index }}" aria-expanded="false" aria-controls="collapseOne">
+                                              <span class="heading">{{ block.settings.heading }}</span>
+                                              <i class="ion ion-ios-remove h5 mb-0"></i>
+                                          </div>
+                                      </h6>
+                                  </div>
+                                  {% if block.settings.txt != '' %}
+                                  <div id="collapse{{ forloop.index }}" class="collapse" aria-labelledby="heading{{ forloop.index }}" data-parent="#faq">
+                                      <div class="card-body px-4 pt-1 pb-5">
+                                          {{ block.settings.txt }}
+                                      </div>
+                                  </div>
+                                  {% endif %}
+                              </div>
+                          {% endif %}
+                          {% endif %}
+                          {% endfor %}
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    {% endif %}
+
+</section>
+
+{% schema %}
+  {
+    "name": "Subscribe Template",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "fluid_layout",
+        "label": "Full Width Layout?",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Review Carousel Section"
+      },
+      {
+        "type": "checkbox",
+        "id": "gift_review_carousel",
+        "label": "Enable Section?"
+      },
+      {
+        "type": "header",
+        "content": "Faq Section"
+      },
+      {
+        "type": "checkbox",
+        "id": "gift_faq",
+        "label": "Enable Section?"
+      },
+       {
+        "type": "text",
+        "id": "faq_heading",
+        "label": "Faq Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "gift_banner",
+        "limit": 1,
+        "name": "Banner",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "gift_banner_check",
+            "label": "Enabled?",
+            "default": true
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Select Image"
+          },
+          {
+            "type": "header",
+            "content": "Description"
+         },
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "textarea",
+            "id": "txt",
+            "label": "Text"
+          },
+          {
+            "type": "richtext",
+            "id": "sub_txt",
+            "label": "Text"
+          }
+        ]
+      },
+      {
+        "type": "giftbox_wrap",
+        "limit": 2,
+        "name": "Subscribe box",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "giftbox_wrap_check",
+            "label": "Enabled?",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "select_product",
+            "label": "Select Product Tag",
+            "info": "Use 'plan_adult or plan_jr' for product."
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Select Image"
+          },
+          {
+            "type": "header",
+            "content": "img Hover Description"
+          },
+          {
+            "type": "text",
+            "id": "img_heading",
+            "label": "Heading"
+          },
+          {
+            "type": "textarea",
+            "id": "img_captions",
+            "label": "Stepts captions",
+            "info":"Each entry must be on a new line"
+          },
+          {
+            "type": "header",
+            "content": "Description"
+         },
+         {
+            "type": "text",
+            "id": "logo_svg",
+            "label": "SVG URL"
+          },
+          {
+            "type": "image_picker",
+            "id": "logo_png",
+            "label": "Select Image"
+          },
+          {
+            "type": "range",
+            "id": "box_logo_widths",
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "unit": "rem",
+            "label": "Logo width",
+            "default": 9
+          },
+          {
+            "type": "textarea",
+            "id": "txt",
+            "label": "Text"
+          },
+          {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "btn_txt",
+          "label": "Button Text"
+        },        
+        {
+          "type": "select",
+          "id": "btn_type",
+          "label": "Button Type",
+          "options": [{
+              "value": "outline",
+              "label": "Outline"
+            },
+            {
+              "value": "",
+              "label": "Solid"
+            }
+          ],
+          "default": ""
+        },
+        {
+          "type": "select",
+          "id": "btn_variant",
+          "label": "Button Variant",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Primary"
+            },
+            {
+              "value": "secondary",
+              "label": "Secondary"
+            },
+            {
+              "value": "accent",
+              "label": "Accent"
+            },
+            {
+              "value": "light",
+              "label": "Light"
+            },
+            {
+              "value": "dark",
+              "label": "Dark"
+            }
+          ],
+          "default": "dark"
+        },
+        {
+          "type": "select",
+          "id": "btn_size",
+          "label": "Button Size",
+          "options": [{
+              "value": "",
+              "label": "Default"
+            },
+            {
+              "value": "btn-sm",
+              "label": "Small"
+            },
+            {
+              "value": "btn-lg",
+              "label": "Large"
+            }
+          ],
+          "default": ""
+        },
+        {
+            "type": "text",
+            "id": "step_heading",
+            "label": "Step Heading"
+        },
+        {
+            "type": "textarea",
+            "id": "steps_captions",
+            "label": "Stepts captions",
+            "info":"Each entry must be on a new line"
+        }
+        ]
+      },
+      {
+        "type": "review_carousel",
+        "name": "Review Carousel",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "review_carousel_check",
+            "label": "Enabled?",
+            "default": true
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Select Image"
+          },
+          {
+            "type": "header",
+            "content": "Description"
+         },
+         {
+            "type": "text",
+            "id": "icon_class",
+            "label": "SVG URL"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_review",
+            "label": "Select Image"
+          },
+          {
+            "type": "text",
+            "id": "txt",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "review_cre",
+            "label": "review creator"
+          },
+          {
+            "type": "text",
+            "id": "happly",
+            "label": "review feedback"
+          }
+        ]
+      },
+      {
+        "type": "faq",
+        "name": "FAQ",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "faq_check",
+            "label": "Enabled?",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "heading"
+          },
+          {
+            "type": "text",
+            "id": "txt",
+            "label": "Description"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

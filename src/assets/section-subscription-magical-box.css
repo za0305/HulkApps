@@ -1,0 +1,111 @@
+.subscription-magical-box .wi__header {
+  padding: 114px 0 0;
+  margin: 127px auto 0;
+  border-top: 1px solid #E2F3FA;
+}
+
+.subscription-magical-box .wi__header::before,
+.subscription-magical-box .wi__header::after {
+  content: '';
+  width: 36px;
+  height: 54px;
+  position: absolute;
+  top: -28px;
+  background: url(icon-star-newsletter.svg) no-repeat;
+}
+.subscription-magical-box .wi__header::before {
+  left: calc(50% - 100px);
+}
+.subscription-magical-box .wi__header::after {
+  right: calc(50% - 100px);
+}
+
+.subscription-magical-box .wi__header > div::before {
+  content: '';
+  width: 32px;
+  height: 142px;
+  position: absolute;
+  top: -64px;
+  left: calc(50% - 16px);
+  background: url(icon-magical-box-head.svg) no-repeat;
+}
+
+.subscription-magical-box .wi__subtitle {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  color: #282560;
+  opacity: 0.7;
+  margin-bottom: 0;
+  margin-top: 18px;
+}
+
+.subscription-magical-box .wi__btnWrapper {
+  margin-top: 26px;
+}
+
+.subscription-magical-box .wi__btn {
+  margin: 0 auto;
+  width: 221px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #26BCB4;
+  border-radius: 20px;
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+  transition: all .15s linear;
+}
+
+.subscription-magical-box .wi__btn:hover {
+  color: #fff;
+  box-shadow: 0 0 60px rgba(38, 188, 180, 0.4);
+}
+
+@media only screen and (max-width: 1440px) and (min-width: 1367px) {
+  .subscription-magical-box {
+    zoom: .7;
+  }
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 568px) {
+  .subscription-magical-box {
+    zoom: .6;
+  }
+}
+
+@media only screen and (max-width: 568px) {
+  .subscription-magical-box .wi__header {
+    padding: 60px 0 0;
+    margin: 40px auto 11px;
+    border-top: 0;
+  }
+  .subscription-magical-box .wi__header:before,
+  .subscription-magical-box .wi__header:after {
+    display: none;
+  }
+  .subscription-magical-box .wi__header > div:before {
+    transform: rotate(90deg);
+  }
+  .subscription-magical-box .wi__subtitle {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .subscription-magical-box .wi__btn {
+    width: 201px;
+    height: 55px;
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 19px;
+  }
+}

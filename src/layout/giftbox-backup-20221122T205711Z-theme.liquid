@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="{{ shop.locale }}">
+<head>
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HLNLBXRN7F"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    
+    gtag('config', 'G-HLNLBXRN7F');
+  </script>
+
+  {% include 'style-tags', layout: 'theme' %}
+  {% comment %} Preconnet {% endcomment %}
+  <link rel="preconnect" href="https://cdn.shopify.com" />
+  <link rel="preconnect" href="https://v.shopify.com" />
+  <link rel="preconnect" href="https://cdn.shopifycloud.com" />
+  <link rel="preconnect" href="https://ajax.googleapis.com" />
+  <link rel="preconnect" href="https://www.google-analytics.com" />
+  <link rel="preconnect" href="https://shopifyorderlimits.s3.amazonaws.com" />
+  <link rel="preconnect" href="https://www.youtube.com" />
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <meta name="theme-color" content="">
+  {% if settings.enable_meta_noindex %}
+  <meta name="robots" content="noindex, nofollow">
+  {% endif %}
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {% if settings.favicon_image != blank %}
+  <link rel="shortcut icon" href="{{ settings.favicon_image | img_url: '32x32' }}" type="image/png">
+  {% endif %}
+
+  {% capture seo_title %}
+    {{ page_title }}
+    {% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} - {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}
+    {% if current_page != 1 %} - {{ 'general.meta.page' | t: page: current_page }}{% endif %}
+    {% unless page_title contains shop.name %} - {{ shop.name }}{% endunless %}
+  {% endcapture %}
+
+  <title>{{ seo_title }}</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+<!--   <link rel="stylesheet" href="{{ 'custom.css' | asset_url }}" type="text/css"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% else %}
+    <meta name="description" content="{{ seo_title }}">
+  {% endif %}
+
+  {% include 'social-meta-tags' %}
+  {% include 'css-variables' %}
+
+  {% comment %}
+    If you store has customer accounts disabled, you can remove the following JS file
+  {% endcomment %}
+  {%- if template.directory == 'customers' or page.handle == 'subscription-plan' -%}
+    {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+  {%- endif -%}
+
+  
+  {% include 'legacy-support-scripts' %}
+
+  <!--   content start  -->
+  {% comment %} {{ content_for_header }} {% endcomment %}
+  {% comment %}
+  {%- if template.name == 'index' or template.name == 'collection' or template.name == 'product' -%}
+    {%- assign CFH = CFH  | remove: '"https:\/\/chimpstatic.com\/mcjs-connected\/js\/users\/7ab93bda8ebe7be546d16a4f3\/f53173aac2d839f1541b43dbb.js?shop=owlcratepp.myshopify.com","\/\/www.powr.io\/powr.js?powr-token=owlcratepp.myshopify.com\u0026external-type=shopify\u0026shop=owlcratepp.myshopify.com","https:\/\/cdn.swellrewards.com\/loader\/VfisLjUzAMGFZM2JJS5QKw.js?shop=owlcratepp.myshopify.com","https:\/\/static.klaviyo.com\/onsite\/js\/klaviyo.js?company_id=QLJpCZ\u0026shop=owlcratepp.myshopify.com","https:\/\/static.rechargecdn.com\/static\/js\/recharge.js?shop=owlcratepp.myshopify.com","https:\/\/instafeed.nfcube.com\/cdn\/a522b6cf5c5abceed0ae3e8768a4e252.js?shop=owlcratepp.myshopify.com"' -%}
+  {%- endif -%}
+  {%- if template contains 'index' -%}
+    {{ CFH }}
+  {%- else -%}
+    {{ CFH }}
+  {%- endif -%}
+  {% endcomment %}
+
+  {%- capture CFH -%}{{content_for_header }}{%- endcapture -%}
+  {%- assign asyncloadFunction  =  CFH | split: 'function asyncLoad()' -%}
+  {%- assign asyncload = asyncloadFunction[1] | split: 'var urls = [' -%}
+  {%- assign urlData = asyncload[1] | split: '];' -%}
+  {{ CFH | replace: urlData[0], '' }}
+
+  <!--  content end  -->
+  <script src="https://cdn-widgetsrepository.yotpo.com/v1/loader/VfisLjUzAMGFZM2JJS5QKw" async></script>
+  <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer></script>
+
+{% include 'sca.freegifts' %}
+</head>
+{% capture body %}
+<body id="{{ page_title | handle }}" class="template-{{ template.name | handle }}" {% if template.name == 'index' %}data-template="index"{% endif %}>
+  <div id="sitePreloader" data-site-preloader></div>
+  <div id="app" :class="{'loading': isLoading}">
+    <div class="overlay site-overlay" :class="{'show': isOverlayVisible}" data-site-overlay></div>
+    <vue-snotify></vue-snotify>
+    {% section 'header' %}
+    <div class="inner-container">
+      {{ content_for_layout }}
+    </div>
+    
+    {% section 'mobile-navigation' %}
+    {% section 'search-layer' %}
+    {% section 'newsletter-popup' %}
+    {% include 'modal-soldout' %}
+  </div>
+
+  {% comment %}
+  placeholder to dynamically append elements with embedded scripts
+  outside of Vue.js main app wrapper div so as to not break Vue.js template
+  {% endcomment %}
+
+  <script>
+    window.theme = {
+      soldoutJr: {% if settings.jr_soldout %}true{% else %}false{% endif %},
+      soldoutAdult: {% if settings.adult_soldout %}true{% else %}false{% endif %},
+      utmJr: {% if settings.utm_jr != '' %}'{{settings.utm_jr}}'{% else %}null{% endif %},
+      utmAdult: {% if settings.utm_adult != '' %}'{{settings.utm_adult}}'{% else %}null{% endif %},
+      customerLoggedIn: {% if customer %}true{% else %}false{% endif %},
+      customersID: {% if customer %}{{ customer.id }}{% else %}null{% endif %},
+      customersFirstName: {% if customer %}'{{ customer.first_name }}'{% else %}null{% endif %},
+      customersLastName: {% if customer %}'{{ customer.last_name }}'{% else %}null{% endif %},
+      customerEmail: {% if customer %}'{{ customer.email }}'{% else %}null{% endif %},
+      domain: '{{shop.permanent_domain}}',
+      customer: {% if customer %}{{customer | json}}{% else %}null{% endif %},
+      addresses: {% if customer %}'{{ customer.addresses | json }}'{% else %}null{% endif %},
+      cart: {{ cart | json }},
+      moneyFormat: {{ shop.money_format | json }},
+      colorSwatchesEnabled: false,
+      sizeSwatchesEnabled: false,
+      productExcludeTag: {{ settings.product_exclude_tag_text | json }},
+      productReviewsEnabled: false,
+      utilitiesAppEnabled: {{ settings.enable_utilities_app | json }},
+      discountPause: {% if settings.discount_pause != '' %}{{settings.discount_pause}}{% else %}null{% endif %},
+      discountSwitch: {% if settings.discount_switch != '' %}{{settings.discount_switch}}{% else %}null{% endif %}
+    };
+  </script>
+  
+  {% include 'script-tags', layout: 'theme' %}
+
+  <div data-app-scripts></div>
+
+  {%- unless page.handle == 'jr-subscription' or page.template_suffix == 'jr_Subscription' -%}
+    {% section 'footer' %}
+  {%- endunless -%}
+
+  {%- if template == 'cart' -%}
+    {{ '/services/javascripts/countries.js' | script_tag }}
+  {%- endif -%}
+
+  <script type="application/json" data-additional-cart-json>
+    {
+      "items": [{% for item in cart.items %}{"id": {{ item.id }},"key": "{{ item.key }}","box_note": "{% if item.product.metafields.c_f.box_note != undefined %}{{ item.product.metafields.c_f.box_note }}{% else %}undefined{% endif %}"}{% unless forloop.last == true %},{% endunless %}{% endfor %}]
+    }
+  </script>
+
+  {%- if page.handle == 'subscription-plan' or template.name == 'account' -%}
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtF5clgQux6ntCQez4WnXFsq_Si_oBgyE&sensor=false&libraries=places" defer type="text/javascript"></script>
+  {%- endif -%}
+  
+  {% comment %} Other JSON data {% endcomment %}
+  {%- if template == 'product' -%}
+    {% include 'json-swatches-data-colorlist' %}
+  {%- endif -%}
+  {% include 'json-structured-data' %}
+
+  {%- if settings.enable_recharge -%}
+    {%- if template.name == 'product' or template.name == 'cart' or template.name == 'account' -%}
+    	{%- include 'app-recharge' -%}
+  	{%- endif -%}
+  {%- endif -%}
+
+  <script>
+    window.onload = function() {
+
+      var styleFont = document.createElement('link');
+      styleFont.rel = 'stylesheet';
+      styleFont.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css';
+      document.getElementsByTagName('head')[0].appendChild(styleFont);
+
+      var styleIon = document.createElement('link');
+      styleIon.rel = 'stylesheet';
+      styleIon.href = '//cdnjs.cloudflare.com/ajax/libs/ionicons/4.4.8/css/ionicons.min.css';
+      document.getElementsByTagName('head')[0].appendChild(styleIon);
+
+      let urlData = '{{urlData[0]}}';
+      {%- if settings.enable_recharge -%}
+        {%- unless template.name == 'product' or template.name == 'cart' or template.name == 'account' -%}
+          urlData = urlData.replace('"https:\/\/static.rechargecdn.com\/static\/js\/recharge.js?shop=owlcratepp.myshopify.com",','');
+        {%- endunless -%}
+      {%- endif -%}
+      {%- unless page.handle == 'owlcrate-jr' -%}
+        urlData = urlData.replace('"https:\/\/instafeed.nfcube.com\/cdn\/a522b6cf5c5abceed0ae3e8768a4e252.js?shop=owlcratepp.myshopify.com"','');
+      {%- endunless -%}
+      urlData = urlData.replace('"https:\/\/chimpstatic.com\/mcjs-connected\/js\/users\/7ab93bda8ebe7be546d16a4f3\/f53173aac2d839f1541b43dbb.js?shop=owlcratepp.myshopify.com","\/\/www.powr.io\/powr.js?powr-token=owlcratepp.myshopify.com\u0026external-type=shopify\u0026shop=owlcratepp.myshopify.com","https:\/\/cdn.swellrewards.com\/loader\/VfisLjUzAMGFZM2JJS5QKw.js?shop=owlcratepp.myshopify.com",','');
+      urlData = urlData.split(',');
+      for (i = 0; i < urlData.length; i++) {
+        var linkUrl = urlData[i].replace('"','');
+        var s = document.createElement( 'script' );
+        s.setAttribute( 'src', linkUrl );
+        s.defer = true;
+        document.head.appendChild(s);
+      }
+
+      {% if template == 'index' or page.handle == 'owlcrate' or page.handle == 'how-it-works' %}
+      var scriptInsta = document.createElement('script');
+      scriptInsta.src = "{{'instafeed.js' | asset_url}}";
+      scriptInsta.setAttribute('data-shopname','{{shop.permanent_domain}}');
+      scriptInsta.setAttribute('data-gallerytype','homeGallery');
+      document.getElementsByTagName('body')[0].appendChild(scriptInsta);
+      {% endif %}
+
+      //  yotpojs
+      var scriptYotpo = document.createElement('script'); 
+      scriptYotpo.type = 'text/javascript';
+      scriptYotpo.defer = true; 
+      scriptYotpo.src = '//staticw2.yotpo.com/MkqQPRitVDK7WLOMmdeg2AnpE5pZ3lnfCb8jj028/widget.js'; 
+      document.getElementsByTagName('body')[0].appendChild(scriptYotpo);
+
+    };
+  </script>
+  
+  {%- if template == 'cart' -%}
+    {% include 'fraud-order' %}
+  {%- endif -%}
+
+  <!-- PickyStory code, do not modify. Safe to remove after the app is uninstalled -->
+  {% if content_for_header contains 'pickystory' %}
+    {% render 'pickystory-combos-prerender' %}
+  {% endif %}
+  <!-- PickyStory code end -->
+  
+  
+  <!-- PickyStory snippet "main_widget_script", do not modify. Safe to remove after the app is uninstalled -->
+  {% if content_for_header contains 'pickystory' %}
+    <script defer src="https://cdn.pickystory.com/widget/dist/latest/pickystory-widget.min.js"></script>
+  {% endif %}
+  <!-- PickyStory end snippet "main_widget_script" -->
+<!--Gorgias Chat Widget Start--><script id="gorgias-chat-widget-install-v2" src="https://config.gorgias.chat/gorgias-chat-bundle-loader.js?applicationId=20642"></script>
+<script id="gorgias-chat-shopify-install">!function(_){_.SHOPIFY_PERMANENT_DOMAIN="{{shop.permanent_domain}}",_.SHOPIFY_CUSTOMER_ID="{{customer.id}}",_.SHOPIFY_CUSTOMER_EMAIL="{{customer.email}}"}(window||{});</script><!--Gorgias Chat Widget End-->
+</body>
+{% endcapture %}
+
+{{body}}
+</html>

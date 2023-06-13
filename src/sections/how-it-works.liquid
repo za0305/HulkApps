@@ -1,0 +1,181 @@
+{%- liquid
+    assign title = section.settings.title
+    assign bg_color = section.settings.bg_color
+    assign video_url_mov = section.settings.video_url_mov
+    assign video_url_webm = section.settings.video_url_webm
+    assign video_url_mp4 = section.settings.video_url_mp4
+%}
+
+{{ 'section-how-it-works.css' | asset_url | stylesheet_tag }}
+
+<section id="section-{{ section.id }}" class="hiw__wrapper" {% if bg_color != blank %}style="background-color:{{ bg_color }}"{% endif %}>
+    <div class="container-wide container-wide--smaller">
+        {%- if title != blank -%}
+            <h2 class="section-title">{{ title }}</h2>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+            <div class="flex xl-hidden hiw__selector">
+                {%- for block in section.blocks -%}
+                    {%- liquid
+                        assign icon = block.settings.icon
+                        assign title = block.settings.title | escape
+                    -%}
+                    {%- if icon != blank
+                        and title != blank -%}
+                        <div class="hiw__selector-item">
+                            <button class="btn--reset font-barlow hiw__selector-btn {% if forloop.first %}active{% endif %}">
+                                <span>
+                                    STEP {{ forloop.index }}
+                                </span>
+
+                                <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/circle.png?v=1664212827"
+                                    width="60"
+                                    height="60"
+                                    loading="lazy"
+                                    alt="Circle">
+                            </button>
+                        </div>
+                    {%- endif -%}
+                {%- endfor -%}
+            </div>
+
+            <div class="hiw__steps">
+                {%- for block in section.blocks -%}
+                    {%- liquid
+                        assign icon = block.settings.icon
+                        assign title = block.settings.title | escape
+                        assign subtitle = block.settings.subtitle | escape
+                        assign note = block.settings.note | escape
+                    -%}
+                    {%- if icon != blank
+                        and title != blank -%}
+                        <div class="hiw__step {% if forloop.first %}active{% endif %}">
+                            <div class="hiw__step-icon flex align-items-center justify-content-center">
+                                {{ icon }}
+                            </div>
+                            <h3 class="hiw__step-title">{{ title }}</h3>
+                            {%- if subtitle != blank -%}
+                                <p class="hiw__step-subtitle">{{ subtitle }}</p>
+                            {%- endif -%}
+                            {%- if note != blank -%}
+                                <p class="hiw__step-note">{{ note }}</p>
+                            {%- endif -%}
+                        </div>
+                    {%- endif -%}
+                {%- endfor -%}
+            </div>
+        {%- endif -%}
+
+        {%- if video_url_mov != blank
+            or video_url_webm != blank
+            or video_url_mp4 != blank -%}
+            <div class="hiw__videoWrapper">
+                <video class="hiw__video" autoplay loop muted playsinline>
+                    {%- if video_url_mp4 != blank -%}
+                        <source src="{{ video_url_mp4 }}" type='video/mp4'>
+                    {%- endif -%}
+                    {%- if video_url_mov != blank -%}
+                        <source src="{{ video_url_mov }}" type='video/mp4; codecs="hvc1"'>
+                    {%- endif -%}
+                    {%- if video_url_webm != blank -%}
+                        <source src="{{ video_url_webm }}" type="video/webm">
+                    {%- endif -%}
+                </video>
+            </div>
+        {%- endif -%}
+    </div>
+</section>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const $selectorBtns = document.querySelectorAll('.hiw__selector-btn')
+        const $hiwSteps = document.querySelectorAll('.hiw__step')
+        if ($selectorBtns && $hiwSteps) {
+            $selectorBtns.forEach((btn, index) => {
+                btn.addEventListener('click', (event) => {
+                    event.preventDefault()
+                    if (!btn.classList.contains('active')) {
+                        $selectorBtns.forEach((_btn) => {
+                            _btn.classList.remove('active')
+                        })
+
+                        btn.classList.add('active')
+
+                        $hiwSteps.forEach((step) => {
+                            step.classList.remove('active')
+                        })
+                        const $hiwStep = $hiwSteps[index]
+                        $hiwStep.classList.add('active')
+                    }
+                })
+            })
+        }
+    })
+</script>
+
+{% schema %}
+{
+	"name": "How It Works",
+	"settings":[
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title"
+		},
+        {
+			"type": "color",
+			"id": "bg_color",
+			"label": "Background color"
+		},
+        {
+			"type": "text",
+			"id": "video_url_mp4",
+			"label": "Video URL (mp4)"
+		},
+        {
+			"type": "text",
+			"id": "video_url_mov",
+			"label": "Video URL (mov)"
+		},
+        {
+			"type": "text",
+			"id": "video_url_webm",
+			"label": "Video URL (webm)"
+		}
+	],
+	"blocks": [
+        {
+            "type": "step",
+            "name": "step",
+            "settings": [
+                {
+                    "id": "title",
+                    "type": "text",
+                    "label": "Title"
+                },
+                {
+                    "id": "subtitle",
+                    "type": "text",
+                    "label": "Subtitle"
+                },
+                {
+                    "id": "note",
+                    "type": "text",
+                    "label": "Note"
+                },
+                {
+                    "id": "icon",
+                    "type": "html",
+                    "label": "Icon (SVG)"
+                }
+            ]
+        }
+    ],
+	"presets": [
+		{
+			"name": "How It Works"
+		}
+	]
+}
+{% endschema %}

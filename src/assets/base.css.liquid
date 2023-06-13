@@ -1,0 +1,973 @@
+*,::before,::after {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+body {display: none !important;}
+@font-face {
+  font-family: 'Gotham';
+  src: url({{ 'Gotham-Light.woff2' | asset_url}}) format('woff2'),
+    url({{ 'Gotham-Light.woff' | asset_url}}) format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Belgravia';
+  src: url({{ 'Belgravia.ttf' | asset_url }}) format('truetype');
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Eveleth-Bold';
+  src: url({{ 'Eveleth_Bold.otf' | asset_url }}) format('opentype');
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Eveleth-light';
+  src: url({{ 'Eveleth_Dot_W01_Light.otf' | asset_url }}) format('opentype');
+  font-style: normal;
+  font-weight: light;
+}
+
+@font-face {
+  font-family: 'Eveleth-Thin';
+  src: url({{ 'Eveleth_W01_Thin.otf' | asset_url }}) format('opentype');
+  font-style: normal;
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: 'Eveleth-Regular';
+  src: url({{ 'Eveleth_W01_Regular.otf' | asset_url }}) format('opentype');
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Eveleth-Regular';
+  src: url({{ 'Eveleth_W01_Regular.ttf' | asset_url }}) format('truetype');
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Gotham-Black';
+  src: url({{ 'Gotham_Black.otf' | asset_url }}) format('opentype');
+  font-style: normal;
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: 'Gotham-Bold';
+  src: url({{ 'Gotham_Bold.otf' | asset_url }}) format('opentype');
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Gotham-Narrow-Book';
+  src: url({{ 'Gotham_Narrow_Book.otf' | asset_url }}) format('opentype');
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham-Narrow-Medium';
+  src: url({{ 'Gotham_Narrow_Medium.otf' | asset_url }}) format('opentype');
+  font-style: normal;
+  font-weight: 500;
+}
+
+{% comment %}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-ExtraBoldItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-ExtraBoldItalic.woff'| asset_url }}) format('woff');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-BlackItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-BlackItalic.woff'| asset_url }}) format('woff');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-Bold.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-Bold.woff'| asset_url }}) format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-ExtraBold.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-ExtraBold.woff'| asset_url }}) format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-Black.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-Black.woff'| asset_url }}) format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-BoldItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-BoldItalic.woff'| asset_url }}) format('woff');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-ExtraLight.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-ExtraLight.woff'| asset_url }}) format('woff');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-Italic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-Italic.woff'| asset_url }}) format('woff');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-ThinItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-ThinItalic.woff'| asset_url }}) format('woff');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-Medium.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-Medium.woff'| asset_url }}) format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-LightItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-LightItalic.woff'| asset_url }}) format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-Regular.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-Regular.woff'| asset_url }}) format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-Thin.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-Thin.woff'| asset_url }}) format('woff');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-SemiBoldItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-SemiBoldItalic.woff'| asset_url }}) format('woff');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-Light.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-Light.woff'| asset_url }}) format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-SemiBold.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-SemiBold.woff'| asset_url }}) format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-ExtraLightItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-ExtraLightItalic.woff'| asset_url }}) format('woff');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-MediumItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-MediumItalic.woff'| asset_url }}) format('woff');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-Bold.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-Bold.woff'| asset_url }}) format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-BlackItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-BlackItalic.woff'| asset_url }}) format('woff');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-BoldItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-BoldItalic.woff'| asset_url }}) format('woff');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-ExtraBoldItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-ExtraBoldItalic.woff'| asset_url }}) format('woff');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-Black.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-Black.woff'| asset_url }}) format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-ExtraBold.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-ExtraBold.woff'| asset_url }}) format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-SemiBold.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-SemiBold.woff'| asset_url }}) format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-Italic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-Italic.woff'| asset_url }}) format('woff');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-LightItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-LightItalic.woff'| asset_url }}) format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-Light.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-Light.woff'| asset_url }}) format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-Regular.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-Regular.woff'| asset_url }}) format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-Medium.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-Medium.woff'| asset_url }}) format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-ExtraLightItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-ExtraLightItalic.woff'| asset_url }}) format('woff');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-ExtraLight.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-ExtraLight.woff'| asset_url }}) format('woff');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-MediumItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-MediumItalic.woff'| asset_url }}) format('woff');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-SemiBoldItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-SemiBoldItalic.woff'| asset_url }}) format('woff');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+{% endcomment %}
+
+
+/*  Muli Fonts  */
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli.ttf'| asset_url }}) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-Bold.ttf'| asset_url }}) format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-BoldItalic.ttf'| asset_url }}) format('truetype');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-ExtraLight.ttf'| asset_url }}) format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-ExtraLightItalic.ttf'| asset_url }}) format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-Italic.ttf'| asset_url }}) format('truetype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-Light.ttf'| asset_url }}) format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-LightItalic.ttf'| asset_url }}) format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-SemiBold.ttf'| asset_url }}) format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-Semi-BoldItalic.ttf'| asset_url }}) format('truetype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+/* base css */
+.skip-to-content-link {
+  display: none;
+}
+/* base css */
+
+.font-weight-regular {
+  font-weight: 400;
+}
+
+.font-weight-medium {
+  font-weight: 500;
+}
+
+.font-weight-semi-bold {
+  font-weight: 600;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}
+
+:disabled {
+  pointer-events: none;
+  cursor: no-drop;
+  filter: alpha(opacity=40);
+  -moz-opacity: 0.4;
+  -khtml-opacity: 0.4;
+  opacity: 0.4;
+}
+
+.custom-container-fluid {
+  max-width: 100%;
+  margin: 0px auto;
+}
+
+.custom-container {
+  max-width: 1440px;
+  margin: 0px auto;
+  padding: 0px 15px;
+}
+
+.custom-row {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.column-12 {
+  flex: 0 0 100%;
+  -webkit-box-flex: 0 0 100%;
+  -moz-box-flex: 0 0 100%;
+  -webkit-flex: 0 0 100%;
+  -ms-flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.column-9 {
+  flex: 0 0 75%;
+  -webkit-box-flex: 0 0 75%;
+  -moz-box-flex: 0 0 75%;
+  -webkit-flex: 0 0 75%;
+  -ms-flex: 0 0 75%;
+  max-width: 75%;
+}
+
+.column-8 {
+  flex: 0 0 66.66%;
+  -webkit-box-flex: 0 0 66.66%;
+  -moz-box-flex: 0 0 66.66%;
+  -webkit-flex: 0 0 66.66%;
+  -ms-flex: 0 0 66.66%;
+  max-width: 66.66%;
+}
+
+.column-7 {
+  flex: 0 0 60%;
+  -webkit-box-flex: 0 0 54.78%;
+  -moz-box-flex: 0 0 54.78%;
+  -webkit-flex: 0 0 54.78%;
+  -ms-flex: 0 0 54.78%;
+  max-width: 54.78%;
+}
+
+.column-6 {
+  flex: 0 0 50%;
+  -webkit-box-flex: 0 0 50%;
+  -moz-box-flex: 0 0 50%;
+  -webkit-flex: 0 0 50%;
+  -ms-flex: 0 0 50%;
+  max-width: 50%;
+}
+
+.column-5 {
+  flex: 0 0 40%;
+  -webkit-box-flex: 0 0 45.22%;
+  -moz-box-flex: 0 0 45.22%;
+  -webkit-flex: 0 0 45.22%;
+  -ms-flex: 0 0 45.22%;
+  max-width: 45.22%;
+}
+
+.column-4 {
+  flex: 0 0 33.33%;
+  -webkit-box-flex: 0 0 33.33%;
+  -moz-box-flex: 0 0 33.33%;
+  -webkit-flex: 0 0 33.33%;
+  -ms-flex: 0 0 33.33%;
+  max-width: 33.33%;
+}
+
+.column-3 {
+  flex: 0 0 25%;
+  -webkit-box-flex: 0 0 25%;
+  -moz-box-flex: 0 0 25%;
+  -webkit-flex: 0 0 25%;
+  -ms-flex: 0 0 25%;
+  max-width: 25%;
+}
+
+.column-2 {
+  flex: 0 0 16.66%;
+  -webkit-box-flex: 0 0 16.66%;
+  -moz-box-flex: 0 0 16.66%;
+  -webkit-flex: 0 0 16.66%;
+  -ms-flex: 0 0 16.66%;
+  max-width: 16.66%;
+}
+
+.column-1 {
+  flex: 0 0 8.33%;
+  -webkit-box-flex: 0 0 8.33%;
+  -moz-box-flex: 0 0 8.33%;
+  -webkit-flex: 0 0 8.33%;
+  -ms-flex: 0 0 8.33%;
+  max-width: 8.33%;
+}
+
+.column-auto {
+  flex: 0 0 auto;
+  -webkit-box-flex: 0 0 auto;
+  -moz-box-flex: 0 0 auto;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  max-width: auto;
+}
+
+.d-flex {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.d-inline-block {
+  display: inline-block;
+}
+
+.flex-wrap-nowrap {
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.flex-wrap-wrap {
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-none {
+  display: none;
+}
+
+.list-style-none {
+  list-style: none;
+}
+
+.justify-content-center {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.justify-content-space-between {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.align-items-center {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.transition {
+  -webkit-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.align-self-center {
+  align-self: center;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+  color: currentColor;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.overlay {
+  position: absolute;
+  top: 0px;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  -webkit-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+  z-index: -1;
+}
+
+.display-overlay {
+  left: 0px;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 3;
+  cursor: pointer;
+}
+
+
+/******* Media Query Start *******/
+@media only screen and (max-width: 890px) {
+  .column-12 {
+    flex: 0 0 100%;
+    -webkit-box-flex: 0 0 100%;
+    -moz-box-flex: 0 0 100%;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .column-8 {
+    flex: 0 0 66.66%;
+    -webkit-box-flex: 0 0 66.66%;
+    -moz-box-flex: 0 0 66.66%;
+    -webkit-flex: 0 0 66.66%;
+    -ms-flex: 0 0 66.66%;
+    max-width: 66.66%;
+  }
+
+  .column-6 {
+    flex: 0 0 50%;
+    -webkit-box-flex: 0 0 50%;
+    -moz-box-flex: 0 0 50%;
+    -webkit-flex: 0 0 50%;
+    -ms-flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .column-4 {
+    flex: 0 0 33.33%;
+    -webkit-box-flex: 0 0 33.33%;
+    -moz-box-flex: 0 0 33.33%;
+    -webkit-flex: 0 0 33.33%;
+    -ms-flex: 0 0 33.33%;
+    max-width: 33.33%;
+  }
+
+  .column-2 {
+    flex: 0 0 20%;
+    -webkit-box-flex: 0 0 20%;
+    -moz-box-flex: 0 0 20%;
+    -webkit-flex: 0 0 20%;
+    -ms-flex: 0 0 20%;
+    max-width: 20%;
+  }
+
+  .column-auto {
+    flex: 0 0 auto;
+    -webkit-box-flex: 0 0 auto;
+    -moz-box-flex: 0 0 auto;
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    max-width: auto;
+  }
+
+  .sidebar {
+    display: block;
+    top: 0%;
+    left: -100%;
+    width: 86%;
+    height: 100vh;
+    background-color: #ffffff;
+    padding: 38px 25px;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    z-index: -1;
+    overflow-y: auto;
+  }
+
+  .display-sidebar {
+    left: 0%;
+    z-index: 50;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .column-12 {
+    flex: 0 0 100%;
+    -webkit-box-flex: 0 0 100%;
+    -moz-box-flex: 0 0 100%;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .column-9 {
+    flex: 0 0 100%;
+    -webkit-box-flex: 0 0 100%;
+    -moz-box-flex: 0 0 100%;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .column-8 {
+    flex: 0 0 66.66%;
+    -webkit-box-flex: 0 0 66.66%;
+    -moz-box-flex: 0 0 66.66%;
+    -webkit-flex: 0 0 66.66%;
+    -ms-flex: 0 0 66.66%;
+    max-width: 66.66%;
+  }
+
+  .column-6 {
+    flex: 0 0 50%;
+    -webkit-box-flex: 0 0 100%;
+    -moz-box-flex: 0 0 100%;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .column-4 {
+    flex: 0 0 33.33%;
+    -webkit-box-flex: 0 0 33.33%;
+    -moz-box-flex: 0 0 33.33%;
+    -webkit-flex: 0 0 33.33%;
+    -ms-flex: 0 0 33.33%;
+    max-width: 33.33%;
+  }
+
+  .column-3 {
+    flex: 0 0 50%;
+    -webkit-box-flex: 0 0 50%;
+    -moz-box-flex: 0 0 50%;
+    -webkit-flex: 0 0 50%;
+    -ms-flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .column-2 {
+    flex: 0 0 20%;
+    -webkit-box-flex: 0 0 20%;
+    -moz-box-flex: 0 0 20%;
+    -webkit-flex: 0 0 20%;
+    -ms-flex: 0 0 20%;
+    max-width: 20%;
+  }
+
+  .column-auto {
+    flex: 0 0 auto;
+    -webkit-box-flex: 0 0 auto;
+    -moz-box-flex: 0 0 auto;
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    max-width: auto;
+  }
+}
+
+@media only screen and (max-width: 510px) { 
+  .column-3 {
+    flex: 0 0 100%;
+    -webkit-box-flex: 0 0 100%;
+    -moz-box-flex: 0 0 100%;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .column-12 {
+    flex: 0 0 100%;
+    -webkit-box-flex: 0 0 100%;
+    -moz-box-flex: 0 0 100%;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .column-8 {
+    flex: 0 0 66.66%;
+    -webkit-box-flex: 0 0 66.66%;
+    -moz-box-flex: 0 0 66.66%;
+    -webkit-flex: 0 0 66.66%;
+    -ms-flex: 0 0 66.66%;
+    max-width: 66.66%;
+  }
+
+  .column-6 {
+    flex: 0 0 50%;
+    -webkit-box-flex: 0 0 100%;
+    -moz-box-flex: 0 0 100%;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .column-4 {
+    flex: 0 0 33.33%;
+    -webkit-box-flex: 0 0 33.33%;
+    -moz-box-flex: 0 0 33.33%;
+    -webkit-flex: 0 0 33.33%;
+    -ms-flex: 0 0 33.33%;
+    max-width: 33.33%;
+  }
+
+  .column-3 {
+    flex: 0 0 100%;
+    -webkit-box-flex: 0 0 100%;
+    -moz-box-flex: 0 0 100%;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .column-2 {
+    flex: 0 0 20%;
+    -webkit-box-flex: 0 0 50%;
+    -moz-box-flex: 0 0 50%;
+    -webkit-flex: 0 0 50%;
+    -ms-flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .column-auto {
+    flex: 0 0 auto;
+    -webkit-box-flex: 0 0 auto;
+    -moz-box-flex: 0 0 auto;
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    max-width: auto;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+    .xl-d-block {
+        display: block !important;
+    }
+}
+/******* Media Query End *******/

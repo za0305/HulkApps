@@ -1,0 +1,137 @@
+{%- liquid
+  assign image = section.settings.image
+  assign image_mobile = section.settings.image_mobile
+  assign title = section.settings.title
+  assign subtitle = section.settings.subtitle
+  assign subtitle_2 = section.settings.subtitle_2
+  assign planType = section.settings.planType
+  assign btn_txt = section.settings.btn_txt
+  assign btn_type = section.settings.btn_type
+  assign learn_more = section.settings.learn_more
+%}
+
+{{ 'section-hero-banner.css' | asset_url | stylesheet_tag }}
+
+<section id="section-{{ section.id }}" class="hero-banner relative subscription">
+  <div class="hero-banner__content hero-banner__content-subscription">
+    <div>
+      {%- if title != blank -%}
+        <h2 class="hero-banner__title">{{ title }}</h2>
+      {%- endif -%}
+
+      {%- if subtitle != blank -%}
+        <p class="hero-banner__subtitle">{{ subtitle }}</p>
+      {%- endif -%}
+
+      {%- if subtitle_2 != blank -%}
+        <p class="hero-banner__subtitle__second">{{ subtitle_2 }}</p>
+      {%- endif -%}
+
+      {%- if learn_more != blank -%}
+        <p class="text-center">
+          <a href="{{ learn_more }}" class="hero-banner__learn-more">Learn more</a>
+        </p>
+      {%- endif -%}
+
+      {% if btn_txt != ''
+      and planType != blank -%}
+        <div class="hero-banner__buttons">
+          {% if settings.jr_soldout %}
+            <a href="#" @click.prevent="_soldoutProduct('plan_jr', 'type-normal')" class="hero-banner__btn hero-banner__btn--{{ btn_type }}">{{ btn_txt }}</a>
+          {% else %}
+            <a href="#" @click.prevent="_chooseProductOnPage('{{ planType }}', 2, 'type-normal')" class="hero-banner__btn hero-banner__btn--{{ btn_type }}">{{ btn_txt }}</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="hidden sm-d-block relative hero-banner__imgWrapper">
+    <a href="#" class="reviews__customBtn">
+        <span class="flex">
+          {%- render 'reviews-book' -%}
+        </span>
+      Reviews
+    </a>
+    {%- if image -%}
+      {%- render 'img', image: image, responsive: false, min_wrapper_height: '35.8125rem', loading: 'eager' -%}
+    {%- endif -%}
+  </div>
+
+  <div class="sm-hidden">
+    {%- if image_mobile -%}
+      {%- render 'img', image: image_mobile, responsive: true, loading: 'eager' -%}
+    {%- endif -%}
+  </div>
+</section>
+
+
+
+{% schema %}
+{
+  "name": "Main Subscription",
+  "settings":[
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image mobile (< 1279px)"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "subtitle_2",
+      "label": "Subtitle 2"
+    },
+    {
+      "type": "text",
+      "id": "planType",
+      "label": "Plan Type",
+      "default": "plan_jr"
+    },
+    {
+      "type": "text",
+      "id": "btn_txt",
+      "label": "Button Text"
+    },
+    {
+      "type": "select",
+      "id": "btn_type",
+      "label": "Button Type",
+      "options": [
+        {
+          "value": "white",
+          "label": "White"
+        },
+        {
+          "value": "green",
+          "label": "Green"
+        },
+        {
+          "value": "greendark",
+          "label": "Dark Green"
+        }
+      ],
+      "default": "white"
+    }
+  ],
+  "presets":[
+    {
+      "name": "Main Subscription"
+    }
+  ]
+}
+{% endschema %}

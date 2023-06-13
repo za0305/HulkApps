@@ -1,0 +1,23 @@
+<div 
+  class="size-guide_popup"
+  style="display:none;"
+  :style="!isSizeGuidePopupOpen ? 'display:none;' : 'display:block;'"
+>
+  <div class="size-guide_popup_inner">
+    <div class="size-guide_popup_top">
+        <p class="m-0">SIZE GUIDE</p>
+        <span 
+        class="size-guide_popup_close cursor-pointer"
+        @click="_toggleSizeGuidePopup"
+        >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L8 8M8 8L15 1M8 8L1 15M8 8L15 15" stroke="white"/>
+            </svg>
+        </span>
+    </div>   
+
+    <div class="size-guide_popup_content">
+        {{ pages['size-guide-shirts'].content }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+{% if section.settings.video_check %}
+    {{ 'section-vh.css' | asset_url | stylesheet_tag }}
+    <section class="vh__wrapper" data-section-id="{{ section.id }}" data-index-video>
+        <div class="container-wide">
+            <div class="vh__inner">
+                <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/book-22.png?v=1664895043" class="vh__book vh__book-22" alt="Book 1" width="248" height="404" loading="lazy">
+                <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/book-21.png?v=1664895043" class="vh__book vh__book-21" alt="Book 2" width="248" height="404" loading="lazy">
+                <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/book1.png?v=1664895043" class="vh__book vh__book-1" alt="Book 3" width="248" height="404" loading="lazy">
+                <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/book-11.png?v=1664895043" class="vh__book vh__book-11" alt="Book 4" width="248" height="404" loading="lazy">
+                <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/book-12.png?v=1664895043" class="vh__book vh__book-12" alt="Book 5" width="248" height="404" loading="lazy">
+
+                <div class="flex xl-hidden vh__books">
+                    <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/Books_0b9170f7-583e-4c50-bbe6-071c2c9c72f2.png?v=1666357770" alt="Books" width="953" height="474" loading="lazy">
+                </div>
+
+                <div class="vh__video-wrapper" data-wrap>
+                    <span @click="_playvideo();" class="vh__play-icon">
+                        {%- render 'vh-icon-play' -%}
+                    </span>
+                    <img data-sizes="auto" 
+                        src="{{ section.settings.poster_image | image_url: width: section.settings.poster_image.width }}" 
+                        width="{{ section.settings.poster_image.width }}" 
+                        height="{{ section.settings.poster_image.height }}" 
+                        class="vh__image" 
+                        loading="lazy" 
+                        data-img>
+                    <template v-if="loadVideo">
+                        <video id="video-section-player" class="d-none video-js vjs-default-skin vjs-big-play-centered vjs-fluid vjs-16-9"
+                        controls
+                        data-setup='{
+                        "techOrder": ["youtube"],
+                        "sources": [
+                        { "type": "video/youtube", "src": "https://www.youtube.com/watch?v={{ section.settings.video_id }}"}
+                        ]
+                        }'>
+                        </video>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+{% schema %}
+  {
+    "name": "Video Section",
+    "class":"index-video",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "video_check",
+        "label": "Enabled?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "video_id",
+        "label": "YouTube Video Id"
+      },
+      {
+        "type": "image_picker",
+        "id": "poster_image",
+        "label": "Video Poster Image"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Video Section",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

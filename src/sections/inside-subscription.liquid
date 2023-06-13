@@ -1,0 +1,161 @@
+{%- liquid
+  assign image = section.settings.image
+  assign image_mobile = section.settings.image_mobile
+  assign title = section.settings.title
+  assign planType = section.settings.planType
+  assign btn_txt = section.settings.btn_txt
+  assign btn_type = section.settings.btn_type
+  assign page_link = section.settings.page_link
+%}
+
+{{ 'section-inside-subscription.css' | asset_url | stylesheet_tag }}
+
+<section id="section-{{ section.id }}" class="inside-subscription relative" data-template="box-subscription">
+  <div class="inside-subscription__text text-center">
+    {%- if title != blank -%}
+      <h2>{{ title }}</h2>
+    {%- endif -%}
+    <div class="inside-subscription__text__buttons">
+      {% if settings.adult_soldout %}
+        <a href="#" @click.prevent="_soldoutProduct('plan_adult', 'type-normal')" class="inside-subscription__text__btn inside-subscription__text__btn--{{ btn_type }}">{{ btn_txt }}</a>
+      {% else %}
+        <a href="#" @click.prevent="_chooseProductOnPage('{{ planType }}', 2, 'type-normal')" class="inside-subscription__text__btn inside-subscription__text__btn--{{ btn_type }}">{{ btn_txt }}</a>
+      {% endif %}
+    </div>
+  </div>
+
+  {%- if section.blocks.size > 1 -%}
+    <div class="inside-subscription__elements">
+      {%- for block in section.blocks -%}
+        <div class="inside-subscription__elements__element carousel-cell text-center flex justify-content-center align-items-center" id="isee-{{ forloop.index }}">
+          <img src="{{ 'icon-checkmark-star.svg' | asset_url }}" alt="">
+          <div>{{ block.settings.text }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  <div class="hidden sm-d-block relative inside-subscription__imgWrapper">
+    {%- if image -%}
+      {%- render 'img', image: image, responsive: false, min_wrapper_height: '35.8125rem', loading: 'eager' -%}
+    {%- endif -%}
+  </div>
+  <div class="sm-hidden inside-subscription__imgWrapperMobile">
+    {%- if image_mobile -%}
+      {%- render 'img', image: image_mobile, responsive: true, loading: 'eager' -%}
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+    $( document ).ready(function() {
+        function doFlickityCarousel() {
+            let $carousel = $('.inside-subscription__elements').flickity({
+                freeScroll: false,
+                wrapAround: true,
+                pageDots: false,
+                prevNextButtons: false,
+                autoPlay: true
+            });
+            let isFlickity = true;
+
+            // Default state
+            if ( matchMedia('screen and (max-width: 1099px)').matches ) {
+                if ( !isFlickity ) {
+                    $carousel.flickity();
+                }
+            }
+
+            if ( matchMedia('screen and (min-width: 1100px)').matches ) {
+                if ( isFlickity ) {
+                    // destroy Flickity
+                    $carousel.flickity('destroy');
+                }
+            }
+            isFlickity = !isFlickity;
+        } doFlickityCarousel();
+
+        $(window).on('resize', function(){
+            doFlickityCarousel();
+        });
+    });
+</script>
+
+{% schema %}
+{
+  "name": "Inside Subscription",
+  "settings":[
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image mobile (< 1279px)"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "planType",
+      "label": "Plan Type",
+      "default": "plan_adult"
+    },
+    {
+      "type": "text",
+      "id": "btn_txt",
+      "label": "Button Text"
+    },
+    {
+      "type": "select",
+      "id": "btn_type",
+      "label": "Button Type",
+      "options": [
+        {
+          "value": "white",
+          "label": "White"
+        },
+        {
+          "value": "green",
+          "label": "Green"
+        }
+      ],
+      "default": "white"
+    },
+    {
+      "type": "url",
+      "id": "page_link",
+      "label": "Page link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Info",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name": "Inside Subscription",
+      "blocks": [
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

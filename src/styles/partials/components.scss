@@ -1,0 +1,1064 @@
+/* --------------------------------------------------------------------------------- */
+
+/*  Bootstrap Components
+
+/*--------------------------------------------------------------------------------- */
+
+/* Forms */
+input:invalid,textarea:invalid,
+input:required:invalid,textarea:required:invalid {
+  box-shadow:none;
+}
+input[type="number"]{
+  -webkit-appearance: none;
+  appearance: none;
+}
+// Make select Bootstrap compatible
+select.form-control {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 2em;
+  background-image: url("data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMjkgMTI5IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxMjkgMTI5IiB3aWR0aD0iNTEycHgiIGhlaWdodD0iNTEycHgiPgogIDxnPgogICAgPHBhdGggZD0ibTEyMS4zLDM0LjZjLTEuNi0xLjYtNC4yLTEuNi01LjgsMGwtNTEsNTEuMS01MS4xLTUxLjFjLTEuNi0xLjYtNC4yLTEuNi01LjgsMC0xLjYsMS42LTEuNiw0LjIgMCw1LjhsNTMuOSw1My45YzAuOCwwLjggMS44LDEuMiAyLjksMS4yIDEsMCAyLjEtMC40IDIuOS0xLjJsNTMuOS01My45YzEuNy0xLjYgMS43LTQuMiAwLjEtNS44eiIgZmlsbD0iIzAwMDAwMCIvPgogIDwvZz4KPC9zdmc+Cg==");
+  background-repeat: no-repeat;
+  background-position: right 0.6rem center;
+  background-size: 0.8rem;
+}
+#sortBy.form-control{
+  line-height: 1.3;
+}
+.input-group{
+  select.form-control{
+    padding-right: 1.125rem;
+  }
+}
+// input readonly
+.form-control[readonly] {
+  background: $gray-100;
+}
+
+/* Buttons */
+.btn-group-justified {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+}
+
+.btn-group-justified .btn,
+.btn-group-justified .btn-group {
+  display: table-cell;
+  float: none;
+  width: 1%;
+}
+
+.btn-group-justified .btn .btn,
+.btn-group-justified .btn-group .btn {
+  width: 100%;
+}
+
+.btn-group-justified .btn .dropdown-menu,
+.btn-group-justified .btn-group .dropdown-menu {
+  left: auto;
+}
+
+/*  price */
+.compare-price{
+  color: #a2a2a2;
+}
+
+/*  Pagination */
+.pagination {
+  display: inline-block;
+  width: 100%;
+  // text-align: center;
+
+  a,
+  span {
+    display: inline-block;
+  }
+}
+
+/* Cards */
+.card {
+  width: 100%;
+  overflow: hidden;
+
+  .badges {
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    z-index: 999;
+    &.badge-left {
+      left: 0.5em;
+    }
+
+    &.badge-right {
+      right: 0.5em !important;
+    }
+  }
+
+  .card-img {
+    position: relative;
+    overflow: hidden;
+
+    img {
+      object-fit: cover;
+    }
+  }
+
+  .card-body {
+    .price {
+      white-space: nowrap;
+    }
+  }
+
+  .flickity-prev-next-button {
+    width: 50px !important;
+    height: 50px !important;
+    background: transparent !important;
+    transition: $transition-base;
+
+    &.previous {
+      left: $grid-gutter-width/2 !important;
+    }
+
+    &.next {
+      right: $grid-gutter-width/2 !important;
+    }
+  }
+
+  .flickity-page-dots {
+    bottom: $grid-gutter-width/2;
+  }
+
+  .variant-selector {
+    position: absolute;
+    bottom: $grid-gutter-width/2;
+    display: block;
+    width: 100%;
+
+    .list-inline-item {
+      margin: 0.1rem;
+    }
+  }
+}
+.breadcrumb{
+  a,span{
+    color: #989898;
+  }
+  a{
+    &:hover{
+      color: $primary;
+    }
+  }
+}
+
+/* Alerts */
+.alert {
+  ul {
+    margin: 0;
+    padding: 0 1em;
+  }
+
+  p:last-child {
+    margin: 0 !important;
+  }
+}
+
+/* Modal */
+.modal {
+  .modal-header {
+    .close {
+      cursor: pointer;
+      transition: $transition-base;
+    }
+  }
+
+  // .modal-body {
+  //   white-space: pre-line;
+  // }
+}
+
+
+/* --------------------------------------------------------------------------------- */
+
+/*  3rd party Components & Plugins custom shared styles
+
+/*--------------------------------------------------------------------------------- */
+
+// Video.js
+.video-js {
+  .vjs-poster{
+    background-size: cover !important;
+  }
+
+  .vjs-big-play-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 !important;
+    transform: translate(-50%, -50%) !important;
+    width: 8rem !important;
+    height: 8rem !important;
+    line-height: 8rem !important;
+    border-radius: 8rem !important;
+    border: 0 !important;
+    text-align: center;
+    font-size: 6rem !important;
+    background-color: transparent !important;
+    transition: $transition-base !important;
+    outline: none;
+    z-index: 9999;
+    .vjs-icon-placeholder{
+      margin: 0 !important;
+      padding: 0 !important;
+      color: #c0c0c0;
+      ::before{
+        font-family: "Ionicons" !important;
+        content: "\f357" !important;
+      }
+    }
+  }
+}
+.vjs-youtube-mobile .vjs-big-play-button{
+  display: flex !important;
+}
+.vjs-controls-disabled .vjs-big-play-button, .vjs-error .vjs-big-play-button, .vjs-has-started .vjs-big-play-button, .vjs-using-native-controls .vjs-big-play-button{
+  display: none !important;
+}
+.snotify {
+  z-index: 10000;
+}
+// Notification toast
+.snotifyToast {
+  box-shadow: $box-shadow;
+
+  &__inner {
+    padding: 15px 65px 15px 15px;
+  }
+
+  &__title {
+    font-size: 1.2rem;
+    line-height: 0.8rem;
+    margin-bottom: 0.6rem;
+  }
+
+  &__body {
+    max-width: 100%; // for older IE
+    font-size: 0.9rem;
+    color: $gray-800;
+  }
+}
+
+// Flatpicker component
+.flatpickr-day.selected {
+  background: $primary !important;
+  border-color: $primary !important;
+}
+.flatpickr-input{
+  background-image: url("https://cdn.shopify.com/s/files/1/1091/8372/files/date-picker-icon.svg?19323") !important;
+  background-size: 1.125rem !important;
+  background-repeat: no-repeat !important;
+  background-position: center right 0.9rem !important;
+}
+
+// password strength meter
+.pass-wrapper {
+  width: 100%;
+  font-style: italic;
+  color: $gray-900;
+  font-size: 0.9rem;
+}
+
+.pass-graybar {
+  position: relative;
+  width: 100%;
+  height: 3px;
+  background-color: #cccccc;
+}
+
+.pass-colorbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px
+}
+
+.pass-percent,
+.pass-text {
+  font-size: 1rem;
+}
+
+.pass-percent {
+  margin-right: 5px;
+}
+
+/*! Flickity v2.0.10
+http://flickity.metafizzy.co
+---------------------------------------------- */
+
+.flickity-enabled {
+  position: relative;
+}
+
+.flickity-enabled:focus {
+  outline: none;
+}
+.row .flickity-viewport {
+  width: 100%;
+}
+.flickity-viewport {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.flickity-slider {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.hide-nav-ui {
+
+  .flickity-prev-next-button,
+  .flickity-page-dots {
+    display: none;
+  }
+}
+
+/* draggable */
+.flickity-enabled.is-draggable {
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.flickity-enabled.is-draggable .flickity-viewport {
+  cursor: move;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.flickity-enabled.is-draggable .flickity-viewport.is-pointer-down {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+
+/* ---- previous/next buttons ---- */
+.flickity-prev-next-button {
+  position: absolute;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: white;
+  background: hsla(0, 0%, 100%, 0.75);
+  cursor: pointer;
+
+  /* vertically center */
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.flickity-prev-next-button:hover {
+  background: white;
+}
+
+.flickity-prev-next-button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.flickity-prev-next-button:active {
+  opacity: 0.6;
+}
+
+.flickity-prev-next-button.previous {
+  left: 10px;
+}
+
+.flickity-prev-next-button.next {
+  right: 10px;
+}
+
+/* right to left */
+.flickity-rtl .flickity-prev-next-button.previous {
+  left: auto;
+  right: 10px;
+}
+
+.flickity-rtl .flickity-prev-next-button.next {
+  right: auto;
+  left: 10px;
+}
+
+.flickity-prev-next-button:disabled {
+  opacity: 0.3;
+  cursor: auto;
+}
+
+.flickity-prev-next-button svg {
+  position: absolute;
+  left: 20%;
+  top: 20%;
+  width: 60%;
+  height: 60%;
+}
+
+.flickity-prev-next-button .arrow {
+  fill: #333333;
+}
+
+/* ---- page dots ---- */
+.flickity-page-dots {
+  position: absolute;
+  bottom: -25px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  line-height: 1;
+}
+
+.flickity-rtl .flickity-page-dots {
+  direction: rtl;
+}
+
+.flickity-page-dots .dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 8px;
+  background: $primary;
+  border-radius: 50%;
+  cursor: pointer;
+  @include media-breakpoint-down(sm) {
+    width: 9px;
+    height: 9px;
+    margin: 0 3px;
+  }
+}
+
+.flickity-page-dots .dot.is-selected {
+  opacity: 1;
+}
+
+/* flickity additional custom styles */
+.flickity-viewport {
+  transition: $transition-base;
+}
+
+.carousel {
+  .shadow{
+    box-shadow: 0 10px 30px 0px rgba(0, 0, 0, 0.06) !important;
+  }
+  .carousel-cell.equal-height {
+    min-height: 100%;
+  }
+
+  .flickity-page-dots .dot {
+    border:1px solid $secondary;
+    background: transparent;
+    &.is-selected{
+      background: $secondary;
+    }
+  }
+
+  .flickity-prev-next-button {
+    width: 30px;
+    height: 30px;
+    background: transparent;
+
+    .arrow {
+      transition: $transition-base;
+      fill: $secondary;
+    }
+
+    &:hover {
+      background: transparent;
+    }
+
+    &.previous {
+      left: 3px;
+    }
+
+    &.next {
+      right: 3px;
+    }
+  }
+
+  &.carousel-nav {
+    .carousel-cell {
+      transition: all 0.2s linear;
+      opacity: 0.6;
+      border: 1px solid transparent;
+
+      &.is-nav-selected {
+        opacity: 1;
+        border: 1px solid $primary;
+      }
+    }
+
+    .flickity-prev-next-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 0;
+      background: $gray-100;
+    }
+  }
+}
+
+/* fade in image when loaded */
+.img-carousel-cell {
+  transition: $transition-base;
+  opacity: 0;
+
+  &.flickity-lazyloaded {
+    opacity: 1;
+  }
+}
+
+/* Flickity fullscreen v1.0.1
+------------------------- */
+.flickity-enabled.is-fullscreen {
+  position: fixed;
+  z-index: 999999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+}
+
+.flickity-enabled.is-fullscreen .flickity-page-dots {
+  bottom: 10px;
+}
+
+.flickity-enabled.is-fullscreen .flickity-page-dots .dot {
+  background: white;
+}
+
+/* prevent page scrolling when flickity is fullscreen */
+html.is-flickity-fullscreen {
+  overflow: hidden;
+
+  .img-fluid {
+    height: 100%;
+    object-fit: contain !important;
+  }
+
+  .flickity-prev-next-button {
+    width: 50px;
+    height: 50px;
+    background:#ffffff;
+
+    &.previous {
+      left: $grid-gutter-width/2;
+    }
+
+    &.next {
+      right: $grid-gutter-width/2;
+    }
+
+    .arrow {
+      fill: #333333;
+    }
+
+    &:hover{
+      background:#ffffff;
+    }
+  }
+}
+
+/* ---- flickity-fullscreen-button ---- */
+
+.flickity-fullscreen-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: block;
+  width: 24px !important;
+  height: 24px !important;
+  border-width: 0;
+  border-radius: $border-radius;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+/* right-to-left */
+.flickity-rtl .flickity-fullscreen-button {
+  right: auto;
+  left: 10px;
+}
+
+.flickity-fullscreen-button-exit {
+  display: none;
+}
+
+.flickity-enabled.is-fullscreen .flickity-fullscreen-button-exit {
+  display: block;
+}
+
+.flickity-enabled.is-fullscreen .flickity-fullscreen-button-view {
+  display: none;
+}
+
+.flickity-fullscreen-button .flickity-button-icon {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* flickity-fade */
+.fade-slider{
+  .flickity-slider {
+    transform: none !important;
+
+    .carousel-cell{
+      left: 0 !important;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      z-index: -1;
+      &.is-selected{
+        opacity: 1;
+        z-index: 0;
+      }
+    }
+  }
+} 
+
+
+.flickity-enabled.is-fade .flickity-slider > * {
+  pointer-events: none;
+  z-index: 0;
+}
+
+.flickity-enabled.is-fade .flickity-slider > .is-selected {
+  pointer-events: auto;
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  Images Zoom Plugin (https://github.com/dynamicdriverepo/zoomio)
+
+/*--------------------------------------------------------------------------------- */
+
+#zoomiocontainer {
+  // container containing enlarged image (native sized image) 
+  position: absolute;
+  z-index: 9999;
+  overflow: hidden;
+  visibility: visible;
+}
+
+#zoomiocontainer img {
+  position: absolute !important;
+  display: block !important;
+
+  //  image inside zoom container
+  width: auto !important;
+  height: auto !important;
+}
+
+#zoomiocontainer.mobileclass {
+  // CSS class added to zoom container on mobile OS 
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ### Loading DIV CSS ### */
+#zoomioloadingdiv {
+  position: absolute;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#zoomioloadingdiv .spinner {
+  width: 40px;
+  height: 40px;
+  margin: 100px auto;
+  background-color: #333333;
+  border-radius: 100%;
+  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-scaleout {
+  0% {
+    -webkit-transform: scale(0)
+  }
+
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes sk-scaleout {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+
+  100% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------------- */
+
+/*  Product Reviews
+
+/*--------------------------------------------------------------------------------- */
+
+[data-item-reviews] {
+  .icon-review {
+    font-size: 0.8rem;
+  }
+
+  .icon-review:not(:last-child) {
+    margin: 0 1px;
+  }
+}
+
+[data-product-reviews] {
+  .icon-review {
+    margin-right: 2px;
+  }
+
+  #reviewsList {
+    .review-item {
+      border-top: 1px solid #D4D4D4;
+    }
+
+    .review-image {
+      max-width: 400px;
+    }
+  }
+
+  .flickity-page-dots {
+    bottom: -40px !important;
+  }
+
+  @include media-breakpoint-up(md) {
+    .flickity-page-dots {
+      display: none;
+    }
+  }
+
+  .carousel-cell {
+    min-height: 100%;
+  }
+
+  .modal {
+    .vue-star-rating {
+      position: relative;
+      top: -0.15rem;
+      margin-left: 0.2rem;
+    }
+
+    .vue-star-rating-pointer {
+      position: relative;
+      top: 0.2rem;
+    }
+
+    .vue-star-rating-rating-text {
+      position: relative;
+      top: 0.1rem;
+    }
+
+    .modal-body {
+      font-size: 0.9rem;
+    }
+
+    .vue-dropzone {
+      border-radius: $border-radius;
+      border-width: $border-width;
+      border-color: $border-color;
+    }
+  }
+
+  ul.pagination {
+    list-style: none;
+    list-style-type: none;
+
+    li {
+      display: inline-block;
+
+      a {
+        float: left;
+        padding: 5px 10px;
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: normal;
+      }
+
+      &.active {
+        a {
+          background-color: $gray-600;
+          border-color: $gray-600;
+          color: $light;
+          cursor: default;
+        }
+      }
+
+      &:hover:not(.active) a {
+        background-color: $gray-200;
+      }
+    }
+  }
+}
+input.custom_checkbox{
+  display: none;
+  &:checked ~ label{
+    .check-box{
+      border-color:$secondary; 
+      background-color:$secondary;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+      background-size: 9px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+  & ~ label{
+    .check-box{
+      min-width: 15px;
+      height: 15px;
+      border: 1px solid $gray-300;
+      display: inline-block;
+    }
+  }
+}
+//Animation Track
+.animtion-track{
+  @include media-breakpoint-up(md) {
+    position: relative;
+  }
+  &::before,
+  &::after{
+    @include media-breakpoint-up(md) {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      z-index: 1;
+      width: 12.5rem;
+      height: 16.25rem;
+      background-image: url("https://cdn.shopify.com/s/files/1/0085/2174/4450/files/animation-img.png?15113");
+      background-position: center;
+      background-repeat: repeat-y;
+      animation: slide 100s linear infinite;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+    @include media-breakpoint-down(lg) {
+      animation: slidemobile 100s linear infinite;
+    }
+  }
+  &::after{
+    top: auto;
+    bottom: 0;
+  }
+}
+@keyframes slidemobile {
+  from { background-position: center 0; }
+  to { 
+    background-position: center 5000%;
+  }
+}
+@keyframes slide {
+  from { background-position: center 0; }
+  to { 
+    background-position: center -5000%;
+  }
+}
+
+.custom-mobile-grid{
+  @include media-breakpoint-down(sm) {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+  .custom-mobile-griditem{
+    @include media-breakpoint-down(sm) {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+}
+.richtext-mb-0{
+  p{
+    margin-bottom: 0;
+  }
+}
+//countdown timer Css
+.cation .vuejs-countdown {
+  display: flex;
+  @include media-breakpoint-down(sm) {
+    justify-content: center;
+  }
+  li{
+    background-color: rgba(255,255,255,0.25);
+    margin: 0 1px !important;
+    width: 4.5rem;
+    height: 4.5rem;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    &::after{
+      display: none;
+    }
+    .digit{
+      font-size: 1.375rem;
+      color: $white;
+    }
+    .text{
+      text-transform: lowercase;
+      font-size: 0.875rem;
+      color: $white;
+    }
+  }
+}
+.list-dotted{
+  li{
+    position: relative;
+    padding-left: 14px;
+    &::before{
+      content: '•';
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+}
+
+#size_guide_popup_trigger {
+  color: $primary;
+  line-height: 1.2;
+  border-bottom: 1px solid $primary;
+
+  &:hover {
+    color: $secondary;
+    border-color: $secondary;
+  }
+}
+
+.size-guide_popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  background: white;
+  z-index: 10000;
+  max-width: 100vw;
+
+  .size-guide_popup_top {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    padding: 14px 15px;
+    background: black;
+
+    @include media-breakpoint-down(md) {
+      font-size: 12px;
+      padding: 10px 15px;
+    }
+  }
+  .size-guide_popup_content {
+    padding: 20px 40px 40px;
+    overflow-y: auto;
+
+    @include media-breakpoint-down(md) {
+      font-size: 14px;
+      padding: 15px 15px;
+    }
+  }
+  .size_guide_navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .size_guide_nav_item {
+      width: 120px;
+      height: 50px;
+      padding: 14px 20px;
+      text-align: center;
+      border: 1px solid $primary; 
+      background: white;
+      color: black;
+      cursor: pointer;
+      font-weight: 700;
+      line-height: 1.2;
+
+      @include media-breakpoint-down(md) {
+        width: 50%;
+        height: 40px;
+        padding: 12px 20px;
+        font-size: 12px;
+      }
+
+      &.active {
+        background: $primary;
+        color: white;
+      }
+    }
+  }
+  .size_guide_table {
+    td {
+      text-align: center; 
+      min-width: 120px;
+      height: 50px;
+
+      @include media-breakpoint-down(md) {
+        font-size: 12px;
+        min-width: 78px;
+        height: 40px;
+        padding-left: 1px;
+        padding-right: 1px;
+      }
+
+      & + td {
+        border-left: 1px solid #E3E3E3;
+      }
+    }
+    tr {
+      &:nth-child(odd) {
+        background: #FAFAFA;
+      }
+      &:first-child {
+        border-bottom: 1px solid black;
+        background: white;
+
+        td {
+          border-left: none;
+        }
+      }
+    }
+
+    &:not(.active) {
+      display: none;
+    }
+  }
+}
+

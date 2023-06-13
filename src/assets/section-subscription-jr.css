@@ -1,0 +1,230 @@
+.subscription-jr .header__wrapper {
+  grid-template-columns: 43% 14% 43%;
+}
+.subscription-jr .topbar {
+  background: #CCE8E7 !important;
+}
+.subscription-jr .topbar p,
+.subscription-jr .topbar a {
+  color: #282560;
+}
+.topbar ul li a {
+  opacity: 1;
+}
+.header__wrapper .navbar-expand-ex-lg .navbar-nav .nav-link .menu-icon-abs {
+  color: #F15D31;
+}
+.header__wrapper .header__icon.header__icon--cart .header__icon--cartCount {
+  background-color: #F15D31;
+}
+
+
+
+.section-title {
+  color: #282560;
+  font-size: 60px;
+  font-weight: 600;
+  line-height: 60px;
+  font-family: 'Grandstander', cursive;
+}
+.section-title span {
+  color: #F15D31;
+}
+
+
+
+
+.button {
+  display: inline-block;
+  min-width: 208px;
+  height: 70px;
+  padding: 22px 50px;
+  font-family: 'Barlow', sans-serif;
+  font-style: normal;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 20px;
+}
+.button:hover {
+  color: #fff;
+}
+
+.button--greendark {
+  background-color: #26BCB4;
+  color: #fff;
+}
+.button--greendark:hover {
+  box-shadow: 0px 0px 60px rgba(38, 188, 180, 0.4);
+}
+
+.button--orange {
+  background-color: #F15D31;
+  color: #fff;
+}
+
+
+
+
+.subscription-jr .brands__items {
+  /* grid-template-columns: repeat(5,minmax(0,1fr)); */
+}
+
+
+
+
+.reviews__wrapper {
+  background: transparent !important;
+}
+@media only screen and (min-width: 1309px) {
+  .yotpo-reviews-carousel .carousel-display-wrapper .yotpo-carousel .big-version {
+    display: flex !important;
+    gap: 30px;
+  }
+}
+.yotpo-reviews-carousel .carousel-display-wrapper .yotpo-carousel .y-slider-container .single-carousel .product-image-container .y-carousel-product-image {
+  width: 133px;
+  height: 133px;
+}
+.yotpo-reviews-carousel .carousel-display-wrapper .yotpo-carousel .y-slider-container .single-carousel .product-image-container {
+  width: 133px;
+}
+.index-yotpo-reviews .yotpo-reviews-carousel .carousel-display-wrapper .yotpo-carousel .carousel-review-product-text {
+  display: none !important;
+
+  font-family: 'Grandstander', cursive !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  line-height: 16px !important;
+  text-transform: uppercase !important;
+  color: #F15D31 !important;
+}
+.index-yotpo-reviews .yotpo-reviews-carousel .carousel-display-wrapper .yotpo-carousel .carousel-review-body {
+  font-family: 'Barlow', sans-serif !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 20px !important;
+  line-height: 24px !important;
+
+  color: #282560 !important;
+}
+
+
+.subscription-jr .accordion .card {
+  border: 0 !important;
+  background: #fff !important;
+}
+
+.subscription-jr .accordion .card .card-header,
+.subscription-jr .accordion .card .card-header h3,
+.subscription-jr .accordion .card .card-header .btn {
+  height: 50px;
+}
+
+.subscription-jr .accordion .card .card-header .btn::after {
+  width: 32px !important;
+  height: 72px !important;
+  background: url(icon-plus-2.svg) no-repeat 50% 50% !important;
+}
+
+.subscription-jr .accordion .card .card-header .btn[aria-expanded="true"]::after {
+  width: 28px !important;
+  height: 72px !important;
+  background: url(icon-minus-2.svg) no-repeat 50% 50% !important;
+}
+
+
+.index-brand-logo {
+  margin-top: 0 !important;
+}
+.brands__wrapper {
+  padding-top: 0 !important;
+}
+.brands__image {
+  display: none;
+}
+
+
+
+.flickity-prev-next-button {
+  width: 52px !important;
+  height: 52px !important;
+  background-color: #FFD9CE !important;
+  background-repeat: no-repeat !important;
+  background-position: 50% 50% !important;
+  box-shadow: 0 8px 15px rgba(241, 93, 49, 0.45), inset 0 -6px 18px rgba(241, 93, 49, 0.15) !important;
+}
+.flickity-prev-next-button .flickity-button-icon {
+  display: none !important;
+}
+.flickity-prev-next-button.previous {
+  background-image: url(icon-arrow-prev.svg) !important;
+}
+.flickity-prev-next-button.next {
+  background-image: url(icon-arrow-next.svg) !important;
+}
+
+
+
+@media only screen and (max-width: 1795px) and (min-width: 1025px) {
+  .brands__wrapper,
+  .reviews__wrapper,
+  .subscription-faq {
+    zoom: .85;
+  }
+}
+
+@media only screen and (max-width: 1308px) {
+  .yotpo-reviews-carousel .carousel-display-wrapper .yotpo-carousel .y-slider-container .single-carousel .product-image-container .y-carousel-product-image {
+    width: 93px;
+    height: 93px;
+  }
+  .yotpo-reviews-carousel .carousel-display-wrapper .yotpo-carousel .y-slider-container .single-carousel .product-image-container {
+    width: 93px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .section-title {
+    font-size: 42px;
+    line-height: 44px;
+  }
+
+  .button {
+    min-width: 181px;
+    height: 55px;
+    border-radius: 10px;
+    padding: 18px 59px;
+    font-size: 16px;
+    line-height: 19px;
+  }
+}
+
+
+@media only screen and (max-width: 568px) {
+  .button {
+    min-width: 150px;
+  }
+
+  .section-title {
+    font-size: 32px;
+    line-height: 100%;
+  }
+
+  .brands__item--inner {
+    height: 118px !important;
+  }
+}
+
+@media only screen and (max-width: 568px) {
+  .hero-banner__title {
+    max-width: 100%;
+  }
+
+  .subscription-jr .subscription-faq {
+    padding-top: 25px;
+  }
+}

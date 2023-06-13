@@ -1,0 +1,377 @@
+{%- if section.settings.enable_banner -%}
+<section class="section-content our-team-hero">
+	<div class="container">
+		<div class="row mx-md-0 px-md-3 align-items-center hero-block mb-lg-8">
+			<div class="col-md-5 text-center hero-text position-relative text-md-left px-md-0">
+				<div class="border border-dark my-md-6 mx-4 mx-md-0 px-3 py-5 px-md-6 px-xl-8 py-md-8 py-xl-11">
+                    <h1 class="mb-3">{{- section.settings.banner_head -}}</h1>
+                    {%- if section.settings.banner_caption != '' -%}
+                    <p class="mb-0">{{- section.settings.banner_caption -}}</p>
+                    {%- endif -%}
+				</div>
+            </div>
+            {%- if section.settings.choose_img != blank -%}
+			<div class="col-md-7 hero-img-block px-md-0">
+				<div class="position-relative hero-img">
+					<img src="{{ section.settings.choose_img | img_url: 'pico' }}" data-src="{{ section.settings.choose_img | img_url: 'grande' }}" alt="Our Story" class="img-fluid lazyload position-absolute h-100">
+				</div>
+            </div>
+            {%- endif -%}
+		</div>
+	</div>
+</section>
+{%- endif -%}
+
+{%- assign count = 0 -%}
+<section class="section-content our-team-section">
+	<div class="container">
+        {%- for block in section.blocks -%}
+            {%- if block.type == 'our-team' and block.settings.enable_team -%}
+                {%- assign count = count | plus: 1 -%}
+                <div class="row mx-0 px-3 align-items-center our-team-block {% unless count == 0 %}mb-5 mb-md-8{% endunless %}">
+                    {%- if block.settings.choose_img != blank -%}
+                    <div class="col-md-6 mb-4 mb-md-0 our-team-img-block px-md-0">
+                        <div class="position-relative our-team-img mt-5 mt-md-0">
+                            <img src="{{ block.settings.choose_img | img_url: 'pico' }}" data-src="{{ block.settings.choose_img | img_url: 'grande' }}" alt="Team" class="lazyload img-fluid position-absolute h-100">
+                        </div>
+                    </div>
+                    {%- endif -%}
+                    <div class="col-md-6 text-center our-team-text-block position-relative text-md-left px-md-0">
+                        {%- if block.settings.choose_icon != '' -%}
+                        <img src="{{ block.settings.choose_icon }}" alt="{{block.settings.team_head}}" class="lazyload mh-100 mw-10 owlcrate-icon mb-2 mb-md-0">
+                        {%- endif -%}
+                        <div class="row justify-content-center">
+                            <div class="col-md-9 px-xl-4">
+                                {%- if block.settings.team_head != '' -%}
+                                <h3 class="mb-3">{{- block.settings.team_head -}}</h3>
+                                {%- endif -%}
+                                {%- if block.settings.team_caption != '' -%}
+                                <p class="mb-0">{{- block.settings.team_caption -}}</p>
+                                {%- endif -%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {%- endif -%}
+        {%- endfor -%}
+	</div>
+</section>
+
+{%- if section.settings.enable_mission  -%}
+<section class="section-content our-team-testimonial">
+	<div class="container">
+		<div class="shadow">
+			<div class="testimonial-slider position-relative" >
+				<div class="carousel-cell w-100" role="treeitem">
+					<div class="px-md-10 py-6 px-5 py-md-7">
+						<div class="quote-img mx-auto mb-5 mb-md-7">
+							<img src="https://cdn.shopify.com/s/files/1/1091/8372/files/quote.svg?v=1607497985" class="img-fluid h-100" alt="quote" />
+                        </div>
+						<div class="text-center">
+                            {%- if section.settings.mission_caption != '' -%}
+                            <div class="display-3 font-barlow mb-5 mb-md-7">{{- section.settings.mission_caption -}}</div>
+                            {%- endif -%}
+                            {%- if section.settings.mission_author != '' -%}
+                            <h3 class="font-bad-script font-weight-normal mb-2">- {{- section.settings.mission_author -}}</h3>
+                            {%- endif -%}
+                            {%- if section.settings.mission_des != '' -%}
+                            <small class="font-weight-semi-bold text-uppercase text-gray-800">{{- section.settings.mission_des -}}</small>
+                            {%- endif -%}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{%- endif -%}
+
+{%- if section.settings.enable_scenes  -%}
+<section class="section-content our-team-behind-scene">
+	<div class="container mb-5 mb-md-7">
+		<div class="row justify-content-center">
+			<div class="col-md-10 text-center">
+                {%- if section.settings.scenes_title != '' -%}
+                <h2 class="section-title mb-3">{{- section.settings.scenes_title -}}</h2>
+                {%- endif -%}
+                {%- if section.settings.scenes_caption != '' -%}
+                <p class="mb-0">{{- section.settings.scenes_caption -}}</p>
+                {%- endif -%}
+			</div>
+		</div>
+    </div>
+
+	<div class="row mx-0 behind-scene-slider position-relative" role="tree" data-flickity='{
+		"autoPlay": true,
+		"cellAlign": "center",
+		"contain": true,
+		"wrapAround": true,
+		"accessibility": true,
+		"setGallerySize": true,
+		"cellAlign": "center",
+		"dragThreshold": 20,
+		"lazyLoad": false,
+		"prevNextButtons": true,
+		"pageDots": false,
+		"arrowShape": {"x0": 10, "x1": 60, "y1": 50, "x2": 65, "y2": 40, "x3": 25}
+		}'>
+        {%- for block in section.blocks -%}
+            {%- if block.type == 'our-scenes' and block.settings.choose_scene_img != blank -%}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 px-0 px-sm-1 carousel-cell" role="treeitem">
+                <div class="scene-item-img position-relative">
+                    <img src="{{block.settings.choose_scene_img | img_url: 'large'}}" class="img-fluid position-absolute h-100" alt="{{- section.settings.scenes_title -}}" />
+                </div>
+            </div>
+            {%- endif -%}
+        {%- endfor -%}
+	</div>
+</section>
+{%- endif -%}
+
+{%- if section.settings.enable_team_mem  -%}
+<section class="section-content mb-lg-6">
+	<div class="container">
+        {%- if section.settings.team_mem_title != '' -%}
+        <div class="row"><div class="col-12 text-center"><h2 class="mb-5 mb-sm-6 mb-lg-8">{{- section.settings.team_mem_title -}}</h2></div></div>
+        {%- endif -%}
+		<div class="row">
+            {%- for block in section.blocks -%}
+                {%- if block.type == 'our-team-mem' and block.settings.enable_mem -%}
+                <div class="col-md-6 team-member-item mb-sm-5 mb-md-8">
+                    <div class="row align-items-center">
+                        {%- if block.settings.choose_mem_img != blank-%}
+                        <div class="col-8 mx-auto col-sm-5 col-lg-6">
+                            <div class="position-relative team-member-img mb-4 mb-sm-0">
+                                <img src="{{ block.settings.choose_mem_img | img_url: 'pico' }}" data-src="{{ block.settings.choose_mem_img | img_url: 'large' }}" alt="{{- block.settings.mem_name -}}" class="lazyload border border-dark h-100 img-fluid p-2 position-absolute">
+                            </div>
+                        </div>
+                        {%- endif -%}
+                        <div class="col-sm-7 col-lg-6">
+                            <div class="team-member-content text-center text-sm-left mb-7 mb-sm-0">
+                                <div class="name-post mb-4">
+                                    {%- if block.settings.mem_name != '' -%}
+                                    <div class="h5 mb-2">{{- block.settings.mem_name -}}</div>
+                                    {%- endif -%}
+                                    {%- if block.settings.mem_des != '' -%}
+                                    <div class="font-size-xs text-uppercase text-gray-800 letter-spacing-100">{{- block.settings.mem_des -}}</div>
+                                    {%- endif -%}
+                                </div>
+                                <div class="favourite-book mb-4">
+                                    <div class="font-weight-bold text-uppercase mb-1">{{block.settings.fav_book_que}}:</div>
+                                    {%- if block.settings.fav_book != '' -%}
+                                    <div class="">{{- block.settings.fav_book -}}</div>
+                                    {%- endif -%}
+                                </div>
+                                <div class="hogwarts-house">
+                                    <div class="font-weight-bold text-uppercase mb-1">{{ block.settings.hogwarts_house_que}}:</div>
+                                    {%- if block.settings.hogwarts_house != '' -%}
+                                    <div class="">{{- block.settings.hogwarts_house -}}</div>
+                                    {%- endif -%}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {%- endif -%}
+            {%- endfor -%}
+		</div>
+	</div>
+</section>
+{%- endif -%}
+
+
+{% schema %}
+{
+    "name": "Meet Team",
+    "class": "our-team-meet-team",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Banner"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_banner",
+            "label": "Enable Section"
+        },
+        {
+            "type": "image_picker",
+            "id": "choose_img",
+            "label": "Choose Image"
+        },
+        {
+            "type": "text",
+            "id": "banner_head",
+            "label": "Heading Text",
+            "default": "Our Story"
+        },
+        {
+            "type": "textarea",
+            "id": "banner_caption",
+            "label": "Caption Text"
+        },
+        {
+            "type": "header",
+            "content": "Our Mission"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_mission",
+            "label": "Enable Section"
+        },
+        {
+            "type": "textarea",
+            "id": "mission_caption",
+            "label": "Caption"
+        },
+        {
+            "type": "text",
+            "id": "mission_author",
+            "label": "Author"
+        },
+        {
+            "type": "text",
+            "id": "mission_des",
+            "label": "Author Category",
+            "default": "Founders"
+        },
+        {
+            "type": "header",
+            "content": "Behind The Scenes"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_scenes",
+            "label": "Enable Section"
+        },
+        {
+            "type": "text",
+            "id": "scenes_title",
+            "label": "Title",
+            "default": "Behind The Scenes"
+        },
+        {
+            "type": "textarea",
+            "id": "scenes_caption",
+            "label": "Caption"
+        },
+        {
+            "type": "header",
+            "content": "Meet The Team"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_team_mem",
+            "label": "Enable Section"
+        },
+        {
+            "type": "text",
+            "id": "team_mem_title",
+            "label": "Title",
+            "default": "Meet The Team"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "our-team",
+            "limit": 2,
+            "name": "Our Team",
+            "settings": [
+                {
+                    "type": "checkbox",
+                    "id": "enable_team",
+                    "label": "Enable Section"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "choose_img",
+                    "label": "Choose Image"
+                },
+                {
+                    "type": "text",
+                    "id": "choose_icon",
+                    "label": "Choose Icon"
+                },
+                {
+                    "type": "text",
+                    "id": "team_head",
+                    "label": "Title"
+                },
+                {
+                    "type": "textarea",
+                    "id": "team_caption",
+                    "label": "Caption"
+                }
+            ]
+        },
+        {
+            "type": "our-scenes",
+            "name": "Our Scenes",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "choose_scene_img",
+                    "label": "Choose Image"
+                }
+            ]
+        },
+        {
+            "type": "our-team-mem",
+            "name": "Team Member",
+            "settings": [
+                {
+                    "type": "checkbox",
+                    "id": "enable_mem",
+                    "label": "Enable"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "choose_mem_img",
+                    "label": "Choose Image"
+                },
+                {
+                    "type": "text",
+                    "id": "mem_name",
+                    "label": "Name"
+                },
+                {
+                    "type": "text",
+                    "id": "mem_des",
+                    "label": "Position",
+                    "default": "CEO, SYSTEMS & OPERATIONS"
+                },
+				{
+                    "type": "header",
+                    "content": "Favorite Book"
+                },
+				{
+                    "type": "text",
+                    "id": "fav_book_que",
+                    "label": "Question",
+					"default": "Favorite Book"
+                },
+                {
+                    "type": "text",
+                    "id": "fav_book",
+                    "label": "Answer"
+                },
+				{
+                    "type": "header",
+                    "content": "Hogwarts house"
+                },
+				{
+                    "type": "text",
+                    "id": "hogwarts_house_que",
+                    "label": "Question",
+					"default": "Hogwarts house"
+                },
+                {
+                    "type": "text",
+                    "id": "hogwarts_house",
+                    "label": "Answer"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,96 @@
+<template v-if="claimGift.hasRechargeClaimPopup">
+     <div class="modal" tabindex="-1" role="dialog" data-recharge-subscription :class="{'opened d-block show claimpopup': claimGift.hasRechargeClaimPopup}">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg subscription-popup" role="document">
+            <div class="modal-content">
+                <div class="modal-header popup-head bg-secondary d-block text-center">
+                    <h4 class="mb-0 text-white">Claim</h4>
+                    <p class="mb-0 text-white">Add your shipping address below so we can send you your gift!</p>
+                    <button class="popup-close close" type="button" @click.prevent="_closeModal($event)">
+                        <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/close-icon.svg?26005" alt="popup-close" />
+                    </button>
+                </div>
+                
+                
+                <div class="modal-body popup-body pb-md-4">        
+                <form data-billing-address data-claim-form class="gift-popup-wrapper" @submit.prevent="_updateGiftAddress($event)">            
+                    <div class="row custom-shipping-row align-items-center justify-content-start">
+                        <div class="col-12 col-md-6 custom-shipping-col">
+                            <input placeholder="First Name" type="text" name="address[first_name]" :class="{ 'is-invalid': claimGift.submittedGift && claimGift.rechargeGiftForm.gEmailFName == null }" id="first_name" class="form-control form-control-sm font-base ls-base" autocomplete="off" data-gEmailFName/>         
+                        </div>
+                        <div class="col-12 col-md-6 custom-shipping-col">
+                            <input placeholder="Last Name" type="text"  name="address[last_name]" id="last_name" :class="{ 'is-invalid': claimGift.submittedGift && claimGift.rechargeGiftForm.gEmailLName == null }" class="form-control form-control-sm font-base ls-base" data-gEmailLName/>     
+                        </div>
+                        <div class="col-12 col-md-6 custom-shipping-col">
+                            <input placeholder="Address Line 1" type="text" id="street_number" :class="{ 'is-invalid': claimGift.submittedGift && claimGift.rechargeGiftForm.address1 == null}" class="address_form customAddress form-control form-control-sm font-base ls-base" name="address[address1]" autocapitalize="words" data-field="Address" data-gaddress1>
+                        </div>
+                        <div class="col-12 col-md-6 custom-shipping-col">
+                            <input placeholder="Address Line 2" type="text" id="route" class="address_form form-control form-control-sm font-base ls-base" name="address[address2]" autocapitalize="words" data-field="Address2" data-gaddress2>
+                        </div>
+                        <div class="col-12 col-md-4 custom-shipping-col">
+                            <input placeholder="City" type="text" name="address[city]" id="locality" class="form-control form-control-sm font-base ls-base" :class="{ 'is-invalid': claimGift.submittedGift && claimGift.rechargeGiftForm.city == null}" data-gcity/>    
+                        </div>
+                        <div class="col-12 col-md-4 custom-shipping-col" id="province-wrap">                            
+                            <select id="administrative_area_level_1" name="address[province]" class="form-control form-control-sm font-base ls-base" :class="{ 'is-invalid': claimGift.submittedGift && claimGift.rechargeGiftForm.province == null }" data-province  data-default="{{form.province}}" data-field="province" data-gprovince>
+                            </select>                             
+                        </div>
+                        <div class="col-12 col-md-4 custom-shipping-col">
+                            <input placeholder="Postal Code" type="text" name="address[zip]" data-postal_code id="postal_code" :class="{ 'is-invalid': claimGift.submittedGift && claimGift.rechargeGiftForm.zip == null }" class="form-control form-control-sm font-base ls-base" data-gzip/>
+                        </div>
+                        <div class="col-12 col-md-6 custom-shipping-col">
+                            <select id="country" name="address[country]" data-country class="form-control form-control-sm font-base ls-base" :class="{ 'is-invalid': claimGift.submittedGift && claimGift.rechargeGiftForm.country == null }"   data-default="{{form.country}}" data-gcountry>{{ country_option_tags }}</select>
+                        </div>
+                        <div class="col-12 col-md-6 custom-shipping-col">
+                            <input placeholder="Phone*" type="text" name="address[phone]" id="phone" class="form-control form-control-sm font-base ls-base"  :class="{ 'is-invalid': claimGift.submittedGift && claimGift.rechargeGiftForm.phone == null }" data-gphone/>      
+                        </div>
+                    </div>  
+                    <div class="popup-footer px-0 justify-content-center pt-0">
+                        <div class="custom-row align-items-center w-100">
+                            <div class="text-center text-md-right order-md-2 my-2 my-md-0">
+                            <button type="submit" class="btn btn-primary disabled" role="button" data-save-address>
+                                    <template v-if="isLoading && loadingEvent == 'nextStage'">
+                                        <div class="text-center float-right">
+                                            <hollow-dots-spinner
+                                            :animation-duration="1000"
+                                            :size="60"
+                                            :color="'#fff'"
+                                            />
+                                        </div>
+                                    </template>
+                                    <template v-else>
+                                        SAVE SHIPPING ADDRESS
+                                    </template>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+</template>
+
+<template v-if="!claimGift.giftClaimedSuccessfully == false">
+    <!-- Modal -->
+    <div class="modal" data-recharge-subscription  tabindex="-1" role="dialog" :class="{'opened d-block show claimpopup': claimGift.giftClaimedSuccessfully}">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg subscription-popup" role="document">
+            <div class="modal-content"> 
+                <div class="modal-body popup-body text-center align-item-center justify-content-center">
+                    <div class="d-flex align-item-center justify-content-center flex-column h-100">
+                        <div class="w-100 p-sm-3">
+                            <h1>congrats!</h1>
+                            <p>Your gift has been claimed. We are fulfilling your order <br>
+                            and we will email you when your gift is on it’s way!</p>
+                            <div class="body-footer">
+                                <a href="/account" class="btn btn-secondary mr-3 mb-2">return to my account</a>
+                                <a href="/collections/" class="btn btn-primary mb-2">shop OwlCrate</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

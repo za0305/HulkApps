@@ -1,0 +1,17 @@
+<div class="index-yotpo-reviews" data-section-id="{{ section.id }}">
+    <div class="container-wide">
+        <div class="yotpo yotpo-reviews-carousel" 
+        data-background-color="transparent" 
+        data-mode="top_rated" 
+        data-type="both" 
+        data-count="9" 
+        data-show-bottomline="1" 
+        data-autoplay-enabled="1"
+        data-autoplay-speed="3000"
+        data-show-navigation="1" 
+        data-testimonials-page-enabled="1" 
+        data-testimonials-page-text="See All Reviews"
+        data-testimonials-page-link="{{ shop.url }}/pages/reviews"
+        {% if productID != blank %}data-product-id="{{ productID }}"{% endif %}></div>
+    </div>
+</div>  

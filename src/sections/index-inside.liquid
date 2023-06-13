@@ -1,0 +1,314 @@
+<section class="section-content mt-md-3" data-section-id="{{ section.id }}">
+  <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %} owlfeet">
+      
+      <div class="row align-items-start">
+          <div class="col-12 col-md-5 col-lg-4">
+              <div class="pl-xl-4 inside-block text-center text-md-left">
+                  {% if section.settings.heading_txt != '' %}
+                    <h2 class="mb-2">{{ section.settings.heading_txt }}</h2>
+                  {% endif %}
+                  <div class="mb-3 mb-lg-5 white-space-nowrap">{{ section.settings.txt }}</div>
+                  <h6 class="mb-2 mb-md-3 text-uppercase ls-0">{{ section.settings.step_heading }}</h6>
+                  {% assign caption = section.settings.steps_captions | split: '--' %}
+                  <ul class="mb-5 list-unstyled">
+                      {% for cap in caption %}
+                        <li class="mb-2 mb-md-3">{{ cap }}</li>
+                      {% endfor %}
+                  </ul>
+                  <div class="mb-4 mb-md-5">
+                    {% assign isSoldout = false %}
+                    {% if section.settings.select_product != '' %}
+                      {% if settings.adult_soldout and section.settings.select_product == 'plan_adult' %} 
+                        {% assign isSoldout = true %}
+                      {% elsif settings.jr_soldout and section.settings.select_product == 'plan_jr' %} 
+                        {% assign isSoldout = true %}
+                      {% endif %}
+                    {% endif %}
+                    {% if section.settings.btn_txt != '' %}
+                      <a href="{{section.settings.btn_link}}" class="btn btn{% if section.settings.btn_type == 'outline' %}-{% endif %}{{ section.settings.btn_type }}-{{ section.settings.btn_variant }} {{ section.settings.btn_size }} mr-3 mr-lg-4">{{ section.settings.btn_txt }}</a>
+                    {% endif %}
+                      {% if section.settings.link_text != '' %}
+                        <a href="{{ section.settings.link_url }}" class="line-hover-primary font-weight-bold text-uppercase font-barlow mt-md-4 compare-link mt-3 border-bottom d-inline-block border-primary">{{ section.settings.link_text }}</a>
+                      {% endif %}
+                  </div>
+              </div>
+          </div>
+          <div class="col-12 col-md-7 col-lg-8 mt-4 mb-1 my-md-0 owlfeet-animtion-div">
+          <div class="owlfeet-animtion d-none d-md-block">
+            <img src="{{ 'owlfeet1.svg' | asset_url }}" class="owlfeet-default owlfeet1" alt="animtion-icon" />
+            <img src="{{ 'owlfeet2.svg' | asset_url }}" class="owlfeet-default owlfeet2" alt="animtion-icon" />
+            <img src="{{ 'owlfeet3.svg' | asset_url }}" class="owlfeet-default owlfeet3" alt="animtion-icon" />
+            <img src="{{ 'owlfeet4.svg' | asset_url }}" class="owlfeet-default owlfeet4" alt="animtion-icon" />
+            <img src="{{ 'owlfeet5.svg' | asset_url }}" class="owlfeet-default owlfeet5" alt="animtion-icon" />
+            <img src="{{ 'owlfeet6.svg' | asset_url }}" class="owlfeet-default owlfeet6" alt="animtion-icon" />
+            <img src="{{ 'owlfeet7.svg' | asset_url }}" class="owlfeet-default owlfeet7" alt="animtion-icon" />
+            <img src="{{ 'owlfeet8.svg' | asset_url }}" class="owlfeet-default owlfeet8" alt="animtion-icon" />
+            <img src="{{ 'owlfeet9.svg' | asset_url }}" class="owlfeet-default owlfeet9" alt="animtion-icon" />
+            <img src="{{ 'owlfeet10.svg' | asset_url }}" class="owlfeet-default owlfeet10" alt="animtion-icon" />
+            <img src="{{ 'owlfeet11.svg' | asset_url }}" class="owlfeet-default owlfeet11" alt="animtion-icon" />
+          </div>
+            <div class="position-relative inside-box row">
+              <div class="col first-image-margin">
+                <div class="padding-top-110 position-relative inside-box-img">
+                  <img
+                  data-sizes="auto"
+                  src="{{ section.settings.image | img_url: 'pico'}}"
+                  data-srcset="
+                  {{ section.settings.image | img_url: '170x' }} 150w,
+                  {{ section.settings.image | img_url: '340x' }} 300w,
+                  {{ section.settings.image | img_url: '400x' }} 370w,
+                  {{ section.settings.image | img_url: '420x' }} 400w
+                  "
+                  class="lazyload h-100" alt="{{ section.settings.heading_txt | escape }}" />
+                </div>
+              </div>
+              <div class="col">
+                <div class="padding-top-110 position-relative inside-box-img">
+                  <img
+                  data-sizes="auto"
+                  src="{{ section.settings.image_2 | img_url: 'pico'}}"
+                  data-srcset="
+                  {{ section.settings.image_2 | img_url: '170x' }} 150w,
+                  {{ section.settings.image_2 | img_url: '340x' }} 300w,
+                  {{ section.settings.image_2 | img_url: '400x' }} 370w,
+                  {{ section.settings.image_2 | img_url: '420x' }} 400w
+                  "
+                  class="lazyload h-100" alt="{{ section.settings.heading_txt | escape }}" />
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Inside",
+  "class": "index-inside",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "fluid_layout",
+      "label": "Full Width Layout?",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "select_product",
+      "label": "Select Product Tag",
+      "default": "plan_adult",
+      "info": "Use 'plan_adult or plan_jr' for product."
+    },
+    {
+      "type": "text",
+      "id": "heading_txt",
+      "label": "Heading Text"
+    },
+    {
+      "type": "richtext",
+      "id": "txt",
+      "label": "Text"
+    },
+    {
+      "type": "text",
+      "id": "step_heading",
+      "label": "Step Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "steps_captions",
+      "label": "Stepts captions",
+      "info":"Each entry must be on a new line"
+    },
+    {
+        "type": "header",
+        "content": "Button"
+      },
+      {
+        "type": "text",
+        "id": "btn_txt",
+        "label": "Button Text"
+      }, 
+      {
+        "type": "url",
+        "id": "btn_link",
+        "label": "Button Link"
+      },
+      {
+        "type": "select",
+        "id": "btn_type",
+        "label": "Button Type",
+        "options": [{
+            "value": "outline",
+            "label": "Outline"
+          },
+          {
+            "value": "",
+            "label": "Solid"
+          }
+        ],
+        "default": ""
+      },
+      {
+        "type": "select",
+        "id": "btn_variant",
+        "label": "Button Variant",
+        "options": [
+          {
+            "value": "primary",
+            "label": "Primary"
+          },
+          {
+            "value": "secondary",
+            "label": "Secondary"
+          },
+          {
+            "value": "accent",
+            "label": "Accent"
+          },
+          {
+            "value": "light",
+            "label": "Light"
+          },
+          {
+            "value": "dark",
+            "label": "Dark"
+          }
+        ],
+        "default": "dark"
+      },
+      {
+        "type": "select",
+        "id": "btn_size",
+        "label": "Button Size",
+        "options": [{
+            "value": "",
+            "label": "Default"
+          },
+          {
+            "value": "btn-sm",
+            "label": "Small"
+          },
+          {
+            "value": "btn-lg",
+            "label": "Large"
+          }
+        ],
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "btn_txt_second",
+        "label": "Button Text"
+      },
+      {
+        "type": "url",
+        "id": "btn_link_second",
+        "label": "Button Link"
+      },
+      {
+        "type": "select",
+        "id": "btn_type_second",
+        "label": "Button Type",
+        "options": [{
+            "value": "outline",
+            "label": "Outline"
+          },
+          {
+            "value": "",
+            "label": "Solid"
+          }
+        ],
+        "default": ""
+      },
+      {
+        "type": "select",
+        "id": "btn_variant_second",
+        "label": "Button Variant",
+        "options": [
+          {
+            "value": "primary",
+            "label": "Primary"
+          },
+          {
+            "value": "secondary",
+            "label": "Secondary"
+          },
+          {
+            "value": "accent",
+            "label": "Accent"
+          },
+          {
+            "value": "light",
+            "label": "Light"
+          },
+          {
+            "value": "dark",
+            "label": "Dark"
+          }
+        ],
+        "default": "dark"
+      },
+      {
+        "type": "select",
+        "id": "btn_size_second",
+        "label": "Button Size",
+        "options": [{
+            "value": "",
+            "label": "Default"
+          },
+          {
+            "value": "btn-sm",
+            "label": "Small"
+          },
+          {
+            "value": "btn-lg",
+            "label": "Large"
+          }
+        ],
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "link_text",
+        "label": "Link Text"
+      },
+      {
+        "type": "url",
+        "id": "link_url",
+        "label": "Link Url"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Select Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_2",
+        "label": "Select Image"
+      }
+  ],
+  "presets": [
+    {
+      "name": "Inside",
+      "category": "Content"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

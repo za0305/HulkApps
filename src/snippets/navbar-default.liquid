@@ -1,0 +1,373 @@
+{%- if owlcrateJr -%}
+  <a href="/"  class="navbar-brand navbar-brand-jr mr-xl-7 d-none d-ex-lg-block desktop-logo" name="{{ shop.name | escape }}" title="{{ shop.name | escape }}" aria-label="{{ shop.name | escape }}">
+    {%- if settings.main_jr_svg_logo != blank -%}
+      <img src="{{ settings.main_jr_svg_logo }}" class="img-fluid" alt="{{ shop.name | escape }}"  style="width: {{ logo_jr_width }}px" />
+    {%- elsif logo_jr contains 'no-image' -%}
+      <span class="h5 text-primary"><i class="icon ion-pound text-primary"></i> {{ shop.name | escape }} JR</span>
+    {%- else -%}
+      <img src="{{ logo_jr }}" alt="{{ shop.name | escape }}" class="img-fluid"  style="width: {{ logo_jr_width }}px">
+    {%- endif -%}
+  </a>
+{%- else -%}
+  {%- if page.handle == 'subscription-plan' -%}
+    <template v-if="subscriptionFlow.addonType == 'box_junior'">
+      <a href="/"  class="navbar-brand navbar-brand-jr mr-xl-7 d-none d-ex-lg-block desktop-logo" name="{{ shop.name | escape }}" title="{{ shop.name | escape }}" aria-label="{{ shop.name | escape }}">
+        {%- if settings.main_jr_svg_logo != blank -%}
+          <img src="{{ settings.main_jr_svg_logo }}" class="img-fluid" alt="{{ shop.name | escape }}"  style="width: {{ logo_jr_width }}px" />
+        {%- elsif logo_jr contains 'no-image' -%}
+          <span class="h5 text-primary"><i class="icon ion-pound text-primary"></i> {{ shop.name | escape }} JR</span>
+        {%- else -%}
+          <img src="{{ logo_jr }}" alt="{{ shop.name | escape }}" class="img-fluid"  style="width: {{ logo_jr_width }}px">
+        {%- endif -%}
+      </a>
+    </template>
+    <template v-else>
+      <a href="/" class="navbar-brand mr-xl-7 d-none d-ex-lg-block desktop-logo" name="{{ shop.name | escape }}" title="{{ shop.name | escape }}" aria-label="{{ shop.name | escape }}">
+        {%- if settings.main_svg_logo != blank -%}
+          <img src="{{ settings.main_svg_logo }}" class="img-fluid" alt="{{ shop.name | escape }}"  style="width: {{ logo_width }}px" />
+        {%- elsif logo contains 'no-image' -%}
+          <span class="h5 text-primary"><i class="icon ion-pound text-primary"></i> {{ shop.name | escape }}</span>
+        {%- else -%}
+          <img src="{{ logo }}" alt="{{ shop.name | escape }}" class="img-fluid"  style="width: {{ logo_width }}px">
+        {%- endif -%}
+      </a>
+    </template>
+  {%- else -%}
+    <a href="/" class="navbar-brand mr-xl-7 d-none d-ex-lg-block desktop-logo" name="{{ shop.name | escape }}" title="{{ shop.name | escape }}" aria-label="{{ shop.name | escape }}">
+      {%- if settings.main_svg_logo != blank -%}
+        <img src="{{ settings.main_svg_logo }}" class="img-fluid" alt="{{ shop.name | escape }}"  style="width: {{ logo_width }}px" />
+      {%- elsif logo contains 'no-image' -%}
+        <span class="h5 text-primary"><i class="icon ion-pound text-primary"></i> {{ shop.name | escape }}</span>
+      {%- else -%}
+        <img src="{{ logo }}" alt="{{ shop.name | escape }}" class="img-fluid"  style="width: {{ logo_width }}px">
+      {%- endif -%}
+    </a>
+  {%- endif -%}
+{%- endif -%}
+
+
+{%- assign megamenu = section.settings.mega_menu | handleize -%}
+{%- assign megamenu_second = section.settings.mega_menu_second | handleize -%}
+<div class="collapse navbar-collapse">
+  <ul class="navbar-nav align-items-center mx-auto flex-grow-1 justify-content-around">
+    {%- for link in linklists[section.settings.main_linklist].links -%}
+      {%- assign child_list_handle = link.title | handleize -%}
+      {%- if megamenu == child_list_handle -%}
+        <li class="nav-item dropdown megamenu ">
+          <a data-href="{{ link.url }}" class="nav-link d-flex align-items-center justify-content-between {{ link.handle }}" role="button" data-toggle="dropdown" aria-expanded="false" name="{{ link.title }}" title="{{ link.title }}" aria-label="{{ link.title }}">
+            <span>{{ link.title }}</span> <i class="fa fa-angle-down ml-1"></i>
+          </a>
+          <ul class="menu_dropdown list-unstyled bg-white py-4">
+            <div class="container">
+              <div class="row align-items-center">
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'content' -%}
+                  <div class="col-md-5 sub_mega_product">
+                    <div class="row align-items-center">
+                      <div class="col-md-5">
+                        <a href="{{ block.settings.sub_btn_link }}" class="position-relative product-img">
+                          <img
+                            data-sizes="auto"
+                            src="{{ block.settings.sub_img | img_url: 'small'}}"
+                            data-srcset="
+                            {{ block.settings.sub_img | img_url: '200x130' }} 992w
+                              "
+                            class="lazyload widthout-hover-img" alt="{{ block.settings.heading | escape }}" />
+                            <img
+                            data-sizes="auto"
+                            src="{{ block.settings.sub_hover_img | img_url: 'small'}}"
+                            data-srcset="
+                              {{ block.settings.sub_hover_img | img_url: '200x130' }} 992w
+                              "
+                            class="lazyload hover-img" alt="{{ block.settings.heading | escape }}" />
+                        </a>
+                      </div>
+                      <div class="col-md-7 pl-xl-5">
+                        <h5 class="ls-0">{{block.settings.sub_title}}</h5>
+                        {%- if block.settings.sub_desc != '' -%}<div class="mb-3 sub_desc">{{ block.settings.sub_desc }}</div>{%- endif -%}
+                        <div class="d-flex align-items-center">
+                          {%- if block.settings.sub_btn_link != '' -%}
+                            {%- assign isSoldout = false -%}
+                            {%- if block.settings.select_product != '' -%}
+                              {%- if settings.adult_soldout and block.settings.select_product == 'plan_adult' -%}
+                                {%- assign isSoldout = true -%}
+                              {%- elsif settings.jr_soldout and block.settings.select_product == 'plan_jr' -%}
+                                {%- assign isSoldout = true -%}
+                              {%- endif -%}
+                            {%- endif -%}
+
+                            {%- if block.settings.select_product == 'plan_adult' -%}
+                              <template v-if="isUtmAdult">
+                                  <a href="#"
+                                      @click.prevent="_chooseProductOnPage('{{block.settings.select_product}}', 2, 'type-normal')"
+                                      class="btn btn{% if block.settings.btn_type == 'outline' %}-{% endif %}{{ block.settings.btn_type }}-{{ block.settings.btn_variant }} {{ block.settings.btn_size }} mr-3 mr-lg-4">{{ block.settings.btn_txt }}</a>
+                              </template>
+                              <template v-else>
+                                <a href="#"
+                                {%- if isSoldout -%}
+                                  @click.prevent="_soldoutProduct('{{block.settings.select_product}}', 'type-normal')"
+                                {%- else -%}
+                                  @click.prevent="_chooseProductOnPage('{{block.settings.select_product}}', 2, 'type-normal')"
+                                {%- endif -%}
+                                class="btn btn{% if block.settings.btn_type == 'outline' %}-{% endif %}{{ block.settings.btn_type }}-{{ block.settings.btn_variant }} {{ block.settings.btn_size }} mr-3 mr-lg-4">{% if isSoldout %}{% if block.settings.select_product == 'plan_adult' %}{{ settings.modal_adult_btn_txt }}{% else %}{{ settings.modal_jr_btn_txt }}{% endif %}{% else %}{{ block.settings.btn_txt }}{% endif %}</a>
+                              </template>
+                            {%- elsif block.settings.select_product == 'plan_jr' -%}
+                              <template v-if="isUtmJr">
+                                <a href="#"
+                                    @click.prevent="_chooseProductOnPage('{{block.settings.select_product}}', 2, 'type-normal')"
+                                    class="btn btn{% if block.settings.btn_type == 'outline' %}-{% endif %}{{ block.settings.btn_type }}-{{ block.settings.btn_variant }} {{ block.settings.btn_size }} mr-3 mr-lg-4">{{ block.settings.btn_txt }}</a>
+                              </template>
+                              <template v-else>
+                                <a href="#"
+                                {%- if isSoldout -%}
+                                  @click.prevent="_soldoutProduct('{{block.settings.select_product}}', 'type-normal')"
+                                {%- else -%}
+                                  @click.prevent="_chooseProductOnPage('{{block.settings.select_product}}', 2, 'type-normal')"
+                                {%- endif -%}
+                                class="btn btn{% if block.settings.btn_type == 'outline' %}-{% endif %}{{ block.settings.btn_type }}-{{ block.settings.btn_variant }} {{ block.settings.btn_size }} mr-3 mr-lg-4">{% if isSoldout %}{% if block.settings.select_product == 'plan_adult' %}{{ settings.modal_adult_btn_txt }}{% else %}{{ settings.modal_jr_btn_txt }}{% endif %}{% else %}{{ block.settings.btn_txt }}{% endif %}</a>
+                              </template>
+                            {%- endif -%}
+
+                          {%- endif -%}
+                          {%- if block.settings.btn_sec_txt != '' -%}
+                            <a href="#" {% if block.settings.select_product != '' %}  @click.prevent="_chooseProductOnPage('{{block.settings.select_product}}', 2, 'type-gift')" {% endif %} class="text-uppercase border-bottom d-inline-block border-primary text-primary for-links">{{block.settings.btn_sec_txt}}</a>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {%- endif -%}
+                {%- endfor -%}
+                <div class="col-md-2">
+                  <div class="bg-teal-100 sub_menu_note px-2 px-xl-3 py-5 text-center">
+                    <i class="h4 mb-1 {{ section.settings.icon_class }} font-weight-light"></i>
+                    <h5 class="font-weight-light ls-base mb-3">{{ section.settings.compare_text }}</h5>
+                    {%- if block.settings.compare_link_text != '' -%}
+                      <a href="{{ section.settings.compare_link }}" class="mb-0 font-size-ex-sm font-barlow font-weight-semi-bold text-uppercase text-primary ls-2">{{ section.settings.compare_link_text }}</a>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ul>
+        </li>
+      {%- elsif megamenu_second == child_list_handle -%}
+        <li class="nav-item dropdown megamenu">
+          <a data-href="{{ link.url }}" href="{{ link.url }}" class="nav-link d-flex align-items-center justify-content-between {{ link.handle }}" role="button" data-toggle="dropdown" aria-expanded="false" name="{{ link.title }}" title="{{ link.title }}" aria-label="{{ link.title }}">
+            <span>{{ link.title }}</span> <i class="fa fa-angle-down ml-1"></i>
+          </a>
+          <ul class="menu_dropdown list-unstyled bg-white py-4 shop-megamenu">
+            <div class="container">
+                <div class="row">
+                  {%- for childlink in menus[child_list_handle].links -%}
+                  {%- assign third_list_handle = childlink.title | handleize -%}
+                  {%- if menus[third_list_handle].links != blank -%}
+                  {%- assign index = forloop.index -%}
+                  <div class="{% unless index == 2 %} col-md-2 {% endunless %}{% if index == 2 %} col-md-5 {% endif %}">
+                    <h5 class="font-size-sm font-barlow font-weight-medium text-uppercase text-primary ls-1 mb-3">{{ childlink.title }}</h5>
+                    <ul class="list-unstyled {% if index == 2 %}column-count-3{% endif %}">
+                      {%- for thirdlink in menus[third_list_handle].links -%}
+                        <li class="mb-2 {% if index == 2 %} mb-3 d-inline-block{% endif %}">
+                          {%- if index == 2 -%}
+                          {%- assign collection = thirdlink.object -%}
+                            <a href="{{ thirdlink.url }}" name="{{ thirdlink.title }}" title="{{ thirdlink.title }}" aria-label="{{ thirdlink.title }}" class="font-barlow text-nowrap font-size-ex-sm ls-1 d-flex align-items-center">
+                              <img src="{{ collection.metafields.c_f.nav_icon }}" alt="{{ thirdlink.title | escape  }}" class="mr-2 pr-1" /> 
+                              {{- thirdlink.title -}}
+                            </a>
+                          {%- else -%}
+                            <a href="{{ thirdlink.url }}" name="{{ thirdlink.title }}" title="{{ thirdlink.title }}" aria-label="{{ thirdlink.title }}" class="font-barlow text-nowrap font-size-ex-sm ls-1">{{ thirdlink.title }}</a>
+                          {%- endif -%}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+                  {%- endif -%}
+                  {%- endfor -%}
+                  <div class="col-md-5 pl-xl-6">
+
+                    {%- if section.blocks.size > 0 -%}
+                    <div class="row justify-content-end">
+                      <div class="col-12">
+                        <h5 class="font-size-sm font-barlow font-weight-medium text-uppercase text-primary ls-1 mb-3">SUBSCRIPTIONS</h5>
+                      </div>
+                      {%- for block in section.blocks -%}
+                        {%- if block.type == 'content_shop' and block.settings.enable_prod -%}
+                          <div class="col-md-6">
+                            <div class="megamenu-product">
+                              <a href="{{ block.settings.btn_link }}" class="position-relative product-img mb-3">
+                                <img
+                                    data-sizes="auto"
+                                    src="{{ block.settings.sub_img | img_url: 'pico' }}"
+                                    data-srcset="{{ block.settings.sub_img | img_url: '178x173' }} 576w"
+                                    class="lazyload img-fluid h-100 w-auto"
+                                    alt="{{ block.settings.title }}"/>
+                              </a>
+                              <h5 class="font-size-sm ls-base mb-1"><a class="text-primary" href="{{ block.settings.btn_link }}">{{ block.settings.title }}</a></h5>
+                              <p class="font-size-sm mb-0">
+                              {%- if block.settings.compare_price > block.settings.price -%}
+                                <s class="compare-price m-0 pl-1">${{ block.settings.compare_price }}</s>
+                              {%- endif -%}
+                              ${{ block.settings.price }}</p>
+                            </div>
+                          </div>
+                        {%- endif -%}
+                      {%- endfor -%}
+
+                    </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+            </div>
+          </ul> 
+        </li>
+      {%- elsif menus[child_list_handle].links != blank -%}
+        <li class="nav-item dropdown">
+          <a data-href="{{ link.url }}" class="nav-link d-flex align-items-center justify-content-between {{ link.handle }}" role="button" data-toggle="dropdown" aria-expanded="false" name="{{ link.title }}" title="{{ link.title }}" aria-label="{{ link.title }}">
+            <span>{{ link.title }}</span> <i class="fa fa-angle-down ml-1"></i>
+          </a>
+          <ul class="dropdown-menu">
+            {%- for childlink in menus[child_list_handle].links -%}
+              <li>
+                <a class="dropdown-item {{ childlink.handle }}" href="{{ childlink.url }}" name="{{ childlink.title }}" title="{{ childlink.title }}" aria-label="{{ childlink.title }}">
+                  {{- childlink.title -}}
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>  
+         </li>
+
+      {%- else -%}
+        <li class="nav-item ">
+          <a class="nav-link {{ link.handle }}" href="{{ link.url }}" name="{{ link.title }}" title="{{ link.title }}" aria-label="{{ link.title }}" {% if link.title == 'FAQs' %}rel="noopener noreferrer" target="_blank"{% endif %}>
+            {{- link.title -}}
+          </a>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+
+  <ul class="navbar-nav navbar-icon-links align-items-center ml-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="#" @click.prevent="_toggleSearch" name="search" title="search" rel="nofollow" aria-label="Search">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="27.374px" height="27.315px" viewBox="0 0 27.374 27.315" enable-background="new 0 0 27.374 27.315" xml:space="preserve">
+        <g>
+          <path fill="none" stroke="#000000" stroke-width="1.5" stroke-miterlimit="10" d="M10.831,1.086c5.157,0,9.339,4.182,9.339,9.34
+            s-4.182,9.34-9.339,9.34c-5.159,0-9.34-4.182-9.34-9.34"/>
+          <path fill="none" stroke="#000000" stroke-width="1.5" stroke-miterlimit="10" d="M1.491,10.426c0-5.158,4.181-9.34,9.34-9.34"/>
+            <line fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="25.883" y1="26.23" x2="17.486" y2="17.833"/>
+          <path fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+            M8.416,4.711c0.742-0.314,1.558-0.487,2.415-0.487c2.821,0,5.203,1.884,5.955,4.464"/>
+        </g>
+        </svg>
+      </a>
+    </li>
+    <li class="nav-item pr-0">
+      {% include 'header-cart-link' %}
+    </li>
+
+    {% comment %}
+    {%- if settings.enable_currency_selector -%}
+      <li class="nav-item text-right">
+      {% form 'currency', id: 'currencyForm', data-currency-selector: "" %}
+        <select name="currency"  aria-label="currency-selector" class="form-control form-control-sm" @change="_changeCurrency()">
+          {% for currency in shop.enabled_currencies %}
+            {% if currency == cart.currency %}
+              <option selected="true">{{currency.iso_code}}</option>
+              {% else %}
+              <option>{{currency.iso_code}}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      {% endform %}
+      </li>
+    {% endif %}
+    {% endcomment %}
+
+  </ul>
+</div>
+<div class="row w-100 no-gutters d-flex align-items-center d-ex-lg-none">
+  <div class="col-4 text-left">
+    <a class="" href="#" @click.prevent="_toggleMobileNavDrawer" name="menu" title="menu" rel="nofollow" aria-label="Menu">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="25px" height="16px" viewBox="0 0 28.781 19.646" enable-background="new 0 0 28.781 19.646" xml:space="preserve">
+        <g>
+            <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="1.89" y1="1.522" x2="26.89" y2="1.522"/>
+            <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="1.89" y1="9.823" x2="17.251" y2="9.823"/>
+            <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="1.89" y1="18.124" x2="24.666" y2="18.124"/>
+        </g>
+        </svg>
+    </a>
+  </div>
+  <div class="col-4 text-center">
+    {%- if owlcrateJr -%}
+      <a href="/"  class="nav-link">
+        {%- if settings.main_jr_mobile_svg_logo != blank -%}
+          <img src="{{ settings.main_jr_mobile_svg_logo }}" class="img-fluid" alt="{{ shop.name | escape }}" style="width: {{ logo_jr_mobile_width }}px" />
+        {%- elsif logo_jr_mobile contains 'no-image' -%}
+          <span class="h5 text-primary"><i class="icon ion-pound text-primary"></i> {{ shop.name | escape }} JR</span>
+        {%- else -%}
+          <img src="{{ logo_jr_mobile }}" alt="{{ shop.name | escape }}" class="img-fluid"  style="width: {{ logo_jr_mobile_width }}px">
+        {%- endif -%}
+      </a>
+    {%- else -%}
+      {%- if page.handle == 'subscription-plan' -%}
+        <template v-if="subscriptionFlow.addonType == 'box_junior'">
+          <a href="/" class="nav-link" name="{{ shop.name | escape }}" title="{{ shop.name | escape }}" aria-label="{{ shop.name | escape }}">
+            {%- if settings.main_jr_mobile_svg_logo != blank -%}
+              <img src="{{ settings.main_jr_mobile_svg_logo }}" class="img-fluid" alt="{{ shop.name | escape }}" style="width: {{ logo_jr_mobile_width }}px" />
+            {%- elsif logo_jr_mobile contains 'no-image' -%}
+              <span class="h5 text-primary"><i class="icon ion-pound text-primary"></i> {{ shop.name | escape }} JR</span>
+            {%- else -%}
+              <img src="{{ logo_jr_mobile }}" alt="{{ shop.name | escape }}" class="img-fluid"  style="width: {{ logo_jr_mobile_width }}px">
+            {%- endif -%}
+          </a>
+        </template>
+        <template v-else>
+          <a href="/" class="nav-link" name="{{ shop.name | escape }}" title="{{ shop.name | escape }}" aria-label="{{ shop.name | escape }}">
+            {%- if settings.main_mobile_svg_logo != blank -%}
+              <img src="{{ settings.main_mobile_svg_logo }}" class="img-fluid" alt="{{ shop.name | escape }}" style="width: {{ logo_mobile_width }}px" />
+            {%- elsif logo_mobile contains 'no-image' -%}
+              <span class="h5 text-primary"><i class="icon ion-pound text-primary"></i> {{ shop.name | escape }}</span>
+            {%- else -%}
+              <img src="{{ logo_mobile }}" alt="{{ shop.name | escape }}" class="img-fluid"  style="width: {{ logo_mobile_width }}px">
+            {%- endif -%}
+          </a>
+        </template>
+      {%- else -%}
+        <a href="/" class="nav-link" name="{{ shop.name | escape }}" title="{{ shop.name | escape }}" aria-label="{{ shop.name | escape }}">
+          {%- if settings.main_mobile_svg_logo != blank -%}
+            <img src="{{ settings.main_mobile_svg_logo }}" class="img-fluid" alt="{{ shop.name | escape }}" style="width: {{ logo_mobile_width }}px" />
+          {%- elsif logo_mobile contains 'no-image' -%}
+            <span class="h5 text-primary"><i class="icon ion-pound text-primary"></i> {{ shop.name | escape }}</span>
+          {%- else -%}
+            <img src="{{ logo_mobile }}" alt="{{ shop.name | escape }}" class="img-fluid"  style="width: {{ logo_mobile_width }}px">
+          {%- endif -%}
+        </a>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+  <div class="col-4">
+    <ul class="list-unstyled d-flex align-items-center mobile-icon justify-content-end mb-0">
+      <li class="nav-item">
+        <a class="nav-link" href="#" @click.prevent="_toggleSearch" name="search" title="search" rel="nofollow" aria-label="Search">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="27.374px" height="27.315px" viewBox="0 0 27.374 27.315" enable-background="new 0 0 27.374 27.315" xml:space="preserve">
+          <g>
+            <path fill="none" stroke="#000000" stroke-width="1.5" stroke-miterlimit="10" d="M10.831,1.086c5.157,0,9.339,4.182,9.339,9.34
+              s-4.182,9.34-9.339,9.34c-5.159,0-9.34-4.182-9.34-9.34"/>
+            <path fill="none" stroke="#000000" stroke-width="1.5" stroke-miterlimit="10" d="M1.491,10.426c0-5.158,4.181-9.34,9.34-9.34"/>
+              <line fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="25.883" y1="26.23" x2="17.486" y2="17.833"/>
+            <path fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+              M8.416,4.711c0.742-0.314,1.558-0.487,2.415-0.487c2.821,0,5.203,1.884,5.955,4.464"/>
+          </g>
+          </svg>
+        </a>
+      </li>
+      <li class="nav-item text-right cart-icon">
+        {% include 'header-cart-link' %}
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+{%- paginate blog.articles by items_per_page -%}
+
+<section class="section-content">
+    <div class="{% if fluid_layout %}container-fluid{% else %}container{% endif %}">
+        <div class="row">
+            <div class="col-12 text-center">
+                {%- include 'breadcrumb' -%}
+                <h1 class="page-title">{{ blog_title }}</h1>
+            </div>
+        </div>
+
+        {%- if sidebar_enabled -%}
+            {% comment %} layout with sidebar {% endcomment %}
+            <div class="row">
+                <div class="col-lg-8">
+                  <div class="row justify-content-center">
+                    {%- for article in blog.articles limit: 1 -%}
+                    <div class="col-12">
+                        <div class="position-relative">
+                            {%- unless article.image.src contains 'no-image' -%}
+                                <a href="{{ article.url }}"><img class="great-img img-fluid lazyload" 
+                                    data-sizes="auto"
+                                    src="{{ article.image.src | img_url: 'pico'}}"
+                                    data-srcset="{{ article.image.src | img_url: '450x450x', crop: 'center'}} 320w,
+                                                 {{ article.image.src | img_url: '600x600', crop: 'center' }} 400w,
+                                                 {{ article.image.src | img_url: '800x800', crop: 'center' }} 600w,
+                                                 {{ article.image.src | img_url: '1200x1200', crop: 'center' }} 768w"
+                                                 alt="{{ article.image.alt | default: article.title | escape }}"/>
+                                </a>
+                            {%- endunless -%}
+                            <div class="comments-box position-absolute p-4">
+                                <div class="d-flex">
+                                    <p class="font-size-ex-xs text-gray-800 mb-0 text-uppercase font-weight-semi-bold">{{ article.published_at | date: "%a, %b %d, %Y" }}</p>
+                                    {% comment %}{%- if article.comments_count > 0 -%}
+                                        <p class="font-size-ex-xs text-gray-800 mb-0 text-uppercase font-weight-semi-bold comments-count">{{ article.comments_count }} comments</p>
+                                    {%- endif -%}{% endcomment %}
+                                </div>
+                                <a href="{{ article.url }}"><h4 class="col-md-11 col-12 px-0 m-0 font-barlow"> {{ article.title }}</h4></a>
+                            </div>
+                            <div class="btn-box position-absolute ml-3">
+                                {%- for tag in article.tags -%}
+                                    {%- unless tag contains 'photo_by' -%}
+                                        <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="btn-primary btn-sm d-inline-block font-barlow font-size-ex-xs font-weight-semi-bold mx-2 my-1">{{tag}}</a>
+                                    {%- endunless -%}
+                                {%- endfor -%}
+                            </div>
+                        </div>
+                    </div>
+                    {%- endfor -%}
+
+                    {%- for article in blog.articles offset: 1 -%}
+                    <div class="{% if fluid_layout %}col-sm-4{% else %}col-sm-6 {% endif %} my-3 d-flex align-items-stretch">
+                        {%- include 'card-article-style-JR' -%}
+                    </div>
+                    {%- endfor -%}
+                  </div>
+                  {%- if paginate.pages > 1 -%}
+                    <div class="row">
+                        <div class="col-12 text-center mt-5">
+                            {%- include 'pagination' -%}
+                        </div>
+                    </div>
+                  {%- endif -%}
+                </div>
+                <div class="col-lg-4 pl-xl-6">
+                  {%- include 'sidebar-jr-blog' -%}
+                </div>
+            </div>
+
+        {%- else -%}
+
+            {% comment %} layout without sidebar {% endcomment %}
+            <div class="row justify-content-center">
+                {%- for article in blog.articles -%}
+                <div class="col-sm-6 col-lg-4 my-3 d-flex align-items-stretch">
+                    {%- include 'card-article-style-JR' -%}
+                </div>
+                {%- endfor -%}
+            </div>
+            {%- if paginate.pages > 1 -%}
+              <div class="row">
+                  <div class="col-12 text-center mt-5">
+                      {%- include 'pagination' -%}
+                  </div>
+              </div>
+            {%- endif -%}
+
+        {%- endif -%}
+
+    </div>
+</section>
+
+{%- endpaginate -%}

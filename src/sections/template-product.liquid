@@ -1,0 +1,149 @@
+{% assign fluid_layout = section.settings.fluid_layout %}
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+{% assign show_vendor = section.settings.show_vendor %}
+{% assign addons_enabled = section.settings.enable_product_addons %}
+{% assign addons_type = section.settings.addons_type %}
+{% assign enable_color_swatches = false %}
+{% assign enable_size_swatches = false %}
+
+<div
+  data-section-id="{{ section.id }}"
+  data-template="product"
+  data-product-template="classic-vertical"
+  data-enable-history-state="true"
+  class="{% if product.has_only_default_variant %}only-default-variant{% endif %}">
+
+  {% include 'template-product-classic-vertical' %}
+ 
+  {%- for block in section.blocks -%}
+  {%- if block.type == 'related-products' and block.settings.enable_related_products -%}
+    {%- include 'block-related-products' %}
+  {%- endif -%}
+  {%- endfor -%}
+
+  {% comment %} {% if section.settings.enable_mobile_toolbar %}
+  {% include 'product-toolbar-mobile' %}
+  {% endif %} {% include 'app-utilities-related-products' %} {% endcomment %}
+
+  {%- unless product == empty -%}
+  <script type="application/json" data-product-json>
+  {
+    "product": {{ product | json }},
+    "options_with_values": {{ product.options_with_values | json }}
+  }
+  </script>
+  {%- endunless -%}
+</div>
+
+{% schema %}
+  {
+    "name": "Product Template",
+    "settings": [     
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "fluid_layout",
+        "label": "Full Width Layout?",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Features"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show Vendor?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_social_share",
+        "label": "Show Social Share?",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "related-products",
+        "name": "Related Products",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "header",
+            "content": "Layout"
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_related_products",
+            "label": "Enabled?"
+          },
+          {
+            "type": "checkbox",
+            "id": "related_products_fluid_layout",
+            "label": "Full Width Layout?",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "related_products_section_padding",
+            "label": "Section Padding?",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "related_products_section_no_gutters",
+            "label": "No Gutters?",
+            "default": false
+          },
+          {
+            "type": "range",
+            "id": "related_products_view",
+            "label": "Total Items to Show",
+            "min": 0,
+            "max": 16,
+            "step": 1,
+            "default": 9
+          },
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "text",
+            "id": "related_products_heading_txt",
+            "label": "Heading Text",
+            "default": "Related Products"
+          },
+          {
+            "type": "header",
+            "content": "Styling"
+          },
+          {
+            "type": "color",
+            "id": "related_products_section_bg_color",
+            "label": "Background Color",
+            "default": "#F8F9FA"
+          },
+          {
+            "type": "color",
+            "id": "related_products_section_color",
+            "label": "Text Color",
+            "default": "#343a40"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+
+{% javascript %}
+{% endjavascript %}
+
+{% stylesheet 'scss' %}
+{% endstylesheet %}

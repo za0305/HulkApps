@@ -1,0 +1,201 @@
+.subscription-jr-theme {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  margin-top: -170px;
+  padding-bottom: 124px;
+}
+
+.subscription-jr-theme__lside img {
+  max-width: 100%;
+  border-radius: 30px;
+}
+.subscription-jr-theme__lside #countdown {
+  margin-top: -25px;
+}
+.subscription-jr-theme__lside #countdown::after {
+  content: '';
+  width: 34px;
+  height: 34px;
+  position: absolute;
+  top: -17px;
+  left: calc(50% - 17px);
+  background: url(icon-clock-countdown.svg) no-repeat 50% 50%;
+  background-size: cover;
+}
+.subscription-jr-theme__lside__info {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #282560;
+}
+
+.subscription-jr-theme__rside {
+  padding-left: 166px;
+  padding-top: 83px;
+}
+.subscription-jr-theme__rside:before {
+  content: '';
+  width: 80px;
+  height: 107px;
+  position: absolute;
+  top: 0;
+  left: 135px;
+  z-index: 2;
+  background: url(icon-owlet.svg) no-repeat 50% 50%;
+}
+.subscription-jr-theme__rside:after {
+  content: '';
+  width: 203px;
+  height: 205px;
+  position: absolute;
+  top: -110px;
+  right: -170px;
+  z-index: 2;
+  background: url(bg-jr-theme-text.svg) no-repeat 50% 50%;
+}
+.subscription-jr-theme__rside h2 {
+  font-weight: 600;
+  font-size: 60px;
+  line-height: 100%;
+  color: #282560;
+  font-family: 'Grandstander', cursive;
+  margin-bottom: 20px;
+}
+.subscription-jr-theme__rside h2 span {
+  color: #F15D31;
+  text-transform: uppercase;
+}
+
+.subscription-jr-theme__rside p {
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 26px;
+  font-family: 'Barlow', sans-serif;
+  color: rgba(40, 37, 96, 0.7);
+}
+
+.subscription-jr-theme__rside__links {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.subscription-jr-theme__rside__links p {
+  margin-bottom: 5px;
+}
+
+.subscription-jr-theme__rside__links a {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+
+  text-decoration-line: underline;
+
+  color: #26BCB4;
+}
+.subscription-jr-theme__rside__links p:nth-child(2n) a {
+  color: #F15D31;
+}
+
+@media only screen and (max-width: 1795px) and (min-width: 1441px) {
+  .subscription-jr-theme {
+    zoom: .85;
+  }
+}
+
+@media only screen and (max-width: 1440px) and (min-width: 1367px) {
+  .subscription-jr-theme {
+    zoom: .7;
+  }
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 1025px) {
+  .subscription-jr-theme {
+    zoom: .6;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .subscription-jr-theme__lside #countdown {
+    margin-top: -6px;
+  }
+
+  .subscription-jr-theme__rside {
+    padding-left: 56px;
+  }
+
+  .subscription-jr-theme__rside:before {
+    left: 25px;
+  }
+
+  .subscription-jr-theme__rside h2 {
+    font-size: 40px;
+  }
+  .subscription-jr-theme__rside__links a {
+    font-size: 20px;
+    line-height: 22px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .subscription-jr-theme__lside #countdown {
+    margin-top: -8px;
+  }
+  .subscription-jr-theme {
+    display: block;
+    margin-top: 0;
+    padding-bottom: 20px;
+  }
+  .subscription-jr-theme__lside {
+    text-align: center;
+  }
+  .subscription-jr-theme__lside img {
+    display: inline-block;
+  }
+  .subscription-jr-theme__rside {
+    padding-left: 0;
+  }
+  .subscription-jr-theme__rside:before {
+    left: -17px;
+    top: -20px;
+  }
+  .subscription-jr-theme__rside h2 {
+    font-size: 48px;
+  }
+}
+
+@media only screen and (max-width: 568px) {
+  .subscription-jr-theme__lside #countdown {
+    margin-top: 5px;
+  }
+  .subscription-jr-theme__rside {
+    padding-top: 37px;
+  }
+  .subscription-jr-theme__rside h2 {
+    font-size: 32px;
+    line-height: 100%;
+    text-align: center;
+  }
+  .subscription-jr-theme__rside h2 span {
+    display: inline-block;
+  }
+  .subscription-jr-theme__rside p {
+    font-size: 14px;
+    line-height: 17px;
+  }
+  .subscription-jr-theme__rside:before,
+  .subscription-jr-theme__rside:after {
+    display: none;
+  }
+  .subscription-jr-theme__rside .button {
+    width: 100%;
+  }
+  .subscription-jr-theme__lside__info,
+  .subscription-jr-theme__rside__links a {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

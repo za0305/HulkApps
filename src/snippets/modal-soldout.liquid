@@ -1,0 +1,66 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary d-none" data-toggle="modal" data-target="#soldout_modal">
+  Launch New Modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade pr-0" id="soldout_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-soldout-modal>
+  <div class="modal-dialog modal-dialog-centered mx-auto" role="document">
+    <div class="modal-content">
+      <div class="modal-header popup-head bg-secondary justify-content-center">
+        {% if settings.modal_adult_heading != '' %}<h4 class="mb-0 text-white" :class="{'d-none': soldout_plan != 'plan_adult'}">{{settings.modal_adult_heading}}</h4>{% endif %}
+        {% if settings.modal_jr_heading != '' %}<h4 class="mb-0 text-white" :class="{'d-none': soldout_plan != 'plan_jr'}">{{settings.modal_jr_heading}}</h4>{% endif %}
+        <button type="button" class="popup-close close" data-dismiss="modal" aria-label="Close">
+          <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/close-icon.svg?26005" alt="popup-close" />
+        </button>
+      </div>
+      <div class="modal-body popup-body py-8 py-lg-10">
+        <div>
+          <div class="text-center mb-5">
+            <img src="{{ 'OwlCrate_RewardIcons-FINAL-05.jpg' | file_img_url: 'small' }}" alt="{{shop.name}}">
+          </div>
+          {% if settings.klaviyo_adult != '' %}
+            <form data-klaviyo-adult id="klaviyo_adult" class="validate contact-form klaviyo_gdpr_embed_{{settings.klaviyo_adult}}" :class="{'d-none': soldout_plan != 'plan_adult'}" action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+              <input type="hidden" name="g" value="{{settings.klaviyo_adult}}">
+              <div class="text-center">
+                {% if settings.modal_adult_lead_txt != '' %}<p class="mb-3 mb-md-4">{{settings.modal_adult_lead_txt}}</p>{% endif %}
+                <div class="row">
+                  <div class="col-lg-7 mx-auto">
+                    <div class="input-group">
+                      <input type="email" name="email" id="k_id_adult_email" placeholder="Email Address" aria-label="email" class="form-control font-base ls-base">
+                      <div class="input-group-append klaviyo_form_actions"><input type="submit" value="SUBMIT" name="subscribe" class="btn btn-dark font-size-ex-sm px-lg-3 py-2"></div>
+                    </div>
+                    <div class="klaviyo_messages mt-3 text-center">
+                      <div class="success_message text-success" style="display:none;" data-success_message></div>
+                      <div class="error_message  text-danger" style="display:none;" data-error_message></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          {% endif %}
+          {% if settings.klaviyo_jr != '' %}
+            <form data-klaviyo-jr id="klaviyo_jr" class="validate contact-form klaviyo_gdpr_embed_{{settings.klaviyo_jr}}" :class="{'d-none': soldout_plan != 'plan_jr'}" action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+              <input type="hidden" name="g" value="{{settings.klaviyo_jr}}">
+              <div class="text-center">
+                {% if settings.modal_Jr_lead_txt != '' %}<p class="mb-3 mb-md-4">{{settings.modal_Jr_lead_txt}}</p>{% endif %}
+                <div class="row">
+                  <div class="col-lg-7 mx-auto">
+                    <div class="input-group">
+                      <input type="email" name="email" id="k_id_jr_email" placeholder="Email Address" aria-label="email" class="form-control font-base ls-base">
+                      <div class="input-group-append klaviyo_form_actions"><input type="submit" value="SUBMIT" name="subscribe" class="btn btn-dark font-size-ex-sm px-lg-3 py-2"></div>
+                    </div>
+                    <div class="klaviyo_messages mt-3 text-center">
+                      <div class="success_message text-success" style="display:none;" data-success_message></div>
+                      <div class="error_message text-danger" style="display:none;" data-error_message></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

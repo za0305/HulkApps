@@ -1,0 +1,224 @@
+{%- liquid
+  assign heading = section.settings.heading | escape
+  assign subtitle = section.settings.subtitle | escape
+  assign button_label = section.settings.button_label | escape
+  assign button_url = section.settings.button_url
+
+%}
+
+{{ 'section-subscription-real-reviews.css' | asset_url | stylesheet_tag }}
+
+<section id="section-{{ section.id }}" class="subscription-real-reviews relative">
+
+  {%- render 'sp-sun' -%}
+
+  <h2 class="section-title">{{ heading }}</h2>
+
+
+  {%- if section.blocks.size > 1 -%}
+    <div class="subscription-real-reviews__carousel">
+      <div class="carousel">
+      {% for block in section.blocks %}
+        <div class="carousel-cell real-review relative">
+          <div class="real-review__body">
+            <div class="real-review__body__header relative">
+              <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.image.alt }}">
+              <div class="real-review__body__header__name-date">
+                <p>{{ block.settings.name }}</p>
+                <p><span>{{ block.settings.date_picker }}</span></p>
+              </div>
+            </div>
+
+            <div class="real-review__body__raiting">
+              {% assign rating = block.settings.rating | plus: 0 %}
+              {% for i in (1..5) %}
+                {% if i <= rating %}
+                  <i class="icon ion-md-star"></i>
+                {% else %}
+                  <i class="icon ion-md-star-outline"></i>
+                {% endif %}
+              {% endfor %}
+            </div>
+
+            <p class="real-review__body__desc">
+              {{ block.settings.text | truncatewords: 23, '...' }} 
+              {% assign splited_text = block.settings.text | truncatewords: 23, '---' %}
+              {% if splited_text contains '---' %}
+                <br><a href="/pages/reviews"><i>see all</i></a>
+              {% endif %} 
+            </p>
+
+            <div class="real-review__body__product relative">
+              {% if block.settings.product != blank %} 
+                <img src="{{ block.settings.product.images[0] | product_img_url: 'x196' }}" alt="">
+              {% else %}
+                <img src="{{ 'product.png' | asset_img_url: 'x196' }}" alt="">
+              {% endif %}
+              <div class="real-review__body__product__info">
+                <p class="real-review__body__product__info__title">{{ block.settings.product.title | truncate: 40 }}</p>
+                <p class="real-review__body__product__info__price">{{ block.settings.product.price | money }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+  {%- endif -%}
+
+{% comment %}
+  {%- if button_label != blank
+  and button_url != blank -%}
+    <div class="wi__btnWrapper">
+      <a href="{{ button_url }}" class="wi__btn">{{ button_label }}</a>
+    </div>
+  {%- endif -%}
+{% endcomment %}
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/phucbm/flickity-responsive@latest/flickity-responsive.min.js"></script>
+<script>
+    $( document ).ready(function() {
+      $('.subscription-real-reviews__carousel .carousel').flickityResponsive({
+        wrapAround: true,
+        freeScroll: false,
+        lazyLoad: true,
+        prevNextButtons: true,
+        pageDots: false,
+        groupCells: '100%',
+        cellAlign: "left",
+        responsive: [
+          {
+            breakpoint: 1280,
+            settings: {
+              groupCells: '100%',
+              cellAlign: "center"
+            }
+          },
+          {
+            breakpoint: 768,
+            settings: {
+              groupCells: '100%',
+              cellAlign: "center"
+            }
+          }
+        ]
+      });
+    });
+</script>
+
+
+{% schema %}
+{
+  "name": "Real Reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label"
+    },
+    {
+      "type": "select",
+      "id": "btn_type",
+      "label": "Button Type",
+      "options": [
+        {
+          "value": "white",
+          "label": "White"
+        },
+        {
+          "value": "green",
+          "label": "Green"
+        }
+      ],
+      "default": "white"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button Url"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo (180x180)"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name"
+        },
+        {
+          "type": "text",
+          "id": "date_picker",
+          "label": "Choose date",
+          "default": "12.24.2022",
+          "info": "e.g. mm.dd.yyyy"
+        },
+        {
+          "type": "select",
+          "id": "rating",
+          "label": "Rating",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            },
+            {
+              "value": "5",
+              "label": "5"
+            }
+          ],
+          "default": "5"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Real Reviews",
+      "category": "Content",
+      "blocks": [
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

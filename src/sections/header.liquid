@@ -1,0 +1,509 @@
+{% assign homepage_transparent_header = section.settings.homepage_transparent_header %}
+{% assign logo = settings.main_logo | img_url: '200x' %}
+{% assign logo_jr = settings.main_jr_logo | img_url: '200x' %}
+{% assign logo_mobile = settings.main_mobile_logo | img_url: '200x' %}
+{% assign logo_jr_mobile = settings.main_jr_mobile_logo | img_url: '200x' %}
+{% assign logo_width = settings.logo_max_width %}
+{% assign logo_jr_width = settings.logo_jr_max_width %}
+{% assign logo_mobile_width = settings.logo_mobile_max_width %}
+
+{% assign logo_jr_mobile_width = settings.logo_jr_mobile_max_width %}
+
+{{ 'section-header.css' | asset_url | stylesheet_tag }}
+
+{% assign owlcrateJr = false %}
+{% if template.suffix == 'owlcrate-jr' or blog.handle == 'owlcratejr' or template.suffix == 'jr_Subscription' %}
+  {% assign owlcrateJr = true %}
+{% endif %}
+
+<header
+        class="site-header {% if homepage_transparent_header %}header-transparent{% endif %} {% if section.settings.is_sticky %}fixed-top{% endif %} pr-0"
+        data-site-header
+        data-section-id="{{ section.id }}"
+        data-cart-type="cart_page"
+        data-fixed-header="{% if section.settings.is_sticky%}true{% else %}false{% endif %}"
+        data-transparent-header="{{ homepage_transparent_header }}">
+
+
+  {% if section.settings.topbar_enabled %}
+  {% if page.handle == 'subscription-plan' %}
+  <div class="topbar d-block position-relative" data-top-bar :class="{'owlcrate-jr-topbar': subscriptionFlow.addonType == 'box_junior', 'owlcrate-topbar': subscriptionFlow.addonType == 'box_adult'}">
+    {% else %}
+    <div class="topbar hidden xl-d-block position-relative" data-top-bar style="background-color: {% if owlcrateJr %}{{ section.settings.topbar_jr_bg_color }}{% else %}{{ section.settings.topbar_adult_bg_color }}{% endif %}">
+      {% endif %}
+      <div class="container-wide">
+        <div class="row" style="min-height: {{ section.settings.topbar_height }}px !important;">
+          <div class="col-12 d-ex-lg-none">
+            <div class="d-flex align-items-center topbar_text justify-content-center h-100">
+              {% if owlcrateJr %}
+                <div class="font-size-ex-sm ls-1 py-2 py-sm-0">{{ section.settings.topbar_jr_text }}</div>
+              {% else %}
+                {% if page.handle == 'subscription-plan' %}
+                  <template v-if="subscriptionFlow.addonType == 'box_junior'">
+                    <div class="font-size-ex-sm ls-1 py-2 py-sm-0">{{ section.settings.topbar_jr_text }}</div>
+                  </template>
+                  <template v-else>
+                    <div class="font-size-ex-sm ls-1 py-2 py-sm-0">{{ section.settings.topbar_adult_text }}</div>
+                  </template>
+                {% else %}
+                  <div class="font-size-ex-sm ls-1 py-2 py-sm-0">{{ section.settings.topbar_adult_text }}</div>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-12 col-lg-7 offset-lg-2 col-xl-6 offset-xl-3 d-none d-ex-lg-flex align-items-center justify-content-center" style="color:{% if owlcrateJr %} {{ section.settings.topbar_jr_text_color }} {% else %}  {{ section.settings.topbar_adult_text_color }} {% endif %} !important">
+            <div class="d-flex align-items-center topbar_text">
+              {% if owlcrateJr %}
+                <div>{{ section.settings.topbar_jr_text }}</div>
+                {% comment %}
+                {% if section.settings.topbar_jr_text_second != '' %}
+                <span class="px-2">|</span>
+                <div class="font-size-ex-sm ls-1">{{ section.settings.topbar_jr_text_second }}</div>
+                {% endif %}
+                {% endcomment %}
+              {% else %}
+                {% if page.handle == 'subscription-plan' %}
+                  <template v-if="subscriptionFlow.addonType == 'box_junior'">
+                    <div class="font-size-ex-sm ls-1">{{ section.settings.topbar_jr_text }}</div>
+                    {% comment %}
+                    {% if section.settings.topbar_jr_text_second != '' %}
+                    <span class="px-2">|</span>
+                    <div class="font-size-ex-sm ls-1">{{ section.settings.topbar_jr_text_second }}</div>
+                    {% endif %}
+                    {% endcomment %}
+                  </template>
+                  <template v-else>
+                    <div class="">{{ section.settings.topbar_adult_text }}</div>
+                    {% comment %}
+                    {% if section.settings.topbar_adult_text_second != '' %}
+                    <span class="px-2">|</span>
+                    <div class="font-size-ex-sm ls-1">{{ section.settings.topbar_adult_text_second }}</div>
+                    {% endif %}
+                    {% endcomment %}
+                  </template>
+                {% else %}
+                  <div class="">{{ section.settings.topbar_adult_text }}</div>
+                  {% comment %}
+                  {% if section.settings.topbar_adult_text_second != '' %}
+                      <span class="px-2">|</span>
+                      <div class="font-size-ex-sm ls-1">{{ section.settings.topbar_adult_text_second }}</div>
+                  {% endif %}
+                  {% endcomment %}
+                {% endif %}
+              {% endif %}
+            </div>
+            {% comment %} <p class="mb-0 font-size-ex-sm ls-1">April Box Theme: THE DARK SIDE Did you miss a Past Box? <a href="#" class="line-hover">Click Here</a></p> {% endcomment %}
+          </div>
+          <div class="col-12 col-lg-3 pl-0 d-none d-ex-lg-flex align-items-center justify-content-end">
+            {% comment %}
+              <ul class="list-unstyled d-flex align-items-center mb-0">
+              {% for link in linklists[section.settings.topbar_menu].links %}
+                  <li class="pr-4"><a href="{{ link.url }}" name="{{ link.title }}" title="{{ link.title }}" aria-label="{{ link.title }}" class="font-weight-medium ls-1 font-size-ex-sm font-barlow" {% if link.title contains 'FAQ' %}rel="noopener noreferrer" target="_blank"{% endif %}>{{ link.title }}</a></li>
+              {% endfor %}
+              {% if shop.customer_accounts_enabled %}
+                  <li><a href="/account" name="account" title="account" rel="nofollow" class="font-weight-medium ls-1 font-size-ex-sm font-barlow">{% if customer %}My Account{% else %}Log In{% endif %}</a></li>
+              {% endif %}
+              </ul>
+            {% endcomment %}
+          </div>
+        </div>
+        <div class="close-icon_topbar d-md-none hidden">
+          <img src='{{ "close.png" | asset_img_url: '10x10' }}' class="p-1" alt="close" data-close-btn style="cursor:pointer;" @click.prevent="_closeTopbar();">
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+
+    <div class="header__main">
+      <div class="container-wide">
+        <div class="header__wrapper">
+          <div class="d-flex align-items-center">
+            <div class="hidden xl-d-block">
+              <div class="navbar navbar-main navbar-expand-ex-lg lside">
+                {%- render 'header-menu',
+                limit: 3,
+                        offset: 0 -%}
+              </div>
+            </div>
+
+            <div class="flex xl-hidden align-items-center">
+              <a href="#" @click.prevent="_toggleMobileNavDrawer" class="d-flex align-items-center justify-content-center header__icon header__icon--menu">
+                {%- render 'icon-burger' -%}
+              </a>
+
+              <a href="{{ routes.account_url }}" class="d-flex align-items-center justify-content-center header__icon">
+                {%- render 'icon-account' -%}
+              </a>
+            </div>
+          </div>
+
+          <div class="header__logo {% if page.template_suffix == 'subscription-jr' %}jr{% endif %}">
+            {%- if settings.primary_logo_svg != blank -%}
+              <a href="{{ routes.root_url }}" class="hidden xl-flex align-items-center justify-content-center">
+                {%- if page.template_suffix != 'subscription-jr' -%}
+                  {{ settings.primary_logo_svg }}
+                {%- else -%}
+                  {{ settings.primary_logo_svg_green }}
+                {%- endif -%}
+              </a>
+            {%- endif -%}
+
+            {%- if settings.primary_logo_svg_mobile != blank -%}
+              <a href="{{ routes.root_url }}" class="flex xl-hidden align-items-center justify-content-center">
+                {%- if page.template_suffix != 'subscription-jr' -%}
+                  {{ settings.primary_logo_svg_mobile }}
+                {%- else -%}
+                  {{ settings.primary_logo_svg_mobile_green }}
+                {%- endif -%}
+              </a>
+            {%- endif -%}
+          </div>
+
+          <div class="d-flex align-items-center justify-content-end">
+
+            <div class="hidden xl-flex justify-content-end">
+              <div class="navbar navbar-main navbar-expand-ex-lg justify-content-end">
+                {%- render 'header-menu',
+                limit: 2,
+                        offset: 3 -%}
+              </div>
+            </div>
+
+            <div class="header__icons d-flex align-items-center justify-content-end">
+              <a href="{{ routes.account_url }}" class="hidden xl-flex align-items-center justify-content-center header__icon">
+                {%- render 'icon-account' -%}
+              </a>
+
+              <a class="d-flex align-items-center justify-content-center header__icon" href="#" @click.prevent="_toggleSearch" name="search" title="search" rel="nofollow" aria-label="Search">
+                {%- render 'icon-search' -%}
+              </a>
+
+              <a class="d-flex align-items-center justify-content-center header__icon header__icon--cart" href="/cart" name="cart" title="cart" rel="nofollow" aria-label="Cart">
+                {%- render 'icon-cart' -%}
+                <span v-text="cart.item_count" class="header__icon--cartCount d-flex align-items-center justify-content-center"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% comment %}
+    <nav class="navbar navbar-main navbar-expand-ex-lg py-0 ">
+        <div class="{% if section.settings.fluid_header %}container-fluid{% else %}container{% endif %}">
+        {% include 'navbar-default' %}
+        </div>
+    </nav>
+    {% endcomment %}
+
+</header>
+
+<style data-topbar-style>
+  .owlcrate-jr-topbar{
+    background-color:{{ section.settings.topbar_jr_bg_color }};
+  }
+  .owlcrate-topbar{
+    background-color:{{ section.settings.topbar_adult_bg_color }};
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "fluid_header",
+      "label": "Full Width Header?",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "is_sticky",
+      "label": "Sticky Header?",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "checkbox",
+      "id": "homepage_transparent_header",
+      "label": "Transparent Header at Homepage?",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "main_linklist",
+      "label": "Select Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "text",
+      "id": "mega_menu",
+      "label": "Mega menu title"
+    },
+    {
+      "type": "header",
+      "content": "Compare box"
+    },
+    {
+      "type": "text",
+      "id": "icon_class",
+      "label": "Icon Class",
+      "info": "You can use a class from any Icon Font of choice."
+    },
+    {
+      "type": "text",
+      "id": "compare_text",
+      "label": "Compare Heading"
+    },
+    {
+      "type": "text",
+      "id": "compare_link_text",
+      "label": "Compare Link Text"
+    },
+    {
+      "type": "url",
+      "id": "compare_link",
+      "label": "Compare Link"
+    },
+    {
+      "type": "text",
+      "id": "mega_menu_second",
+      "label": "Mega menu Second title"
+    },
+    {
+      "type": "header",
+      "content": "Top Bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "topbar_enabled",
+      "label": "Enabled?",
+      "default": false
+    },
+    {
+      "type": "richtext",
+      "id": "topbar_adult_text",
+      "label": "Adult Message"
+    },
+    {
+      "type": "richtext",
+      "id": "topbar_jr_text",
+      "label": "Jr Message"
+    },
+    {
+      "type": "color",
+      "id": "topbar_adult_bg_color",
+      "label": "Adult Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "topbar_adult_text_color",
+      "label": "Adult Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "topbar_jr_bg_color",
+      "label": "Jr Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "topbar_jr_text_color",
+      "label": "Jr Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "topbar_height",
+      "label": "Minimum Height",
+      "min": 20,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "link_list",
+      "id": "topbar_menu",
+      "label": "Topbar Menu"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "content",
+      "name": "Megamenu Subscribe",
+      "settings": [
+        {
+          "type": "header",
+          "content": "images"
+        },
+        {
+          "type":"image_picker",
+          "id":"sub_img",
+          "label":"Subscribe Images"
+        },
+        {
+          "type":"image_picker",
+          "id":"sub_hover_img",
+          "label":"Subscribe Hover Images"
+        },
+        {
+          "type": "text",
+          "id": "sub_title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "sub_desc",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "select_product",
+          "label": "Select Product Tag",
+          "info": "Use 'plan_adult or plan_jr' for product."
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "btn_txt",
+          "label": "Button Text"
+        },
+        {
+          "type": "url",
+          "id": "sub_btn_link",
+          "label": "Product Link"
+        },
+        {
+          "type": "select",
+          "id": "btn_type",
+          "label": "Button Type",
+          "options": [{
+            "value": "outline",
+            "label": "Outline"
+          },
+            {
+              "value": "",
+              "label": "Solid"
+            }
+          ],
+          "default": ""
+        },
+        {
+          "type": "select",
+          "id": "btn_variant",
+          "label": "Button Variant",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Primary"
+            },
+            {
+              "value": "secondary",
+              "label": "Secondary"
+            },
+            {
+              "value": "accent",
+              "label": "Accent"
+            },
+            {
+              "value": "light",
+              "label": "Light"
+            },
+            {
+              "value": "dark",
+              "label": "Dark"
+            }
+          ],
+          "default": "dark"
+        },
+        {
+          "type": "select",
+          "id": "btn_size",
+          "label": "Button Size",
+          "options": [{
+            "value": "",
+            "label": "Default"
+          },
+            {
+              "value": "btn-sm",
+              "label": "Small"
+            },
+            {
+              "value": "btn-lg",
+              "label": "Large"
+            }
+          ],
+          "default": ""
+        },
+        {
+          "type": "text",
+          "id": "btn_sec_txt",
+          "label": "Link Text",
+          "default": "Send A Gift"
+        }
+      ]
+    },
+    {
+      "type": "content_shop",
+      "name": "Megamenu Shop",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enable_prod",
+          "label": "Enable Product"
+        },
+        {
+          "type":"image_picker",
+          "id":"sub_img",
+          "label":"Subscribe Images"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "info": "Add price without the $ sign"
+        },
+        {
+          "type": "text",
+          "id": "compare_price",
+          "label": "Compare Price",
+          "info": "Add price without the $ sign"
+        },
+        {
+          "type": "url",
+          "id": "btn_link",
+          "label": "Product Link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+
+{% javascript %}
+{% endjavascript %}

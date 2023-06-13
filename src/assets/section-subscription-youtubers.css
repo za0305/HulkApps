@@ -1,0 +1,176 @@
+.subscription-youtubers .section-title {
+  margin-bottom: 330px;
+}
+
+.subscription-youtubers__body {
+  background: #f3f7ff url(https://cdn.shopify.com/s/files/1/1091/8372/files/double-wave-white.png?v=1666104393) repeat-x 0 370px;
+  background-size: cover;
+}
+
+.subscription-youtubers__body img {
+  border-radius: 50px;
+}
+
+.subscription-youtubers__body .carousel {
+  top: -250px;
+}
+
+.subscription-youtubers__body .carousel-cell {
+  margin: 0 8px 0;
+}
+
+.subscription-youtubers__body .flickity-button {
+  width: 86px;
+  height: 86px;
+  background: rgba(255, 255, 255, 0.93);
+  backdrop-filter: blur(6px);
+  border-radius: 86px;
+}
+.subscription-youtubers__body .flickity-button.previous {
+  left: calc(50% - 479px);
+}
+.subscription-youtubers__body .flickity-button.next {
+  right: calc(50% - 479px);
+}
+.subscription-youtubers__body .flickity-button .flickity-button-icon {
+  position: initial;
+  display: block;
+  height: 20px;
+  margin: 0 auto;
+}
+
+.subscription-youtubers__body .open-popup-link::before {
+  content: '';
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: calc(50% - 50px);
+  left: calc(50% - 50px);
+  z-index: 2;
+  background: url(icon-play.svg) no-repeat 50% 50%;
+}
+
+@media only screen and (max-width: 1440px) and (min-width: 1367px) {
+  .subscription-youtubers {
+    zoom: .7;
+  }
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 569px) {
+  .subscription-youtubers {
+    zoom: .6;
+  }
+}
+
+@media only screen and (max-width: 968px) {
+  .subscription-youtubers__body .flickity-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 48px;
+  }
+  .subscription-youtubers__body .flickity-button.previous {
+    left: 10px;
+  }
+  .subscription-youtubers__body .flickity-button.next {
+    right: 10px;
+  }
+}
+
+@media only screen and (max-width: 568px) {
+  .subscription-youtubers {
+    padding: 42px 0 20px
+  }
+
+  .subscription-youtubers .section-title {
+    margin: 0 0 30px;
+  }
+
+  .subscription-youtubers,
+  .subscription-youtubers__body {
+    background: #F3F7FF !important;
+  }
+  .subscription-youtubers__body .carousel {
+    top: 0;
+  }
+
+  .subscription-youtubers__body .carousel-cell a {
+    display: block;
+    width: 197px;
+    height: 158px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 30px;
+  }
+
+  .subscription-youtubers__body img {
+    height: 158px;
+    border-radius: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+  }
+  .subscription-youtubers__body .open-popup-link::before {
+    width: 40px;
+    height: 45px;
+    top: calc(50% - 22px);
+    left: calc(50% - 20px);
+    background-size: cover;
+  }
+
+  .subscription-youtubers__body .flickity-button.previous {
+    left: 153px;
+  }
+  .subscription-youtubers__body .flickity-button.next {
+    right: 153px;
+  }
+
+  .subscription-youtubers__body .flickity-button .flickity-button-icon {
+    height: 14px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .subscription-youtubers__body .flickity-button.previous {
+    left: 110px;
+  }
+  .subscription-youtubers__body .flickity-button.next {
+    right: 110px;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .subscription-youtubers__body .flickity-button.previous {
+    left: 78px;
+  }
+  .subscription-youtubers__body .flickity-button.next {
+    right: 78px;
+  }
+}
+
+@media only screen and (max-width: 390px) {
+  .subscription-youtubers__body .flickity-button.previous {
+    left: 66px;
+  }
+  .subscription-youtubers__body .flickity-button.next {
+    right: 66px;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .subscription-youtubers__body .flickity-button.previous {
+    left: 58px;
+  }
+  .subscription-youtubers__body .flickity-button.next {
+    right: 58px;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .subscription-youtubers__body .flickity-button.previous {
+    left: 50px;
+  }
+  .subscription-youtubers__body .flickity-button.next {
+    right: 50px;
+  }
+}

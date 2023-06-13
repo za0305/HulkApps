@@ -1,0 +1,196 @@
+
+{%- if section.settings.enable_brand -%}
+	<section class="jr-brand section-content index-brand-logo mb-md-3 mt-md-6">
+		<div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+			<div class="row d-sm-flex d-none">
+					<div class="col-12 text-center">
+						{%- if section.settings.brnad_title != '' -%}
+							<h4 class="mb-3 text-blurple-100 f-heading">{{ section.settings.brnad_title }}</h4>
+						{%- endif -%}
+					</div>
+			</div>
+			<div class="carousel row" role="tree" data-flickity='{
+					"contain": true,
+					"wrapAround": false,
+					"accessibility": true,
+					"setGallerySize": true,
+					"cellAlign": "left",
+					"groupCells": "100%",
+					"lazyLoad": true,
+					"prevNextButtons": false,
+					"pageDots": true,
+					"arrowShape": {"x0": 10, "x1": 60, "y1": 50, "x2": 65, "y2": 40, "x3": 25}
+					}'>
+				{%- for block in section.blocks limit: section.blocks.size -%}
+					{%- if block.type == 'brand_sec' -%}
+						<div class="carousel-cell col-4 col-md-3 my-1 my-md-3" role="treeitem">
+							<div class="company_logo">
+								<a href="{{ block.settings.logo_url }}" class="d-flex align-items-center justify-content-center" target="_blank" rel="noreferrer">
+									<img data-sizes="auto"
+									     src="{{ block.settings.logo_img | img_url: 'pico' }}"
+											 data-src="{{ block.settings.logo_img | img_url: 'original' }}"
+											 class="lazyload d-inline-block align-items-center mh-100 mw-100 w-auto" alt="logo" />
+								</a>
+							</div>
+						</div>
+					{%- endif -%}
+				{%- endfor -%}
+			</div>
+		</div>
+	</section>
+{%- endif -%}
+
+{%- if section.settings.enable -%}
+	<section class="jr-how-it-works section-content">
+			<div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+					<div class="jr-banner section-padding border-radius-20" {% if section.settings.bg_imag %}style="background: url('{{ section.settings.bg_imag | img_url: 'master' }}') center no-repeat;" {%- else -%} style="background: url('https://cdn.shopify.com/s/files/1/0085/2174/4450/files/Group_507.jpg?v=1639041384') center no-repeat;"{% endif %}>
+							<div class="text-center">
+									{%- if section.settings.work_title != '' -%}
+										<h2 class="mb-md-5 mb-0 text-blurple-100 h1 font-weight-semi-bold">{{ section.settings.work_title }}</h2>
+									{%- endif -%}
+									<div class="row gutter-lg">
+										{%- for block in section.blocks limit: section.blocks.size -%}
+											{%- if block.type == 'how_it_work' -%}
+												<div class="col-md-4 mt-md-0 mt-5">
+														<div class="px-lg-5 px-3">
+																{%- if block.settings.number_img != blank -%}
+																	<img src="{{ block.settings.number_img | img_url: '100x' }}" alt="Box-number_{{forloop.index}}" class="number-img mb-5 d-md-none d-block mx-auto" />
+																{%- endif -%}
+																{%- if block.settings.work_img != blank -%}
+																	<div class="icon-wrapper d-flex align-items-center justify-content-center mb-md-0 mb-4">
+																			<img src="{{ block.settings.work_img | img_url: 'medium' }}" class="d-block mx-auto" alt="{{ block.settings.heading }}" />
+																	</div>
+																{%- endif -%}
+																{%- if block.settings.number_img != blank -%}
+																	<img src="{{ block.settings.number_img | img_url: '100x' }}" alt="Box-number_{{forloop.index}}" class="number-img mb-3 d-md-block d-none mx-auto" />
+																{%- endif -%}
+																{%- if block.settings.heading != '' -%}
+																	<h4 class="f-subheading font-weight-normal mb-1">{{ block.settings.heading }}</h4>
+																{%- endif -%}
+																{%- if block.settings.desc_txt != '' -%}
+																	{{ block.settings.desc_txt }}
+																{%- endif -%}
+														</div>
+												</div>
+											{%- endif -%}
+										{%- endfor -%}
+									</div>
+							</div>
+					</div>
+			</div>
+	</section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Brand & How it Works",
+    "settings": [
+		{
+			"type": "header",
+			"content": "Layout"
+		},
+		{
+			"type": "checkbox",
+			"id": "fluid_layout",
+			"label": "Full Width Layout?",
+			"default": false
+		},
+		{
+			"type": "header",
+			"content": "Brand section"
+		},
+		{
+			"type": "checkbox",
+			"id": "enable_brand",
+			"label": "Brand Section Enabled?",
+			"default": true
+		},
+		{
+			"type": "text",
+			"id": "brnad_title",
+			"label": "Brand Section Title",
+			"default": "As seen in"
+		},
+		{
+			"type": "header",
+			"content": "How it Works"
+		},
+		{
+			"type": "checkbox",
+			"id": "enable",
+			"label": "How it Work Enabled?",
+			"default": true
+		},
+		{
+			"type": "image_picker",
+			"id": "bg_imag",
+			"label": "Background Image",
+			"info": "Please add image with size 1500x700"
+		},
+		{
+			"type": "text",
+			"id": "work_title",
+			"label": "Section Title",
+			"default": "How it works"
+		},
+		{
+			"type": "header",
+			"content": "Expect Boxes"
+		},
+		{
+			"type": "checkbox",
+			"id": "enable_box",
+			"label": "Expect boxes Enabled?",
+			"default": true
+		}
+    ],
+    "blocks": [
+		{
+        "type": "brand_sec",
+        "name": "Featured Logo",
+        "settings": [
+			{
+				"type": "image_picker",
+				"id": "logo_img",
+				"label": "Brand Image",
+				"info": "Please add image with size 210x80"
+			},
+			{
+				"type": "url",
+				"id": "logo_url",
+				"label": "URL"
+			}
+		]
+      },
+      {
+        "type": "how_it_work",
+        "name": "How it Work",
+        "limit": 3,
+        "settings": [
+			{
+				"type": "image_picker",
+				"id": "work_img",
+				"label": "Image",
+				"info": "Please add image with size 160x110"
+			},
+			{
+				"type": "image_picker",
+				"id": "number_img",
+				"label": "Number Image",
+				"info": "Please add image with size 61x61"
+			},
+			{
+				"type": "text",
+				"id": "heading",
+				"label": "Heading"
+			},
+			{
+				"type": "textarea",
+				"id": "desc_txt",
+				"label": "Description"
+          	}
+        ]
+      }
+    ]
+  }
+{% endschema %}

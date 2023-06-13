@@ -1,0 +1,32 @@
+<div class="card bg-white text-left border-0">
+
+    <div class="position-relative">
+      <div class="teg-btn position-absolute d-flex pl-2 flex-wrap">
+        {%- for tag in article.tags -%}
+          {%- unless tag contains 'photo_by' -%}
+            <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="btn-sm btn-primary font-barlow font-size-ex-xs font-weight-semi-bold text-nowrap my-1 mx-2">{{tag}}</a>
+          {%- endunless -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    {% if article.image.src != '' %}
+      <a href="{{ article.url }}">
+        <img data-sizes="auto"
+            src="{{ article.image.src | img_url: 'pico'}}"
+            data-srcset="{{ article.image.src | img_url: '600x', crop: 'center' }} 400w"
+            class="lazyload" alt="{{ article.image.alt | escape }}"/>
+      </a>
+    {% endif %}
+    <div class="blog-page card-body px-0">
+      <div class="small text-muted d-flex">
+        <time datetime="formatDate(article.node.publishedAt)" class="font-weight-semi-bold text-uppercase text-gray-800 font-size-ex-xs"> {{ article.published_at | date: "%a, %b %d, %Y" }}</time>
+        {% comment %}{%- if article.comments_count > 0 -%}
+          <p class="font-size-ex-xs text-gray-800 mb-0 text-uppercase font-weight-semi-bold font-size-ex-xs comments-count">{{ article.comments_count }} comments</p>
+        {%- endif -%}{% endcomment %}
+      </div>
+      
+      <h5 class="mt-2 display-4 mb-3" style="text-transform: none;"><a href="{{ article.url }}">{{ article.title }}</a></h5>
+      <p class="font-weight-light mb-2">{{ article.excerpt_or_content | strip_html | truncatewords: 100 }}</p>
+      <a href="{{ article.url }}" class="border-bottom border-primary text-primary d-inline-block text-uppercase font-weight-semi-bold font-barlow">Continue Reading</a>
+    </div>
+  </div>

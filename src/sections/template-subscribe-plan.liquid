@@ -1,0 +1,505 @@
+<section  data-section-id="{{ section.id }}" class="py-lg-4" data-template="subscription-plan">
+    <div class="section-content pt-0 pt-lg-7">
+        <div class="bg-gray-100 py-3 text-center d-lg-none mb-5">
+            <div class="sub-title-mobile" v-if="subscriptionFlow.subscriptionPlan != null">                
+                <h6 class="font-size-sm mb-0" v-if="subscriptionFlow.isGiftSub == 'true'">Your Gift Subscription:</h6>                
+                <h6 class="font-size-sm mb-0" v-else>Your Subscription:</h6>                
+                <div class="d-flex align-items-center justify-content-center">                   
+                    <template v-if="subscriptionFlow.selectedPlanType === 'plan_adult'">
+                        <template v-if="subscriptionFlow.isGiftSub == 'true'">
+                            <h6 class="ls-base text-capitalize mb-0 font-weight-semi-bold">OwlCrate (Gift)</h6> 
+                        </template>                                        
+                        <h6 class="ls-base text-capitalize mb-0 font-weight-semi-bold" v-else>OwlCrate</h6> 
+                        <p class="font-size-sm mb-0 ml-2">Ages 14+</p>
+                    </template>
+                    <template v-if="subscriptionFlow.selectedPlanType === 'plan_jr'">
+                        <template v-if="subscriptionFlow.isGiftSub == 'true'">
+                            <h6 class="ls-base text-capitalize mb-0 font-weight-semi-bold">OwlCrate JR (Gift)</h6> 
+                        </template>                                        
+                        <h6 class="ls-base text-capitalize mb-0 font-weight-semi-bold" v-else>OwlCrate JR</h6> 
+                        <p class="font-size-sm mb-0 ml-2">Ages 8-12</p>
+                    </template>                     
+                    <a href="#" @click.prevent="_prevStage($event, 2, 1)" class="line-hover-primary font-size-sm ml-2">Change Box</a>
+                </div>
+            </div>
+            <div class="sub-title-mobile"  v-if="subscriptionFlow.subscriptionPayment != null">
+                <h6 class="font-size-sm mb-0">Your Plan:</h6>
+                <div class="d-flex align-items-center justify-content-center">
+                    <h6 class="ls-base text-capitalize mb-0" v-text="subscriptionFlow.subscriptionPayment.title"></h6>                  
+                    <a href="#" @click.prevent="_prevStage($event, 3, 2)" class="line-hover-primary font-size-sm ml-2">Change Plan</a>
+                </div>
+            </div>
+        </div>
+        <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+            <div class="row">
+                <div class="col-12 col-md-3 d-none d-lg-block">
+                    <div class="bg-gray-100 h-100 p-4">
+                        <div class="gift-box-item pb-4" v-if="subscriptionFlow.subscriptionPlan != null">                                            
+                            <h6 class="font-size-sm mb-3 mb-md-4" v-if="subscriptionFlow.isGiftSub == 'true'">Your Gift Subscription:</h6>
+                            <h6 class="font-size-sm mb-3 mb-md-4" v-else>Your Subscription:</h6>                           
+                            <div class="d-flex align-items-center">
+                                <div class="product-img">         
+                                    <template v-if="subscriptionFlow.selectedPlanType === 'plan_adult'">
+                                        <img src="{{ 'owlcrate-new-box.png' | file_img_url: 'pico' }}"
+                                        data-src="{{ 'owlcrate-new-box.png' | file_img_url: 'medium' }}"
+                                        class="img-fluid lazyload h-auto"
+                                        :alt="subscriptionFlow.subscriptionPlan.title"/> 
+                                    </template>
+                                    <template v-else-if="subscriptionFlow.selectedPlanType === 'plan_jr'">
+                                        <img src="{{ 'owlcrate-jr-new.png' | file_img_url: 'pico' }}"
+                                        data-src="{{ 'owlcrate-jr-new.png' | file_img_url: 'medium' }}"
+                                        class="img-fluid lazyload  h-auto"
+                                        :alt="subscriptionFlow.subscriptionPlan.title"/>
+                                    </template>
+                                     <span v-else>
+                                        {{ 'product-1' | placeholder_svg_tag: 'img-fluid' }}
+                                    </span>
+                                </div>
+                                <div class="gift-box-text w-50 pl-3" v-show="subscriptionFlow.selectedPlanType != 'null'">
+                                    <template v-if="subscriptionFlow.selectedPlanType === 'plan_adult'">
+                                        <template v-if="subscriptionFlow.isGiftSub == 'true'">
+                                            <h6 class="ls-base text-capitalize mb-0 font-weight-semi-bold">OwlCrate (Gift)</h6> 
+                                        </template>                                        
+                                        <h6 class="ls-base text-capitalize mb-0 font-weight-semi-bold" v-else>OwlCrate</h6> 
+                                        <p class="font-size-sm mb-0">Ages 14+</p>
+                                    </template>
+                                    <template v-if="subscriptionFlow.selectedPlanType === 'plan_jr'">
+                                        <template v-if="subscriptionFlow.isGiftSub == 'true'">
+                                            <h6 class="ls-base text-capitalize mb-0 font-weight-semi-bold">OwlCrate JR (Gift)</h6> 
+                                        </template>                                        
+                                        <h6 class="ls-base text-capitalize mb-0 font-weight-semi-bold" v-else>OwlCrate JR</h6> 
+                                        <p class="font-size-sm mb-0">Ages 8-12</p>
+                                    </template>
+                                    <a href="#" @click.prevent="_prevStage($event, 2, 1)" class="line-hover-primary font-size-ex-sm">Change Box</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gift-box-item box-item-plan py-4" v-if="subscriptionFlow.subscriptionPayment != null">
+                            <h6 class="font-size-sm mb-2">Your Plan:</h6>
+                            <div class="d-flex align-items-center">
+                                <div class="product-img">
+                                    <img v-if="subscriptionFlow.subscriptionPayment.featured_image != null" :src="_getSizedImageUrl(subscriptionFlow.subscriptionPayment.featured_image, 'pico')"
+                                    :data-src="_getSizedImageUrl(subscriptionFlow.subscriptionPayment.featured_image, 'medium')"
+                                    class="img-fluid lazyload"
+                                    :alt="subscriptionFlow.subscriptionPayment.title"/>   
+                                    <span v-else>
+                                        {{ 'product-1' | placeholder_svg_tag: 'img-fluid' }}
+                                    </span>
+                                </div>
+                                <div class="gift-box-text pl-3">
+                                    <h6 class="ls-base text-capitalize mb-0 font-weight-semi-bold" v-text="subscriptionFlow.subscriptionPayment.title"></h6>
+                                    <p class="font-size-sm mb-0" v-html="_formatMoney(subscriptionFlow.subscriptionPayment.price)"></p>
+                                    <a href="#" @click.prevent="_prevStage($event, 3, 2)" class="line-hover-primary font-size-ex-sm">Change Plan</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-9" data-step="2">
+                    <h3 class="mb-4 text-center text-md-left"><template v-if="subscriptionFlow.isGiftSub == 'true'">Select Your Gift Plan</template><template v-else>Select Your Subscription Plan</template></h3>
+                    <div class="row align-items-end">
+                        <div class="col-md-4 mb-3 mb-md-0" v-for="variant in subscriptionFlow.subscriptionPlanJson" v-if="variant.is_hidden != 'true'" data-plan-wrap>
+                            <div class="card shadow-none border-secondary plan-item">
+                                <p v-if="variant.save > 0" :class="{'bg-primary': subscriptionFlow.selectedPlanType == 'plan_jr', 'bg-blurple-100': subscriptionFlow.selectedPlanType == 'plan_adult'}" class=" text-center py-1 mb-0 text-white ls-1 font-weight-semi-bold font-size-xs offer-text" v-text="'You Save '+ _formatMoney(variant.save)+'!'"></p>
+                                <div class="card-body d-flex align-items-center d-md-block py-5">
+                                    <div class="d-md-none plan-mobile-img">
+                                        <div class="product-img">                                            
+                                            <img test v-if="variant.featured_image != null" :src="_getSizedImageUrl(variant.featured_image, 'pico')"
+                                            :data-src="_getSizedImageUrl(variant.featured_image, '480x')"
+                                            class="img-fluid h-100 lazyload"
+                                            :alt="variant.title"/>
+                                            <img v-else-if="variant.title.includes('3')" src="{{'3-month-plan.jpg' | file_img_url: 'pico'}}" data-src="{{'3-month-plan.jpg' | file_img_url: '480x'}}"  :alt="variant.title" class="img-fluid h-100 lazyload" />
+                                            <img v-else-if="variant.title.includes('6')" src="{{'6-month-plans.jpg' | file_img_url: 'pico'}}" data-src="{{'6-month-plans.jpg' | file_img_url: '480x'}}" :alt="variant.title" class="img-fluid h-100 lazyload" />
+                                            <img v-else src="{{'owl-pack.jpg' | file_img_url: 'pico'}}" data-src="{{'owl-pack.jpg' | file_img_url: '480x'}}" :alt="variant.title" class="img-fluid h-100 lazyload" />
+                                        </div>
+                                    </div>
+                                    <div class="plan-item-text text-left text-md-center">
+                                        <h6 class="mb-1" v-text="variant.title"></h6>
+                                        <h5 v-text="_formatMoney(variant.price)"></h5>
+                                        <div class="product-img mb-4 d-none d-md-block">
+                                            <img v-if="variant.featured_image != null" :src="_getSizedImageUrl(variant.featured_image, 'pico')"
+                                            :data-src="_getSizedImageUrl(variant.featured_image, '480x')"
+                                            class="img-fluid shadow-none h-100 lazyload"
+                                            :alt="variant.title"/>
+                                            <img v-else-if="variant.title.includes('3')" src="{{'3-month-plan.jpg' | file_img_url: 'pico'}}" data-src="{{'3-month-plan.jpg' | file_img_url: '480x'}}" class="img-fluid lazyload shadow-none h-100" />
+                                            <img v-else-if="variant.title.includes('6')" src="{{'6-month-plans.jpg' | file_img_url: 'pico'}}" data-src="{{'6-month-plans.jpg' | file_img_url: '480x'}}" class="img-fluid lazyload shadow-none h-100" />
+                                            <img v-else src="{{'owl-pack.jpg' | file_img_url: 'pico'}}" data-src="{{'owl-pack.jpg' | file_img_url: '480x'}}" class="img-fluid shadow-none lazyload h-100" />
+                                        </div>
+                                        <p class="mb-0 card-total font-size-ex-sm" data-card-total><b>Total Price:</b> <br class="d-md-none" /> <span v-text="_formatMoney(variant.price) + ' + Shipping'"></span></p>
+                                        <template v-if="variant.metafields.charge_internal_frequency != null">
+                                            <p class="mb-0 font-size-ex-sm" v-if="variant.metafields.charge_internal_frequency == 1" v-text="subscriptionFlow.isGiftSub == 'true' ?  'One-Time Box' : 'Charged Every Month'"></p>
+                                            <p class="mb-0 font-size-ex-sm" v-else v-text="subscriptionFlow.isGiftSub == 'true' ? 'One-Time '+variant.metafields.charge_internal_frequency+'-Month Subscription' : 'Charged Every '+variant.metafields.charge_internal_frequency+' Months'"></p>
+                                        </template>
+
+                                        <template v-if = "subscriptionFlow.selectedPlanType == 'plan_adult'" >
+                                            <a href="#" v-if="soldoutAdult == false || isUtmAdult" @click.prevent="_selectedPlan(variant)" class="btn btn-sm btn-dark mt-2 mt-md-3">Select</a>
+                                        </template>
+
+                                        <template v-if = "subscriptionFlow.selectedPlanType == 'plan_jr'">
+                                            <a href="#" v-if = "soldoutJr == false || isUtmJr" @click.prevent="_selectedPlan(variant)" class="btn btn-sm btn-primary mt-2 mt-md-3">Select</a>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center" v-if = "soldoutAdult && subscriptionFlow.selectedPlanType == 'plan_adult'">
+                            <template v-if="isUtmAdult == false">
+                                <a href="#" @click.prevent="_soldoutProduct(subscriptionFlow.selectedPlanType, 'type-gift')"  class="btn btn-sm btn-dark mt-2 mt-md-3" v-if="subscriptionFlow.isGiftSub == 'true'">{{ settings.modal_adult_btn_txt }}</a>
+                                <a href="#" @click.prevent="_soldoutProduct(subscriptionFlow.selectedPlanType, 'type-normal')"  class="btn btn-sm btn-dark mt-2 mt-md-3" v-else>{{ settings.modal_adult_btn_txt }}</a>
+                            </template>
+                        </div>
+                        <div class="col-12 text-center" v-if = "soldoutJr && subscriptionFlow.selectedPlanType == 'plan_jr'">
+                            <template v-if="isUtmJr == false">
+                                <a href="#" @click.prevent="_soldoutProduct(subscriptionFlow.selectedPlanType, 'type-gift')"  class="btn btn-sm btn-primary mt-2 mt-md-3" v-if="subscriptionFlow.isGiftSub == 'true'">{{ settings.modal_jr_btn_txt }}</a>
+                                <a href="#" @click.prevent="_soldoutProduct(subscriptionFlow.selectedPlanType, 'type-normal')"  class="btn btn-sm btn-primary mt-2 mt-md-3" v-else>{{ settings.modal_jr_btn_txt }}</a>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-9 d-none" data-step="3">
+
+                    <template  v-if="subscriptionFlow.isGiftSub == 'true'">
+                        <h3 class="mb-3 text-center text-md-left">Select your gift delivery option</h3>
+                        <div class="custom-control custom-checkbox mb-3">
+                            <input id="renew_gift" type="checkbox" class="custom-control-input" @click="_giftRenew($event);">
+                            <label for="renew_gift" class="custom-control-label"><span>Automatically renew this gift subscription</span></label>
+                        </div>
+                       <div class="border border-secondary py-3 mb-form-gutter delivery-option before-open" data-gift-immidiate data-delivery-option>
+                            <div class="d-flex align-items-center px-3 px-sm-4 px-md-5 py-3 cursor-pointer delivery-clickble" @click="_isExpandBox($event)"> 
+                                <div class="gift-delivery-img">
+                                    <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/10-Ship_Gift_Immediately.png?96469" style="width:5rem;" alt="Gift Icon" />
+                                </div>
+                                <div class="gift-delivery-text pl-5 pl-md-6">
+                                    <h6 class="mb-0 mb-md-1 text-capitalize">{{section.settings.opt_head_txt1}}</h6>
+                                    {% if section.settings.opt_caption1 != blank %}<p class="ls-1 mb-0">{{ section.settings.opt_caption1 }}</p>{% endif %}
+                                </div>
+                            </div>
+                            <div class="px-4 px-md-5 delivery-box">
+                                <p class="text-secondary mb-0">Enter the gift-recipient's information.</p>
+                                <p class="text-danger small">* We'll ask you for your own information during checkout.</p>
+                                <p data-validation-error class="text-danger" v-show="giftEmail.emailValidateMsg && subscriptionFlow.giftType == 'gift-recharge-immediately'" v-text="giftEmail.emailValidateMsg"></p>
+                                <div class="form-row">
+                                    <div class="col-12 col-sm-6 col-md-4 mb-form-gutter">
+                                        <input type="text" class="form-control form-control-sm font-base ls-base font-italic" placeholder="First Name*" autocomplete="off" data-immidiate-firstname>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-form-gutter">
+                                        <input type="text" class="form-control form-control-sm font-base ls-base font-italic" placeholder="Last Name*" autocomplete="off" data-immidiate-last_name>
+                                    </div>
+                                    <div class="col-12 col-md-4 mb-form-gutter">
+                                        <input type="text" class="form-control form-control-sm font-base ls-base font-italic" placeholder="Company"  autocomplete="off" data-immidiate-company>
+                                    </div>
+                                    <div class="col-12 mb-form-gutter">
+                                        <input type="email" class="form-control form-control-sm font-base ls-base font-italic" placeholder="Email Address*" v-model="giftEmail.rEmail" autocomplete="off" :class="{'border-danger':giftEmail.isEmailValidate}" data-immidiate-email>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-6 mb-form-gutter">
+                                        <input type="text" class="form-control form-control-sm font-base ls-base font-italic" id="street_number" placeholder="Address 1*" autocomplete="off" autocapitalize="words" data-field="Address" data-fields="" data-immidiate-address1>                                        
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-6 mb-form-gutter">
+                                        <input type="text" class="form-control form-control-sm font-base ls-base font-italic" name="properties[address2]" autocapitalize="words" id="route" placeholder="Address 2"autocomplete="off" data-immidiate-address2>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-form-gutter">
+                                        <input type="text"  name="properties[city]" class="form-control form-control-sm font-base ls-base font-italic" id="locality" placeholder="City*" aria-required="true" aria-invalid="false" autocomplete="off" data-immidiate-city>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-4 mb-form-gutter" id="province-wrap" data-province-wrap>
+                                        <select class="form-control form-control-sm font-base ls-base font-italic" name="properties[province]" data-province=""  id="administrative_area_level_1"   aria-required="true" aria-invalid="false" data-field="Province" data-immidiate-province></select>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-4 mb-form-gutter">
+                                        <input type="text" class="form-control form-control-sm font-base ls-base font-italic" placeholder="Zip Code*" id="postal_code" autocomplete="off" data-immidiate-zip >
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-6 mb-form-gutter">
+                                        <select class="form-control form-control-sm font-base ls-base font-italic" id="country" name="properties[country]" data-default="{{form.country}}" data-immidiate-country>{{ country_option_tags }}</select>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-6 mb-form-gutter">
+                                        <input type="text" class="form-control form-control-sm font-base ls-base font-italic" placeholder="Phone*" autocomplete="off" data-immidiate-phone>
+                                    </div>
+                                    <div class="col-12 mb-2">
+                                        <div class="row align-items-center">
+                                            <div class="col-12 col-md-6 order-md-2 text-md-right mb-3 mb-md-0">
+                                                <span class="lead"><span class="font-weight-semi-bold">Subtotal:</span> <span v-text="_formatMoney(subscriptionFlow.subTotal)"></span><span class="font-size-sm">{{shop.currency}}</span></span>
+                                                {% comment %} @click.prevent="_addToCartSubscription($event,'gift-recharge-immediately')"  {% endcomment %}
+                                                <a href="#" @click.prevent="_checkEmail(giftEmail.rEmail,'gift-recharge-immediately')" class="btn btn-primary ml-3 disabled" :disabled="isLoading && loadingEvent == 'cartAdding'" data-checkout>
+                                                    <template v-if="isLoading && loadingEvent == 'cartAdding gift-recharge-immediately'">
+                                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ 'general.wait' | t }}
+                                                    </template>
+                                                    <template v-else>Checkout</template>
+                                                </a>
+                                            </div>
+                                            <div class="col-12 col-md-6 order-md-1 text-center text-md-left">
+                                                {% if section.settings.ship_txt != blank %}<p class="mb-0 font-size-xs ls-1"><span class="font-weight-semi-bold">Shipping:</span>  {{ section.settings.ship_txt }}</p>{% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="border border-secondary py-3 delivery-option before-open" data-gift-email data-delivery-option v-show="!subscriptionFlow.giftRenew">
+                            <div class="d-flex align-items-center px-3 px-sm-4 px-md-5 py-3 cursor-pointer delivery-clickble" @click="_isExpandBox($event)"> 
+                                <div class="gift-delivery-img">
+                                   <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/11-Send_gift_via_email.png?96469" style="width:5rem;" alt="Gift Icon" />
+                                </div>
+                                <div class="gift-delivery-text pl-5 pl-md-6">
+                                    <h6 class="mb-0 mb-md-1  text-capitalize">{{section.settings.opt_head_txt2}}</h6>
+                                    {% if section.settings.opt_caption2 != blank %}<p class="ls-1 mb-0">{{ section.settings.opt_caption2 }}</p>{% endif %}
+                                </div>
+                            </div>
+                            <div class="px-4 px-md-5 delivery-box mt-0" data-giftemail>
+                                <p class="text-secondary mb-0">Enter the gift-recipient's information.</p>
+                                <p class="text-danger small">* We'll ask you for your own information during checkout.</p>
+                                <div class="row mt-2">
+                                    <div class="col-12 col-md-4">
+                                        <h6 class="text-capitalize mb-2">Send Gift Email:</h6>
+                                        <flat-pickr
+                                            value="{{ cart.attributes.date }}"
+                                            :config="datePickerConfig"
+                                            :required="false"
+                                            v-model="giftEmail.date"
+                                            name="attributes[date]"
+                                            aria-label="Select Date"
+                                            placeholder="Select Date*"
+                                            class="form-control form-control-sm bg-white font-base ls-base font-italic mb-3" data-giftemail-date>
+                                        </flat-pickr>
+                                        {% comment %} <input type="text" class="form-control form-control-sm font-base ls-base font-italic mb-3" placeholder="Select Date"> {% endcomment %}
+                                        {% comment %} <p class="font-size-sm">The recipient will receive an email on
+                                            the selected date below to claim
+                                            their gift.</p> {% endcomment %}
+                                            <p class="font-size-sm">Choose the date you'd like your gift recipient to receive their subscription.</p>
+                                    </div>
+                                    <div class="col-12 col-md-8">
+                                        <p data-validation-error class="text-danger mb-2" v-show="giftEmail.emailValidateMsg && subscriptionFlow.giftType == 'gift-recharge-email'" v-text="giftEmail.emailValidateMsg"></p>                         
+                                        <div class="form-row">
+                                            <div class="col-12 col-sm-6 mb-form-gutter">
+                                                <input type="text" class="form-control form-control-sm font-base ls-base font-italic" placeholder="First Name*" autocomplete="off" data-giftemail-firstname>
+                                            </div>
+                                            <div class="col-12 col-sm-6 mb-form-gutter">
+                                                <input type="text" class="form-control form-control-sm font-base ls-base font-italic" placeholder="Last Name*" autocomplete="off" data-giftemail-lastname>
+                                            </div>
+                                            <div class="col-12 mb-form-gutter">
+                                                <input type="email" class="form-control form-control-sm font-base ls-base font-italic" placeholder="Email*" v-model="giftEmail.gEmail" autocomplete="off" :class="{'border-danger':giftEmail.isEmailValidate}" data-giftemail-email>
+                                            </div>
+                                            <div class="col-12 mb-form-gutter">
+                                                <textarea rows="5" class="form-control form-control-sm font-base ls-base font-italic" placeholder="Gift Message" autocomplete="off" data-giftemail-msg></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-2">
+                                        <div class="row align-items-center">
+                                            <div class="col-12 col-md-6 order-md-2 text-md-right mb-3 mb-md-0">
+                                                <span class="lead"><span class="font-weight-semi-bold">Subtotal:</span> <span v-text="_formatMoney(subscriptionFlow.subTotal)"></span><span class="font-size-sm">{{shop.currency}}</span></span>
+                                                {% comment %} @click.prevent="_addToCartSubscription($event,'gift-recharge-email')" {% endcomment %}
+                                                <a href="#" @click.prevent="_checkEmail(giftEmail.gEmail,'gift-recharge-email')" class="btn btn-primary ml-3 disabled" :disabled="isLoading && loadingEvent == 'cartAdding'" data-checkout>
+                                                <template v-if="isLoading && loadingEvent == 'cartAdding gift-recharge-email'">
+                                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ 'general.wait' | t }}
+                                                </template>
+                                                <template v-else>Checkout</template>
+                                                </a>
+                                            </div>
+                                            <div class="col-12 col-md-6 order-md-1 text-center text-md-left">
+                                                {% if section.settings.ship_txt != blank %}<p class="mb-0 font-size-xs ls-1"><span class="font-weight-semi-bold">Shipping:</span>  {{ section.settings.ship_txt }}</p>{% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </template>
+                    <template v-else> 
+                        <h3 class="mb-0 text-center text-md-left">Other products we know you’ll love</h3>
+                        <p class="ls-1 text-center text-md-left">
+                          Subscription boxes are generally shipped out between the 15th and 20th of each month. Add-on items are shipped out 2-3 days after completing your order (except limited edition products which will ship at the time of their stated release).
+                      </p>
+                        <div class="border border-secondary py-4 px-4 px-md-7 one-time-gift" data-addons-wrap>
+                            <div class="carousel row custom-mobile-grid" role="tree" data-addons-section>
+                                {% assign productcount = section.settings.per_row_product %}
+                                <template v-if="subscriptionFlow.addonType == 'box_adult'">
+                                    {% for product in collections[section.settings.choose_addoncoll_owlcrate].products limit: productcount %}
+                                    <div class="carousel-cell col-6 col-sm-4 col-md-3 custom-mobile-griditem" role="treeitem" data-addon-list="{{product.handle}}">
+                                        <div class="card card-product card-product-style-1 shadow-none border-0 text-left">
+                                            <div class="card-img text-center position-relative">
+                                                <a href="javascript:void(0);" class="position-relative product-img">
+                                                    {% if product.featured_image != blank %}
+                                                        <img src="{{ product.featured_image | img_url: 'pico' }}"
+                                                        data-src="{{ product.featured_image | img_url: 'large' }}"                                                                        
+                                                        alt="{{ product.featured_image.alt | escape }}" class="img-fluid lazyload" />
+                                                    {% else %}
+                                                        {{ 'image' | append: current | placeholder_svg_tag: 'img-fluid' }}
+                                                    {% endif %}
+                                                </a>
+                                            </div>
+                                            <div class="card-body px-0 pb-1 pt-2 text-center">
+                                                <h5 class="font-size-sm ls-base product-title" data-product-title>{{product.title}}</h4>
+                                                <p class="font-size-sm mb-2">{{product.price | money}}</p>
+                                                <a href="#" @click.prevent="_chooseAddons('{{product.handle}}')" class="btn btn-sm btn-outline-primary w-100" data-add>ADD</a>
+                                                <a href="#" @click.prevent="_removeAddons('{{product.handle}}')" class="btn btn-sm btn-outline-secondary w-100 d-none" data-remove>REMOVE</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </template>
+                                <template v-else-if="subscriptionFlow.addonType == 'box_junior'">
+                                    {% for product in collections[section.settings.choose_addoncoll_owlcratejr].products limit: productcount %}
+                                    <div class="carousel-cell col-6 col-sm-4 col-md-3 custom-mobile-griditem" role="treeitem" data-addon-list="{{product.handle}}">
+                                        <div class="card card-product card-product-style-1 shadow-none border-0 text-left">
+                                            <div class="card-img text-center position-relative">
+                                                <a href="javascript:void(0);" class="position-relative product-img">
+                                                    {% if product.featured_image != blank %}
+                                                        <img src="{{ product.featured_image | img_url: 'pico' }}"
+                                                        data-src="{{ product.featured_image | img_url: 'large' }}"                                                                        
+                                                        alt="{{ product.featured_image.alt | escape }}" class="img-fluid lazyload" />
+                                                    {% else %}
+                                                        {{ 'image' | append: current | placeholder_svg_tag: 'img-fluid' }}
+                                                    {% endif %}
+                                                </a>
+                                            </div>
+                                            <div class="card-body px-0 pb-1 pt-2 text-center">
+                                                <h5 class="font-size-sm ls-base product-title" data-product-title>{{product.title}}</h4>
+                                                <p class="font-size-sm mb-2">{{product.price | money}}</p>
+                                                <a href="#" @click.prevent="_chooseAddons('{{product.handle}}')" class="btn btn-sm btn-outline-primary w-100" data-add>ADD</a>
+                                                <a href="#" @click.prevent="_removeAddons('{{product.handle}}')" class="btn btn-sm btn-outline-secondary w-100 d-none" data-remove>REMOVE</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </template>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between justify-content-md-end align-items-center mt-4" data-checkout-wrap>
+                            <h5 class="lead mb-0"><span class="font-weight-semi-bold mr-2">Subtotal:</span><span v-text="_formatMoney(subscriptionFlow.subTotal)"></span></h5>
+                            <a href="#" @click.prevent="_addToCartSubscription('subscription')" class="btn btn-primary ml-3 ml-md-5" :disabled="isLoading && loadingEvent == 'cartAdding'" :class="{'disabled': isLoading && loadingEvent == 'cartAdding'}">
+                                <template v-if="isLoading && loadingEvent == 'cartAdding subscription'">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ 'general.wait' | t }}
+                                </template>
+                                <template v-else>
+                                    <template v-if="subscriptionFlow.productAddon.length == 0"><span class="d-none d-md-inline-block">no thanks,</span> Checkout</template>
+                                    <template v-else>Checkout</template>
+                                </template>
+                            </a>
+                        </div>
+                    </template>
+                </div>
+                
+            </div>
+        </div>
+    </div>      
+</section>
+
+{% assign collection = collections[section.settings.choose_plan_products] %}
+{% unless collection == empty %}
+    {% for product in collection.products %}
+        {% unless product.tags contains 'is_hidden' %}
+            {% unless product.variants[0].metafields.subscription.is_hidden == true  %}                        
+            <script type="application/json" data-sub-json>
+                {
+                    "variant": {{ product.variants[0] | json }},
+                    "product": {
+                        "product_id": {{product.id}},
+                        "product_title": "{{product.title}}",
+                        "product_price": {{product.metafields.c_f.original_price}},
+                        "product_featured_image": "{{product.featured_image.src}}",
+                        "product_type": "{% if product.tags contains 'plan_adult' %}plan_adult{% else %}plan_jr{% endif %}",
+                        "addonType": "{% if product.tags contains 'plan_adult' %}box_adult{% else %}box_junior{% endif %}",
+                        "product_tags": [{% if product.tags.size > 0 %}{% for tag in product.tags %}"{{tag}}"{% unless forloop.last%},{% endunless %}{% endfor %}{% endif %}]
+                    },
+                    "metafields": {
+                        "subscription_id": {{ product.metafields.subscriptions.subscription_id }},
+                        "shipping_interval_unit_type": "{{ product.metafields.subscriptions.shipping_interval_unit_type }}",
+                        "charge_internal_frequency": {{ product.variants[0].metafields.subscription.charge_internal_frequency }},
+                        "shipping_interval_frequency": {{ product.variants[0].metafields.subscription.shipping_interval_frequency }},
+                        "discount_variant_id": {{ product.variants[0].metafields.subscriptions.discount_variant_id }},
+                        "is_hidden": {% if product.variants[0].metafields.subscription.is_hidden != '' %}{{ product.variants[0].metafields.subscription.is_hidden }}{% else %}null{% endif %}
+                    }
+                }
+            </script>
+            {% endunless %}
+        {% endunless %}
+    {% endfor %}
+{% endunless %}  
+
+{% for product in collections[section.settings.choose_addoncoll_owlcrate].products limit: productcount %}
+<script type="application/json" data-addon-adult-{{product.handle}}>
+    {{product|json}}
+</script>
+{% endfor %}
+
+{% for product in collections[section.settings.choose_addoncoll_owlcratejr].products limit: productcount %}
+<script type="application/json" data-addon-junior-{{product.handle}}>
+    {{product|json}}
+</script>
+{% endfor %}
+
+{% schema %}
+  {
+    "name": "Subscription Template",
+    "settings": [        
+        {
+            "type": "header",
+            "content": "Subscription product"
+        },
+        {
+            "type": "collection",
+            "id": "choose_plan_products",
+            "label": "Choose Plan Products"
+        },
+        {
+            "type": "header",
+            "content": "Addons Content"
+        },        
+        {
+            "type": "collection",
+            "id": "choose_addoncoll_owlcrate",
+            "label": "Choose Collection For Owlcrate"
+        },
+        {
+            "type": "collection",
+            "id": "choose_addoncoll_owlcratejr",
+            "label": "Choose Collection For Owlcrate JR."
+        },
+        {
+            "type": "range",
+            "id": "per_row_product",
+            "label": "Total Product To Show",
+            "min": 4,
+            "max": 10,
+            "step": 1,
+            "default": 6
+        },
+        {
+            "type": "header",
+            "content": "Shipping Text"
+        },
+        {
+            "type": "text",
+            "id": "ship_txt",
+            "label": "Shipping Charge Text"
+        },
+        {
+            "type": "header",
+            "content": "Gift Delivery Option Content"
+        },
+        {
+            "type": "text",
+            "id": "opt_head_txt1",
+            "label": "Option Head Text 1",
+            "default": "SHIP THE UPCOMING BOX"
+        },
+        {
+            "type": "textarea",
+            "id": "opt_caption1",
+            "label": "Option Caption Text 1"
+        },
+        {
+            "type": "text",
+            "id": "opt_head_txt2",
+            "label": "Option Head Text 2",
+            "default": "SEND GIFT VIA EMAIL"
+        },
+        {
+            "type": "textarea",
+            "id": "opt_caption2",
+            "label": "Option Caption Text 2"
+        }
+    ]
+  }
+{% endschema %}

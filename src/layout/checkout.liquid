@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="{{ locale }}" dir="{{ direction }}" class="{{ checkout_html_classes }}">
+  <head>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HLNLBXRN7F"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    
+    gtag('config', 'G-HLNLBXRN7F');
+  </script>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=3, initial-scale=1, shrink-to-fit=no, user-scalable=0">
+    <meta name="referrer" content="origin">
+    {% if settings.favicon_image != blank %}
+      <link rel="shortcut icon" href="{{ settings.favicon_image | img_url: '32x32' }}" type="image/png">
+      {% endif %}
+    <title>{{ page_title }}</title>
+	  <link href="https://fonts.googleapis.com/css?family=Muli:300,400,600,700,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Barlow:300,400,500,600,700&display=swap" rel="stylesheet">
+
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+    {{ content_for_header }}
+
+    {{ checkout_stylesheets }}
+    
+    {{ checkout_scripts }}
+    
+    <style>
+      body{
+        font-family: 'Muli', sans-serif;
+        font-weight:400;
+        color:#49504f;
+        letter-spacing: 0.025em;
+      }
+      button:focus, input:focus, optgroup:focus, select:focus, textarea:focus{
+        outline:none;
+      }
+      h1,.h1,h2,.h2,h3,.h3,h4,.h4{
+        font-family: 'Barlow', sans-serif;
+        font-weight:400;
+      }
+      h1,.h1{
+        font-size: 3.75rem;
+      }
+      h2,.h2{
+        font-size: 1.5rem;
+      }
+      h3,.h3{
+        font-size: 2.5rem;
+      }
+      h4,.h4{
+        font-size: 2.1875rem;
+      }
+      h5,.h5{
+        font-weight: 600;
+        letter-spacing: 0;
+        font-size: 1.5625rem;
+      }
+      h6,.h6{
+        text-transform: uppercase;
+        font-family: "Muli", sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        font-size: 1rem;
+      }
+      .btn{
+        display: inline-block;
+        font-family: Barlow,sans-serif;
+        font-weight: 600;
+        text-align: center;
+        vertical-align: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-color: transparent;
+        border: 2px solid transparent;
+        padding: 1rem 1.875rem;
+        font-size: .9375rem;
+        line-height: 1;
+        border-radius: 0;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        color: #fff;
+        background-color: #26bcb4;
+        border-color: #26bcb4;
+        cursor: pointer;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+      }
+      .btn:hover,
+      .btn:focus{
+        color: #fff;
+        background-color: #209c96;
+        border-color: #1d928b;
+      }
+      .input-checkbox{
+        border-radius:0;
+        outline:none;
+      }
+      .breadcrumb__item .breadcrumb__link,
+      .breadcrumb__item .breadcrumb__text{
+        font-family: 'Barlow', sans-serif;
+        font-size: 0.86rem;
+      }
+      .policy-list .policy-list__item a{
+        font-family: 'Barlow', sans-serif;
+        font-size: 0.86rem;
+      }
+      .js .sidebar .btn--disabled{
+        border-color:#c8c8c8;
+      }
+      .field__input{
+        border-radius:0;
+        border-color:#000;
+      }
+      .main .field__input{
+        border-color:#000;
+      }
+      .field__input:focus, .field__input-wrapper--flag-focus .field__input{
+        border-color: #26bcb4;
+      }
+      .field--error .field__input{
+        border-color: #ff6d6d;
+      }
+      .content-box{
+        border-radius:0;
+      }
+      button[disabled]{
+        opacity: 0.3;
+      }
+      #checkout-recaptcha-node {
+         margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    {{ skip_to_content_link }}
+
+    <div class="banner" data-header>
+      <div class="wrap">
+        {{ content_for_logo }}
+      </div>
+    </div>
+
+    {{ order_summary_toggle }}
+
+    <div class="content" data-content>
+      <div class="wrap">
+        <div class="main" role="main">
+          <div class="main__header">
+            {{ content_for_logo }}
+            {{ breadcrumb }}
+            {{ alternative_payment_methods }}
+          </div>
+          <div class="main__content">
+            {{ content_for_layout }}
+          </div>
+          <div class="main__footer">
+            {{ content_for_footer }}
+          </div>
+        </div>
+        <div class="sidebar" role="complementary">
+          <div class="sidebar__header">
+            {{ content_for_logo }}
+          </div>
+          <div class="sidebar__content">
+            {{ content_for_order_summary }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{ tracking_code }}
+
+    <script type="text/javascript">
+      
+      var $checkoutForm = document.querySelector('form.edit_checkout[data-customer-information-form="true"]')
+      if ($checkoutForm && $checkoutForm !== null) {
+        var $continueBtn = document.getElementById('continue_button')
+        $continueBtn.setAttribute('disabled', 'true')
+        var $recaptchaContainer = document.createElement('div')
+        $recaptchaContainer.id = 'checkout-recaptcha-node'
+        $checkoutForm.appendChild($recaptchaContainer)
+      }
+      
+      var verifyCallback = function(response) {
+        if (response && $continueBtn) {
+          $continueBtn.removeAttribute('disabled')
+        }
+      }
+      var expiredCallback = function(response) {
+        console.log(expired)
+      }
+
+      var onloadCallback = function() {
+        if ($checkoutForm && $checkoutForm !== null) {
+          grecaptcha.render('checkout-recaptcha-node', {
+            'sitekey' : '6LevTm4hAAAAADfBc4vjsqOxfyfp9BJ2X9liCOSK',
+            'callback' : verifyCallback,
+            'expired-callback': expiredCallback
+          })
+        }
+      };
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
+  </body>
+
+<script type='text/javascript' defer>
+function getCartItems() {
+      var requestId;
+      const APIHeader = {
+       Accept: 'application/json',
+       'Content-Type': 'application/json',
+      };
+      // Initialize an agent at application startup.
+      const botdPromise = import('https://openfpcdn.io/botd/v0.1')
+       .then( Botd => Botd.load({ publicKey: 'dO0dDNpTdNGZvrreuTrDvGey' }))
+       // Get the bot detection result when you need it.
+       // Result will contain the `requestId` property, that you can securely verify on the server.
+       botdPromise
+        .then(botd => botd.detect())
+        .then(function(result) {
+          console.log(result);
+          // We will have requestId here in result, and we will have to make API call to API Manager with this requestId and if we receive possibility as 1 for any of these four (https://d.pr/i/iq4mch) then we have to disable checkout & cart buttons.
+          requestId = result.requestId;
+          // console.log('requestId-----', requestId);
+          const config = {
+            url: '/verify',
+            method: 'POST',
+            data: {
+              requestId: requestId,
+            },
+          };
+          fetch('https://api-manager.praella.app/api/fingerprintjs/common', {
+            method: 'POST',
+            headers: APIHeader,
+            body: JSON.stringify(config),
+          })
+          .then(response => response.json())
+          .then(data => {
+            // console.log('data-----',data);
+            if (data.vm.probability == 1 || data.bot.automationTool.probability == 1 || data.bot.browserSpoofing.probability == 1 || data.bot.searchEngine.probability == 1) {
+              $('.main__content form input[type="hidden"]').each(function(index, value) {
+                value.remove();
+              });
+              $('.main__content .field__input-wrapper').each(function(index, value) {
+                if($(value).find('input')){
+                  $(value).find('input').removeAttr('name');
+                  $(value).find('input').attr('disabled','disabled');
+                }
+                if($(value).find('select')){
+                  $(value).find('select').removeAttr('name');
+                  $(value).find('select').attr('disabled','disabled');
+                }
+              });
+              $('#continue_button').attr('disabled','disabled');
+              $("#continue_button, [data-step-footer] button[type='submit']").removeAttr('type name');
+              $('form').removeAttr('action method');
+              alert('There seems to be an issue with your browser. Please contact our customer support support@owlcrate.com');
+            }
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+        })
+      .catch(error => console.error(error))
+    }
+    getCartItems();
+</script>
+</html>
+<script src="https://cdn-widgetsrepository.yotpo.com/v1/loader/VfisLjUzAMGFZM2JJS5QKw" async></script>
+<div class="yotpo-widget-instance" data-yotpo-instance-id="163517"></div>

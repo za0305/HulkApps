@@ -1,0 +1,50 @@
+{%- liquid
+  assign product = section.settings.product
+  assign title = section.settings.title
+  assign planType = section.settings.planType
+%}
+
+{{ 'section-subscription-bar.scss.css' | asset_url | stylesheet_tag }}
+
+<section id="section-{{ section.id }}" class="subscription-bar">
+  <div class="subscription-bar__body">
+    <h3>{{ title }}</h3>
+    <p>Total Price: <strong>{{ product.variants[0].price | money }}</strong> <span>+ Shipping</span></p>
+    {% if btn_txt != ''
+    and product != blank
+    and planType != blank -%}
+      <a href="#" @click.prevent="_chooseProductOnPage('{{ planType }}', 2, 'type-normal')" class="btn btn--primary cta__btn">Select</a>
+    {% endif %}
+  </div>
+</section>
+
+
+
+{% schema %}
+{
+  "name": "Subscription Bar",
+  "settings":[
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Subscription"
+    },
+    {
+      "type": "text",
+      "id": "planType",
+      "label": "Plan Type",
+      "default": "plan_adult"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Subscription Bar"
+    }
+  ]
+}
+{% endschema %}

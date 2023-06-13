@@ -1,0 +1,88 @@
+<script type='text/javascript' defer>
+
+function getCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(';');
+  for(var i=0;i < ca.length;i++) {
+      var c = ca[i];
+      while (c.charAt(0)==' ') c = c.substring(1,c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+  }
+  return null;
+}
+
+getCookie('fraud_owlcrate');
+var status = '';
+if (document.cookie && document.cookie.indexOf('fraud_owlcrate') != -1) {
+  status = 'Cookie is present';
+} else {
+  status = 'Cookie is NOT present. It may be expired, or never set';
+  createCookie('fraud_owlcrate', 'true', 5);
+}
+if (status != 'Cookie is present') {
+  // if (app.currentTemplate === 'cart'){
+    getCartItems();
+  // }
+}
+
+function createCookie(name, value, minutes) {
+  var date, expires;
+  if (minutes) {
+    date = new Date();
+    date.setTime(date.getTime()+(minutes*60*1000));
+    expires = "; expires="+date.toUTCString();
+  } else {
+    expires = "";
+  }
+  document.cookie = name+"="+value+expires+"; path=/";
+}
+
+
+function getCartItems() {
+  var requestId;
+  const APIHeader = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  };
+  // Initialize an agent at application startup.
+  const botdPromise = import('https://openfpcdn.io/botd/v0.1')
+    .then( Botd => Botd.load({ publicKey: 'dO0dDNpTdNGZvrreuTrDvGey' }))
+    // Get the bot detection result when you need it.
+    // Result will contain the `requestId` property, that you can securely verify on the server.
+    botdPromise
+    .then(botd => botd.detect())
+    .then(function(result) {
+      console.log(result);
+      // We will have requestId here in result, and we will have to make API call to API Manager with this requestId and if we receive possibility as 1 for any of these four (https://d.pr/i/iq4mch) then we have to disable checkout & cart buttons.
+      requestId = result.requestId;
+      // console.log('requestId-----', requestId);
+      const config = {
+        url: '/verify',
+        method: 'POST',
+        data: {
+          requestId: requestId,
+        },
+      };
+      fetch('https://api-manager.praella.app/api/fingerprintjs/common', {
+        method: 'POST',
+        headers: APIHeader,
+        body: JSON.stringify(config),
+      })
+      .then(response => response.json())
+      .then(data => {
+          // console.log('data-----',data);
+        if (data.vm.probability == 1 || data.bot.automationTool.probability == 1 || data.bot.browserSpoofing.probability == 1 || data.bot.searchEngine.probability == 1) {
+          $('[data-checkout_redirect]').attr('disabled','disabled');
+          $('[data-checkout_redirect], .cart-sticky button[type="submit"]').removeAttr('type name');
+          $('form').removeAttr('action method');
+          app._snotifyMsg('Error', 'There seems to be an issue with your browser. Please contact our customer support support@owlcrate.com', 'Error');
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    })
+  .catch(error => console.error(error))
+}
+
+</script>

@@ -1,0 +1,111 @@
+{{ 'section-brands.css' | asset_url | stylesheet_tag }}
+
+{%- assign heading_txt = section.settings.heading_txt | escape -%}
+
+<section class="brands__wrapper" data-section-id="{{ section.id }}">
+    <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/rsz_1waves2.png?v=1664972216"
+        alt="Waves 2"
+        width="1920"
+        height="666"
+        class="brands__image hidden xl-d-block"
+        loading="lazy">
+
+    <div class="container-wide">
+        <h2 class="section-title">{{ heading_txt }}</h2>
+
+        <div class="brands__items">
+            {%- for block in section.blocks -%}
+                {%- if block.settings.logo_url != blank and block.settings.logo_url != '#' -%}
+                  <a href="{{ block.settings.logo_url }}" class="brands__item">
+                {%- else -%}
+                  <span class="brands__item">
+                {%- endif -%}
+                    {%- assign image = block.settings.logo_image -%}
+                    {%- render 'img', image: image, class: 'contain' -%}
+                {%- if block.settings.logo_url != blank and block.settings.logo_url != '#' -%}
+                  </a>
+                {%- else -%}
+                  </span>
+                {%- endif -%}
+            {%- endfor -%}
+        </div>
+    </div>
+
+    <div class="brands__items--mobile carousel" data-flickity='{ "freeScroll": false, "wrapAround": true, "pageDots": false, "prevNextButtons": false, "autoPlay": true }'>
+        {%- for block in section.blocks -%}
+          {%- if block.settings.logo_url != blank and block.settings.logo_url != '#' -%}
+            <a href="{{ block.settings.logo_url }}" class="brands__item carousel-cell">
+          {%- else -%}
+            <span class="brands__item carousel-cell">
+          {%- endif -%}
+                <div class="brands__item--inner">
+                    {%- assign image = block.settings.logo_image -%}
+                    {%- render 'img', image: image, class: 'contain' -%}
+                </div>
+          {%- if block.settings.logo_url != blank and block.settings.logo_url != '#' -%}
+            </a>
+          {%- else -%}
+            </span>
+          {%- endif -%}
+        {%- endfor -%}
+    </div>
+</section>
+
+{% schema %}
+  {
+    "name": "brand logo",
+    "class": "index-brand-logo",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "fluid_layout",
+        "label": "Full Width Layout?",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "text",
+        "id": "heading_txt",
+        "label": "Heading Text",
+        "default": "as seen in"
+      }
+    ],
+    "presets": [
+      {
+        "name": "brand logo",
+        "category": "Content"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "content",
+        "name": "Logo Block",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "logo_image",
+            "label": "Select Image"
+          },
+          {
+            "type": "url",
+            "id": "logo_url",
+            "label": "Url"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

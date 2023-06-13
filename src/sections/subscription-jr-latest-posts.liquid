@@ -1,0 +1,113 @@
+{%- liquid
+  assign title = section.settings.title
+  assign bg_color = section.settings.bg_color
+%}
+
+{{ 'section-subscription-jr-past-boxes.css' | asset_url | stylesheet_tag }}
+
+<section id="section-{{ section.id }}" class="hiw__wrapper subscription-jr-past-boxes blog relative" {% if bg_color != blank %}style="background-color:{{ bg_color }}"{% endif %}>
+  <div class="container-wide relative">
+    {%- if title != blank -%}
+      <h2 class="section-title">{{ title }}</h2>
+    {%- endif -%}
+
+
+    <div class="pb__boxes carousel">
+      {%- for article in blogs['ocjr'].articles limit: 4 -%}
+        <div class="pb__box article">
+          <div class="pb__box-img">
+            <img src="{{ article.image.src | img_url: '415x'}}" alt="">
+          </div>
+          <time datetime="formatDate(article.node.publishedAt)"> {{ article.published_at | date: "%a, %b %d, %Y" }}</time>
+          <h3 class="pb__box-title">{{ article.title | strip_html | truncate: 60 }}</h3>
+          <div class="pb__box-description">{{ article.content | strip_html | truncate: 80 }}</div>
+          <a href="{{ article.url }}">Read More</a>
+        </div>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/gh/phucbm/flickity-responsive@latest/flickity-responsive.min.js"></script>
+<script>
+    $( document ).ready(function() {
+        function doFlickityCarousel() {
+            let $carousel = $('.blog .carousel').flickity({
+                freeScroll: false,
+                wrapAround: true,
+                pageDots: false,
+                prevNextButtons: false,
+                autoPlay: true,
+                groupCells: 2,
+                cellAlign: 'left'
+            });
+            let isFlickity = true;
+
+            // Default state
+            if ( matchMedia('screen and (max-width: 1024px)').matches ) {
+                if ( !isFlickity ) {
+                    $carousel.flickity();
+                }
+            }
+
+            if ( matchMedia('screen and (min-width: 1025px)').matches ) {
+                if ( isFlickity ) {
+                    // destroy Flickity
+                    $carousel.flickity('destroy');
+                }
+            }
+            isFlickity = !isFlickity;
+        } doFlickityCarousel();
+
+        $(window).on('resize', function(){
+            doFlickityCarousel();
+        });
+    });
+</script>
+
+{% schema %}
+{
+  "name": "Latest Post",
+  "settings":[
+    {
+      "type": "html",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "box",
+      "name": "Box",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Title"
+        },
+        {
+          "id": "link",
+          "type": "url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Latest Post"
+    }
+  ]
+}
+{% endschema %}

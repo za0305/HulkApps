@@ -1,0 +1,31 @@
+@charset 'UTF-8';
+
+/**
+ * Insert your styles with Liquid below.
+ *
+ * You can import additional stylesheets with liquid code into this sheet using CSS imports:
+ * @import url('./partials/test.scss');
+ */
+
+#sitePreloader{
+  display: block;
+  position: fixed;
+  z-index: 1070;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #fff;
+
+  &.is-hidden{
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+// Password strength meter background image
+.pass-colorbar {
+  background-image: url('{{ "passwordstrength.jpg" | asset_url }}');
+}

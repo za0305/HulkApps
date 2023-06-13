@@ -1,0 +1,69 @@
+{%- liquid
+  assign bg_color = section.settings.color
+  assign heading = section.settings.heading
+  assign button_label = section.settings.button_label
+  assign button_type = section.settings.button_type
+  assign button_url = section.settings.button_url
+  assign image_main = section.settings.image_main
+
+%}
+
+{{ 'section-subscription-jr-shipping.css' | asset_url | stylesheet_tag }}
+
+<section id="section-{{ section.id }}"
+         class="subscription-jr-shipping"
+         {% if bg_color != blank %}
+         style="background-color:{{ bg_color }}"
+         {% endif %}
+>
+
+  {%- if section.blocks.size > 1 -%}
+    <div class="container-wide flex flex-wrap justify-content-between">
+      {% for block in section.blocks %}
+        <div class="subscription-jr-shipping__element relative" id="sjs-{{ forloop.index }}">
+          {{ block.settings.text }}
+        </div>
+      {% endfor %}
+    </div>
+  {%- endif -%}
+
+</section>
+
+
+
+{% schema %}
+{
+  "name": "Subscription JR Shipping",
+  "max_blocks": 2,
+  "settings":[
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Background Color"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name": "Subscription JR Shipping",
+      "blocks": [
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

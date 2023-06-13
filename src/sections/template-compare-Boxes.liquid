@@ -1,0 +1,308 @@
+<section  data-section-id="{{ section.id }}" class="py-3" data-template="subscribe-page">
+    <div class="section-content">
+    <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+        <div class="text-center">
+            <h1 class="mb-4 mb-md-6">{{ section.settings.compare_heading }}</h1>
+        </div>
+        <div class="row">
+            {% for block in section.blocks %}
+                {% if block.type == 'comparebox' %}
+                    {% if block.settings.giftbox_wrap_check %}
+                        <div class="col-12 col-md-6 mb-3 mb-md-0 comparebox-item">
+                            <div class="p-2 h-100">
+                                <div class="row align-items-center">
+                                    <div class="col-6 col-lg-8">
+                                        <div class="position-relative product-img comparebox-img">
+                                                <img
+                                                data-sizes="auto"
+                                                src="{{ block.settings.image | img_url: 'large'}}"
+                                                data-srcset="
+                                                    {{ block.settings.image | img_url: '1024x' }} 576w,
+                                                    {{ block.settings.image | img_url: '1280x' }} 768w,
+                                                    {{ block.settings.image | img_url: '1440x' }} 992w,
+                                                    {{ block.settings.image | img_url: '1920x' }} 1200w
+                                                    "
+                                                class="img-fluid w-auto h-auto mh-100" alt="{{ block.settings.heading | escape }}" />
+                                                <div class="comparebox-img-text d-flex align-items-center p-4">
+                                                    <div class="box-h" v-match-heights="{el: ['.box-h']}">
+                                                        <h6 class="mb-2">{{ block.settings.img_heading }}</h6>
+                                                        {% assign img_caption = block.settings.img_captions | split: '--' %}
+                                                        <ul class="mb-0 list-unstyled list-dotted">
+                                                            {% for cap_img in img_caption %}
+                                                            <li class="mb-1">{{ cap_img }}</li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-lg-4 cb-h" v-match-heights="{el: ['.cb-h']}">
+                                        {% if block.settings.logo_svg != blank %}
+                                            <img src="{{ block.settings.logo_svg}}" v-match-heights="{el: ['.log-gift']}" alt="Logo-icon" class="log-gift mb-4" style="width: {{ block.settings.box_logo_widths }}rem" /> 
+                                        {% elsif block.settings.image != blank %}
+                                            <img src="{{ block.settings.logo_png | img_url :'165x' }}" alt="Logo-icon" v-match-heights="{el: ['.log-gift']}" class="log-gift mb-4" style="width: {{ block.settings.box_logo_widths }}rem" /> 
+                                        {% endif %}
+                                        {% if block.settings.txt != '' %}
+                                            <p class="mb-4">{{ block.settings.txt }}</p>
+                                        {% endif %}
+                                        {% if block.settings.btn_txt != '' %}
+                                          {% assign isSoldout = false %}
+                                          {% if block.settings.select_product != '' %}
+                                            {% if settings.adult_soldout and block.settings.select_product == 'plan_adult' %}
+                                              {% assign isSoldout = true %}
+                                            {% elsif settings.jr_soldout and block.settings.select_product == 'plan_jr' %}
+                                              {% assign isSoldout = true %}
+                                            {% endif %}
+                                          {% endif %}
+                                          {% if block.settings.select_product == 'plan_jr'%}
+                                            <template v-if="isUtmJr">
+                                              <a  href="#" @click.prevent="_chooseProductOnPage('{{block.settings.select_product}}', 2, 'type-normal')"
+                                              class="btn btn{% if block.settings.btn_type == 'outline' %}-{% endif %}{{ block.settings.btn_type }}-{{ block.settings.btn_variant }} {{ block.settings.btn_size }} {% if isSoldout %} px-3 {% endif %}">{{ block.settings.btn_txt }}</a>
+                                            </template>
+                                            <template v-else>
+                                              <a  href="#"
+                                              {% if isSoldout %} @click.prevent="_soldoutProduct('{{block.settings.select_product}}', 'type-normal')" {% else %} @click.prevent="_chooseProductOnPage('{{block.settings.select_product}}', 2, 'type-normal')" {% endif %}
+                                              class="btn btn{% if block.settings.btn_type == 'outline' %}-{% endif %}{{ block.settings.btn_type }}-{{ block.settings.btn_variant }} {{ block.settings.btn_size }} {% if isSoldout %} px-3 {% endif %}">{% if isSoldout %}{% if block.settings.select_product == 'plan_adult' %}{{ settings.modal_adult_btn_txt }}{% else %}{{ settings.modal_jr_btn_txt }}{% endif %}{% else %} {{ block.settings.btn_txt }} {% endif %}</a>
+                                            </template>
+                                          {% elsif block.settings.select_product == 'plan_adult'%}
+                                            <template v-if="isUtmAdult">
+                                              <a  href="#" @click.prevent="_chooseProductOnPage('{{block.settings.select_product}}', 2, 'type-normal')"
+                                              class="btn btn{% if block.settings.btn_type == 'outline' %}-{% endif %}{{ block.settings.btn_type }}-{{ block.settings.btn_variant }} {{ block.settings.btn_size }} {% if isSoldout %} px-3 {% endif %}">{{ block.settings.btn_txt }}</a>
+                                            </template>
+                                            <template v-else>
+                                              <a  href="#"
+                                              {% if isSoldout %} @click.prevent="_soldoutProduct('{{block.settings.select_product}}', 'type-normal')" {% else %} @click.prevent="_chooseProductOnPage('{{block.settings.select_product}}', 2, 'type-normal')" {% endif %}
+                                              class="btn btn{% if block.settings.btn_type == 'outline' %}-{% endif %}{{ block.settings.btn_type }}-{{ block.settings.btn_variant }} {{ block.settings.btn_size }} {% if isSoldout %} px-3 {% endif %}">{% if isSoldout %}{% if block.settings.select_product == 'plan_adult' %}{{ settings.modal_adult_btn_txt }}{% else %}{{ settings.modal_jr_btn_txt }}{% endif %}{% else %} {{ block.settings.btn_txt }} {% endif %}</a>
+                                            </template>
+                                          {% endif %}
+                                        {% endif %}
+                                         {% if block.settings.link_text != '' %}
+                                            <div class="d-block mt-4">
+                                                <a {% if block.settings.link_url %} href="{{ block.settings.link_url }}" {% endif %} class="{{ block.settings.link_category }} border-link font-barlow font-weight-semi-bold text-uppercase font-size-sm ls-1 pb-1">{{ block.settings.link_text }}</a>
+                                            </div>
+                                        {% endif %} 
+                                    </div>
+
+                                    <div class="col-12 mt-md-2">
+                                        <div class="px-lg-6 border-top border-secondary mt-4 pt-5 pb-3">
+                                            <h6 class="mb-2">{{ block.settings.step_heading }}</h6>
+                                            {% assign caption = block.settings.steps_captions | split: '--' %}
+                                            <ul class="mb-0 list-unstyled list-dotted">
+                                                {% for cap in caption %}
+                                                <li class="mb-1">{{ cap }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+</section>
+
+
+{% schema %}
+  {
+    "name": "Compare Template",
+    "max_blocks": 2,
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "fluid_layout",
+        "label": "Full Width Layout?",
+        "default": false
+      },
+       {
+        "type": "text",
+        "id": "compare_heading",
+        "label": "Page Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "comparebox",
+        "name": "CompareBox",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "giftbox_wrap_check",
+            "label": "Enabled?",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "select_product",
+            "label": "Select Product Tag",
+            "info": "Use 'plan_adult or plan_jr' for product."
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Select Image"
+          },
+          {
+            "type": "header",
+            "content": "img Hover Description"
+          },
+          {
+            "type": "text",
+            "id": "img_heading",
+            "label": "Heading"
+          },
+          {
+            "type": "textarea",
+            "id": "img_captions",
+            "label": "Stepts captions",
+            "info":"Each entry must be on a new line"
+          },
+          {
+            "type": "header",
+            "content": "Description"
+         },
+         {
+            "type": "text",
+            "id": "logo_svg",
+            "label": "SVG URL"
+          },
+          {
+            "type": "image_picker",
+            "id": "logo_png",
+            "label": "Select Image"
+          },
+          {
+            "type": "range",
+            "id": "box_logo_widths",
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "unit": "rem",
+            "label": "Logo width",
+            "default": 9
+          },
+          {
+            "type": "textarea",
+            "id": "txt",
+            "label": "Text"
+          },
+          {
+            "type": "header",
+            "content": "Button"
+            },
+            {
+            "type": "text",
+            "id": "btn_txt",
+            "label": "Button Text"
+            },            
+            {
+            "type": "select",
+            "id": "btn_type",
+            "label": "Button Type",
+            "options": [{
+                "value": "outline",
+                "label": "Outline"
+                },
+                {
+                "value": "",
+                "label": "Solid"
+                }
+            ],
+            "default": ""
+            },
+            {
+            "type": "select",
+            "id": "btn_variant",
+            "label": "Button Variant",
+            "options": [
+                {
+                "value": "primary",
+                "label": "Primary"
+                },
+                {
+                "value": "secondary",
+                "label": "Secondary"
+                },
+                {
+                "value": "accent",
+                "label": "Accent"
+                },
+                {
+                "value": "light",
+                "label": "Light"
+                },
+                {
+                "value": "dark",
+                "label": "Dark"
+                }
+            ],
+            "default": "dark"
+            },
+            {
+            "type": "select",
+            "id": "btn_size",
+            "label": "Button Size",
+            "options": [{
+                "value": "",
+                "label": "Default"
+                },
+                {
+                "value": "btn-sm",
+                "label": "Small"
+                },
+                {
+                "value": "btn-lg",
+                "label": "Large"
+                }
+            ],
+            "default": ""
+            },
+            {
+                "type": "text",
+                "id": "link_text",
+                "label": "Link Text"
+            },
+            {
+                "type": "url",
+                "id": "link_url",
+                "label": "Link url"
+            },
+            {
+                "type": "select",
+                "id": "link_category",
+                "label": "Link Category",
+                "options": [
+                    {
+                    "value": "line-hover",
+                    "label": "category secondary"
+                    },
+                    {
+                    "value": "line-hover-primary",
+                    "label": "category primary"
+                    }
+                ],
+                "default": "line-hover"
+            },
+            {
+                "type": "text",
+                "id": "step_heading",
+                "label": "Step Heading"
+            },
+            {
+                "type": "textarea",
+                "id": "steps_captions",
+                "label": "Stepts captions",
+                "info":"Each entry must be on a new line"
+            }
+        ]
+      }
+    ]
+  }
+{% endschema %}

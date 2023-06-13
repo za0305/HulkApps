@@ -1,0 +1,134 @@
+{%- assign cart_type = 'cart_page' -%}
+<a class="nav-link" href="/cart" name="cart" title="cart" rel="nofollow" aria-label="Cart">
+  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+    width="39.917px" height="33.917px" viewBox="0 0 39.917 33.917" enable-background="new 0 0 39.917 33.917" xml:space="preserve">
+    <g>
+      <g>
+          <path fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+          M4.335,9.396V9.041c0-0.213,0.202-0.367,0.407-0.311c0,0,18.598,4.936,18.674,4.89l11.153-7.03
+          c0.215-0.132,0.491,0.022,0.491,0.274v15.649c0,0.091-0.038,0.178-0.106,0.239l-11.308,9.747
+          c-0.085,0.077-0.204,0.103-0.313,0.069L4.56,26.475c-0.134-0.042-0.225-0.167-0.225-0.307v-6.835"/>
+          <path fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+          M4.51,8.878c-0.355-0.106,0.945-0.878,1.273-1.05l12.393-6.492c0.096-0.05,15.999,4.86,15.999,4.86
+          c0.342,0.103,1.188,0.666,0.884,0.853"/>
+          <line fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="23.416" y1="13.619" x2="23.333" y2="32.567"/>
+          <path fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+          M4.169,9.292l-3.138,7.747c-0.216,0.533,0.068,1.137,0.617,1.31l18.021,5.684c0.529,0.167,1.091-0.135,1.244-0.668l2.465-8.59
+          c0.151-0.526-0.155-1.074-0.682-1.221L5.347,8.713C4.864,8.578,4.357,8.827,4.169,9.292z"/>
+          <path fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+          M35.31,14.612l3.153,1.092c0.3,0.104,0.584-0.191,0.469-0.487L35.06,6.863"/>
+      </g>
+        <line fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="18.328" y1="12.195" x2="18.328" y2="1.336"/>
+    </g>
+  </svg>
+  <span v-text="cart.item_count" class="font-barlow font-weight-medium ls-1 ml-1"></span>
+</a>
+
+{% comment %}
+{%- case cart_type -%}
+
+  {%- when 'cart_dropdown' -%}
+
+    <a id="cartDropdown" class="nav-link cart-dropdown" href="#" name="cart" title="cart" rel="nofollow" aria-label="Cart">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	      width="39.917px" height="33.917px" viewBox="0 0 39.917 33.917" enable-background="new 0 0 39.917 33.917" xml:space="preserve">
+        <g>
+          <g>
+            
+              <path fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+              M4.335,9.396V9.041c0-0.213,0.202-0.367,0.407-0.311c0,0,18.598,4.936,18.674,4.89l11.153-7.03
+              c0.215-0.132,0.491,0.022,0.491,0.274v15.649c0,0.091-0.038,0.178-0.106,0.239l-11.308,9.747
+              c-0.085,0.077-0.204,0.103-0.313,0.069L4.56,26.475c-0.134-0.042-0.225-0.167-0.225-0.307v-6.835"/>
+            
+              <path fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+              M4.51,8.878c-0.355-0.106,0.945-0.878,1.273-1.05l12.393-6.492c0.096-0.05,15.999,4.86,15.999,4.86
+              c0.342,0.103,1.188,0.666,0.884,0.853"/>
+            
+              <line fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="23.416" y1="13.619" x2="23.333" y2="32.567"/>
+            
+              <path fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+              M4.169,9.292l-3.138,7.747c-0.216,0.533,0.068,1.137,0.617,1.31l18.021,5.684c0.529,0.167,1.091-0.135,1.244-0.668l2.465-8.59
+              c0.151-0.526-0.155-1.074-0.682-1.221L5.347,8.713C4.864,8.578,4.357,8.827,4.169,9.292z"/>
+            
+              <path fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+              M35.31,14.612l3.153,1.092c0.3,0.104,0.584-0.191,0.469-0.487L35.06,6.863"/>
+          </g>
+          
+            <line fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="18.328" y1="12.195" x2="18.328" y2="1.336"/>
+        </g>
+      </svg>
+      <span v-text="cart.item_count" class="font-barlow font-weight-medium ls-1 ml-1"></span>
+    </a>
+    <b-popover target="cartDropdown" placement="bottom" container="cartDropdown" triggers="hover focus" class="d-none">
+      <template slot="title">{{ 'cart.general.title' | t }}</template>
+      {% include 'cart-dropdown' %}
+    </b-popover>
+
+  {%- when 'cart_drawer' -%}
+
+    <a class="nav-link" href="#" @click.prevent="_toggleCartDrawer" rel="nofollow" name="cart" title="cart" rel="nofollow" aria-label="Cart">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	      width="39.917px" height="33.917px" viewBox="0 0 39.917 33.917" enable-background="new 0 0 39.917 33.917" xml:space="preserve">
+        <g>
+          <g>
+            
+              <path fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+              M4.335,9.396V9.041c0-0.213,0.202-0.367,0.407-0.311c0,0,18.598,4.936,18.674,4.89l11.153-7.03
+              c0.215-0.132,0.491,0.022,0.491,0.274v15.649c0,0.091-0.038,0.178-0.106,0.239l-11.308,9.747
+              c-0.085,0.077-0.204,0.103-0.313,0.069L4.56,26.475c-0.134-0.042-0.225-0.167-0.225-0.307v-6.835"/>
+            
+              <path fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+              M4.51,8.878c-0.355-0.106,0.945-0.878,1.273-1.05l12.393-6.492c0.096-0.05,15.999,4.86,15.999,4.86
+              c0.342,0.103,1.188,0.666,0.884,0.853"/>
+            
+              <line fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="23.416" y1="13.619" x2="23.333" y2="32.567"/>
+            
+              <path fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+              M4.169,9.292l-3.138,7.747c-0.216,0.533,0.068,1.137,0.617,1.31l18.021,5.684c0.529,0.167,1.091-0.135,1.244-0.668l2.465-8.59
+              c0.151-0.526-0.155-1.074-0.682-1.221L5.347,8.713C4.864,8.578,4.357,8.827,4.169,9.292z"/>
+            
+              <path fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+              M35.31,14.612l3.153,1.092c0.3,0.104,0.584-0.191,0.469-0.487L35.06,6.863"/>
+          </g>
+          
+            <line fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="18.328" y1="12.195" x2="18.328" y2="1.336"/>
+        </g>
+      </svg>
+      <span v-text="cart.item_count" class="font-barlow font-weight-medium ls-1 ml-1"></span>
+    </a>
+
+  {%- else -%}
+
+    <a class="nav-link" href="/cart" name="cart" title="cart" rel="nofollow" aria-label="Cart">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	      width="39.917px" height="33.917px" viewBox="0 0 39.917 33.917" enable-background="new 0 0 39.917 33.917" xml:space="preserve">
+        <g>
+          <g>
+            
+              <path fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+              M4.335,9.396V9.041c0-0.213,0.202-0.367,0.407-0.311c0,0,18.598,4.936,18.674,4.89l11.153-7.03
+              c0.215-0.132,0.491,0.022,0.491,0.274v15.649c0,0.091-0.038,0.178-0.106,0.239l-11.308,9.747
+              c-0.085,0.077-0.204,0.103-0.313,0.069L4.56,26.475c-0.134-0.042-0.225-0.167-0.225-0.307v-6.835"/>
+            
+              <path fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+              M4.51,8.878c-0.355-0.106,0.945-0.878,1.273-1.05l12.393-6.492c0.096-0.05,15.999,4.86,15.999,4.86
+              c0.342,0.103,1.188,0.666,0.884,0.853"/>
+            
+              <line fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="23.416" y1="13.619" x2="23.333" y2="32.567"/>
+            
+              <path fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+              M4.169,9.292l-3.138,7.747c-0.216,0.533,0.068,1.137,0.617,1.31l18.021,5.684c0.529,0.167,1.091-0.135,1.244-0.668l2.465-8.59
+              c0.151-0.526-0.155-1.074-0.682-1.221L5.347,8.713C4.864,8.578,4.357,8.827,4.169,9.292z"/>
+            
+              <path fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+              M35.31,14.612l3.153,1.092c0.3,0.104,0.584-0.191,0.469-0.487L35.06,6.863"/>
+          </g>
+          
+            <line fill="none" stroke="#000000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="18.328" y1="12.195" x2="18.328" y2="1.336"/>
+        </g>
+      </svg>
+      <span v-text="cart.item_count" class="font-barlow font-weight-medium ls-1 ml-1"></span>
+    </a>
+
+{%- endcase -%}
+{% endcomment %}

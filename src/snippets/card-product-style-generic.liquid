@@ -1,0 +1,165 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign product_cart_limit = null %}
+{% for tag in product.tags %}
+  {% if tag contains 'cart-limit-' %}
+    {% assign product_cart_limit = tag | replace: 'cart-limit-', '' %}
+  {% endif %}
+{% endfor %}
+
+<div class="card card-product card-product-style-1 shadow-none border-0 text-left" data-card-product>
+  <span class="badges">
+    {% if current_variant.compare_at_price > current_variant.price %}
+      <span class="badge badge-right badge-danger font-barlow text-uppercase ls-1" >
+        {{ 'products.product.on_sale' | t | escape }}
+      </span>
+    {% endif %}
+    {% unless product.available %}
+      <span class="badge badge-right badge-secondary font-barlow text-uppercase ls-1">{{ 'products.product.sold_out' | t | escape }}</span>
+    {% endunless %}
+  </span>
+  <div class="card-img text-center position-relative {% if product.featured_image.size == 0 %}bg-white{% endif %}">
+    {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+    {% if product.featured_image.size > 0 %}
+        <a href="{{ product.url | within: collection }}" class="position-relative product-img">
+          <img
+            data-sizes="auto"
+            src="{{ product.featured_image | img_url: 'pico' }}"
+            data-srcset="
+              {{ product.featured_image | img_url: 'large' }} 576w,
+              {{ product.featured_image | img_url: '600x' }} 768w,
+              {{ product.featured_image | img_url: '600x' }} 992w,
+              {{ product.featured_image | img_url: '600x' }} 1200w
+              "
+            class="lazyload img-fluid w-auto h-100"
+            alt="{{ product.featured_image.alt | escape }}"/>
+        </a>
+        <template v-if="product.available && product.type != 'Subscription'">
+          <div class="quick-shop-wrapper d-flex align-items-end p-2 p-lg-3">
+            <form data-product-form data-product-id="{{ product.id }}" action="/cart/add" method="post" enctype="multipart/form-data" class="d-flex justify-content-between">
+
+              <button class="btn btn-primary btn-sm flex-grow-1"
+                type="submit"
+                name="add"
+                aria-label="{{ 'products.product.add_to_cart' | t | escape }}"
+                {% unless product.available %}disabled{% endunless%}
+                data-cart-limit="{{ product_cart_limit }}"
+                @click.prevent="_addToCart({{ current_variant.id }}, $event)">
+                  <template v-if="isLoading && loadingEvent == 'cartAdding'">
+                    ADDING...
+                  </template>
+                  <template v-else>
+                    {% if product.available %}{{ 'products.product.add_to_cart' | t }}
+                    {% else %}                  
+                    {{ 'products.product.sold_out' | t }}
+                    {% endif %}
+                  </template>    
+              </button>                  
+                          
+              {% if settings.enable_on_product %}
+                <a href="{{ product.url | within: collection }}" rel="nofollow" class="btn btn-secondary px-2 btn-sm ml-2 d-flex align-items-center" title="{{ 'products.product.quickshop' | t | escape }}" aria-label="{{ 'products.product.quickshop' | t | escape }}">
+                  <svg version="1.1" class="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    width="26px" height="18px" viewBox="0 0 26 18" enable-background="new 0 0 26 18" xml:space="preserve">
+                  <g>
+                    <g>
+                        <circle fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="13" cy="9" r="3.273"/>
+                    </g>
+                    <path fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+                      M1,9c0,0,4.364-7.636,12-7.636S25,9,25,9s-4.364,7.636-12,7.636S1,9,1,9z"/>
+                  </g>
+                  </svg>
+                </a>
+              {% endif %}
+              
+              {% if settings.enable_quickshop %}
+                <a :href="'/products/' + product.handle" class="btn btn-secondary px-2 btn-sm ml-2 d-flex align-items-center" title="{{ 'products.product.quickshop' | t | escape }}" rel="nofollow" aria-label="{{ 'products.product.quickshop' | t | escape }}">
+                  <svg version="1.1" class="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    width="1.625rem" height="1.125rem" viewBox="0 0 26 18" enable-background="new 0 0 26 18" xml:space="preserve">
+                  <g>
+                    <g>
+                        <circle fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="13" cy="9" r="3.273"/>
+                    </g>
+                    <path fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+                      M1,9c0,0,4.364-7.636,12-7.636S25,9,25,9s-4.364,7.636-12,7.636S1,9,1,9z"/>
+                  </g>
+                  </svg>
+                </a>
+                
+              {% endif %}
+
+              {% comment %} {% if settings.enable_wishlist %}
+                <template v-if="!_checkWishlist({{ current_variant.id }})">
+                  <a href="#" rel="nofollow"  @click.prevent="_addVariantToWishlist('{{ product.handle }}', {{ current_variant.id }}, $event)" class="btn btn-outline-primary btn-sm ml-1 d-flex align-items-center" title="{{ 'general.wishlist.add_to_wishlist' | t }}" aria-label="{{ 'general.wishlist.add_to_wishlist' | t }}" data-toggle="tooltip" data-trigger="hover" data-placement="top">
+                    <i class="icon ion-md-star-outline"></i>
+                  </a>
+                </template>
+                <template v-else>
+                  <a class="btn btn-outline-primary btn-sm ml-1 d-flex align-items-center" rel="nofollow" title="{{ 'general.wishlist.added_to_wishlist' | t }}" rel="nofollow" aria-label="{{ 'general.wishlist.added_to_wishlist' | t }}" data-toggle="modal" data-target="[data-modal-wishlist]" tabindex="-1">
+                    <i class="icon ion-md-star"></i>
+                  </a>
+                </template>
+              {% endif %} {% endcomment %}
+            </form>
+          </div>
+        </template>
+    {% else %}
+        {{ 'product-' | append: current | placeholder_svg_tag: 'img-fluid' }}
+    {% endif %}
+  </div>
+  <div class="card-body px-0">
+    <div class="card-title mb-1">
+       <p class="font-weight-semi-bold text-uppercase ls-2 vendor-text mb-1">{{ product.vendor }}</p>
+       <h5 class="m-0 display-4 ls-base"><a href="{{ product.url | within: collection }}">{{ product.title }}</a></h5>
+    </div>
+
+      <div class="yotpo bottomLine my-2"
+      data-product-id="{{ product.id }}">
+      {%- assign yotpo_offload_content = shop.metafields.yotpo.yotpo_offload_content %}
+      {%- assign time_now = 'now' | date: '%s' %}
+      {%- assign yotpo_live_time = shop.metafields.yotpo.yotpo_live | date: '%s' %}
+      {%- assign diff_seconds_from_live = time_now | minus: yotpo_live_time %}
+      {%- assign yotpo_bottomline_last_updated = product.metafields.yotpo.catalog_bottomline_update_time | date: '%s' %}
+      {%- assign diff_seconds_from_last_bottomline_update = time_now | minus: yotpo_bottomline_last_updated %}
+      {%- if yotpo_live_time and diff_seconds_from_live < 86400 or yotpo_bottomline_last_updated and diff_seconds_from_last_bottomline_update < 86400 -%}
+      {%- assign yotpo_bottomline_obsolete = false %}
+      {%- else %}
+      {%- assign yotpo_bottomline_obsolete = true %}
+      {%- endif %}
+      {%- if yotpo_offload_content == 'yes' and yotpo_bottomline_obsolete != true -%}
+      {{ product.metafields.yotpo.catalog_bottomline }}
+      {%- endif %}
+      </div>
+
+    <div class="prise-wrp d-flex align-items-center">
+      {% if product.available %}
+        {% if current_variant.compare_at_price > product.price %}
+          <span class="price m-0 p-0 font-weight-semi-bold text-danger">{{ product.price | money }}</span>
+          <s class="compare-price m-0 pl-2">{{ product.compare_at_price | money }}</s>
+        {% else %}
+          <span class="price m-0 p-0">{{ product.price | money }}</span>
+        {% endif %}
+
+      {% else %}
+        {% if current_variant.compare_at_price > product.price %}
+          <s class="price m-0 p-0 font-weight-semi-bold text-danger">{{ product.price | money }}</s>
+          <s class="compare-price m-0 pl-2">{{ product.compare_at_price | money }}</s>
+        {% else %}
+          <s class="price m-0 p-0" style="color:#a2a2a2;">{{ product.price | money }}</s>
+        {% endif %}
+        <span class="font-weight-semi-bold text-uppercase ml-2">{{ 'products.product.sold_out' | t | escape }}</span>
+
+        
+
+      {% endif %}
+      {% comment %} {% if current_variant.compare_at_price > product.price %}
+        <span class="price m-0 p-0 font-weight-semi-bold text-danger">{{ product.price | money }}</span>
+        <s class="compare-price m-0 pl-2">{{ product.compare_at_price | money }}</s>
+      {% else %}
+        <span class="price m-0 p-0">{{ product.price | money }}</span>
+      {% endif %}
+      {% unless product.available %}
+        <span class="font-weight-semi-bold text-uppercase ml-2">{{ 'products.product.sold_out' | t | escape }}</span>
+      {% endunless %} {% endcomment %}
+
+    </div>
+  </div>
+</div>

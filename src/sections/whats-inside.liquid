@@ -1,0 +1,198 @@
+{%- if section.blocks.size > 0 -%}
+  {{ 'section-whats-inside.css' | asset_url | stylesheet_tag }}
+
+  {%- liquid
+    assign title = section.settings.title | escape
+    assign subtitle = section.settings.subtitle | escape
+    assign planType = section.settings.planType
+    assign button_label = section.settings.button_label | escape
+    assign link_label = section.settings.link_label | escape
+    assign link_url = section.settings.link_url
+  -%}
+
+  <section id="{{ section.id }}" class="whats-inside">
+
+    {%- if title != blank -%}
+      <div class="wi__header-wrapper">
+        <div class="wi__header">
+          <div class="container-wide">
+            <h2 class="section-title">{{ title }}</h2>
+
+            {%- if subtitle != blank -%}
+              <p class="wi__subtitle">{{ subtitle }}</p>
+            {%- endif -%}
+
+            {%- if button_label != blank
+            and planType != blank -%}
+              <div class="wi__btnWrapper">
+                {% if settings.adult_soldout %}
+                  <a href="#" @click.prevent="_soldoutProduct('plan_adult', 'type-normal')" class="wi__btn">{{ button_label }}</a>
+                {% else %}
+                  <a href="#" @click.prevent="_chooseProductOnPage('{{ planType }}', 2, 'type-normal')" class="wi__btn">{{ button_label }}</a>
+                {% endif %}
+              </div>
+            {%- endif -%}
+
+            {%- if link_label != blank
+            and link_url != blank -%}
+              <div class="wi__linkWrapper">
+                <a href="{{ link_url }}" class="wi__link">{{ link_label }}</a>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+
+    <ul class="wi__items">
+      {%- render 'wi-ss1' -%}
+      {%- render 'wi-ss2' -%}
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign image = block.settings.image
+          assign icon = block.settings.icon
+          assign title = block.settings.title | escape
+          assign subtitle = block.settings.subtitle | escape
+        -%}
+        {%- if image
+        and icon != blank
+        and title != blank -%}
+          <li class="wi__item">
+            <div class="wi__blur"></div>
+            <div class="wi__icon wi__icon--{{ forloop.index }}">{{ icon }}</div>
+            <img src="{{ image | image_url: width: image.width }}"
+                 alt="{{ image.alt | escape }}"
+                 width="{{ image.width }}"
+                 height="{{ image.width | divided_by: image.aspect_ratio | round }}"
+                 class="wi__image"
+                 loading="lazy">
+            <div class="wi__line-top"></div>
+            <div class="wi__circle"></div>
+            {%- render 'wi-ok-icon' -%}
+            <div class="wi__titles">
+              <h4 class="wi__item-title">{{ title }}</h4>
+              {%- if subtitle != blank -%}
+                <p class="wi__item-subtitle">{{ subtitle }}</p>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+
+    <ul class="wi__items--mobile carousel" data-flickity='{ "wrapAround": true, "pageDots": false, "prevNextButtons": false, "autoPlay": true }'>
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign image = block.settings.image
+          assign icon = block.settings.icon_mobile
+          assign title = block.settings.title | escape
+          assign subtitle = block.settings.subtitle | escape
+        -%}
+        {%- if image
+        and icon != blank
+        and title != blank -%}
+          <li class="wi__item carousel-cell">
+            <div class="wi__blur"></div>
+            <div class="wi__icon wi__icon--{{ forloop.index }}">{{ icon }}</div>
+            <img src="{{ image | image_url: width: image.width }}"
+                 alt="{{ image.alt | escape }}"
+                 width="{{ image.width }}"
+                 height="{{ image.width | divided_by: image.aspect_ratio | round }}"
+                 class="wi__image"
+                 loading="lazy">
+            <div class="wi__line-top"></div>
+            <div class="wi__circle"></div>
+            {%- render 'wi-ok-icon' -%}
+            <div class="wi__titles">
+              <h4 class="wi__item-title">{{ title }}</h4>
+              {%- if subtitle != blank -%}
+                <p class="wi__item-subtitle">{{ subtitle }}</p>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+
+  </section>
+
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Whats inside",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "planType",
+      "label": "Plan Type",
+      "default": "plan_adult"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "item",
+      "settings": [
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "Icon (SVG)"
+        },
+        {
+          "type": "html",
+          "id": "icon_mobile",
+          "label": "Icon mobile (SVG)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Whats inside",
+      "category": "Content"
+    }
+  ]
+}
+{% endschema %}

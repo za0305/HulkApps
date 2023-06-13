@@ -1,0 +1,515 @@
+{% if settings.choose_ac_collection != blank %}
+  {% assign collection = collections[settings.choose_ac_collection] %}
+{% endif %}
+
+<div class="modal pr-0" id="modal-subscription" tabindex="-1" role="dialog" aria-labelledby="modal-subscription" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg subscription-popup" role="document">
+
+    {% comment %} Membership Option {% endcomment %}
+    <div class="modal-content membership-popup fade" :class="{'show': rechargeDashboard.isChooseOpt}">
+        <div class="modal-header popup-head bg-secondary justify-content-center">
+            <h4 class="mb-0 text-white">Membership Options</h4>
+            <button class="popup-close close" type="button" data-dismiss="modal" aria-label="Close">
+                <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/close-icon.svg?26005" alt="popup-close" />
+            </button>
+        </div>
+        <div class="modal-body popup-body pb-md-4">
+            <div class="d-flex align-items-center justify-content-between border-bottom py-3 px-2 px-md-4 membership-item">
+            <div class="d-flex align-items-center">
+                <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/4-Need_More_OwlCrate_medium.png?96480" alt="Subscribe" class="mh-100 mw-10 mr-6 d-none d-md-block">
+                <div class="membership-item-text px-2">
+                <h6 class="mb-0">Need more owlcrate?</h6>
+                <p class="mb-0">Order another subscription or gift to a friend</p>
+                </div>
+            </div>
+            <a href="/pages/subscribe" class="btn btn-primary">Subscribe</a>
+            </div>
+            <div class="d-flex align-items-center justify-content-between border-bottom py-3 px-2 px-md-4 membership-item">
+            <div class="d-flex align-items-center">
+                <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/5-Try_a_Different_Plan_medium.png?96480" alt="Subscribe" class="mh-100 mw-10 mr-6 d-none d-md-block">
+                <div class="membership-item-text px-2">
+                <h6 class="mb-0">Try a different plan</h6>
+                <p class="mb-0">Switch to a 1, 3 or 6 month plan</p>
+                </div>
+            </div>
+            <a href="#" class="btn btn-primary"  @click.prevent="_changeModal($event,'switch-plan');">Switch plan</a>
+            </div>
+            <div class="d-flex align-items-center justify-content-between py-3 px-2 px-md-4 membership-item">
+            <div class="d-flex align-items-center">
+                <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/6-Skip_a_Month_medium.png?96480" alt="Subscribe" class="mh-100 mw-10 mr-6 d-none d-md-block">
+                <div class="membership-item-text px-2">
+                <h6 class="mb-0"><template v-if="!rechargeDashboard.currentSubscription.skip">Skip Renewal</template><template v-else>Unskip Renewal</template></h6>
+                <p class="mb-0"><template v-if="!rechargeDashboard.currentSubscription.skip">Skip your upcoming renewal</template><template v-else>Unskip your upcoming renewal</template></p>
+                </div>
+            </div>
+            <a href="#" v-if="!rechargeDashboard.currentSubscription.skip" class="btn btn-primary" @click.prevent="_changeModal($event,'skip-shipment')">Skip a Month</a>
+            <a href="#" v-else class="btn btn-primary" @click.prevent="_changeModal($event,'unskip-shipment')">Unskip a Month</a>
+            </div>
+        </div>
+        <div class="modal-footer popup-footer justify-content-center px-5 pb-5">
+            <div class="row custom-row align-items-center w-100">
+                <div class="col-12 col-md-5 text-center text-md-right order-md-2 my-2 my-md-0">
+                    <a href="#" class="line-hover" @click.prevent="_changeModal($event,'cancel-subscription-reason');">I need to end my subscription.</a>
+                </div>
+                <div class="col-12 col-md-7 order-md-1 text-center text-md-left my-2 my-md-0">
+                    <p class="mb-0">
+                        Have a question?  Contact us at <a href="mailto:support@owlcrate.com">support@owlcrate.com</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-content swap-popup fade" :class="{'show': rechargeDashboard.isSwitchPlan}" data-swap-product-wrap>
+        <div class="modal-header popup-head bg-secondary justify-content-center">
+            <h4 class="mb-0 text-white">Change Subscription</h4>
+            <button class="popup-close close" type="button" data-dismiss="modal" aria-label="Close">
+                <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/close-icon.svg?26005" alt="popup-close" />
+            </button>
+        </div>
+        <div class="modal-body popup-body">
+            <div class="form-row">                
+            
+                <div class="col-12 col-md-6 mb-3 mb-md-0" data-plan_adult data-product>
+                    <div class="mission-selector h-100">
+                    <input type="radio" id="product_plan_adult" name="plan_owlCrate" class="d-none mission-selector-input" data-input-plan_adult @click="_changeProduct($event,'plan_adult')">
+                    <label class="mb-0 w-100 mission-selector-label p-4 h-100" for="product_plan_adult">
+                        <div class="d-flex align-items-center mb-6 mission-img-block">
+                        <img src="{{ 'owlcrate-new-box.png' | file_img_url: 'medium' }}" alt="OwlCrate" class="mr-4" />
+                        <div class="mission-img-text">
+                            <h5 class="mb-2 lead font-weight-semi-bold">OwlCrate</h5>
+                            <p class="mb-0 font-size-ex-sm">Our Classic Young-Adult book box. Good for ages 14+</p>
+                        </div>
+                        </div>
+
+                        {% for product in collection.products %}
+                            {% unless product == empty %}
+                                {% if product.variants[0].metafields.subscription.is_hidden != 'true' and product.tags contains 'plan_adult' %} 
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                <div class="custom-radio">
+                                    <input type="radio" id="variant_{{product.variants[0].id}}" name="payment_plan_adult" class="d-none" data-variant-{{product.variants[0].id}} {% if product.variants[0].metafields.subscription.plan_variant_id != blank %}data-plan-id = "{{product.variants[0].metafields.subscription.plan_variant_id}}"{% endif %} data-variant @click="_changeVariant($event,'{{product.variants[0].id}}')">
+                                    <label class="mb-0 font-size-sm" for="variant_{{product.variants[0].id}}">
+                                        <span class="mr-3"></span>{{product.variants[0].title}}
+                                    </label>
+                                </div>
+                                <p class="font-size-sm mb-0">{{product.variants[0].price | money}} per renewal</p>
+                                </div>
+                                {% endif %}
+                            {% endunless %}
+                        {% endfor %}                            
+                    </label>
+                    </div>
+                </div>
+                
+
+                <div class="col-12 col-md-6 mb-3 mb-md-0" data-plan_jr data-product>
+                        <div class="mission-selector h-100">
+                        <input type="radio" id="product_plan_jr" name="plan_owlCrate" class="d-none mission-selector-input" data-input-plan_jr @click="_changeProduct($event,'plan_jr')">
+                        <label class="mb-0 w-100 mission-selector-label p-4 h-100" for="product_plan_jr">
+                            <div class="d-flex align-items-center mb-6 mission-img-block">
+                            <img src="{{ 'owlcrate-jr-new.png' | file_img_url: 'medium' }}" alt="OwlCrate JR" class="mr-4" />
+                            <div class="mission-img-text">
+                                <h5 class="mb-2 lead font-weight-semi-bold">OwlCrate JR</h5>                                
+                                <p class="mb-0 font-size-ex-sm">Our Middle-Grade box for readers aged 8-12.</p>
+                            </div>
+                            </div>
+
+                            {% for product in collection.products %}
+                                {% unless product == empty %}
+                                    {% if product.variants[0].metafields.subscription.is_hidden != 'true' and product.tags contains 'plan_jr' %} 
+                                        <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <div class="custom-radio">
+                                            <input type="radio" id="variant_{{product.variants[0].id}}" name="payment_plan_jr" class="d-none" data-variant-{{product.variants[0].id}} {% if product.variants[0].metafields.subscription.plan_variant_id != blank %}data-plan-id = "{{product.variants[0].metafields.subscription.plan_variant_id}}"{% endif %} data-variant @click="_changeVariant($event,'{{product.variants[0].id}}')">
+                                            <label class="mb-0 font-size-sm" for="variant_{{product.variants[0].id}}">
+                                                <span class="mr-3"></span>{{product.variants[0].title}}
+                                            </label>
+                                        </div>
+                                        <p class="font-size-sm mb-0">{{product.variants[0].price | money}} per renewal</p>
+                                        </div>
+                                    {% endif %}
+                                {% endunless %}
+                            {% endfor %}                            
+                        </label>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+        <div class="modal-footer popup-footer d-block px-5 pb-5 pt-2">
+            <div class="row custom-row align-items-center">
+                <div class="col-12 col-md-5 text-center text-md-right order-md-2 my-2 my-md-0">
+                    <a href="#" class="btn btn-primary" v-if="rechargeDashboard.isUpdateSubscription" @click.prevent="_changeModal($event,'confirm-subscription-update')">Swap Product</a>
+                </div>
+                <div class="col-12 col-md-7 order-md-1 text-center text-md-left my-2 my-md-0">
+                    <p class="mb-0">
+                        <span class="font-weight-bold text-uppercase mr-lg-2">Need Help?</span>
+                        Send us an email at <a href="mailto:support@owlcrate.com">support@owlcrate.com</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-content cancel-prepaid-popup fade" :class="{'show': rechargeDashboard.isConfirmSubscriptionUpdate}">
+        <div class="modal-header popup-head  bg-secondary justify-content-center">
+            <div class="go-back-link text-white">
+                <p class="mb-0" @click.prevent="_goback(1,'switch-plan')">
+                    <i class="ion ion-ios-arrow-back font-size-lg mr-1"></i>
+                    <span class="text-uppercase font-barlow ls-1 font-weight-semi-bold d-none d-md-inline-block">GO BACK</span>
+                </p>
+            </div>
+            <h4 class="mb-0 text-white">Change Subscription</h4>
+            <button class="popup-close close d-none" type="button" data-dismiss="modal" aria-label="Close">
+            <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/close-icon-black.svg?26054" alt="popup-close" />
+            </button>
+        </div>
+        <div class="modal-body popup-body pt-md-7">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 text-center">
+                <h5 class="font-weight-semi-bold font-barlow mb-6">Are you sure you want to change your subscription?</h5>                
+                <div class="row justify-content-center mb-6 text-left">
+                    <div class="col-12 col-md-6 billed-box d-flex justify-content-center justify-content-md-start border-right border-secondary py-3" style="opacity: 0.6;">
+                    <div class="w-100">
+                        <h6 class="mb-3">Old Subscription Details:</h6>
+                        <div class="d-flex align-items-center cancel-sub-item">
+                        <img :src="_getSizedImageUrl(rechargeDashboard.currentProduct.featured_image, 'medium')" :alt="rechargeDashboard.currentProduct.title" class="mr-4 mx-100">
+                        <div class="cancel-sub-text">
+                            <h6 class="display-4 font-weight-semi-bold text-capitalize mb-1" v-text="rechargeDashboard.currentProduct.product_title">OwlCrate</h6>
+                            <p class="mb-0" v-text="rechargeDashboard.currentProduct.title"></p>
+                            <p class="mb-0" v-text="_formatMoney(rechargeDashboard.currentProduct.price)+' per renewal'"></p>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-12 col-md-6 py-3 billed-box d-flex justify-content-center justify-content-md-end">
+                    <div class="w-100">
+                        <h6 class="mb-3">NEW Subscription Details:</h6>
+                        <div class="d-flex align-items-center cancel-sub-item">
+                        <img :src="_getSizedImageUrl(rechargeDashboard.updatedProduct.featured_image, 'medium')" :alt="rechargeDashboard.updatedProduct.title" class="mr-4 mx-100">
+                        <div class="cancel-sub-text">
+                            <h6 class="display-4 font-weight-semi-bold text-capitalize mb-1" v-text="rechargeDashboard.updatedProduct.product_title"></h6>
+                            <p class="mb-0" v-text="rechargeDashboard.updatedProduct.title">Monthly</p>
+                            <p class="mb-0" v-text="_formatMoney(rechargeDashboard.updatedProduct.price)+' per renewal'"></p>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <a href="#" class="btn btn-primary text-uppercase" @click.prevent="_updateSubAPI('switch subscription');" :disabled="isLoading && loadingEvent == 'change_subsciption'" :class="{'disabled': isLoading && loadingEvent == 'change_subsciption'}">
+                        <template v-if="isLoading && loadingEvent == 'change_subsciption'">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ 'general.wait' | t }}
+                        </template>
+                        <template v-else>
+                            I agree to make this change
+                        </template>
+                    </a>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-content skip-popup fade" :class="{'show': rechargeDashboard.isSkipShipment}">        
+        <div class="modal-header popup-head bg-secondary justify-content-center">
+            <h4 class="mb-0 text-white">skip a renewal</h4>
+            <button class="popup-close close" type="button" data-dismiss="modal" aria-label="Close">
+                <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/close-icon.svg?26005" alt="popup-close" />
+            </button>
+        </div>
+        <div class="modal-body popup-body pt-md-7">
+            <div class="row justify-content-center pt-1 mb-5">
+            <div class="col-12 col-lg-11 text-center">
+                <template v-if="!rechargeDashboard.currentSubscription.skip">
+                    <h5 class="mb-3">Are you Sure You Want To Skip Your Next Renewal?</h5>
+                    <p class="px-xl-4"><span class="font-weight-bold">Please note:</span> Skipping the next renewal date doesn’t change any existing shipments. To push back or change shipment dates, please contact us directly at <a href="mailto:support@owlcrate.com">support@owlcrate.com</a>.</p>
+                </template>
+                <template v-else>
+                    <h5 class="mb-3">Are you Sure You Want To Unskip Your Next Renewal?</h5>
+                    <p class="px-xl-4"><span class="font-weight-bold">Please note:</span> Unskipping the next renewal date doesn’t change any existing shipments. To push back or change shipment dates, please contact us directly at <a href="mailto:support@owlcrate.com">support@owlcrate.com</a>.</p>
+                </template>            
+            </div>
+            </div>
+            <div class="row align-items-center justify-content-center mb-4 mb-md-8">
+            <div class="col-12 col-md-6 text-center text-md-right border-right border-secondary py-2">
+            <p class="mb-0" style="opacity: 0.6;"><span class="font-weight-bold">Old Renewal:</span> <span v-html="_formatDateDisplay(rechargeDashboard.currentSubscription.next_charge_scheduled_at)"></span></p>
+            </div>
+            <div class="col-12 col-md-6 text-center text-md-left py-2">
+            <p class="mb-0"><span class="font-weight-bold">New Renewal Date:</span> <span v-html="_formatDateDisplay(rechargeDashboard.skip_shippment.nextChargeDate)"></span></p>
+            </div>
+            </div>
+            <div class="row align-items-center justify-content-center">
+            <div class="col-12 col-md-6 text-center text-md-right py-2">
+            <a href="#" class="font-weight-semi-bold ls-1 font-size-sm font-barlow text-primary text-uppercase" data-dismiss="modal" aria-label="Close"><template v-if="!rechargeDashboard.currentSubscription.skip">No, Don’t Skip</template><template v-else> No, Don’t Unskip</template></a>
+            </div>
+            <div class="col-12 col-md-6 text-center text-md-left py-2">
+            <a href="#" v-if="!rechargeDashboard.currentSubscription.skip" class="btn btn-primary" :disabled="isLoading && loadingEvent == 'skip-shipment'" @click.prevent="_updateskipApi('skip-shipment')" :class="{'disabled': isLoading && loadingEvent == 'skip-shipment'}">
+                 <template v-if="isLoading && loadingEvent == 'skip-shipment'">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ 'general.wait' | t }}
+                </template>
+                <template v-else>
+                    Yes, Skip it
+                </template>
+            </a>
+            <a href="#" v-else class="btn btn-primary" :disabled="isLoading && loadingEvent == 'unskip-shipment'" @click.prevent="_updateskipApi('unskip-shipment')" :class="{'disabled': isLoading && loadingEvent == 'unskip-shipment'}">
+                <template v-if="isLoading && loadingEvent == 'unskip-shipment'">
+                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ 'general.wait' | t }}
+               </template>
+               <template v-else>
+                   Yes, Unskip it
+               </template>
+            </a>
+            </div>
+            </div>
+        </div>
+    </div>
+        
+    <div class="modal-content cancel-popup fade" :class="{'show': rechargeDashboard.isSubscriptionCancelReason}" >
+        <div class="modal-header popup-head justify-content-center">
+            <div class="go-back-link">
+                <p class="mb-0" @click.prevent="_goback(1,'cancel-reason')">
+                    <i class="ion ion-ios-arrow-back font-size-lg mr-1"></i>
+                    <span class="text-uppercase font-barlow ls-1 font-weight-semi-bold d-none d-md-inline-block">GO BACK</span>
+                </p>
+            </div>
+            <button class="popup-close close" type="button" data-dismiss="modal" aria-label="Close">
+            <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/close-icon-black.svg?26054" alt="popup-close" />
+            </button>
+        </div>
+        <div class="modal-body popup-body">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-11 text-center">
+                <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/7-Is_This_Really_the_End_medium.png?96489" alt="OwlCrate Arrives" class="mh-100 mw-10 mb-3 arrives-img">
+                <h3 class="mb-0">Is this really the end?</h3>
+                <p>It breaks our heart to close the book on us. Please let us know why you decided to leave.</p>
+                <div class="px-md-3">
+                    <div class="w-100 mb-3">
+                    <select class="form-control form-control-sm font-base ls-base"  data-cancellation-reason  @change="_cancelReason($event)">
+                        <template v-if="!rechargeDashboard.isCancelOption == false">
+                            <option value="no_reason" selected >Please select a reason</option> 
+                        </template>                 
+                        <template v-else>
+                            <option value="no_reason" selected >Please select a reason</option> 
+                        </template>
+                        <option value="Didn't Like Items/Book Choice">Didn't Like Items/Book Choice</option>
+                        <option value="Prefer Book Only Option">Prefer Book Only Option</option>
+                        <option value="Financial Reasons">Financial Reasons</option>
+                        <option value="Shipping Costs">Shipping Costs</option>
+                        <option value="Behind on Reading/Outgrew Books">Behind on Reading/Outgrew Books</option>
+                        <option value="Meant to be a One-Time Gift">Meant to be a One-Time Gift</option>
+                        <option value="Wanted to Try it Out">Wanted to Try it Out</option>
+                        <option value="I'll Be Back!">I'll Be Back!</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    </div>
+                    <div class="w-100 mb-3">
+                        <textarea placeholder="What could we have done better?" class="form-control form-control-sm font-base ls-base" rows="6" data-cancellation-comment></textarea>                  
+                    </div>
+                    <div class="w-100 mb-3">
+                        <a href="#" class="btn btn-primary" @click.prevent="_cancelSubscription()" v-show="rechargeDashboard.isCancelOption">Continue</a>
+                    </div>
+                    <div class="w-100 mb-3">
+                    <a href="#" class="line-hover" data-dismiss="modal" aria-label="Close">No, I want to keep my subscription!</a>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-content cancel-popup fade" :class="{'show': rechargeDashboard.prepaidSwitchCancelSub}" >
+        <div class="modal-header popup-head justify-content-center">
+            <div class="go-back-link">
+                <p class="mb-0" @click.prevent="_goback(1,'cancel-prepaid')">
+                    <i class="ion ion-ios-arrow-back font-size-lg mr-1"></i>
+                    <span class="text-uppercase font-barlow ls-1 font-weight-semi-bold d-none d-md-inline-block">GO BACK</span>
+                </p>
+            </div>
+            <button class="popup-close close" type="button" data-dismiss="modal" aria-label="Close">
+            <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/close-icon-black.svg?26054" alt="popup-close" />
+            </button>
+        </div>
+        <div class="modal-body popup-body pt-0">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 text-center">            
+            <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/8-We_can_just_Take_a_Break_medium.png?96487" alt="OwlCrate Arrives" class="mh-100 mw-10 mb-3 arrives-img">
+            <h3 class="mb-1">We Can Just Switch Plans!</h3>
+            {% if settings.discount_switch != ''%}<p v-text="'You can switch your '+rechargeDashboard.currentSubscription.charge_interval_frequency+' month prepaid plan to our monthly plan and receive a {{settings.discount_switch}}% discount on your next box. '"></p>{% endif %}
+            <a href="#" class="btn btn-primary mb-6" @click.prevent="_swapSubscriptionVariant()" :disabled="isLoading && loadingEvent == 'change_subsciption'" :class="{'disabled': isLoading && loadingEvent == 'change_subsciption','disabled': rechargeDashboard.currentSubscription.is_apply}">
+                <template v-if="isLoading && loadingEvent == 'change_subsciption'">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ 'general.wait' | t }}
+                </template>
+                <template v-else>
+                    Switch To Monthly Plan
+                </template>
+            </a>
+            <p class="mb-2">or if you really must go...</p>
+            <a href="#" class="btn btn-outline-primary" @click.prevent="_cancelSubscriptionAPI()" :disabled="isLoading && loadingEvent == 'cancel_subScription'" :class="{'disabled': isLoading && loadingEvent == 'cancel_subScription'}">
+                <template v-if="isLoading && loadingEvent == 'cancel_subScription'">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ 'general.wait' | t }}
+                </template>
+                <template v-else>
+                    Cancel Subscription
+                </template>
+            </a>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="modal-content cancel-prepaid-popup fade" :class="{'show': rechargeDashboard.monthlyConfirmation}" >
+        <div class="modal-header popup-head justify-content-center">
+            <button class="popup-close close" type="button" data-dismiss="modal" aria-label="Close" @click="_closePopup('monthlyConfirmation');">
+            <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/close-icon-black.svg?26054" alt="popup-close" />
+            </button>
+        </div>
+        <div class="modal-body popup-body pt-md-7">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 text-center">
+                <h3 class="mb-0">Awesome!</h3>
+                <p class="mb-5">Your OwlCrate subscription is now billed monthly.</p>
+                <div class="row justify-content-center mb-6 text-left">
+                    <div class="col-12 col-md-6 billed-box d-flex justify-content-center justify-content-md-start border-right border-secondary py-3" style="opacity: 0.6;">
+                    <div class="w-100">
+                        <h6 class="mb-3">Old Subscription Details:</h6>
+                        <div class="d-flex align-items-center cancel-sub-item">
+                        <img :src="_getSizedImageUrl(rechargeDashboard.currentProduct.featured_image, 'medium')" :alt="rechargeDashboard.currentProduct.title" class="mr-4 mx-100">
+                        <div class="cancel-sub-text">
+                            <h6 class="display-4 font-weight-semi-bold text-capitalize mb-1" v-text="rechargeDashboard.currentProduct.product_title"></h6>
+                            <p class="mb-0" v-text="rechargeDashboard.currentProduct.title"></p>
+                            <p class="mb-0" v-text="_formatMoney(rechargeDashboard.currentProduct.price)+' per renewal'"></p>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-12 col-md-6 py-3 billed-box d-flex justify-content-center justify-content-md-end">
+                    <div class="w-100">
+                        <h6 class="mb-3">NEW Subscription Details:</h6>
+                        <div class="d-flex align-items-center cancel-sub-item">
+                        <img :src="_getSizedImageUrl(rechargeDashboard.updatedProduct.featured_image, 'medium')" :alt="rechargeDashboard.updatedProduct.title" class="mr-4 mx-100">
+                        <div class="cancel-sub-text">
+                            <h6 class="display-4 font-weight-semi-bold text-capitalize mb-1" v-text="rechargeDashboard.updatedProduct.product_title"></h6>
+                            <p class="mb-0" v-text="rechargeDashboard.updatedProduct.title"></p>
+                            <p class="mb-0" v-text="_formatMoney(rechargeDashboard.updatedProduct.price)+' per renewal'"></p>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                <a href="/account" class="font-weight-semi-bold ls-1 font-size-sm font-barlow text-primary">RETURN TO MY ACCOUNT</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-content cancel-popup fade" :class="{'show': rechargeDashboard.monthlyCancelSub}">
+        <div class="modal-header popup-head justify-content-center">
+            <div class="go-back-link">
+                <p class="mb-0" @click.prevent="_goback(1,'cancel-monthly')">
+                    <i class="ion ion-ios-arrow-back font-size-lg mr-1"></i>
+                    <span class="text-uppercase font-barlow ls-1 font-weight-semi-bold d-none d-md-inline-block">GO BACK</span>
+                </p>
+            </div>
+            <button class="popup-close close" type="button" data-dismiss="modal" aria-label="Close">
+            <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/close-icon-black.svg?26054" alt="popup-close" />
+            </button>
+        </div>
+        <div class="modal-body popup-body pt-0">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 text-center">
+                <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/8-We_can_just_Take_a_Break_medium.png?96487" alt="OwlCrate Arrives" class="mh-100 mw-10 mb-3 arrives-img">
+                <h3 class="mb-1 text-uppercase">We can just take a break!</h3>
+                {% if settings.discount_pause != ''%}<p>You can pause your subscription for 3 months and we will give you a {{settings.discount_pause}}% discount on your first returning box.</p>{% endif %}
+                <a href="#" class="btn btn-primary mb-6 text-uppercase" :disabled="isLoading && loadingEvent == 'pause_subsciption'" @click.prevent="_updateNextChargeDate('pause_subsciption')" :class="{'disabled': isLoading && loadingEvent == 'pause_subsciption', 'disabled': rechargeDashboard.currentSubscription.is_apply}">
+                    <template v-if="isLoading && loadingEvent == 'pause_subsciption'">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ 'general.wait' | t }}
+                    </template>
+                    <template v-else>
+                        Pause for 3 months
+                    </template>
+                </a>
+                <p class="mb-2">or if you really must go...</p>
+                <a href="#" class="btn btn-outline-primary" :disabled="isLoading && loadingEvent == 'cancel_subScription'" @click.prevent="_cancelSubscriptionAPI()" :class="{'disabled': isLoading && loadingEvent == 'cancel_subScription'}">
+                    <template v-if="isLoading && loadingEvent == 'cancel_subScription'">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ 'general.wait' | t }}
+                    </template>
+                    <template v-else>
+                        Cancel Subscription
+                    </template>
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-content cancel-pause-popup fade" data-pause-confirmation :class="{'show': rechargeDashboard.pauseConfirmation}">
+        <div class="modal-header popup-head justify-content-center">
+            <button class="popup-close close" type="button" data-dismiss="modal" aria-label="Close" @click="_closePopup('monthlyConfirmation');">
+            <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/close-icon-black.svg?26054" alt="popup-close" />
+            </button>
+        </div>
+        <div class="modal-body popup-body">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 text-center">
+                <h3 class="mb-0">Great choice!</h3>
+                <p>Your OwlCrate subscription is now paused for 3 months.</p>
+                <div class="row justify-content-center mb-5 text-left">
+                    <div class="col-12 col-md-9">
+                    <div class="d-flex align-items-center justify-content-center cancel-sub-item mb-3">
+                        <img :src="rechargeDashboard.currentSubscription.image" :alt="rechargeDashboard.currentSubscription.product_title" class="mr-4 mx-100">
+                        <div class="cancel-sub-text">
+                        <h6 class="display-4 mb-0 font-weight-semi-bold text-capitalize" v-text="rechargeDashboard.currentSubscription.product_title"></h6>
+                        <p class="mb-0" v-text="rechargeDashboard.currentSubscription.variant_title"></p>
+                        <p class="mb-0" v-html="_formatMoney(rechargeDashboard.currentSubscription.price*100)+' per renewal'"></p>
+                        </div>
+                    </div>
+                    <p class="text-center"><span class="font-weight-bold">Old Renewal:</span> <span v-html="'Thur '+ _formatDateRecharge(rechargeDashboard.currentSubscription.next_charge_scheduled_at)"></span><span class="text-danger ml-1">PAUSED</span></p>
+                    <div class="border border-secondary p-2 text-center">
+                        <p class="mb-0"><span class="font-weight-bold">Resume Date: </span><span v-html="'Thur '+ _formatDateRecharge(rechargeDashboard.pauseSubscription.next_charge_scheduled_at)"></span></p>
+                        {% if settings.discount_pause != ''%}<p class="mb-0 font-size-sm text-uppercase">+{{settings.discount_pause}}% discount on first box</p>{% endif %}
+                    </div>
+                    </div>
+                </div>
+
+                <a href="/account" class="font-weight-semi-bold ls-1 font-size-sm font-barlow text-primary mt-4">RETURN TO MY ACCOUNT</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-content swap-popup fade" :class="{'show': rechargeDashboard.isEditPayment}" data-edit-payment>
+        <div class="modal-header popup-head bg-secondary justify-content-center">
+            <h4 class="mb-0 text-white">Edit Your Payment Method</h4>
+            <button class="popup-close close" type="button" data-dismiss="modal" aria-label="Close">
+                <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/close-icon.svg?26005" alt="popup-close" />
+            </button>
+        </div>
+        <div class="modal-body popup-body">
+           <div v-if="isEditPaymentLoaded == false" class="d-flex flex-column align-items-center justify-content-center">
+                <div class="my-3">
+                    <hollow-dots-spinner
+                    :animation-duration="1000"
+                    :size="60"
+                    :color="'#de7c00'"
+                    />
+                </div>
+                <p class="small text-gray-700">Please Wait...</p>
+            </div>
+            <div data-recharge-payment-form class="d-none"></div>
+        </div>
+        <div class="modal-footer popup-footer d-block px-5 pb-5 pt-2">
+            <div class="row custom-row align-items-center">                
+                <div class="col-12 text-center text-md-left my-2 my-md-0">
+                    <p class="mb-0">
+                        <span class="font-weight-bold text-uppercase mr-lg-2">Need Help?</span>
+                        Send us an email at <a href="mailto:support@owlcrate.com">support@owlcrate.com</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </div>
+</div>

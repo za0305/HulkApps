@@ -1,0 +1,190 @@
+{%- if section.settings.enable_attime -%}
+	<section class="jr-one-box-attime pt-md-4 pt-5">
+		<div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+			<div class="text-center">
+				{%- if section.settings.attime_title != '' -%}
+					<h2 class="text-blurple-100 h1 font-weight-semi-bold mb-0">{{ section.settings.attime_title }}</h2>
+				{%- endif -%}
+					<div class="row">
+						<div class="col-lg-12 col-11 mx-auto">
+							<div class="row"
+									data-flickity='{
+									"contain": true,
+									"wrapAround": false,
+									"freeScroll": false,
+									"groupCells": "100%",
+									"dragThreshold": 20,
+									"lazyLoad": false,
+									"cellAlign": "center",
+									"prevNextButtons": true,
+									"pageDots": false,
+									"arrowShape": {"x0": 10, "x1": 60, "y1": 50, "x2": 65, "y2": 40, "x3": 25}
+									}'>
+									{%- for block in section.blocks limit: section.blocks.size -%}
+										{%- if block.type == 'one_at_time' -%}
+											<div class="col-lg-3 col-md-4 col-sm-6">
+													<div class="card-wrapper p-lg-4 p-md-3 p-4 bg-white shadow my-md-6 my-5 mx-md-0 mx-3">
+															<div class="card-img-wrapper padding-top-100 position-relative mb-3  ">
+																	<img data-sizes="auto"
+																	     src="{{ block.settings.box_img | img_url: 'pico' }}"
+																			 data-srcset="{{ block.settings.box_img | img_url: '320x' }} 260w,
+																									  {{ block.settings.box_img | img_url: '480x' }} 350w"
+																			 alt="{{ block.settings.box_head | escape }}" class="lazyload position-absolute img-wrapper top-left-50" />
+															</div>
+															{%- if block.settings.box_head != '' -%}
+																<p class="font-size-lg font-weight-bold mb-0 box-h" v-match-heights="{el: ['.box-h']}">{{ block.settings.box_head }}</p>
+															{%- endif -%}
+															{%- if block.settings.box_desc != '' -%}
+																<p class="font-size-sm equal-desc" v-match-heights="{el: ['.equal-desc']}">{{ block.settings.box_desc }}</p>
+															{%- endif -%}
+													</div>
+											</div>
+										{%- endif -%}
+									{%- endfor -%}
+							</div>
+							{%- if section.settings.btn_txt != '' and section.settings.btn_url != '' -%}
+								<div class="text-center my-md-3 my-2">
+									<a href="{{ section.settings.btn_url }}" class="btn btn{% if section.settings.btn_type == 'outline' %}-{% endif %}{{ section.settings.btn_type }}-{{ section.settings.btn_variant }} {{ section.settings.btn_size }}">{{ section.settings.btn_txt }}</a>
+								</div>
+							{%- endif -%}
+						</div>
+					</div>
+			</div>
+		</div>
+	</section>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "One Box At A Time",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+			{
+        "type": "checkbox",
+        "id": "fluid_layout",
+        "label": "Full Width Layout?",
+        "default": false
+      },
+			{
+				"type": "header",
+				"content": "One Box At Time"
+			},
+			{
+				"type": "checkbox",
+				"id": "enable_attime",
+				"label": "One box Enabled?",
+				"default": true
+			},
+			{
+				"type": "text",
+				"id": "attime_title",
+				"label": "Section Title",
+				"default": "One box at a time"
+			},
+			{
+				"type": "text",
+				"id": "btn_txt",
+				"label": "Button Text"
+			},
+			{
+				"type": "url",
+				"id": "btn_url",
+				"label": "Button URL"
+			},
+			{
+				"type": "select",
+				"id": "btn_type",
+				"label": "Button Type",
+				"options": [
+					{
+						"value": "outline",
+						"label": "Outline"
+					},
+					{
+						"value": "",
+						"label": "Solid"
+					}
+				],
+				"default": ""
+			},
+			{
+				"type": "select",
+				"id": "btn_variant",
+				"label": "Button Variant",
+				"options": [
+					{
+						"value": "primary",
+						"label": "Primary"
+					},
+					{
+						"value": "secondary",
+						"label": "Secondary"
+					},
+					{
+						"value": "accent",
+						"label": "Accent"
+					},
+					{
+						"value": "light",
+						"label": "Light"
+					},
+					{
+						"value": "dark",
+						"label": "Dark"
+					},
+					{
+						"value": "purple",
+						"label": "Purple"
+					}
+				],
+				"default": "purple"
+			},
+			{
+				"type": "select",
+				"id": "btn_size",
+				"label": "Button Size",
+				"options": [
+					{
+						"value": "",
+						"label": "Default"
+					},
+					{
+						"value": "btn-sm",
+						"label": "Small"
+					},
+					{
+						"value": "btn-lg",
+						"label": "Large"
+					}
+				],
+				"default": ""
+			}
+    ],
+    "blocks": [
+      {
+				"type": "one_at_time",
+				"name": "One Box At Time",
+				"settings": [
+					{
+						"type": "image_picker",
+						"id": "box_img",
+						"label": "Box image"
+					},
+					{
+						"type": "text",
+						"id": "box_head",
+						"label": "Box Heading"
+					},
+					{
+						"type": "textarea",
+						"id": "box_desc",
+						"label": "Box description"
+					}
+				]
+			}
+    ]
+  }
+{% endschema %}

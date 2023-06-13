@@ -1,0 +1,165 @@
+{%- liquid
+  assign bg_color = section.settings.color
+  assign heading = section.settings.heading
+  assign planType = section.settings.planType
+  assign button_label = section.settings.button_label
+  assign button_type = section.settings.button_type
+  assign image_main = section.settings.image_main
+
+%}
+
+{{ 'section-subscription-jr-what-to-expect.css' | asset_url | stylesheet_tag }}
+
+<section id="section-{{ section.id }}"
+         class="subscription-jr-what-to-expect relative"
+        {% if bg_color != blank %}
+          style="background-color:{{ bg_color }}"
+        {% endif %}
+>
+
+  <h2 class="section-title">{{ heading }}</h2>
+
+  {%- if section.blocks.size > 1 -%}
+    <div class="subscription-jr-what-to-expect__info flex items-end">
+      <img src="{{ image_main | img_url: 'master' }}" alt="" class="inline-block">
+
+      <div class="what-to-expect__elements">
+        <div class="what-to-expect__elements__body">
+          {% for block in section.blocks %}
+            <div class="what-to-expect__element absolute" id="wtee-{{ forloop.index }}">
+              <div class="what-to-expect__element__text text-center">
+                {{ block.settings.text }}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {% if button_label != ''
+  and planType != blank -%}
+    <div class="jr-love-of-reading__buttons text-center">
+      {% if settings.jr_soldout %}
+        <a href="#" @click.prevent="_soldoutProduct('plan_jr', 'type-normal')" class="button button--{{ button_type }}">{{ button_label }}</a>
+      {% else %}
+        <a href="#" @click.prevent="_chooseProductOnPage('{{ planType }}', 2, 'type-normal')" class="button button--{{ button_type }}">{{ button_label }}</a>
+      {% endif %}
+    </div>
+  {% endif %}
+</section>
+
+<script src="https://cdn.jsdelivr.net/gh/phucbm/flickity-responsive@latest/flickity-responsive.min.js"></script>
+<script>
+    $( document ).ready(function() {
+        function doFlickityCarousel() {
+            let $carousel = $('.what-to-expect__elements__body').flickity({
+                freeScroll: false,
+                wrapAround: true,
+                pageDots: false,
+                prevNextButtons: true,
+                autoPlay: true
+            });
+            let isFlickity = true;
+
+            // Default state
+            if ( matchMedia('screen and (max-width: 1024px)').matches ) {
+                if ( !isFlickity ) {
+                    $carousel.flickity();
+                }
+            }
+
+            if ( matchMedia('screen and (min-width: 1025px)').matches ) {
+                if ( isFlickity ) {
+                    // destroy Flickity
+                    $carousel.flickity('destroy');
+                }
+            }
+            isFlickity = !isFlickity;
+        } doFlickityCarousel();
+
+        $(window).on('resize', function(){
+            doFlickityCarousel();
+        });
+    });
+</script>
+
+
+
+{% schema %}
+{
+  "name": "What to expect",
+  "max_blocks": 4,
+  "settings":[
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Background Color"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "planType",
+      "label": "Plan Type",
+      "default": "plan_jr"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "select",
+      "id": "button_type",
+      "label": "Button Type",
+      "options": [
+        {
+          "value": "white",
+          "label": "White"
+        },
+        {
+          "value": "green",
+          "label": "Green"
+        },
+        {
+          "value": "greendark",
+          "label": "Dark Green"
+        }
+      ],
+      "default": "white"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_main",
+      "label": "Image (Main)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name": "What to expect",
+      "blocks": [
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

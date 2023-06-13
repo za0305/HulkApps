@@ -1,0 +1,182 @@
+{% if section.settings.enable_section %}
+<template v-if="subscriptionFlow.subscriptionPlanJson.length > 0">
+  <section class="section-content" data-section-id="{{ section.id }}">
+      <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+          <div class="row justify-content-center mb-4">
+              <div class="col-12 col-md-7 text-center">
+                  {% if section.settings.heading_txt != blank %}<h2 class="mb-1 section-title">{{section.settings.heading_txt}}</h2>{% endif %}
+                  {% if section.settings.caption_txt != blank %}<p>{{section.settings.caption_txt}}</p>{% endif %}
+              </div>
+          </div>
+          <div class="row justify-content-center">
+              <div class="col-12 col-xl-9">
+                  <div class="row align-items-end">
+                    <div class="col-md-4 mb-3 mb-md-0" v-for="variant in subscriptionFlow.subscriptionPlanJson" v-if="variant.is_hidden != 'true'">
+                        <div class="card shadow-none border-secondary plan-item">
+                            <p v-if="variant.save > 0" class="bg-blurple-100 text-center py-1 mb-0 text-white ls-1 font-weight-semi-bold font-size-xs offer-text" v-text="'You Save '+ _formatMoney(variant.save)+'!'"></p>
+                            <div class="card-body d-flex align-items-center d-md-block py-5">
+                                <div class="d-md-none plan-mobile-img">
+                                    <div class="product-img">
+                                        <img test v-if="variant.featured_image != null" :src="_getSizedImageUrl(variant.featured_image, 'pico')"
+                                        :data-src="_getSizedImageUrl(variant.featured_image, '480x')"
+                                        class="img-fluid lazyload"
+                                        :alt="variant.title"/>
+                                        <img v-else-if="variant.title.includes('3')" src="{{ '3-month-plan.jpg' | file_img_url: 'pico'}}" data-src="{{ '3-month-plan.jpg' | file_img_url: '480x'}}" :alt="variant.title" class="img-fluid lazyload" />
+                                        <img v-else-if="variant.title.includes('6')" src="{{'6-month-plans.jpg' | file_img_url: 'pico'}}" data-src="{{'6-month-plans.jpg' | file_img_url: '480x'}}" :alt="variant.title" class="img-fluid lazyload" />
+                                        <img v-else src="{{'owl-pack.jpg' | file_img_url: 'pico'}}" data-src="{{'owl-pack.jpg' | file_img_url: '480x'}}" :alt="variant.title" class="img-fluid lazyload" />
+                                    </div>
+                                </div>
+                                <div class="plan-item-text text-left text-md-center">
+                                    <h6 class="mb-1" v-text="variant.title"></h6>
+                                    <h5 v-text="_formatMoney(variant.price)"></h5>
+                                    <div class="product-img mb-4 d-none d-md-block">
+                                        <img v-if="variant.featured_image != null" :src="_getSizedImageUrl(variant.featured_image, 'pico')"
+                                        :data-src="_getSizedImageUrl(variant.featured_image, '480x')"
+                                        class="img-fluid lazyload"
+                                        :alt="variant.title"/>
+                                        <img v-else-if="variant.title.includes('3')" src="{{'3-month-plan.jpg' | file_img_url: 'pico'}}" data-src="{{'3-month-plan.jpg' | file_img_url: '480x'}}" class="img-fluid lazyload" />
+                                        <img v-else-if="variant.title.includes('6')" src="{{'6-month-plans.jpg' | file_img_url: 'pico'}}" data-src="{{'6-month-plans.jpg' | file_img_url: '480x'}}" class="img-fluid lazyload" />
+                                        <img v-else src="{{'owl-pack.jpg' | file_img_url: 'pico'}}" data-src="{{'owl-pack.jpg' | file_img_url: '480x'}}" class="img-fluid lazyload" />
+                                    </div>
+                                    <p class="mb-0 card-total font-size-ex-sm" v-match-heights="{el: ['.card-total']}"><b>Total Price:</b> <br class="d-md-none" /> <span v-text="_formatMoney(variant.price) + ' + Shipping'"></span></p>
+                                    <template v-if="variant.metafields.charge_internal_frequency != null">
+                                        <p class="mb-0 font-size-ex-sm" v-if="variant.metafields.charge_internal_frequency == 1" >One-Time Box</p>
+                                        <p class="mb-0 font-size-ex-sm" v-else v-text="'One-Time '+variant.metafields.charge_internal_frequency+'-Month Subscription'"></p>
+                                    </template>
+                                    <a href="#"  @click.prevent="_selectedPagePlan(variant)" class="btn btn-sm btn-dark mt-2 mt-md-3">Select</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+          <p class="text-center mt-5 ls-1">{{section.settings.footer_txt}}{% if section.settings.footer_btn_txt %}<a href="{% if section.settings.footer_btn_link != blank %}{{section.settings.footer_btn_link}}{% else %}#{% endif %}" class="line-hover ml-2">{{section.settings.footer_btn_txt}}</a>{% endif %}</p>
+      </div>
+  </section>
+</template>
+
+{% if section.blocks.size > 0 %}
+  {% if section.settings.select_product != '' %}<p class="d-none" data-selectedPlanType="{{section.settings.select_product}}"></p>{% endif %}
+  {% for block in section.blocks %}
+    {% assign subProd = all_products[block.settings.main_product] %}
+    {% if subProd.title != blank %}
+      {% unless subProd.variants[0].metafields.subscription.is_hidden == true  %}
+        <script type="application/json" data-sub-json>
+            {
+                "variant": {{ subProd.variants[0] | json }},
+                "product": {
+                    "product_id": {{subProd.id}},
+                    "product_title": "{{subProd.title}}",
+                    "product_price": {{subProd.metafields.c_f.original_price}},
+                    "product_featured_image": "{{subProd.featured_image.src}}",
+                    "product_type": "{% if subProd.tags contains 'plan_adult' %}plan_adult{% else %}plan_jr{% endif %}",
+                    "addonType": "{% if subProd.tags contains 'plan_adult' %}box_adult{% else %}box_junior{% endif %}",
+                    "product_tags": [{% if subProd.tags.size > 0 %}{% for tag in subProd.tags %}"{{tag}}"{% unless forloop.last%},{% endunless %}{% endfor %}{% endif %}]
+                },
+                "metafields": {
+                    "subscription_id": {{ subProd.metafields.subscriptions.subscription_id }},
+                    "shipping_interval_unit_type": "{{ subProd.metafields.subscriptions.shipping_interval_unit_type }}",
+                    "charge_internal_frequency": {{ subProd.variants[0].metafields.subscription.charge_internal_frequency }},
+                    "shipping_interval_frequency": {{ subProd.variants[0].metafields.subscription.shipping_interval_frequency }},
+                    "discount_variant_id": {{ subProd.variants[0].metafields.subscriptions.discount_variant_id }},
+                    "is_hidden": {% if subProd.variants[0].metafields.subscription.is_hidden != '' %}{{ subProd.variants[0].metafields.subscription.is_hidden }}{% else %}null{% endif %}
+                }
+            }
+        </script>
+      {% endunless %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% endif %}
+
+{% schema %}
+  {
+    "name": "OwlCrate Plan",
+    "class": "index-owlCrate-plan",
+    "max_blocks": 3,
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "fluid_layout",
+        "label": "Full Width Layout?",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_section",
+        "label": "Enable Section"
+      },
+      {
+        "type": "text",
+        "id": "heading_txt",
+        "label": "Heading Text"
+      },
+      {
+        "type": "textarea",
+        "id": "caption_txt",
+        "label": "Caption Text"
+      },     
+      {
+        "type": "text",
+        "id": "select_product",
+        "label": "Select Product Tag",
+        "default": "plan_adult",
+        "info": "Use 'plan_adult or plan_jr' for product."
+      },
+      {
+        "type": "header",
+        "content": "Footer Content"
+      },
+      {
+        "type": "text",
+        "id": "footer_txt",
+        "label": "Text"
+      },      
+      {
+        "type": "text",
+        "id": "footer_btn_txt",
+        "label": "Link Text"
+      },
+      {
+        "type": "url",
+        "id": "footer_btn_link",
+        "label": "Link Url"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "content",
+        "name": "Plan Products",
+        "settings": [
+          {
+            "type": "product",
+            "id": "main_product",
+            "label": "Choose Product"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "index owlCrate plan",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

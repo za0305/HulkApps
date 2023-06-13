@@ -1,0 +1,103 @@
+{% comment %}
+<link rel="stylesheet" href="{{ 'ambassadors-faq.css' | asset_url }}" type="text/css">
+{% endcomment %}
+<section class="js-faq-section">
+  <h2 class="js-faq-heading text-center">{{ section.settings.faq_title }}</h2>
+  <div class="custom-container">
+    {% comment %}<h2 class="js-faq-heading text-center">{{ section.settings.faq_title }}</h2>{% endcomment %}
+    <div class="custom-row">
+      <div class="column-12">
+        <div class="accordion">
+          {% if section.blocks.size > 0 %}
+            {% for block in section.blocks %}
+              <div class="accordion-item">
+                <button class="accordion-btn">
+                  <span class="accordion-caption">{{ block.settings.faq_question }}</span>
+                  <span class="accordion-icon">
+                    {% render 'arrow-rigth' %}
+                  </span>
+                </button>
+                <div class="accordion-content">
+                  <p class="accordion-content-data">{{ block.settings.faq_answer }}</p>
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
+    <div class="custom-row">
+      <div class="column-12">
+        <div class="faq-join-wrapper text-center">
+            {% comment %}<a class="owl-join-button text-decoration-none" href="{% if section.settings.button_link != blank %}{{ section.settings.button_link }}{% else %}javascript:void(0);{% endif %}">{{ section.settings.button_title }}</a>{% endcomment %}
+          <div class="lc-signup-container" data-lc-button-text="{{ section.settings.button_title }}"
+               data-lc-button-text-color="#FFFFF"
+               data-lc-button-bg-color="#26bcb4">
+            <script type="text/javascript" src="https://pub.loudcrowd.com/launch.js?hid=cHJvZ3JhbV9ob3N0OjE1NQ"></script>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<script>
+    $(document).ready ( function () {
+      const accItems = document.querySelectorAll(".accordion-item");
+      accItems.forEach( (acc) => acc.addEventListener("click", toggleAcc) );
+      function toggleAcc () {
+        accItems.forEach((item) => item != this ? item.classList.remove("accordion-item-active") : null );
+        if (this.classList != "accordion-item-active") {
+          this.classList.toggle("accordion-item-active");
+        }
+      }
+    });
+  </script>
+
+{% schema %}
+  {
+    "name": "FAQs",
+    "settings": [
+      {
+        "id": "faq_title",
+        "type": "text",
+        "label": "Faq Title",
+		"default": "HAVE ANY QUESTIONS?"
+      },
+	  {
+        "id": "button_title",
+        "type": "text",
+        "label": "Button Title",
+		"default": "JOIN NOW"
+      }
+    ],
+	"blocks": [
+      {
+        "type": "text",
+        "name": "Faq",
+        "settings": [
+          {
+            "id": "faq_question",
+            "type": "text",
+            "label": "Faq Question",
+			"default": "How do I get rewarded?"
+          },
+          {
+            "id": "faq_answer",
+            "type": "text",
+            "label": "Faq Answer",
+			"default": "Check your email. Reward notifications will be sent to the email you register with."
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

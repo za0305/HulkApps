@@ -1,0 +1,88 @@
+{%- if section.blocks.size > 0 -%}
+  {{ 'section-featured-categories.css' | asset_url | stylesheet_tag }}
+
+  <section id="{{ section.id }}" class="fc__wrapper">
+    <div class="container-wide">
+      <div class="fc__items">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign title = block.settings.title | escape
+            assign url = block.settings.url
+            assign image = block.settings.image
+            assign image_mobile = block.settings.image_mobile
+          -%}
+          {%- if title != blank
+          and url != blank
+          and image
+          and image_mobile -%}
+            <a href="{{ url }}" class="fc__item">
+              {%- render 'img', image: image, class: 'scaled desctop' -%}
+              {%- render 'img', image: image_mobile, class: 'scaled mobile' -%}
+              <div class="fc__item-inner">
+                <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/fc_bg.png?v=1664902634"
+                     width="510"
+                     height="540"
+                     class="fc__item-bg"
+                     alt="Bg img"
+                     loading="lazy">
+
+                <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/Frame.png?v=1665151177"
+                     width="335"
+                     height="188"
+                     class="fc__item-bg--mobile"
+                     alt="Bg img mobile"
+                     loading="lazy">
+
+                <h3 class="fc__item-title">{{ title }}</h3>
+              </div>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Featured Categories",
+  "max_blocks": 3,
+  "settings": [
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Image Mobile"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Categories",
+      "category": "Content"
+    }
+  ]
+}
+{% endschema %}

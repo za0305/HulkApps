@@ -1,0 +1,315 @@
+.subscription-faq {
+  padding-top: 11.6rem;
+  padding-bottom: 5rem;
+}
+.subscription-jr .subscription-faq::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1358px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: url(bg-subscription-faq-v3.png) no-repeat 50% 0;
+  background-size: contain;
+}
+@media only screen and (max-width: 1920px) {
+  .subscription-jr .subscription-faq::after {
+    background-size: cover;
+  }
+}
+.subscription-jr .subscription-faq #faq  {
+  position: relative;
+  z-index: 2;
+}
+@media only screen and (min-width: 1025px) {
+  .subscription-jr .subscription-faq #faq:before {
+    content: '';
+    display: block;
+    width: 296px;
+    height: 338px;
+    position: absolute;
+    top: -120px;
+    left: -460px;
+    background: url(bg-jr-faq-before.svg) no-repeat 50% 50%;
+  }
+  .subscription-jr .subscription-faq #faq:after {
+    content: '';
+    display: block;
+    width: 142px;
+    height: 408px;
+    position: absolute;
+    top: -130px;
+    right: -324px;
+    background: url(bg-jr-faq-after.svg) no-repeat 50% 50%;
+  }
+}
+
+.subscription-faq .sp__sun {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  left: 50%;
+  transform: translate(-50%) rotate(180deg);
+}
+.subscription-jr .subscription-faq .sp__sun {
+  display: none;
+}
+
+.subscription .accordion,
+.subscription-jr .accordion {
+  max-width: 850px;
+  margin: 50px auto 0;
+}
+
+.subscription .accordion .card,
+.subscription-jr .accordion .card {
+  margin: 0 0 10px 0;
+  padding: 12px 17px 12px 40px;
+  background: #FBFFFF;
+  border: 1px solid #CCE8E7;
+  border-radius: 20px;
+}
+
+.subscription .accordion .card .heading,
+.subscription-jr .accordion .card .heading {
+  display: inline-block;
+  color: #282560;
+  opacity: 0.7;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  text-transform: none;
+}
+.subscription .accordion .card .card-header,
+.subscription-jr .accordion .card .card-header {
+  margin: 0;
+  border: 0;
+}
+.subscription .accordion .card .card-header .btn,
+.subscription-jr .accordion .card .card-header .btn {
+  width: 100%;
+  padding: 0;
+  letter-spacing: 0;
+}
+.subscription .accordion .card .card-header .btn span,
+.subscription-jr .accordion .card .card-header .btn span {
+  width: calc(100% - 46px);
+}
+.subscription .accordion .card .card-header .btn::after,
+.subscription-jr .accordion .card .card-header .btn::after {
+  content: '';
+  width: 46px;
+  height: 46px;
+  border-radius: 23px;
+  background: #CCE8E7 url(icon-arrow.svg) no-repeat 50% 50%;
+}
+.subscription .accordion .card .card-header .btn[aria-expanded="true"]::after,
+.subscription-jr .accordion .card .card-header .btn[aria-expanded="true"]::after {
+  transform: rotate(180deg);
+  background-color: #000;
+}
+
+.subscription .card-footer,
+.subscription .card-header,
+.subscription-jr .card-footer,
+.subscription-jr .card-header {
+  padding: 0;
+  background: transparent;
+}
+
+.subscription .accordion .card .card-body,
+.subscription-jr .accordion .card .card-body {
+  padding: 21px 70px 0 0;
+}
+.subscription .accordion .card .card-body p,
+.subscription-jr .accordion .card .card-body p {
+  color: #282560;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  font-family: "Barlow", sans-serif;
+}
+
+
+
+.subscription-subscribe {
+  width: 1426px;
+  margin: 122px auto 33px;
+  padding: 31px 29px;
+  background: #282560;
+  box-shadow: 0 9px 90px rgba(21, 27, 67, 0.2);
+  backdrop-filter: blur(20px);
+  border-radius: 50px;
+}
+.subscription-subscribe::before {
+  content: '';
+  width: 553px;
+  height: 359px;
+  position: absolute;
+  top: -51px;
+  right: -62px;
+  z-index: 1;
+  background: url(subscription-newsletter-before.png) no-repeat;
+}
+.subscription-subscribe__body {
+  width: 100%;
+  height: 171px;
+  border: 2px solid #EBFBFA;
+  border-radius: 30px;
+}
+.subscription-subscribe__body::before {
+  content: '';
+  width: 36px;
+  height: 54px;
+  position: absolute;
+  top: 56px;
+  left: -19px;
+  z-index: 2;
+  background: url(icon-star-newsletter.svg) no-repeat;
+}
+.subscription-subscribe__body__label {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  color: #fff;
+  text-transform: uppercase;
+  font-family: "Barlow", sans-serif;
+  position: absolute;
+  top: 47px;
+  left: 97px;
+  z-index: 3;
+}
+.subscription-subscribe__body__label span {
+  display: inline-block;
+  width: 100%;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 43px;
+  text-transform: none;
+}
+
+.subscription-subscribe__body__form {
+  width: 532px;
+  position: absolute;
+  top: 62px;
+  left: 525px;
+  z-index: 3;
+  font-family: "Barlow", sans-serif;
+}
+.subscription-subscribe__body__form  .newsletter__formWrapper {
+  margin-top: 0;
+}
+.subscription-subscribe__body__form  .newsletter__formWrapper .newsletter__input {
+  height: 54px;
+  color: #282560;
+}
+.subscription-subscribe__body__form  .newsletter__formWrapper .newsletter__input::-webkit-input-placeholder {
+  color: #282560;
+}
+.subscription-subscribe__body__form  .newsletter__formWrapper .newsletter__input:-ms-input-placeholder {
+  color: #282560;
+}
+.subscription-subscribe__body__form  .newsletter__formWrapper .newsletter__input:-moz-placeholder {
+  color: #282560;
+  opacity:1;
+}
+.subscription-subscribe__body__form  .newsletter__formWrapper .newsletter__input::-moz-placeholder {
+  color: #282560;
+  opacity:1;
+}
+
+.subscription-subscribe__body__form  .newsletter__formWrapper .newsletter__btn {
+  width: 144px;
+}
+
+@media only screen and (max-width: 1440px) and (min-width: 1367px) {
+  .subscription-faq {
+    zoom: .7;
+  }
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 1025px) {
+  .subscription-faq {
+    zoom: .6;
+  }
+}
+
+@media only screen and (max-width: 1426px) {
+  .subscription-subscribe {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 860px) and (min-width: 569px) {
+  .subscription-jr .accordion {
+    max-width: calc(100% - 40px);
+  }
+}
+
+@media only screen and (max-width: 568px) {
+  .subscription-faq {
+    padding-top: 104px;
+    padding-bottom: 20px;
+  }
+
+  .subscription-faq .sp__sun {
+    height: 98px;
+  }
+
+  .subscription .accordion,
+  .subscription-jr .accordion {
+    padding: 0 20px;
+    margin: 20px auto 0;
+  }
+
+  .subscription .accordion .card,
+  .subscription-jr .accordion .card {
+    padding: 8px 10px 8px 20px;
+  }
+  .subscription .accordion .card .card-header .btn span,
+  .subscription-jr .accordion .card .card-header .btn span {
+    width: calc(100% - 32px);
+  }
+  .subscription .accordion .card .card-header .btn:after,
+  .subscription-jr .accordion .card .card-header .btn:after {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+  }
+  .subscription .accordion .card .heading,
+  .subscription-jr .accordion .card .heading {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0;
+  }
+
+  .subscription .accordion .card .card-body,
+  .subscription-jr .accordion .card .card-body {
+    padding: 20px 0 0 0;
+  }
+  .subscription .accordion .card .card-body p,
+  .subscription-jr .accordion .card .card-body p {
+    font-size: 16px;
+    line-height: 18px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .subscription-jr .subscription-faq:after {
+    display: none;
+  }
+
+  .subscription .accordion .card .heading,
+  .subscription-jr .accordion .card .heading {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .subscription-jr .accordion .card .card-header .btn:after {
+    width: 19px!important;
+    height: 17px!important;
+    background-size: cover !important;
+  }
+}

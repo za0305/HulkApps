@@ -1,0 +1,78 @@
+<section class="post-rule-section">
+  <div class="custom-container">
+    <div class="custom-row">
+      <div class="column-6">
+        <div class="post-rule-column-wrapper post-rule-image-wrapper">
+          {% if section.settings.rule_image != blank %}
+            <img
+                 data-sizes="auto"
+                 src="{{ section.settings.rule_image | img_url: 'original'}}"
+                 data-srcset="{{ section.settings.rule_image | img_url: '320x' }} 320w,
+                              {{ section.settings.rule_image | img_url: '580x' }} 580w,
+                              {{ section.settings.rule_image | img_url: '800x' }} 800w,
+                              {{ section.settings.rule_image | img_url: '1024x' }} 576w
+                              "
+                 class="post-rule-image" />
+          {% else %}
+          	{{ 'image' | placeholder_svg_tag: 'post-rule-image'}}
+          {% endif %}
+        </div>
+      </div>
+      <div class="column-6 align-self-center">
+        <div class="post-rule-column-wrapper">
+          <h2 class="post-rule-main-heading">{{ section.settings.rule_title }}</h2>
+          <ul class="post-rule-list">
+            {% if section.blocks.size > 0 %}
+              {% for block in section.blocks %}
+                <li class="post-rule-data">{{ block.settings.rule_details }}</li>
+              {% endfor %}
+            {% else %}
+              {% for i in  (1..5) %}
+                <li class="post-rule-data">Posts must be made from accounts that are public.</li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Post Rule",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "rule_image",
+        "label": "Post Rule Image"
+      },
+      {
+        "id": "rule_title",
+        "type": "text",
+        "label": "Post Rules Title",
+		"default": "POST RULES"
+      }
+    ],
+	"blocks": [
+      {
+        "type": "text",
+        "name": "Post Rules",
+        "settings": [
+          {
+            "id": "rule_details",
+            "type": "text",
+            "label": "Post Rules",
+			"default": "Posts must be made from accounts that are public."
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

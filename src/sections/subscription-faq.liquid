@@ -1,0 +1,120 @@
+{%- liquid
+  assign bg_color = section.settings.color
+  assign heading = section.settings.heading
+
+%}
+
+{{ 'section-subscription-faq.css' | asset_url | stylesheet_tag }}
+
+<section id="section-{{ section.id }}"
+         class="subscription-faq relative"
+         {% if bg_color != blank %}
+         style="background-color:{{ bg_color }}"
+         {% endif %}
+>
+  {%- render 'sp-sun' -%}
+
+  <h2 class="section-title">{{ heading }}</h2>
+
+  {%- if section.blocks.size > 1 -%}
+    <div class="accordion" id="faq">
+      {% for block in section.blocks %}
+        <div class="card">
+          <div class="card-header" id="heading{{ forloop.index }}">
+            <h3 class="m-0">
+              <button class="btn btn-link text-left d-flex align-items-center justify-content-between collapsed" type="button" data-toggle="collapse" data-target="#collapse{{ forloop.index }}" aria-expanded="false" aria-controls="collapseOne">
+                <span class="heading">{{ block.settings.heading }}</span>
+              </button>
+            </h3>
+          </div>
+
+          <div id="collapse{{ forloop.index }}" class="collapse" aria-labelledby="heading{{ forloop.index }}" data-parent="#faq">
+            <div class="card-body">
+              {{ block.settings.answer }}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {%- endif -%}
+
+  {% if page.template_suffix != 'subscription-jr' %}
+  <div class="subscription-subscribe relative">
+    <div class="subscription-subscribe__body relative">
+      <div class="subscription-subscribe__body__label">
+        SUBSCRIBE TO THE
+        <span>OwlCrate Newsletter</span>
+      </div>
+      <div class="subscription-subscribe__body__form">
+        <div class="klaviyo-form-wrap newsletter__formWrapper">
+          <form data-klaviyo-footer-form id="klaviyo_footer_form" class="validate contact-form klaviyo_gdpr_embed_{{ section.settings.klaviyo_adult }}"  action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+            <input type="hidden" name="g" value="{{ section.settings.klaviyo_adult }}" data-input-hidden>
+            <div class="newsletter__inputWrapper">
+              <input type="email" value="" name="email" class="newsletter__input" id="k_id_email" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" aria-label="email">
+              <input type="submit" value="SUBMIT" name="subscribe" class="newsletter__btn" @click="_submitNewsletter($event);">
+            </div>
+            <div class="klaviyo_messages mt-0">
+              <div class="success_message text-success" style="display:none;" data-success_message></div>
+              <div class="error_message  text-danger" style="display:none;" data-error_message></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+</section>
+
+
+
+{% schema %}
+{
+  "name": "Subscription FAQ",
+  "settings":[
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Background Color"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_adult",
+      "label": "Klaviyo"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name": "Subscription FAQ",
+      "blocks": [
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

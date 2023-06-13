@@ -1,0 +1,134 @@
+<section class="section-content template-product-classic vertical-thumbs mt-3" data-product-section>
+    <div class="{% if fluid_layout %}container-fluid{% else %}container{% endif %}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    {% if product.images.size > 1 %}
+                      <div class="col-lg-2 pr-lg-0">
+                        <div class="carousel-nav d-none d-lg-block" role="tree"
+                           data-flickity='{
+                             "asNavFor": ".carousel-main",
+                             "draggable": false,
+                             "percentPosition": false,
+                             "cellAlign": "left",
+                             "groupCells": "100%",
+                             "pageDots": false,
+                             "arrowShape": {"x0": 10, "x1": 60, "y1": 50, "x2": 60, "y2": 45, "x3": 15}
+                           }'>
+                          {% for image in product.images %}
+                            <img src="{{ image.src | img_url: 'large' }}" alt="{{ image.alt | escape }}" class="carousel-cell" role="treeitem">
+                          {% endfor %}
+                        </div>
+                      </div>
+                    {% endif %}
+
+                    {% if featured_image != blank %}
+                      <div class="col-12 {% if product.images.size > 1 %} col-lg-10 pl-lg-0 {% endif %}">
+                        <div class="carousel row no-gutters carousel-main" role="tree"
+                            data-carousel-main
+                            data-flickity='{
+                             "contain": true,
+                             "wrapAround": false,
+                             "freeScroll": false,
+                             "accessibility": true,
+                             "setGallerySize": true,
+                             "prevNextButtons": false,
+                             "pageDots": true,
+                             "lazyLoad": true,
+                             "dragThreshold": 20,
+                             "arrowShape": {"x0": 10, "x1": 60, "y1": 50, "x2": 60, "y2": 45, "x3": 15}
+                           }'>
+                          {% for image in product.images %}
+                            <div class="carousel-cell col-12 mb-3 mb-lg-0" role="treeitem">
+                              <div class="position-relative product-img">
+                                <img class="lazyload img-fluid w-auto h-100"
+                                  data-sizes="auto"
+                                  src="{{ image.src | img_url: 'large' }}"
+                                  data-srcset="
+                                    {{ image.src | img_url: 'large' }} 576w
+                                  "
+                                  data-variant-title="{{ image.alt | escape }}"
+                                  alt="{{ image.alt | escape }}"/>
+                              </div>
+                            </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+
+                    {% else %}
+                      <div class="col-12">
+                        {{ 'image' | append: current | placeholder_svg_tag: 'img-fluid' }}
+                      </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="product-details-wrapper pl-xl-2 pt-6 pt-md-4">
+
+                  <div class="d-flex align-items-center mb-2">
+                    {% if show_vendor %}
+                      <span class="my-0 font-weight-semi-bold text-uppercase ls-2 vendor-text">{{ product.vendor }}</span>
+                    {% endif %}
+
+                  </div>
+                  <h2 class="mb-1 mb-md-2">{{ product.title }}</h2>
+
+                  <div class="mb-2 yotpo bottomLine"
+                  data-product-id="{{ product.id }}"></div>
+
+                  <div class="price-wrapper mb-3 mb-md-2">
+                    <span class="h5 actual-price mb-0 mr-2" v-html="_formatMoney(currentVariant.price + storeUtilities.productAddons.totalValue)"></span>
+                    <s v-if="_formatMoney(currentVariant.compare_at_price) > _formatMoney(currentVariant.price)" class="h6 text-gray-600 font-weight-medium" v-html="_formatMoney(currentVariant.compare_at_price)"></s>
+                  </div>      
+
+                  {% assign article_blog_tag =  '' %}
+                  {% assign article_pro_tag =  '' %}
+
+                  {% for tag in product.tags %}
+                    {% if tag contains 'article_' %}
+                      {% assign tag_name = tag | split:'_' %}
+                      {% assign article_blog_tag =  tag_name[1] %}
+                      {% assign article_pro_tag =  tag_name[2] %}
+                    {% endif %}
+                  {% endfor %}
+
+                  {% assign owlcrate_url =  article_blog_tag | append: '/' | append: article_pro_tag %}                    
+
+                  {% if product.description or articles[owlcrate_url].content %}                  
+                  <div class="see-more" :class="{'expand-desc': expandDesc}">
+                    {{ product.description }}    
+                    {{ articles[owlcrate_url].content }}
+                  </div>
+                  <div class="read-more mt-2" :class="{'d-none': expandDesc}">
+                    <a class="text-primary" href="javascript:void(0);" @click.prevent="_viewmore();">See More</a>
+                  </div>
+                  {% endif %}
+
+                  {% include 'form-product' %}
+                  {% comment %} {% include 'app-utilities-product-addons' %} {% endcomment %}
+
+                  {% comment %} {% if section.settings.show_social_share %}
+                  <h6 class="mt-5 mb-2">{{ 'general.social.share' | t }}</h6>
+                  {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
+                  {% endif %} {% endcomment %}
+                  <p class="mb-0">Do you love OwlCrate? <a href="/pages/subscribe" class="line-hover-primary">Subscribe Now</a></p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div
+              class="yotpo yotpo-pictures-widget mt-5"
+              data-gallery-id="5f8578f9e31670378bf2a6fd"
+              data-product-id="{{ product.id }}">
+            </div>
+
+            <div class="yotpo yotpo-main-widget mt-5" data-product-id="{{ product.id }}" data-name="{{ product.title | escape }}" data-url="{{ shop.url }}{{ product.url }}" data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" data-description="{{ product.description | escape }}"></div>
+          </div>
+        </div>
+
+    </div>
+</section>

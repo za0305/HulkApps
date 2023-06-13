@@ -1,0 +1,293 @@
+{%- liquid
+  assign image = section.settings.image
+  assign image_mobile = section.settings.image_mobile
+  assign title = section.settings.title
+  assign subtitle = section.settings.subtitle
+  assign subtitle_2 = section.settings.subtitle_2
+  assign planType = section.settings.planType
+  assign btn_txt = section.settings.btn_txt
+  assign btn_txt_second = section.settings.btn_txt_second
+  assign btn_type = section.settings.btn_type
+  assign btn_type_second = section.settings.btn_type_second
+  assign learn_more = section.settings.learn_more
+  assign clock_heading = section.settings.clock_heading
+  assign page_link = section.settings.page_link
+  assign page_link_2 = section.settings.page_link_2
+  assign date_picker = section.settings.date_picker
+%}
+
+{{ 'section-hero-banner.css' | asset_url | stylesheet_tag }}
+
+<section id="section-{{ section.id }}" class="hero-banner relative subscription" data-template="box-subscription">
+  <div class="hero-banner__content hero-banner__content-subscription d-flex justify-content-center">
+    <div>
+      {%- if title != blank -%}
+        <h2 class="hero-banner__title">{{ title }}</h2>
+      {%- endif -%}
+
+      {%- if subtitle != blank -%}
+        <p class="hero-banner__subtitle">{{ subtitle }}</p>
+      {%- endif -%}
+
+      {%- if subtitle_2 != blank -%}
+        <p class="hero-banner__subtitle__second">{{ subtitle_2 }}</p>
+      {%- endif -%}
+
+      {%- if learn_more != blank -%}
+        <p class="text-center">
+          <a href="{{ learn_more }}" class="hero-banner__learn-more">Learn more</a>
+        </p>
+      {%- endif -%}
+
+      {%- if clock_heading != blank -%}
+        <p class="hero-banner__clock-heading">
+          <img src="{{ 'icon-clock.svg' | asset_url }}" alt="">
+          {{ clock_heading }}
+        </p>
+      {%- endif -%}
+
+      <div class="hero-banner__clock-box text-center" id="countdown">
+        <div>27 <span>days</span></div>
+        <div>10 <span>hours</span></div>
+        <div>08 <span>min</span></div>
+        <div>10 <span>sec</span></div>
+      </div>
+
+      <div class="hero-banner__buttons clock">
+        {% comment %}<a href="{{ page_link }}" class="hero-banner__btn hero-banner__btn--{{ btn_type }}">{{ btn_txt }}</a>{% endcomment %}
+        {% comment %}<a href="{{ page_link_2 }}" class="hero-banner__btn hero-banner__btn--{{ btn_type_second }}">{{ btn_txt_second }}</a>{% endcomment %}
+
+        <template v-if="isUtmAdult">
+          {% if btn_txt != ''
+          and planType != blank -%}
+            <a href="/pages/subscription-plan" @click.prevent="_chooseProductOnPage('{{ planType }}', 2, 'type-normal')" class="hero-banner__btn hero-banner__btn--{{ btn_type }}">{{ btn_txt }}</a>
+          {% endif %}
+          {% if btn_txt_second != '' %}
+            <a href="#" @click.prevent="_chooseProductOnPage('plan_adult', 2, 'type-gift')" class="hero-banner__btn hero-banner__btn--{{ btn_type_second }}">{{ btn_txt_second }}</a>
+          {% endif %}
+        </template>
+        <template v-else>
+          {% if settings.adult_soldout %}
+            <a href="#" @click.prevent="_soldoutProduct('plan_adult', 'type-normal')" class="hero-banner__btn hero-banner__btn--{{ btn_type }}">{{ btn_txt }}</a>
+          {% else %}
+            {% if btn_txt != ''
+            and planType != blank -%}
+              <a href="/pages/subscription-plan" @click.prevent="_chooseProductOnPage('{{ planType }}', 2, 'type-normal')" class="hero-banner__btn hero-banner__btn--{{ btn_type }}">{{ btn_txt }}</a>
+            {% endif %}
+            {% if btn_txt_second != '' %}
+              <a href="#" @click.prevent="_chooseProductOnPage('plan_adult', 2, 'type-gift')" class="hero-banner__btn hero-banner__btn--{{ btn_type_second }}">{{ btn_txt_second }}</a>
+            {% endif %}
+          {% endif %}
+        </template>
+      </div>
+    </div>
+  </div>
+
+  <div class="hidden sm-d-block relative hero-banner__imgWrapper">
+    {%- if image -%}
+      {%- render 'img', image: image, responsive: false, min_wrapper_height: '35.8125rem', loading: 'eager' -%}
+    {%- endif -%}
+  </div>
+
+  <div class="sm-hidden">
+    {%- if image_mobile -%}
+      {%- render 'img', image: image_mobile, responsive: true, loading: 'eager' -%}
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+    var end = new Date('{{ date_picker }} 10:1 AM');
+    var _second = 1000;
+    var _minute = _second * 60;
+    var _hour = _minute * 60;
+    var _day = _hour * 24;
+    var timer;
+
+    function showRemaining() {
+      var now = new Date();
+      var distance = end - now;
+      if (distance < 0) {
+        
+        end.setUTCMonth(end.getUTCMonth() + 1);
+        end.setUTCDate(19);
+        end.setUTCHours(4); 
+        distance = end - now;
+      }
+      if (distance < 0) {
+        distance = 0;
+      }
+      var days = Math.floor(distance / _day);
+      var hours = Math.floor((distance % _day) / _hour);
+      var minutes = Math.floor((distance % _hour) / _minute);
+      var seconds = Math.floor((distance % _minute) / _second);
+
+      document.getElementById('countdown').innerHTML = '<div>' + days + '<span>days</span></div>';
+      document.getElementById('countdown').innerHTML += '<div>' + hours + '<span>hours</span></div>';
+      document.getElementById('countdown').innerHTML += '<div>' + minutes + '<span>min</span></div>';
+      document.getElementById('countdown').innerHTML += '<div>' + seconds + '<span>sec</span></div>';
+    }
+
+    timer = setInterval(showRemaining, 1000);
+</script>
+
+{% if section.blocks.size > 0 %}
+  <p class="d-none" data-selectedPlanType="plan_adult"></p>
+  {% for block in section.blocks %}
+    {% if block.type == 'plan_product' %}
+      {% assign subProd = all_products[block.settings.main_product] %}
+      {% if subProd.title != blank %}
+        {% unless subProd.variants[0].metafields.subscription.is_hidden == true %}
+          <script type="application/json" data-sub-json>
+                    {
+                        "variant": {{ subProd.variants[0] | json }},
+                        "product": {
+                            "product_id": {{subProd.id}},
+                            "product_title": "{{subProd.title}}",
+                            "product_price": {{subProd.metafields.c_f.original_price}},
+                            "product_featured_image": "{{subProd.featured_image.src}}",
+                            "product_type": "{% if subProd.tags contains 'plan_adult' %}plan_adult{% else %}plan_jr{% endif %}",
+                            "addonType": "{% if subProd.tags contains 'plan_adult' %}box_adult{% else %}box_junior{% endif %}",
+                            "product_tags": [{% if subProd.tags.size > 0 %}{% for tag in subProd.tags %}"{{tag}}"{% unless forloop.last%},{% endunless %}{% endfor %}{% endif %}]
+                        },
+                        "metafields": {
+                            "subscription_id": {{ subProd.metafields.subscriptions.subscription_id }},
+                            "shipping_interval_unit_type": "{{ subProd.metafields.subscriptions.shipping_interval_unit_type }}",
+                            "charge_internal_frequency": {{ subProd.variants[0].metafields.subscription.charge_internal_frequency }},
+                            "shipping_interval_frequency": {{ subProd.variants[0].metafields.subscription.shipping_interval_frequency }},
+                            "discount_variant_id": {{ subProd.variants[0].metafields.subscriptions.discount_variant_id }},
+                            "is_hidden": {% if subProd.variants[0].metafields.subscription.is_hidden != '' %}{{ subProd.variants[0].metafields.subscription.is_hidden }}{% else %}null{% endif %}
+                        }
+                    }
+          </script>
+        {% endunless %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% schema %}
+{
+  "name": "Main Subscription",
+  "settings":[
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image mobile (< 1279px)"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "subtitle_2",
+      "label": "Subtitle 2"
+    },
+    {
+      "type": "text",
+      "id": "planType",
+      "label": "Plan Type",
+      "default": "plan_adult"
+    },
+    {
+      "type": "text",
+      "id": "btn_txt",
+      "label": "Button Text"
+    },
+    {
+      "type": "select",
+      "id": "btn_type",
+      "label": "Button Type",
+      "options": [
+        {
+          "value": "white",
+          "label": "White"
+        },
+        {
+          "value": "green",
+          "label": "Green"
+        }
+      ],
+      "default": "white"
+    },
+    {
+      "type": "url",
+      "id": "page_link",
+      "label": "Page link"
+    },
+    {
+      "type": "text",
+      "id": "btn_txt_second",
+      "label": "Button Text"
+    },
+    {
+      "type": "select",
+      "id": "btn_type_second",
+      "label": "Button Type",
+      "options": [
+        {
+          "value": "white",
+          "label": "White"
+        },
+        {
+          "value": "green",
+          "label": "Green"
+        }
+      ],
+      "default": "white"
+    },
+    {
+      "type": "url",
+      "id": "page_link_2",
+      "label": "Page link"
+    },
+    {
+      "type": "url",
+      "id": "learn_more",
+      "label": "Learn More Link"
+    },
+    {
+      "type": "text",
+      "id": "clock_heading",
+      "label": "Clock Heading"
+    },
+    {
+      "type": "text",
+      "id": "date_picker",
+      "label": "Choose date",
+      "default": "12/24/2022",
+      "info": "e.g. mm/dd/yyyy"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "plan_product",
+      "name": "Plan Products",
+      "settings": [
+        {
+          "type": "product",
+          "id": "main_product",
+          "label": "Choose Product"
+        }
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name": "Main Subscription"
+    }
+  ]
+}
+{% endschema %}

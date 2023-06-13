@@ -1,0 +1,141 @@
+.subscription-jr-how-it-works {
+  padding: 160px 0 360px;
+  background: url(bg-hiw.png) no-repeat 50% 50%;
+  background-size: 100% 90%;
+}
+
+.subscription-jr-how-it-works .section-title {
+  margin-bottom: 90px;
+}
+
+.hiw__steps {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 10px;
+}
+
+.hiw__step {
+  text-align: center;
+}
+
+.hiw__step h3 {
+  color: #282560;
+  font-size: 38px;
+  font-weight: 500;
+  line-height: 40px;
+  font-family: 'Grandstander', cursive;
+  margin-bottom: 13px;
+}
+.hiw__step p {
+  color: rgba(40, 37, 96, 0.7);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  font-family: 'Barlow', sans-serif;
+}
+
+.hiw__step-img {
+  height: 285px;
+  margin-bottom: 20px;
+}
+
+.hiw__step-number {
+  display: inline-block;
+  width: 170px;
+  height: 160px;
+  padding: 36px 0;
+  color: #F15D31;
+  font-size: 60px;
+  font-weight: 600;
+  line-height: 120%;
+  font-family: 'Grandstander', cursive;
+  background: url(icon-cloud.svg) no-repeat 50% 50%;
+}
+
+@media only screen and (max-width: 1795px) and (min-width: 1441px) {
+  .subscription-jr-how-it-works {
+    zoom: .85;
+  }
+}
+
+@media only screen and (max-width: 1440px) and (min-width: 1367px) {
+  .subscription-jr-how-it-works {
+    zoom: .7;
+  }
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 1025px) {
+  .subscription-jr-how-it-works {
+    zoom: .6;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .subscription-jr-how-it-works {
+    padding: 140px 0 190px;
+  }
+  .subscription-jr-how-it-works .section-title {
+    margin-bottom: 0;
+  }
+  .hiw__step-img img {
+    max-width: 100%;
+  }
+  .hiw__step h3 {
+    font-size: 32px;
+    line-height: 32px;
+  }
+  .hiw__step p {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .hiw__step p br { display: none }
+  .hiw__step-number {
+    font-size: 52px;
+    line-height: 120%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .subscription-jr-how-it-works {
+    padding: 140px 0 70px;
+  }
+}
+
+@media only screen and (max-width: 568px) {
+  .subscription-jr-how-it-works {
+    padding: 61px 0 56px;
+  }
+  .subscription-jr-how-it-works .section-title {
+    margin-bottom: 32px;
+  }
+  .hiw__steps {
+    display: block;
+  }
+  .hiw__step {
+    width: 290px;
+    margin: 0 20px;
+  }
+  .hiw__step h3 {
+    font-size: 24px;
+    line-height: 24px;
+  }
+  .hiw__step p {
+    font-size: 16px;
+    line-height: 19px;
+  }
+  .hiw__step-number {
+    width: 83px;
+    height: 75px;
+    padding: 15px 0;
+    font-size: 36px;
+    line-height: 120%;
+    background-size: cover;
+  }
+}
+
+@media only screen and (max-width: 390px) {
+  .subscription-jr-how-it-works {
+    background: url(bg-hiw-mobile.png) no-repeat 50% 50%;
+    background-size: 100% 120%;
+  }
+}

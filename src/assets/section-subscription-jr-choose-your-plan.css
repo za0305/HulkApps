@@ -1,0 +1,423 @@
+.subscription-jr-choose-your-plan {
+  padding-top: 77px;
+  padding-bottom: 85px;
+  background-image: url("bg-subscription-jr-choose-your-plan.png");
+  background-repeat: repeat-x;
+  background-position: 50% 100%;
+  background-size: 1920px 535px;
+}
+
+.choose-your-plan__body {
+
+}
+.choose-your-plan__body::before,
+.choose-your-plan__body::after {
+  content: '';
+  position: absolute;
+}
+.choose-your-plan__body::before {
+  width: 171px;
+  height: 215px;
+  top: 95px;
+  left: 0;
+  background: url("bg-choose-your-plan__body-before.svg") no-repeat 50% 50%;
+}
+.choose-your-plan__body::after {
+  width: 127px;
+  height: 124px;
+  top: 140px;
+  right: 0;
+  background: url("bg-choose-your-plan__body-after.svg") no-repeat 50% 50%;
+}
+
+.choose-your-plan__body__head {
+  padding-top: 154px;
+  background: url("icon-choose-your-plan__body__head.svg") no-repeat 50% 0;
+}
+.choose-your-plan__body__head h2 {
+  margin-bottom: 32px;
+}
+
+.choose-your-plan__body__head p {
+  color: #282560;
+  font-size: 24px;
+  line-height: 29px;
+  opacity: 0.7;
+  font-family: 'Barlow';
+}
+
+.choose-your-plan__body__plans {
+  margin-top: 55px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+}
+.sp__plans {
+  position: relative;
+}
+
+.sp__plan-inner {
+  padding: 89px 0 65px 0;
+  max-width: initial;
+  position: relative;
+  margin: 0 auto;
+}
+
+.sp__plan-label {
+  width: 100%;
+  padding: 20px 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: inset 0 -6px 18px rgba(241, 93, 49, 0.15);
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  color: #F15D31;
+  -webkit-border-top-left-radius: 50px;
+  -webkit-border-top-right-radius: 50px;
+  -moz-border-radius-topleft: 50px;
+  -moz-border-radius-topright: 50px;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+}
+.sp__plan-label.style-most {
+  background: #FFD9CE;
+}
+.sp__plan-label.style-best {
+  background: #B9F7F3;
+}
+
+.sp__plan-title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #282560;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 16px;
+}
+.sp__plan-title span {
+  font-weight: 600;
+}
+
+.sp__plan-price-wrapper {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  width: max-content;
+  margin: 0 auto;
+}
+
+.sp__plan-price {
+  font-family: 'Grandstander', cursive;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 80px;
+  line-height: 60px;
+  text-align: center;
+  color: #F15D31;
+  margin: 0;
+}
+
+.sp__plan-price span {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  color: #5BB9B3;
+}
+
+.sp__plan-price--old {
+  height: 35px;
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 29px;
+  line-height: 35px;
+  text-align: center;
+  text-decoration-line: line-through;
+  color: #5BB9B3;
+}
+
+.sp__plan-image {
+  position: relative;
+  z-index: 1;
+  width: 278px;
+  height: 256px;
+  margin: 2px auto 0 auto;
+}
+
+.sp__plan-image img {
+  position: absolute;
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.sp__plan-total-price-wrapper {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.sp__plan-total-price-wrapper small {
+  color: #F15D31;
+  font-size: 16px;
+  line-height: 30px;
+}
+
+.sp__plan-total-price {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  color: #282560;
+}
+
+.sp__plan-total-price span {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 30px;
+}
+
+.sp__plan-total-price strong {
+  font-weight: 600;
+}
+
+.sp__plan-total-shipping strong {
+  font-weight: 600;
+}
+
+.sp__plan-total-shipping {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 30px;
+  text-align: center;
+  color: #282560;
+}
+
+.sp__plan-btn {
+  width: 189px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #26BCB4;
+  border-radius: 20px;
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  transition: all .15s linear;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  z-index: 1;
+}
+
+.sp__plan-btn:hover {
+  color: #ffffff;
+}
+
+.sp__plan-inner:hover .sp__plan-btn {
+  box-shadow: 0px 0px 60px rgba(38, 188, 180, 0.4);
+}
+
+.sp__plan-bg {
+  position: absolute;
+  z-index: 0;
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0px 0px 50px #FFFFFF;
+  backdrop-filter: blur(20px);
+  border-radius: 50px;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transition: all .15s linear;
+}
+
+.sp__plan-inner:hover .sp__plan-bg {
+  background: rgba(255, 255, 255, 0.8);
+  filter: drop-shadow(0px 10px 80px rgba(0, 0, 0, 0.1));
+}
+
+@media only screen and (min-width: 1921px) {
+  .subscription-jr-choose-your-plan {
+    background-size: initial;
+    background-position: 50% -200%;
+  }
+}
+
+@media only screen and (max-width: 1795px) and (min-width: 1441px) {
+  .subscription-jr-choose-your-plan {
+    zoom: .85;
+  }
+}
+
+@media only screen and (max-width: 1440px) and (min-width: 1025px) {
+  .subscription-jr-choose-your-plan {
+    zoom: .7;
+  }
+}
+
+@media only screen and (max-width: 1279px) {
+  .sp__plans-inner {
+    padding: 43px 0 56px 0;
+    position: relative;
+    max-width: 480px;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 50px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .subscription-jr-choose-your-plan {
+    padding-top: 50px;
+  }
+  .choose-your-plan__body__head {
+    padding-top: 66px;
+    background-size: 57px 52px;
+  }
+  .choose-your-plan__body__head h2 {
+    margin-bottom: 8px;
+  }
+  .choose-your-plan__body__head p {
+    font-size: 18px;
+    line-height: 20px;
+  }
+  .choose-your-plan__body::before {
+    top: 65px;
+  }
+  .choose-your-plan__body::after {
+    top: 110px;
+  }
+
+  .sp__plan-image {
+    width: 100%;
+    text-align: center;
+  }
+  .sp__plan-image img {
+    position: static;
+    display: inline-block;
+  }
+
+  .sp__plan-inner {
+    margin: 0 auto 47px;
+    padding: 65px 0 51px;
+  }
+  .sp__plan-title {
+    font-size: 16px;
+    line-height: 19px;
+    margin-bottom: 10px;
+  }
+  .sp__plan-price {
+    font-size: 52px;
+    line-height: 40px;
+  }
+  .sp__plan-price span {
+    font-size: 14px;
+    line-height: 17px;
+  }
+  .sp__plan-total-price,
+  .sp__plan-total-shipping {
+    font-size: 16px;
+    line-height: 19px;
+  }
+  .sp__plan-total-price strong {
+    font-size: 24px;
+    line-height: 29px;
+  }
+  .sp__plan-total-price span {
+    font-size: 14px;
+    line-height: 17px;
+  }
+  .sp__plan-total-shipping {
+    margin-top: -8px;
+  }
+
+  .sp__plan-label {
+    padding: 15px 0;
+    font-size: 16px;
+    line-height: 19px;
+  }
+  .sp__plan-price--old {
+    height: 22px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .sp__plan-btn {
+    width: 181px;
+    height: 55px;
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 19px;
+  }
+}
+
+@media only screen and (max-width: 820px) and (min-width: 569px) {
+  .sp__plan-image {
+    height: 170px;
+  }
+  .sp__plan-total-price,
+  .sp__plan-total-shipping {
+    font-size: 14px;
+    line-height: 17px;
+  }
+  .choose-your-plan__body::before {
+    top: 0;
+  }
+  .choose-your-plan__body::after {
+    top: 50px;
+  }
+}
+
+@media only screen and (max-width: 568px) {
+  .subscription-jr-choose-your-plan {
+    padding-top: 16px;
+    padding-bottom: 57px;
+    background: url(bg-jr-plans-mobile.png) no-repeat 50% 66%;
+    background-size: contain;
+  }
+  .choose-your-plan__body:before,
+  .choose-your-plan__body:after {
+    display: none;
+  }
+  .choose-your-plan__body__plans {
+    grid-template-columns: repeat(1,minmax(0,1fr));
+  }
+  .choose-your-plan__body__head p {
+    font-size: 16px;
+    line-height: 19px;
+  }
+  .choose-your-plan__body__head p br {
+    display: none;
+  }
+}

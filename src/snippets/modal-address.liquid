@@ -1,0 +1,122 @@
+<div class="modal fade show" id="modal-address" tabindex="-1" role="dialog" aria-labelledby="modal-address" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-address" role="document">
+  
+      <div class="modal-content billing-popup" :class="{'d-none': rechargeDashboard.addressType == 'shipping'}"  data-billing-address>
+          <div class="modal-header popup-head bg-secondary justify-content-center">
+              <h4 class="mb-0 text-white">Edit Billing Address</h4>
+              <button class="popup-close close" type="button" data-dismiss="modal" aria-label="Close">
+                  <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/close-icon.svg?26005" alt="popup-close" />
+              </button>
+          </div>
+          <div class="modal-body popup-body pb-0" data-address-box>
+            {% capture subscription %}
+                {{ 'customer.addresses.billing_address_note' | t | replace : 'link', '<a href="#subscriptions" class="text-danger font-weight-bold">My Subscriptions</a>' | replace: 'Shipping Address' , '<i>Shipping Address</i>' | replace: 'Billing Address' , '<i>Billing Address</i>' | replace: 'To' , '</br>To' | replace: '*To' , '</br>*To' }}
+            {% endcapture %}
+              <p class="py-2 text-danger text-center custom-style">{{ subscription }}</p>
+              <div class="row custom-shipping-row align-items-center justify-content-start" v-if="rechargeDashboard.customerDetails != null">
+                  <div class="col-12 col-sm-6 custom-shipping-col">
+                      <input type="text" placeholder="First Name" class="form-control form-control-sm font-base ls-base" data-first-name v-bind:value="rechargeDashboard.customerDetails.first_name">
+                  </div>
+                  <div class="col-12 col-sm-6 custom-shipping-col">
+                      <input type="text" placeholder="Last Name" class="form-control form-control-sm font-base ls-base" data-last-name v-bind:value="rechargeDashboard.customerDetails.last_name">
+                  </div>
+                  <div class="col-12 col-sm-6 custom-shipping-col">
+                      <input type="text" placeholder="Address" class="form-control form-control-sm font-base ls-base" name="address[address1]" data-address1 v-bind:value="rechargeDashboard.customerDetails.billing_address1">
+                  </div>
+                  <div class="col-12 col-sm-6 custom-shipping-col">
+                      <input type="text" placeholder="Apt/Suite" class="form-control form-control-sm font-base ls-base" data-address2 v-bind:value="rechargeDashboard.customerDetails.billing_address2">
+                  </div>
+                  <div class="col-12 custom-shipping-col">
+                      <input type="text" placeholder="Company" class="form-control form-control-sm font-base ls-base" data-company v-bind:value="rechargeDashboard.customerDetails.billing_company">
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 custom-shipping-col">
+                      <input type="text" placeholder="City" class="form-control form-control-sm font-base ls-base" data-city v-bind:value="rechargeDashboard.customerDetails.billing_city">
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 custom-shipping-col" id="BillAddressProvinceContainer">
+                      <select id="BillAddressProvince" placeholder="State" class="form-control form-control-sm font-base ls-base"  data-province :data-default="rechargeDashboard.customerDetails.billing_province"></select>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 custom-shipping-col">
+                      <input type="text" placeholder="Zipcode" class="form-control form-control-sm font-base ls-base" data-zip v-bind:value="rechargeDashboard.customerDetails.billing_zip">
+                  </div>
+                  <div class="col-12 col-sm-6 custom-shipping-col" id="BillAddressCountryContainer">
+                      <select id="BillAddressCountry" name="address[country]" class="form-control form-control-sm font-base ls-base" data-country :data-default="rechargeDashboard.customerDetails.billing_country">{{ all_country_option_tags }}</select>
+                  </div>
+                  <div class="col-12 col-sm-6 custom-shipping-col">
+                      <input type="text" placeholder="Phone (Optional)" class="form-control form-control-sm font-base ls-base" data-phone v-bind:value="rechargeDashboard.customerDetails.billing_phone">
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer popup-footer justify-content-center px-5 pb-5 pt-1">
+              <div class="row custom-row align-items-center w-100">
+                  <div class="col-12 text-center text-md-right order-md-2 my-2 my-md-0 py-0">
+                      <a href="#" class="btn btn-primary" v-if="rechargeDashboard.isupdateAddress" :disabled="isLoading && loadingEvent == 'updateBillAddress'" @click.prevent="_updateBillingAddress()">
+                          <template v-if="isLoading">
+                              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ 'general.wait' | t }}
+                          </template>
+                          <template v-else>
+                              Update Billing Address
+                          </template>
+                      </a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="modal-content shipping-popup" :class="{'d-none': rechargeDashboard.addressType == 'billing'}" data-shipping-address>
+          <div class="modal-header popup-head bg-secondary justify-content-center">
+              <h4 class="mb-0 text-white">Edit Shipping Address</h4>
+              <button class="popup-close close" type="button" data-dismiss="modal" aria-label="Close" data-modal-close>
+              <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/close-icon.svg?26005" alt="popup-close" />
+              </button>
+          </div>
+          <div class="modal-body popup-body pb-0" data-address-box>
+              <div class="row custom-shipping-row align-items-center justify-content-start">
+                  <div class="col-12 col-sm-6 custom-shipping-col">
+                      <input type="text" placeholder="First Name" class="form-control form-control-sm font-base ls-base" data-first-name v-model="rechargeDashboard.address.first_name">
+                  </div>
+                  <div class="col-12 col-sm-6 custom-shipping-col">
+                      <input type="text" placeholder="Last Name" class="form-control form-control-sm font-base ls-base" data-last-name v-model="rechargeDashboard.address.last_name">
+                  </div>
+                  <div class="col-12 col-sm-6 custom-shipping-col">
+                      <input type="text" placeholder="Address" class="form-control form-control-sm font-base ls-base" name="address[address1]" data-address1 v-model="rechargeDashboard.address.address1">
+                  </div>
+                  <div class="col-12 col-sm-6 custom-shipping-col">
+                      <input type="text" placeholder="Apt/Suite" class="form-control form-control-sm font-base ls-base" data-address2 v-model="rechargeDashboard.address.address2">
+                  </div>
+                  <div class="col-12 custom-shipping-col">
+                      <input type="text" placeholder="Company" class="form-control form-control-sm font-base ls-base" data-company v-model="rechargeDashboard.address.company">
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 custom-shipping-col">
+                      <input type="text" placeholder="City" class="form-control form-control-sm font-base ls-base" data-city v-model="rechargeDashboard.address.city">
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 custom-shipping-col" id="AddressProvinceContainer">
+                      <select id="AddressProvince" placeholder="State" class="form-control form-control-sm font-base ls-base"  data-province :data-default="rechargeDashboard.address.province"></select>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 custom-shipping-col">
+                      <input type="text" placeholder="Zipcode" class="form-control form-control-sm font-base ls-base" data-zip v-model="rechargeDashboard.address.zip">
+                  </div>
+                  <div class="col-12 col-sm-6 custom-shipping-col" id="AddressCountryContainer">                
+                      <select id="AddressCountry" name="address[country]" class="form-control form-control-sm font-base ls-base" data-country :data-default="rechargeDashboard.address.country">{{ all_country_option_tags }}</select>
+                  </div>
+                  <div class="col-12 col-sm-6 custom-shipping-col">            
+                      <input type="text" placeholder="Phone (Optional)" class="form-control form-control-sm font-base ls-base" data-phone v-model="rechargeDashboard.address.phone">
+                  </div>
+              </div>
+          </div>        
+          <div class="modal-footer popup-footer justify-content-center px-5 pb-5 pt-1">
+              <div class="custom-row align-items-center w-100">
+                  <div class="text-center text-md-right order-md-2 my-2 my-md-0">                    
+                      <a href="#" class="btn btn-primary" v-if="rechargeDashboard.isupdateAddress" :disabled="isLoading && loadingEvent == 'updateAddress'" @click.prevent="_updateSubscriptionAddress()" >
+                          <template v-if="isLoading">
+                              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ 'general.wait' | t }}
+                          </template>
+                          <template v-else>
+                              Update Shipping Address
+                          </template>
+                      </a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  
+    </div>
+  </div>

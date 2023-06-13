@@ -1,0 +1,27 @@
+{% comment %} DO NOT EDIT THIS SNIPPET! Snippet is generated automatically and may be overwritten at any moment.{% endcomment %}
+
+{% assign siteName = "owlcrate" %}{% if template contains "product" %}
+    {% assign disqus_id = product.id %}
+    {% assign temp = "product" %}
+{% elsif template contains "article" %}
+    {% assign disqus_id = article.id %}
+    {% assign temp = "article" %}
+{% elsif template contains "blog" %}
+    {% assign disqus_id = blog.id %}
+    {% assign temp = "blog" %}
+{% elsif template contains "collection" %}
+    {% assign disqus_id = collection.id %}
+    {% assign temp = "collection" %}
+{% elsif template contains "page" %}
+    {% assign disqus_id = page.id %}
+    {% assign temp = "page" %}
+{% elsif type and id %}
+    {% assign disqus_id = id %}
+    {% assign temp = type %}
+{% else %}
+    {% assign disqus_id = "" %}
+    {% assign temp = template | split: "." | first %}
+{% endif %}
+<div id="disqus_thread"></div>
+<script src="/tools/disqus/disqus_code.php?n={{ siteName }}&id={{ temp }}-{{ disqus_id }}&url={{ canonical_url | url_param_escape }}" async></script>
+<script id="dsq-count-scr" src="//{{ siteName }}.disqus.com/count.js" async></script>

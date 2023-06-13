@@ -1,0 +1,120 @@
+{%- liquid
+    assign title = section.settings.title
+    assign bg_color = section.settings.bg_color
+%}
+
+{{ 'section-subscription-jr-how-it-works.css' | asset_url | stylesheet_tag }}
+
+<section id="section-{{ section.id }}" class="hiw__wrapper subscription-jr-how-it-works" {% if bg_color != blank %}style="background-color:{{ bg_color }}"{% endif %}>
+    <div class="container-wide container-wide--medium">
+        {%- if title != blank -%}
+            <h2 class="section-title">{{ title }}</h2>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+            <div class="hiw__steps">
+                {%- for block in section.blocks -%}
+                    {%- liquid
+                        assign image = block.settings.image
+                        assign title = block.settings.title | escape
+                        assign text = block.settings.text
+                    -%}
+                    {%- if image != blank
+                        and title != blank -%}
+                        <div class="hiw__step">
+                            <div class="hiw__step-img flex align-items-end justify-content-center">
+                              <img src="{{ image | img_url: 'master' }}" alt="">
+                            </div>
+                            <h3 class="hiw__step-title">{{ title }}</h3>
+                            {%- if text != blank -%}
+                              {{ text }}
+                            {%- endif -%}
+                            <div class="hiw__step-number">{{ forloop.index }}</div>
+                        </div>
+                    {%- endif -%}
+                {%- endfor -%}
+            </div>
+        {%- endif -%}
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/gh/phucbm/flickity-responsive@latest/flickity-responsive.min.js"></script>
+<script>
+    $( document ).ready(function() {
+        function doFlickityCarousel() {
+            let $carousel = $('.hiw__steps').flickity({
+                freeScroll: false,
+                wrapAround: true,
+                pageDots: false,
+                prevNextButtons: false,
+                autoPlay: true
+            });
+            let isFlickity = true;
+
+            // Default state
+            if ( matchMedia('screen and (max-width: 568px)').matches ) {
+                if ( !isFlickity ) {
+                    $carousel.flickity();
+                }
+            }
+
+            if ( matchMedia('screen and (min-width: 569px)').matches ) {
+                if ( isFlickity ) {
+                    // destroy Flickity
+                    $carousel.flickity('destroy');
+                }
+            }
+            isFlickity = !isFlickity;
+        } doFlickityCarousel();
+
+        $(window).on('resize', function(){
+            doFlickityCarousel();
+        });
+    });
+</script>
+
+{% schema %}
+{
+	"name": "How It Works (JR)",
+	"settings":[
+		{
+			"type": "html",
+			"id": "title",
+			"label": "Title"
+		},
+    {
+			"type": "color",
+			"id": "bg_color",
+			"label": "Background color"
+		}
+	],
+	"blocks": [
+    {
+      "type": "step",
+      "name": "step",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Title"
+        },
+        {
+          "id": "text",
+          "type": "richtext",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+	"presets": [
+		{
+			"name": "How It Works (JR)"
+		}
+	]
+}
+{% endschema %}

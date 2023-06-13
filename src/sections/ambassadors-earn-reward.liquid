@@ -1,0 +1,122 @@
+<section class="earn-reward-section">
+  <div class="custom-container">
+    <h4 class="earn-rewdar-main-title">{{ section.settings.reward_main_title }}</h4>
+    <div class="earn-reward-heading-wrapper mobile-header-wrapper">
+      <h2 class="earn-reward-heading">{{ section.settings.reward_heading }}</h2>
+      <p class="earn-reward-sub-title">{{ section.settings.reward_sub_title }}</p>
+    </div>
+    <div class="custom-row">
+      <div class="column-6">
+        <div class="earn-image-wrapper">
+          {% if section.settings.reward_image != blank %}
+          <img
+               data-sizes="auto"
+               src="{{ section.settings.reward_image | img_url: 'original'}}"
+               data-srcset="
+                            {{ section.settings.reward_image | img_url: '1024x' }} 576w,
+                            {{ section.settings.reward_image | img_url: '1280x' }} 768w,
+                            {{ section.settings.reward_image | img_url: '1440x' }} 992w,
+                            {{ section.settings.reward_image | img_url: '1920x' }} 1200w
+                            "
+               class="earn-reward-image" />
+          {% else %}
+            {{ 'image' | placeholder_svg_tag: 'earn-reward-image'}}
+          {% endif %}
+        </div>
+      </div>
+      <div class="column-6">
+        <div class="wrapper">
+          <div class="earn-reward-heading-wrapper desktop-header-wrapper">
+            <h2 class="earn-reward-heading">{{ section.settings.reward_heading }}</h2>
+            <p class="earn-reward-sub-title">{{ section.settings.reward_sub_title }}</p>
+          </div>  
+          {% if section.blocks.size > 0 %}
+            {% for block in section.blocks %}
+              <div class="earn-reward-block">
+                <h3 class="earn-reward-block-title">{{ block.settings.reward_title }}</h3>
+                <p class="earn-reward-block-data">{{ block.settings.reward_data }}</p>
+              </div>
+            {% endfor %}
+          {% else %}
+            {% for i in  (1..2) %}
+              <div class="earn-reward-block">
+                <h3 class="earn-reward-block-title">Early Member Rewards</h3>
+                <p class="earn-reward-block-data">Post and tag @owlcrate on your Instagram TWICE a month to earn a surprise gift!</p>
+              </div>
+            {% endfor %}
+          {% endif %}
+          <div class="how-works-join-wrapper">
+            <div class="lc-signup-container" data-lc-button-text="{{ section.settings.banner_button }}"
+                 data-lc-button-text-color="#FFFFF"
+                 data-lc-button-bg-color="#26bcb4">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Earn Reward",
+    "max_blocks": 2,
+    "settings": [
+      {
+        "type": "text",
+        "id": "reward_main_title",
+        "label": "Reward Main Title",
+		"default": "Earn Rewards And Exclusive Gifts, Just By Posting About OwlCrate On Instagram!"
+      },
+      {
+        "type": "text",
+        "id": "reward_heading",
+        "label": "Reward Heading",
+		"default": "EARN REWARDS"
+      },
+      {
+        "type": "text",
+        "id": "reward_sub_title",
+        "label": "Reward Sub Title",
+		"default": "Tag us @owlcrate"
+      },
+      {
+        "type": "image_picker",
+        "id": "reward_image",
+        "label": "Reward Image"
+      },
+	  {
+        "type": "text",
+        "id": "banner_button",
+        "label": "Banner Button",
+		"default": "JOIN NOW"
+      }
+	],
+	"blocks": [
+      {
+        "type": "text",
+        "name": "Earn Reward",
+        "settings": [
+          {
+            "id": "reward_title",
+            "type": "text",
+            "label": "Reward Title",
+			"default": "Early Member Rewards"
+          },
+          {
+            "id": "reward_data",
+            "type": "text",
+            "label": "Reward Data",
+			"default": "Post and tag @owlcrate on your Instagram TWICE a month to earn a surprise gift!"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

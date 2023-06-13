@@ -1,0 +1,12 @@
+{
+  "presets": [
+    ["shopify/web", {
+      "modules": false,
+      "debug": false,
+      "browserslist": ["last 2 versions"]
+    }]
+  ],
+  "plugins": [
+    "transform-async-to-generator"
+  ]
+}

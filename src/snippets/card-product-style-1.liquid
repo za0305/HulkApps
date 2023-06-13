@@ -1,0 +1,116 @@
+<div class="card card-product card-product-style-1 shadow-none border-0 text-left" data-card-product>
+  <span class="badges">
+    <span v-if="product.compare_at_price > product.price" class="badge badge-right badge-danger font-barlow text-uppercase ls-1">{{ 'products.product.on_sale' | t | escape }}</span>
+    <span v-if="!product.available" class="badge badge-right badge-secondary font-barlow text-uppercase ls-1">{{ 'products.product.sold_out' | t | escape }}</span>
+  </span>
+  <div class="card-img text-center position-relative" :class="{'bg-white': !product.featured_image}">
+    <a v-if="product.featured_image" :href="'/products/' + product.handle" class="position-relative product-img">
+      <img
+          :src="_getSizedImageUrl(product.featured_image, 'pico')"
+          :data-src="_getSizedImageUrl(product.featured_image, '300x')"
+          class="img-fluid w-auto h-100 lazyload"
+          :alt="product.title"/>
+    </a>
+    <span v-else>
+      {{ 'product-1' | placeholder_svg_tag: 'img-fluid' }}
+    </span>
+
+    <template v-if="product.available && product.type != 'Subscription'">
+      <div class="quick-shop-wrapper d-flex align-items-end p-2 p-md-3">
+        <form data-product-form :data-product-id="product.id" action="/cart/add" method="post" enctype="multipart/form-data" class="d-flex justify-content-between">
+
+            <button class="btn btn-primary btn-sm flex-grow-1"
+              type="submit"
+              name="add"
+              aria-label="{{ 'products.product.add_to_cart' | t | escape }}"
+              :disabled="!product.available || isLoading"
+              :data-cart-limit="product.cart_limit"
+              @click.prevent="_addToCart(product.variants[0].id, $event)">
+              <template v-if="isLoading && loadingEvent == 'cartAdding'">
+                ADDING...
+              </template>
+              <template v-else>
+                <template v-if="product.available">{{ 'products.product.add_to_cart' | t }}</template>
+                <template v-else>{{ 'products.product.sold_out' | t }}</template>
+              </template>       
+            </button>
+            
+            {% if settings.enable_on_product %}
+              <a :href="'/products/' + product.handle" class="btn btn-secondary px-2 btn-sm ml-2 d-flex align-items-center" title="{{ 'products.product.quickshop' | t | escape }}" rel="nofollow" aria-label="{{ 'products.product.quickshop' | t | escape }}">
+                <svg version="1.1" class="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                  width="1.625rem" height="1.125rem" viewBox="0 0 26 18" enable-background="new 0 0 26 18" xml:space="preserve">
+                <g>
+                  <g>
+                      <circle fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="13" cy="9" r="3.273"/>
+                  </g>
+                  <path fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+                    M1,9c0,0,4.364-7.636,12-7.636S25,9,25,9s-4.364,7.636-12,7.636S1,9,1,9z"/>
+                </g>
+                </svg>
+              </a> 
+            {% endif %}
+
+            {% if settings.enable_quickshop %}
+              <a href="#" @click.prevent="_viewQuickShop(product.handle, product.current_variant.options, $event)" class="btn btn-secondary px-2 btn-sm ml-2 d-flex align-items-center" title="{{ 'products.product.quickshop' | t | escape }}" rel="nofollow" aria-label="{{ 'products.product.quickshop' | t | escape }}" data-toggle="tooltip" data-trigger="hover" data-placement="top">
+                <svg version="1.1" class="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                  width="1.625rem" height="1.125rem" viewBox="0 0 26 18" enable-background="new 0 0 26 18" xml:space="preserve">
+                <g>
+                  <g>
+                      <circle fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="13" cy="9" r="3.273"/>
+                  </g>
+                  <path fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+                    M1,9c0,0,4.364-7.636,12-7.636S25,9,25,9s-4.364,7.636-12,7.636S1,9,1,9z"/>
+                </g>
+
+                </svg>
+              </a>
+            {% endif %}
+
+          {% comment %} {% if settings.enable_wishlist %}
+            <template v-if="!_checkWishlist(product.variants[0].id)" >
+              <a href="#" @click.prevent="_addVariantToWishlist(product.handle, product.variants[0].id, $event)" class="btn btn-outline-primary btn-sm ml-2 d-flex align-items-center" title="{{ 'general.wishlist.add_to_wishlist' | t }}" rel="nofollow" aria-label="{{ 'general.wishlist.add_to_wishlist' | t }}" data-toggle="tooltip" data-trigger="hover" data-placement="top">
+                <i class="icon ion-md-star-outline"></i>
+              </a>
+            </template>
+            <template v-else>
+              <a class="btn btn-outline-primary btn-sm ml-1 d-flex align-items-center" rel="nofollow" title="{{ 'general.wishlist.added_to_wishlist' | t }}" rel="nofollow" aria-label="{{ 'general.wishlist.added_to_wishlist' | t }}" data-toggle="modal" data-target="[data-modal-wishlist]" tabindex="-1">
+                <i class="icon ion-md-star"></i>
+              </a>
+            </template>
+          {% endif %} {% endcomment %}
+        </form>
+      </div>
+    </template>
+  </div>
+  <div class="card-body px-0">
+    <div class="card-title mb-1">
+      <p class="font-weight-semi-bold text-uppercase ls-2 vendor-text mb-1" v-text="product.vendor"></p>
+      <h5 class="m-0 display-4 ls-base"><a :href="'/products/' + product.handle" v-text="product.title"></a></h5>
+
+      <div class="yotpo bottomLine my-2" v-show = "product.review.catalog_bottomline != undefined" :data-product-id="product.id" v-html="product.review.catalog_bottomline"></div>
+    </div>
+    <div class="prise-wrp d-flex align-items-center">
+      <template v-if="!product.available">
+        <template v-if="product.compare_at_price > product.price">
+          <s v-html="_formatMoney(product.price)" class="price m-0 p-0 font-weight-semi-bold text-danger"></s>
+          <s v-html="_formatMoney(product.compare_at_price)" class="compare-price m-0 pl-2"></s>
+        </template>
+        <template v-else="">
+          <s v-html="_formatMoney(product.price)" class="price m-0 p-0" style="color:#a2a2a2;"></s>
+        </template>
+        <span  class="font-weight-semi-bold text-uppercase ml-2">{{ 'products.product.sold_out' | t | escape }}</span>
+      </template>
+      <template v-else="">
+        <template v-if="product.compare_at_price > product.price">
+            <span v-html="_formatMoney(product.price)" class="price m-0 p-0 font-weight-semi-bold text-danger"></span>
+            <s v-html="_formatMoney(product.compare_at_price)" class="compare-price m-0 pl-2"></s>
+          </template>
+          <template v-else="">
+            <span v-html="_formatMoney(product.price)" class="price m-0 p-0"></span>
+          </template>
+        </template>
+      </template>
+      
+    </div>
+  </div>
+</div>

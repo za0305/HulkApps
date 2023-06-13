@@ -1,0 +1,257 @@
+.subscription-jr-past-boxes {
+
+}
+.subscription-jr-past-boxes:not(.blog)::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1358px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: url(bg-past-boxes-v4.png) no-repeat 50% 0;
+  background-size: contain;
+}
+@media only screen and (max-width: 1920px) {
+  .subscription-jr-past-boxes:not(.blog)::after {
+    background-size: cover;
+  }
+}
+.subscription-jr-past-boxes:not(.blog) > div,
+.reviews__wrapper,
+.subscription-faq {
+  position: relative;
+  z-index: 2;
+}
+
+.blog {
+  overflow: hidden;
+  padding-bottom: 150px;
+}
+.blog:after {
+  content: '';
+  width: 100%;
+  height: 70%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  background: #EBFBFA;
+}
+.blog:before {
+  content: '';
+  width: 100%;
+  height: 370px;
+  position: absolute;
+  left: 0;
+  bottom: -270px;
+  z-index: 2;
+  background: url(wave-white.png) repeat-x 50% 0;
+  background-size: cover;
+}
+.blog > div {
+  z-index: 3;
+}
+
+.pb__boxes {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: 20px;
+  margin-top: 30px;
+  margin-bottom: 66px;
+}
+.pb__box {
+  text-align: center;
+}
+.article {
+  text-align: left;
+}
+.pb__box-img {
+  overflow: hidden;
+  border-radius: 30px;
+  margin-bottom: 15px;
+}
+.pb__box-title {
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 40px;
+  text-transform: uppercase;
+  color: #282560;
+  font-family: 'Grandstander', cursive;
+  margin-bottom: 9px;
+}
+.article .pb__box-title {
+  height: 108px;
+  overflow: hidden;
+  font-size: 36px;
+  line-height: 100%;
+  font-family: 'Barlow', sans-serif;
+}
+.article .pb__box-description {
+  height: 48px;
+  overflow: hidden;
+  color: rgba(40, 37, 96, 0.7);
+  font-size: 20px;
+  line-height: 24px;
+  font-family: 'Barlow', sans-serif;
+  margin-top: 11px;
+}
+
+time {
+  display: inline-block;
+  font-family: 'Barlow', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  text-transform: uppercase;
+  color: #282560;
+  margin-bottom: 14px;
+}
+
+.pb__box-babs-books {
+  display: inline-block;
+  padding: 5px 0 5px 40px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: rgba(40, 37, 96, 0.7);
+  background: url(icon-photocam.svg) no-repeat 0 50%;
+}
+.article a {
+  display: inline-block;
+  font-family: 'Barlow', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  text-decoration-line: underline;
+  color: #F15D31;
+  margin-top: 28px;
+}
+
+.subscription-jr-past-boxes__buttons {
+  gap: 20px;
+}
+.subscription-jr-past-boxes__buttons .button {
+  width: 320px;
+}
+
+@media only screen and (max-width: 1920px) {
+  .subscription-jr-past-boxes:not(.blog)::after {
+    background-size: cover;
+  }
+}
+
+@media only screen and (max-width: 1795px) and (min-width: 1441px) {
+  .subscription-jr-past-boxes  {
+    zoom: .85;
+  }
+}
+
+@media only screen and (max-width: 1440px) and (min-width: 1367px) {
+  .subscription-jr-past-boxes  {
+    zoom: .7;
+  }
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 1025px) {
+  .subscription-jr-past-boxes  {
+    zoom: .6;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .pb__boxes {
+    display: block;
+  }
+  .pb__box {
+    width: 415px;
+    margin: 0 10px;
+  }
+  .pb__box-img img {
+    max-width: 100%;
+  }
+  .pb__box-title {
+    font-size: 30px;
+    line-height: 30px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+
+}
+
+@media only screen and (max-width: 568px) {
+  .subscription-jr-past-boxes:not(.blog) {
+    padding-top: 121px;
+    background: url(bg-past-boxes.svg) no-repeat 50% 0;
+  }
+  .subscription-jr-past-boxes:not(.blog)::after {
+    height: 1881px;
+    background: url(bg-past-boxes-mobile.png) no-repeat -360px 0;
+    background-size: 1010px 2071px;
+  }
+  .subscription-jr-past-boxes.blog {
+    margin-top: 30px;
+  }
+  .pb__box-title {
+    font-size: 20px;
+    line-height: 20px;
+  }
+  .pb__box-babs-books {
+    font-size: 14px;
+    line-height: 17px;
+  }
+  .subscription-jr-past-boxes__buttons {
+    display: block;
+  }
+  .subscription-jr-past-boxes__buttons .button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .pb__box {
+    width: 70%;
+  }
+  .pb__box img {
+    max-width: 100%;
+  }
+  .article .pb__box-title {
+    height: 60px;
+    font-size: 20px;
+  }
+  .article .pb__box-description {
+    height: 70px;
+  }
+  .article a {
+    font-size: 12px;
+    line-height: 14px;
+  }
+  .blog {
+    padding-bottom: 78px;
+  }
+
+  .subscription-jr-past-boxes:not(.blog) > div,
+  .reviews__wrapper,
+  .subscription-faq {
+    overflow: hidden;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .blog:before {
+    background: url(wave-white.png) repeat-x 20% 0;
+    background-size: 200%;
+  }
+}
+
+@media only screen and (max-width: 390px) {
+  .blog {
+    padding-bottom: 0;
+    background-size: 185%;
+  }
+  .blog:before {
+    bottom: -340px;
+  }
+}

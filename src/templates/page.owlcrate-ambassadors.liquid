@@ -1,0 +1,2490 @@
+<style>
+  
+  *,::before,::after {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url({{ 'Gotham-Light.woff2' | asset_url}}) format('woff2'),
+    url({{ 'Gotham-Light.woff' | asset_url}}) format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Belgravia';
+  src: url({{ 'Belgravia.ttf' | asset_url }}) format('truetype');
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Eveleth-Bold';
+  src: url({{ 'Eveleth_Bold.otf' | asset_url }}) format('opentype');
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Eveleth-light';
+  src: url({{ 'Eveleth_Dot_W01_Light.otf' | asset_url }}) format('opentype');
+  font-style: normal;
+  font-weight: light;
+}
+
+@font-face {
+  font-family: 'Eveleth-Thin';
+  src: url({{ 'Eveleth_W01_Thin.otf' | asset_url }}) format('opentype');
+  font-style: normal;
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: 'Eveleth-Regular';
+  src: url({{ 'Eveleth_W01_Regular.otf' | asset_url }}) format('opentype');
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Eveleth-Regular';
+  src: url({{ 'Eveleth_W01_Regular.ttf' | asset_url }}) format('truetype');
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Gotham-Black';
+  src: url({{ 'Gotham_Black.otf' | asset_url }}) format('opentype');
+  font-style: normal;
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: 'Gotham-Bold';
+  src: url({{ 'Gotham_Bold.otf' | asset_url }}) format('opentype');
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Gotham-Narrow-Book';
+  src: url({{ 'Gotham_Narrow_Book.otf' | asset_url }}) format('opentype');
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham-Narrow-Medium';
+  src: url({{ 'Gotham_Narrow_Medium.otf' | asset_url }}) format('opentype');
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-ExtraBoldItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-ExtraBoldItalic.woff'| asset_url }}) format('woff');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-BlackItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-BlackItalic.woff'| asset_url }}) format('woff');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-Bold.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-Bold.woff'| asset_url }}) format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-ExtraBold.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-ExtraBold.woff'| asset_url }}) format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-Black.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-Black.woff'| asset_url }}) format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-BoldItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-BoldItalic.woff'| asset_url }}) format('woff');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-ExtraLight.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-ExtraLight.woff'| asset_url }}) format('woff');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-Italic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-Italic.woff'| asset_url }}) format('woff');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-ThinItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-ThinItalic.woff'| asset_url }}) format('woff');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-Medium.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-Medium.woff'| asset_url }}) format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-LightItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-LightItalic.woff'| asset_url }}) format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-Regular.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-Regular.woff'| asset_url }}) format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-Thin.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-Thin.woff'| asset_url }}) format('woff');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-SemiBoldItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-SemiBoldItalic.woff'| asset_url }}) format('woff');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-Light.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-Light.woff'| asset_url }}) format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-SemiBold.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-SemiBold.woff'| asset_url }}) format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-ExtraLightItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-ExtraLightItalic.woff'| asset_url }}) format('woff');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url({{ 'Barlow-MediumItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Barlow-MediumItalic.woff'| asset_url }}) format('woff');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+{% comment %}
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-Bold.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-Bold.woff'| asset_url }}) format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-BlackItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-BlackItalic.woff'| asset_url }}) format('woff');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-BoldItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-BoldItalic.woff'| asset_url }}) format('woff');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-ExtraBoldItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-ExtraBoldItalic.woff'| asset_url }}) format('woff');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-Black.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-Black.woff'| asset_url }}) format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-ExtraBold.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-ExtraBold.woff'| asset_url }}) format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-SemiBold.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-SemiBold.woff'| asset_url }}) format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-Italic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-Italic.woff'| asset_url }}) format('woff');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-LightItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-LightItalic.woff'| asset_url }}) format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-Light.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-Light.woff'| asset_url }}) format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-Regular.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-Regular.woff'| asset_url }}) format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-Medium.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-Medium.woff'| asset_url }}) format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-ExtraLightItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-ExtraLightItalic.woff'| asset_url }}) format('woff');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-ExtraLight.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-ExtraLight.woff'| asset_url }}) format('woff');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-MediumItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-MediumItalic.woff'| asset_url }}) format('woff');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url({{ 'Mulish-SemiBoldItalic.woff2'| asset_url }}) format('woff2'),
+    url({{ 'Mulish-SemiBoldItalic.woff'| asset_url }}) format('woff');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+{% endcomment %}
+
+
+/*  Muli Fonts  */
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli.ttf'| asset_url }}) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-Bold.ttf'| asset_url }}) format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-BoldItalic.ttf'| asset_url }}) format('truetype');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-ExtraLight.ttf'| asset_url }}) format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-ExtraLightItalic.ttf'| asset_url }}) format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-Italic.ttf'| asset_url }}) format('truetype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-Light.ttf'| asset_url }}) format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-LightItalic.ttf'| asset_url }}) format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-SemiBold.ttf'| asset_url }}) format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muli';
+  src: url({{ 'Muli-Semi-BoldItalic.ttf'| asset_url }}) format('truetype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+/* base css */
+.skip-to-content-link {
+  display: none;
+}
+/* base css */
+
+.font-weight-regular {
+  font-weight: 400;
+}
+
+.font-weight-medium {
+  font-weight: 500;
+}
+
+.font-weight-semi-bold {
+  font-weight: 600;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}
+
+:disabled {
+  pointer-events: none;
+  cursor: no-drop;
+  filter: alpha(opacity=40);
+  -moz-opacity: 0.4;
+  -khtml-opacity: 0.4;
+  opacity: 0.4;
+}
+
+.custom-container-fluid {
+  max-width: 100%;
+  margin: 0px auto;
+}
+
+.custom-container {
+  max-width: 1440px;
+  margin: 0px auto;
+  padding: 0px 15px;
+}
+
+.custom-row {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.column-12 {
+  flex: 0 0 100%;
+  -webkit-box-flex: 0 0 100%;
+  -moz-box-flex: 0 0 100%;
+  -webkit-flex: 0 0 100%;
+  -ms-flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.column-9 {
+  flex: 0 0 75%;
+  -webkit-box-flex: 0 0 75%;
+  -moz-box-flex: 0 0 75%;
+  -webkit-flex: 0 0 75%;
+  -ms-flex: 0 0 75%;
+  max-width: 75%;
+}
+
+.column-8 {
+  flex: 0 0 66.66%;
+  -webkit-box-flex: 0 0 66.66%;
+  -moz-box-flex: 0 0 66.66%;
+  -webkit-flex: 0 0 66.66%;
+  -ms-flex: 0 0 66.66%;
+  max-width: 66.66%;
+}
+
+.column-7 {
+  flex: 0 0 60%;
+  -webkit-box-flex: 0 0 54.78%;
+  -moz-box-flex: 0 0 54.78%;
+  -webkit-flex: 0 0 54.78%;
+  -ms-flex: 0 0 54.78%;
+  max-width: 54.78%;
+}
+
+.column-6 {
+  flex: 0 0 50%;
+  -webkit-box-flex: 0 0 50%;
+  -moz-box-flex: 0 0 50%;
+  -webkit-flex: 0 0 50%;
+  -ms-flex: 0 0 50%;
+  max-width: 50%;
+}
+
+.column-5 {
+  flex: 0 0 40%;
+  -webkit-box-flex: 0 0 45.22%;
+  -moz-box-flex: 0 0 45.22%;
+  -webkit-flex: 0 0 45.22%;
+  -ms-flex: 0 0 45.22%;
+  max-width: 45.22%;
+}
+
+.column-4 {
+  flex: 0 0 33.33%;
+  -webkit-box-flex: 0 0 33.33%;
+  -moz-box-flex: 0 0 33.33%;
+  -webkit-flex: 0 0 33.33%;
+  -ms-flex: 0 0 33.33%;
+  max-width: 33.33%;
+}
+
+.column-3 {
+  flex: 0 0 25%;
+  -webkit-box-flex: 0 0 25%;
+  -moz-box-flex: 0 0 25%;
+  -webkit-flex: 0 0 25%;
+  -ms-flex: 0 0 25%;
+  max-width: 25%;
+}
+
+.column-2 {
+  flex: 0 0 16.66%;
+  -webkit-box-flex: 0 0 16.66%;
+  -moz-box-flex: 0 0 16.66%;
+  -webkit-flex: 0 0 16.66%;
+  -ms-flex: 0 0 16.66%;
+  max-width: 16.66%;
+}
+
+.column-1 {
+  flex: 0 0 8.33%;
+  -webkit-box-flex: 0 0 8.33%;
+  -moz-box-flex: 0 0 8.33%;
+  -webkit-flex: 0 0 8.33%;
+  -ms-flex: 0 0 8.33%;
+  max-width: 8.33%;
+}
+
+.column-auto {
+  flex: 0 0 auto;
+  -webkit-box-flex: 0 0 auto;
+  -moz-box-flex: 0 0 auto;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  max-width: auto;
+}
+
+.d-flex {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.d-inline-block {
+  display: inline-block;
+}
+
+.flex-wrap-nowrap {
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.flex-wrap-wrap {
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-none {
+  display: none;
+}
+
+.list-style-none {
+  list-style: none;
+}
+
+.justify-content-center {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.justify-content-space-between {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.align-items-center {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.transition {
+  -webkit-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.align-self-center {
+  align-self: center;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+  color: currentColor;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.overlay {
+  position: absolute;
+  top: 0px;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  -webkit-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+  z-index: -1;
+}
+
+.display-overlay {
+  left: 0px;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 3;
+  cursor: pointer;
+}
+
+
+/******* Media Query Start *******/
+@media only screen and (max-width: 890px) {
+  .column-12 {
+    flex: 0 0 100%;
+    -webkit-box-flex: 0 0 100%;
+    -moz-box-flex: 0 0 100%;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .column-8 {
+    flex: 0 0 66.66%;
+    -webkit-box-flex: 0 0 66.66%;
+    -moz-box-flex: 0 0 66.66%;
+    -webkit-flex: 0 0 66.66%;
+    -ms-flex: 0 0 66.66%;
+    max-width: 66.66%;
+  }
+
+  .column-6 {
+    flex: 0 0 50%;
+    -webkit-box-flex: 0 0 50%;
+    -moz-box-flex: 0 0 50%;
+    -webkit-flex: 0 0 50%;
+    -ms-flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .column-4 {
+    flex: 0 0 33.33%;
+    -webkit-box-flex: 0 0 33.33%;
+    -moz-box-flex: 0 0 33.33%;
+    -webkit-flex: 0 0 33.33%;
+    -ms-flex: 0 0 33.33%;
+    max-width: 33.33%;
+  }
+
+  .column-2 {
+    flex: 0 0 20%;
+    -webkit-box-flex: 0 0 20%;
+    -moz-box-flex: 0 0 20%;
+    -webkit-flex: 0 0 20%;
+    -ms-flex: 0 0 20%;
+    max-width: 20%;
+  }
+
+  .column-auto {
+    flex: 0 0 auto;
+    -webkit-box-flex: 0 0 auto;
+    -moz-box-flex: 0 0 auto;
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    max-width: auto;
+  }
+
+  .sidebar {
+    display: block;
+    top: 0%;
+    left: -100%;
+    width: 86%;
+    height: 100vh;
+    background-color: #ffffff;
+    padding: 38px 25px;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    z-index: -1;
+    overflow-y: auto;
+  }
+
+  .display-sidebar {
+    left: 0%;
+    z-index: 50;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .column-12 {
+    flex: 0 0 100%;
+    -webkit-box-flex: 0 0 100%;
+    -moz-box-flex: 0 0 100%;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .column-9 {
+    flex: 0 0 100%;
+    -webkit-box-flex: 0 0 100%;
+    -moz-box-flex: 0 0 100%;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .column-8 {
+    flex: 0 0 66.66%;
+    -webkit-box-flex: 0 0 66.66%;
+    -moz-box-flex: 0 0 66.66%;
+    -webkit-flex: 0 0 66.66%;
+    -ms-flex: 0 0 66.66%;
+    max-width: 66.66%;
+  }
+
+  .column-6 {
+    flex: 0 0 50%;
+    -webkit-box-flex: 0 0 100%;
+    -moz-box-flex: 0 0 100%;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .column-4 {
+    flex: 0 0 33.33%;
+    -webkit-box-flex: 0 0 33.33%;
+    -moz-box-flex: 0 0 33.33%;
+    -webkit-flex: 0 0 33.33%;
+    -ms-flex: 0 0 33.33%;
+    max-width: 33.33%;
+  }
+
+  .column-3 {
+    flex: 0 0 50%;
+    -webkit-box-flex: 0 0 50%;
+    -moz-box-flex: 0 0 50%;
+    -webkit-flex: 0 0 50%;
+    -ms-flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .column-2 {
+    flex: 0 0 20%;
+    -webkit-box-flex: 0 0 20%;
+    -moz-box-flex: 0 0 20%;
+    -webkit-flex: 0 0 20%;
+    -ms-flex: 0 0 20%;
+    max-width: 20%;
+  }
+
+  .column-auto {
+    flex: 0 0 auto;
+    -webkit-box-flex: 0 0 auto;
+    -moz-box-flex: 0 0 auto;
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    max-width: auto;
+  }
+}
+
+@media only screen and (max-width: 510px) { 
+  .column-3 {
+    flex: 0 0 100%;
+    -webkit-box-flex: 0 0 100%;
+    -moz-box-flex: 0 0 100%;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .column-12 {
+    flex: 0 0 100%;
+    -webkit-box-flex: 0 0 100%;
+    -moz-box-flex: 0 0 100%;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .column-8 {
+    flex: 0 0 66.66%;
+    -webkit-box-flex: 0 0 66.66%;
+    -moz-box-flex: 0 0 66.66%;
+    -webkit-flex: 0 0 66.66%;
+    -ms-flex: 0 0 66.66%;
+    max-width: 66.66%;
+  }
+
+  .column-6 {
+    flex: 0 0 50%;
+    -webkit-box-flex: 0 0 100%;
+    -moz-box-flex: 0 0 100%;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .column-4 {
+    flex: 0 0 33.33%;
+    -webkit-box-flex: 0 0 33.33%;
+    -moz-box-flex: 0 0 33.33%;
+    -webkit-flex: 0 0 33.33%;
+    -ms-flex: 0 0 33.33%;
+    max-width: 33.33%;
+  }
+
+  .column-3 {
+    flex: 0 0 100%;
+    -webkit-box-flex: 0 0 100%;
+    -moz-box-flex: 0 0 100%;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .column-2 {
+    flex: 0 0 20%;
+    -webkit-box-flex: 0 0 50%;
+    -moz-box-flex: 0 0 50%;
+    -webkit-flex: 0 0 50%;
+    -ms-flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .column-auto {
+    flex: 0 0 auto;
+    -webkit-box-flex: 0 0 auto;
+    -moz-box-flex: 0 0 auto;
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    max-width: auto;
+  }
+}
+/******* Media Query End *******/
+
+  
+  .owl-join-section {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.7)), url('https://cdn.shopify.com/s/files/1/1091/8372/files/join-background.png?v=1645243158');
+      background-repeat: no-repeat;
+      background-size: cover;
+  }
+  
+  @media only screen and (max-width: 567px) {
+    .owl-join-section {
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url('https://cdn.shopify.com/s/files/1/1091/8372/files/join-mobile-background_fcb52257-a55c-47bb-9ab8-b99b48da8e9f.webp');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+  }
+  
+  .lc-signup-container {
+    font-family: 'Barlow';
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 0em;
+    filter: drop-shadow(0px 4px 4px rgba(0,0,0,.25));
+  }
+  
+  .signup-button_lcButton__3PS4y {
+    margin: 0px auto;
+    border-radius: 0px;
+  }
+  
+  .signup-button_lcButtonText__1Qqcl {
+    font-family: 'Barlow';
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  
+  .signup-button_lcButtonContainer__1Ws4J {
+    width: normal;
+    height: normal;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    display: inline-block;
+    text-align: center;
+  }
+  
+  /* owl-join-section CSS Start */
+.owl-join-section {
+
+  /* background-position: center center; */
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+  padding: 195px 0px 15px;
+}
+
+svg.owl-join-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #f7f7ff;
+  padding: 0;
+}
+
+.owl-join-section .join-title {
+  font-family: 'Barlow';
+  font-size: 38px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 52px;
+  letter-spacing: 0em;
+  color: #000;
+  text-shadow: 5px 7px 4px #FFFFFF;
+  text-transform: uppercase;
+}
+
+.owl-join-section .join-heading {
+  font-family: 'Barlow';
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 110px;
+  letter-spacing: 0em;
+  color: #000;
+  filter: drop-shadow(5px 8px 4px #FFFFFF);
+  /* margin-bottom: 30px; */
+  margin-top: -30px;
+}
+
+.owl-join-section .join-description {
+  font-family: 'Barlow';
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 34px;
+  letter-spacing: 0em;
+  color: #000;
+  text-shadow: 5px 4px 4px #FFFFFF;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.owl-join-button {
+  font-family: 'Barlow';
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: 0em;
+  color: #FFFFFF;
+  background-color: #26BCB4;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  padding: 18px 57px;
+  display: inline-block;
+}
+
+.owl-join-button:hover {
+  color: #FFFFFF;
+  background-color: #26BCB4;
+}
+/* owl-join-section CSS End */
+
+/* earn-reward-section CSS End */
+section.earn-reward-section {
+  padding: 27px 0px 36px;
+}
+
+section.earn-reward-section .custom-container {
+/*   padding: 0px 30px; */
+  max-width: 1140px;
+}
+
+h4.earn-rewdar-main-title {
+  padding: 27px 0px;
+  margin: 0px auto 40px;
+  max-width: 86%;
+  font-family: 'Muli';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: center;
+  background: #FFFFFF;
+  box-shadow: 0px 6px 20px #0000003d;
+  border-radius: 10px;
+}
+
+section.earn-reward-section .column-6:first-child {
+  padding: 0px 30px 0px 0px;
+}
+
+section.earn-reward-section .column-6:last-child {
+  padding: 0 30px 0 0px;
+}
+
+.earn-image-wrapper {
+  position: relative;
+  padding-bottom: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+.earn-reward-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+section.earn-reward-section .earn-reward-heading {
+  font-family: 'Barlow';
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 50px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin-bottom: 0px;
+  margin-top: 16px;
+}
+
+section.earn-reward-section .earn-reward-sub-title {
+  font-family: 'Muli';
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 33px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin-bottom: 17px;
+}
+
+section.earn-reward-section .earn-reward-block {
+  padding: 28px;
+  background: #FFFFFF;
+  box-shadow: 0px 6px 20px #0000003d;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+section.earn-reward-section .wrapper .earn-reward-block:last-child {
+  margin-bottom: 0px;
+}
+
+section.earn-reward-section .earn-reward-block-title {
+  font-family: 'Muli';
+  font-size: 21px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 23px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+section.earn-reward-section .earn-reward-block-data {
+  font-family: 'Muli';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin-bottom: 0rem;
+}
+
+.mobile-header-wrapper {
+  display: none;
+}
+/* earn-reward-section CSS End */
+
+/* how-works-section CSS End */
+.how-works-section {
+  margin-top: 10px;
+  padding: 45px 0px;
+  background: rgba(201, 238, 236, 0.5);
+  overflow: hidden;
+}
+
+.how-works-section .how-works-background-image {
+  position: absolute;
+  /* top: -23%; */
+  /* left: -22%; */
+  top: -250px;
+  left: -320px;
+  transform: rotate(311deg);
+  z-index: 0;
+  opacity: 0.5;
+  width: auto;
+}
+
+.how-works-section .custom-container {
+  max-width: 1250px;
+  z-index: 2;
+  position: relative;
+}
+
+.how-works-main-heading {
+  font-family: 'Barlow';
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 50px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin-bottom: 35px;
+}
+  
+.signup-button_lcButtonContainer__1Ws4J {
+  padding: 0px !important;
+}
+
+.how-works-join-wrapper {
+  padding: 30px 0 0;
+}
+
+.how-works-section .column-4:first-child .how-works-wrapper  {
+  margin-left: 0px;
+}
+
+.how-works-wrapper {
+  padding: 67px 40px 36px 28px;
+  margin: 0px 16px;
+  background: #FFFFFF;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+  height: 100%;
+}
+
+.how-works-section .column-4:last-child .how-works-wrapper {
+  margin-right: 0px;
+}
+
+.icon-wrapper svg {
+  width: 56px;
+  height: 51px;
+  margin-bottom: 15px;
+  display: flex;
+}
+
+.how-works-block-title {
+  font-family: 'Barlow';
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 38px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.how-works-block-data {
+  font-family: 'Muli';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+/* how-works-section CSS End */
+
+/* post-rule-section CSS Start */
+.post-rule-section .custom-container {
+  max-width: 1140px;
+}
+
+.post-rule-section .custom-row .column-6:first-child {
+/*   flex: 0 0 52.223%;
+  max-width: 52.223%; */
+}
+
+.post-rule-section .custom-row .column-6:last-child {
+/*   flex: 0 0 47.777%;
+  max-width: 47.777%; */
+}
+
+.post-rule-section .post-rule-column-wrapper.post-rule-image-wrapper {
+  position: relative;
+  padding-bottom: 95.556%;
+  height: 100%;
+  width: 100%;
+}
+
+.post-rule-section .post-rule-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post-rule-section .column-6:last-child .post-rule-column-wrapper {
+  padding: 0px 40px 0px 30px;
+}
+
+.post-rule-main-heading {
+  font-family: 'Barlow';
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 50px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin-bottom: 36px;
+  margin-top: -94px;
+  text-transform: uppercase;
+}
+
+ul.post-rule-list {
+  margin-left: 28px;
+}
+
+.post-rule-data {
+  font-family: 'Muli';
+  margin-bottom: 28px;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 25px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+/* post-rule-section CSS End */
+
+/* tc-section CSS Start */
+.tc-section {
+
+}
+
+.tc-section .custom-container {
+  max-width: 1250px;
+}
+
+.tc-section .column-6:last-child {
+/*   padding-left: 91.5px; */
+}
+
+.tc-section .column-6 .tc-column-wrapper:first-child {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.tc-page-title {
+  font-family: 'Barlow';
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 38px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin-bottom: 74px;
+  margin-top: 20px;
+}
+
+.tc-main-heading {
+  font-family: 'Barlow';
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 50px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin: 0px 0px 31px 0px;
+  text-transform: uppercase;
+}
+
+.tc-data {
+  font-family: 'Muli';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-bottom: 28px;
+}
+
+.tc-section .tc-column-wrapper.tc-image-wrapper {
+  position: relative;
+  padding-bottom: 101.775%;
+  height: 100%;
+}
+
+.tc-section .tc-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* tc-section CSS End */
+
+/* insta-post-section CSS Start */
+.insta-post-section {
+  padding: 30px 0px;
+  background-color: rgba(201, 238, 236, 0.5);
+  user-select: none;
+}
+
+.insta-post-section .insta-slider {
+  margin: 0px auto;
+  width: 80%;
+}
+
+.insta-slider .insta-slide {
+  width: 33.4027778%;
+  padding: 1.94444444%;
+}
+
+.insta-slider .insta-slide.is-selected .insta-image-wrapper {
+  width: 100%;
+  margin: 0;
+}
+
+.insta-slider .insta-slide.is-next .insta-image-wrapper {
+  margin-left: 0;
+}
+
+.insta-slider .insta-slide:not(.is-selected):not(.is-next):not(.is-prev) {
+  opacity: 0;
+  transition-delay: .5s;
+}
+
+.insta-image-wrapper {
+  width: 64.7058824%;
+  margin: 17.6470588%;
+  margin-left: 35.2941176%;
+  transition: all .5s ease;
+  position: relative;
+}
+
+.insta-image-wrapper:before {
+  content: '';
+  display: block;
+  padding-bottom: 100%;
+}
+
+.insta-image-wrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+.insta-slider .flickity-button {
+  width: 70px;
+  height: 70px;
+  background: transparent url({{ 'next.png' | asset_img_url: '200x' }}) no-repeat center/contain;
+  opacity: 1;
+}
+
+.insta-slider .flickity-button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.insta-slider .flickity-button.previous {
+  background: url({{ 'prev.png' | asset_img_url: '200x' }}) no-repeat center/contain;
+  left: 5%;
+  margin-left: -50px;
+}
+
+.flickity-prev-next-button.next {
+  right: 5%;
+  margin-right: -50px;
+}
+
+.insta-slider .flickity-button svg {
+  display: none;
+}
+
+/* insta-post-section CSS End */
+
+/* FAQ CSS Start */
+section.js-faq-section {
+  padding: 80px 0px;
+}
+
+section.js-faq-section .custom-container {
+  max-width: 1255px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+h2.js-faq-heading.text-center {
+  margin-bottom: 32px;
+  font-family: 'Barlow';
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 50px;
+  letter-spacing: 0em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.accordion {
+  width: 100%;
+}
+
+.accordion .accordion-item:first-child {
+  border-top: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.accordion-item {
+/*   background: #FFFFFF; */
+  /* box-shadow: 0 6px 20px #0000004d; */
+  /* border-radius: 10px; */
+  /* margin-bottom: 30px; */
+  padding: 20px;
+  transition: margin .3s ease;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.accordion-item.accordion-item-active {
+/*   margin-bottom: 74px; */
+  transition: margin 0.3s ease;
+}
+
+.accordion-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  /*     padding: 27px 14px; */
+  text-align: left;
+  cursor: pointer;
+  transition: 0.1s;
+  color: #000000;
+  border: none;
+  outline: none;
+  background: #ffffff;
+  border-radius: 10px;
+
+  font-family: 'Muli';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 26px;
+  letter-spacing: 0.005em;
+  text-align: left;
+
+}
+
+.arrow-right {
+  width: 24px;
+  height: 24px;
+  display: flex;
+}
+
+.accordion-item-active .accordion-btn {
+  color: #000;
+}
+
+.accordion-icon {
+  border-radius: 50%;
+  transform: rotate(0deg);
+  transition: 0.3s ease-in-out;
+  opacity: 0.9;
+  margin-left: 14px;
+  vertical-align: top;
+  display: flex;
+}
+
+
+.accordion-item-active .accordion-icon {
+  transform: rotate(224deg);
+}
+
+.accordion-content {
+  font-weight: 300;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  color: #000;
+  transform: translateX(16px);
+  transition: max-height 0.5s ease, opacity 0.5s, transform 0.5s;
+}
+
+.accordion-content p,
+.accordion-content .accordion-content-data {
+  padding: 6px 27px;
+  margin-top: 12px;
+  margin-bottom: 0;
+  border-left: 5px solid rgba(0,0,0,.5);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 20px;
+  letter-spacing: .005em;
+  text-align: left;
+}
+
+.accordion-item-active .accordion-content {
+  transition: max-height 0.5s ease, opacity 0.5s, transform 0.5s;
+}
+
+.accordion-item-active .accordion-content {
+  opacity: 1;
+  transform: translateX(0px);
+  max-height: 100vh;
+}
+
+.accordian-plus-minus {
+  width: 40px;
+  height: 40px;
+  display: flex;
+}
+
+.lc-signup-container {
+  font-family: 'Barlow';
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+  border-radius: unset;
+}
+
+.signup-button_lcButton__3PS4y {
+  width: 200px;
+  height: 52px;
+  border-radius: 0px;
+  letter-spacing:1.5px!important;
+  padding: 16px 20px!important;
+}
+.signup-button_lcButtonText__1Qqcl{
+  letter-spacing:1.5px!important;
+}
+
+.signup-button_lcButtonContainer__1Ws4J {
+  width: 100%;
+  height: 100%;
+  padding-top: 105px;
+  padding-bottom: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.faq-join-wrapper {
+  margin-top: 36px;
+}
+/* FAQ CSS End */
+
+/* Media Query Start */
+@media only screen and (max-width: 1180px) {
+  .post-rule-main-heading {
+    margin-top: 0px;
+        font-size: 30px;
+  }
+  
+  .insta-slider .flickity-button {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .insta-slider .flickity-button.previous {
+    margin-left: -40px;
+  }
+  
+  .insta-slider .flickity-button.next {
+    margin-right: -40px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  section.earn-reward-section .custom-container {
+    padding: 0 30px;
+  }
+
+  section.earn-reward-section .column-6:first-child {
+    padding: 0px 30px 0px 0px;
+  }
+
+  section.earn-reward-section .column-6:last-child {
+    padding: 0px 20px 0px 30px;
+  }
+
+  section.earn-reward-section .earn-reward-block {
+    padding: 16px;
+    margin-bottom: 32px;
+  }
+
+  .how-works-section .custom-container {
+    max-width: 1000px;
+    padding: 0px 25px
+  }
+
+  .how-works-wrapper {
+    padding: 20px;
+  }
+
+  .post-rule-main-heading {
+    margin-top: 20px;
+  }
+
+  .tc-section .column-6:last-child {
+/*     padding-left: 40px; */
+  }
+  
+  .tc-page-title {
+    margin-bottom: 40px;
+  }
+
+  .tc-main-heading {
+    margin: 20px 0px;
+  }
+
+  .tc-section .column-6 .tc-column-wrapper:first-child {
+    padding-left: 50px;
+    padding-right: 20px;
+  }
+
+  section.js-faq-section .custom-container {
+    padding: 0 60px;
+  }
+  
+  .accordion-item.accordion-item-active {
+/*     margin-bottom: 50px; */
+  }
+
+  .center .slick-slide.slick-center {
+    -moz-transform: scale(1.08);
+    -ms-transform: scale(1.08);
+    -o-transform: scale(1.08);
+    -webkit-transform: scale(1.08);
+    color: #e67e22;
+    opacity: 1;
+    transform: scale(1.5);
+    transition: all 0.6s;
+  }
+
+  .center .slick-slide {
+    color: #3498db;
+    font-size: 36px;
+    line-height: 100px;
+    margin: 10px;
+    padding: 75px;
+    position: relative;
+    text-align: center;
+    transition: all 0.6s;
+  }
+  
+  .insta-post-section .insta-slider {
+    width: 100%;
+  }
+
+  .insta-slider .flickity-button {
+    width: 60px;
+    height: 60px;
+  }
+
+  .insta-slider .flickity-button.previous {
+    margin-left: -30px;
+  }
+
+  .insta-slider .flickity-button.next {
+    margin-right: -30px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .owl-join-section {
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url('https://cdn.shopify.com/s/files/1/1091/8372/files/join-background.png?v=1645243158');
+   }
+  .owl-join-section .join-title { 
+    font-size: 32px;
+    line-height: 38px;
+    margin-bottom: 5px;
+  }
+
+  .owl-join-section .join-heading {
+    font-size: 60px;
+    line-height: 70px;
+    margin-bottom: 15px;
+  }
+
+  .owl-join-section .join-description {
+    font-size: 32px;
+    line-height: 38px;
+    margin-bottom: 10px;
+    text-transform: none;
+  }
+
+  section.earn-reward-section {
+    padding: 27px 30px 36px;
+  }
+
+  section.earn-reward-section .column-6:first-child {
+    padding: 0px;
+    margin-bottom: 54px;
+  }
+
+  section.earn-reward-section .column-6:last-child {
+    padding: 0px;
+  }
+
+  .mobile-header-wrapper {
+    display: block;
+  }
+
+  .desktop-header-wrapper {
+    display: none;
+  }
+
+  h4.earn-rewdar-main-title {
+    padding: 27px 12px;
+    margin: 0px auto 71px;
+  }
+
+  section.earn-reward-section .earn-reward-sub-title {
+    margin-bottom: 47px;
+  }
+
+  .how-works-section {
+    margin-top: 19px;
+    padding: 40px 0;
+  }
+
+  .how-works-section .how-works-background-image {
+    display: none;
+  }
+
+  .how-works-section .column-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 32px;
+    height: 100%;
+  }
+
+  .how-works-section .column-4:last-child {
+    margin-bottom: 0px;
+  }
+
+  .how-works-section .column-4:first-child .how-works-wrapper {
+    margin-left: 0px;
+  }
+
+  .how-works-section .column-4 .how-works-wrapper {
+    margin: 0px;
+    min-height: 230px;
+    padding-top: 44px;
+  }
+
+  .how-works-section .column-4:last-child .how-works-wrapper  {
+    margin-right: 0px;
+  }
+
+  section.post-rule-section {
+    padding: 50px 35px 22px;
+  }
+  
+  .post-rule-section .custom-row .column-6:first-child,
+  .post-rule-section .custom-row .column-6:last-child{
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .post-rule-section .column-6:last-child .post-rule-column-wrapper {
+    padding: 0px;
+  }
+
+  .post-rule-main-heading {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .tc-section {
+    padding: 10px 30px;
+  }
+
+  .tc-section .column-6:last-child {
+    padding-left: 0px;
+    order: -1;
+  }
+  
+  .tc-page-title {
+    display: none;
+  }
+
+  .tc-main-heading {
+    font-size: 30px;
+    line-height: 43px;
+  }
+
+  .tc-data {
+    font-size: 20px;
+    line-height: 25px;
+  }
+
+  ul.tc-list {
+    margin-left: 38px;
+    margin-right: 20px;
+  }
+
+  .insta-post-section {
+    padding: 60px 0;
+  }
+  
+  section.js-faq-section {
+    padding: 41px 0 43px;
+  }
+
+  section.js-faq-section .custom-container {
+    padding: 0 30px;
+  }
+  
+  h2.js-faq-heading.text-center {
+    font-size: 30px;
+    line-height: 35px;
+  }
+
+  .accordion-item {
+    padding: 14px 4px;
+/*     margin-bottom: 16px; */
+/*     box-shadow: 0px 6px 20px rgba(0, 0, 0, .06); */
+  }
+  
+  .accordion-item.accordion-item-active {
+/*     margin-bottom: 19px; */
+  }
+
+  .accordion-btn {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  
+  .accordion-content p, .accordion-content .accordion-content-data {
+    font-size: 14px;
+    line-height: 21px;
+    border: none;
+    margin-top: 9px;
+    padding: 5px 21px 5px 18px;
+    margin-bottom: 0px;
+  }
+  
+  .faq-join-wrapper {
+    margin-top: 36px;
+  }
+  
+  .arrow-right {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .insta-post-section {
+    padding: 49px 0 40px;
+  }
+  
+  .insta-slider .insta-slide {
+    width: 69.0666667%;
+    padding: 4.13333333%;
+  }
+  
+  .insta-slider .flickity-button {
+    width: 50px;
+    height: 50px;
+  }
+
+  .insta-slider .flickity-button.previous {
+    left: 10.4%;
+    margin-left: -25px;
+  }
+
+  .insta-slider .flickity-button.next {
+    right: 10.4%;
+    margin-right: -25px;
+  }
+}
+
+@media only screen and (max-width: 567px) {
+  .owl-join-section {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url('https://cdn.shopify.com/s/files/1/1091/8372/files/join-mobile-background_fcb52257-a55c-47bb-9ab8-b99b48da8e9f.webp?v=1650264342');
+      padding: 170px 0px 0px;
+      z-index: 0;
+  }
+
+  .owl-join-section .join-title { 
+    font-size: 28px;
+    line-height: 34px;
+  }
+
+  .owl-join-section .join-heading {
+    font-size: 42px;
+    line-height: 40px;
+    margin-top:0px;
+  }
+
+  .owl-join-section .join-description {
+    font-size: 28px;
+    line-height: 33.6px;
+    margin-bottom: 7px
+  }
+
+  section.earn-reward-section {
+    padding: 27px 0px 19px;
+  }
+  
+  section.earn-reward-section .custom-container {
+    padding: 0 15px;
+  }
+
+  section.earn-reward-section .column-6:last-child {
+    padding: 0px 5px;
+  }
+
+  .earn-image-wrapper {
+    padding-bottom: 96.27%;
+  }
+  
+  section.earn-reward-section .earn-reward-heading {
+    margin-bottom: 0px;
+    font-size: 30px;
+  }
+
+  .how-works-main-heading {
+    margin-bottom: 18px;
+    font-size: 30px;
+  }
+  
+  .how-works-join-wrapper {
+    padding: 24px 0 0;
+  }
+
+  .how-works-section .column-4 .how-works-wrapper {
+    min-height: 300px;
+  }
+
+  .how-works-section .column-4:nth-child(1) .how-works-wrapper {
+    padding-top: 38px;
+  }
+
+  .how-works-section .column-4:nth-child(2) .how-works-wrapper {
+    padding-top: 38px;
+  }
+
+  .how-works-section .column-4:nth-child(3) .how-works-wrapper {
+    padding-top: 38px;
+  }
+  
+  section.post-rule-section {
+    padding: 50px 5px 22px;
+  }
+  
+  .post-rule-section .post-rule-image {
+    height: 95%;
+  }
+  
+  .tc-section .tc-column-wrapper.tc-image-wrapper {
+    padding-bottom: 90.5%;
+  }
+
+  .tc-section {
+    padding: 10px 0px;
+  }
+
+  .tc-section .column-6:first-child .tc-column-wrapper {
+    padding: 0px;
+  }
+
+  .tc-section .column-6:last-child {
+    padding: 0px 5px;
+  }
+  
+  section.js-faq-section .custom-container {
+    padding: 0 20px;
+  }
+}
+/* Media Query Start */
+
+img[data-sizes=auto] {
+  width: 100%;
+}
+
+.footer_newsletter h3 {
+  font-weight: 600;
+}
+</style>
+
+
+
+
+
+
+<section class="owl-join-section">
+  <div class="custom-container">
+    <div class="custom-row">
+      <div class="column-12">
+        <div class="wrapper text-center">
+          <h2 class="join-title">JOIN THE</h2>
+          <h1 class="join-heading">OWLCRATE COLLECTIVE</h1>
+          <h6 class="join-description">BE AN OWLCRATE SOCIAL AMBASSADOR!</h6>
+            <div class="lc-signup-container" data-lc-button-text="JOIN NOW"
+                 data-lc-button-text-color="#FFFFF"
+                 data-lc-button-bg-color="#26bcb4">
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="earn-reward-section">
+  <div class="custom-container">
+    <h4 class="earn-rewdar-main-title">Earn Rewards And Exclusive Gifts, Just By Posting About OwlCrate On Instagram!</h4>
+    <div class="earn-reward-heading-wrapper mobile-header-wrapper">
+      <h2 class="earn-reward-heading">EARN REWARDS</h2>
+      <p class="earn-reward-sub-title">Tag us @owlcrate</p>
+    </div>
+    <div class="custom-row">
+      <div class="column-6">
+        <div class="earn-image-wrapper">
+          <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/earn-rewad_1024x1024_f94f07c7-044c-4ae5-8141-1c493d2e0c2f_1024x1024.webp" class="earn-reward-image" />
+        </div>
+      </div>
+      <div class="column-6">
+        <div class="wrapper">
+          <div class="earn-reward-heading-wrapper desktop-header-wrapper">
+            <h2 class="earn-reward-heading">EARN REWARDS</h2>
+            <p class="earn-reward-sub-title">Tag us @owlcrate</p>
+          </div>  
+          <div class="earn-reward-block">
+            <h3 class="earn-reward-block-title">Early Member Rewards</h3>
+            <p class="earn-reward-block-data">Post and tag @owlcrate on your Instagram TWICE a month to earn a surprise gift!</p>
+          </div>
+          <div class="earn-reward-block">
+            <h3 class="earn-reward-block-title">Full Program Rewards</h3>
+            <p class="earn-reward-block-data">Coming this Spring!</p>
+          </div>
+          <div class="how-works-join-wrapper">
+            <div class="lc-signup-container" data-lc-button-text="JOIN NOW"
+                 data-lc-button-text-color="#FFFFF"
+                 data-lc-button-bg-color="#26bcb4">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="how-works-section position-relative">
+ <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/how-works-background_1024x1024_4f7a3caf-4e28-4190-a3fc-5ccbb29afeb6_1024x1024.webp" class="how-works-background-image" />
+  <div class="custom-container">
+    <h2 class="how-works-main-heading">HOW IT WORKS</h2>
+    <div class="custom-row">
+      <div class="column-4">
+        <div class="how-works-wrapper">
+          <div class="icon-wrapper">
+            <svg width="56" height="51" viewbox="0 0 56 51" fill="none" xmlns="http://www.w3.org/2000/svg" class="how-works-icon"><path fill-rule="evenodd" clip-rule="evenodd" d="M41.1186 10.3218C42.5899 11.3772 43.5959 12.7652 43.9473 14.2331C44.34 15.8716 43.9061 17.5346 42.7281 18.9093L22.6361 42.359C21.6205 43.5452 20.0934 44.237 18.4428 44.257L10.691 44.3457H10.6692C9.82326 44.3457 9.08881 43.8135 8.89732 43.0597L7.1424 36.1551C6.76911 34.6851 7.13755 33.1618 8.1556 31.9756L10.7928 28.8958C11.4109 28.173 12.555 28.0444 13.3452 28.6142C14.1354 29.1796 14.2736 30.2262 13.6531 30.949L11.0158 34.0288C10.6813 34.419 10.5601 34.9179 10.6838 35.4012L12.1066 41.002L18.3967 40.9311C18.9372 40.9244 19.439 40.6983 19.7735 40.308L39.8654 16.8583C40.3793 16.2596 40.5562 15.6166 40.3963 14.9426C40.2242 14.2308 39.6861 13.5191 38.8765 12.9404L35.5072 10.5214C34.2031 9.59011 32.3634 9.11118 31.1078 10.5812L28.4536 13.6765L32.6664 16.7674C33.4493 17.3394 33.5753 18.3882 32.9475 19.1022C32.5888 19.5146 32.0604 19.7274 31.5271 19.7274C31.1296 19.7274 30.7272 19.6077 30.3927 19.3616L26.2114 16.2951L19.3372 24.3194C18.7167 25.0422 17.575 25.173 16.7824 24.601C15.9946 24.0356 15.8564 22.989 16.4745 22.2662L28.2451 8.52804C30.5285 5.85845 34.5279 5.59682 37.7493 7.90499L41.1186 10.3218ZM31.7247 41.02H47.1821C48.1856 41.02 49 41.765 49 42.683C49 43.6009 48.1856 44.3459 47.1821 44.3459H31.7247C30.7187 44.3459 29.9067 43.6009 29.9067 42.683C29.9067 41.765 30.7187 41.02 31.7247 41.02Z" fill="black"></path></svg>
+          </div>
+          <h3 class="how-works-block-title">Sign Up</h3>
+          <p class="how-works-block-data">Sign up with your email and Instagram username on this page!</p>
+        </div>
+      </div>
+      <div class="column-4">
+        <div class="how-works-wrapper">
+          <div class="icon-wrapper">
+            <svg class="how-works-icon" width="56" height="51" viewBox="0 0 56 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M41.1553 13.4209C40.964 13.4209 40.789 13.3196 40.6233 13.0053C39.9607 11.7333 39.1487 10.1786 38.661 9.3095C37.5923 7.40675 35.7583 6.3499 33.4787 6.33513H22.5073C20.244 6.3499 18.4077 7.40675 17.339 9.31161C16.8653 10.1554 16.0837 11.6531 15.4327 12.9041L15.295 13.1656C15.2133 13.3217 15.0407 13.4209 14.847 13.4209C9.23301 13.4209 4.66667 17.5491 4.66667 22.6224V35.1443C4.66667 40.2176 9.23301 44.3459 14.847 44.3459H16.5853C17.5513 44.3459 18.3353 43.6371 18.3353 42.7638C18.3353 41.8905 17.5513 41.1817 16.5853 41.1817H14.847C11.1627 41.1817 8.16667 38.4731 8.16667 35.1443V22.6224C8.16667 19.2937 11.1627 16.5851 14.847 16.5851C16.3847 16.5851 17.8033 15.773 18.459 14.5178L18.5967 14.2541C19.2337 13.0306 19.999 11.5666 20.461 10.7418C20.9393 9.88961 21.581 9.50568 22.5237 9.49935H33.4647C34.4213 9.50568 35.0607 9.88961 35.539 10.7397C36.015 11.592 36.8107 13.1129 37.5433 14.5178C38.199 15.773 39.6177 16.5851 41.1553 16.5851C44.8373 16.5851 47.8333 19.2937 47.8333 22.6224V35.1443C47.8333 38.4731 44.8373 41.1817 41.1553 41.1817H24.6867C23.7207 41.1817 22.9367 41.8905 22.9367 42.7638C22.9367 43.6371 23.7207 44.3459 24.6867 44.3459H41.1553C46.767 44.3459 51.3333 40.2176 51.3333 35.1443V22.6224C51.3333 17.5491 46.767 13.4209 41.1553 13.4209ZM28.0019 36.4356C30.4542 36.4356 32.7642 35.5622 34.5072 33.9759C36.2409 32.398 37.1882 30.3223 37.1672 28.1432C37.1695 25.9324 36.2129 23.8462 34.4745 22.2746C32.7385 20.7051 30.4402 19.8424 28.0019 19.8424H27.9972C27.3252 19.8424 26.6532 19.9078 26.0022 20.0428C25.0595 20.2305 24.4645 21.0785 24.6769 21.9307C24.8869 22.7809 25.8202 23.3251 26.7652 23.1268C27.1689 23.0467 27.5819 23.0066 27.9995 23.0066H28.0019C29.5069 23.0066 30.9255 23.5424 31.9989 24.5128C33.0769 25.4873 33.6695 26.7741 33.6672 28.1537C33.6789 29.4954 33.0955 30.7695 32.0245 31.7462C30.9442 32.7292 29.5139 33.2713 28.0019 33.2713H27.9972C26.4852 33.2692 25.0642 32.7334 23.9932 31.7609C22.9199 30.7885 22.3319 29.4996 22.3342 28.1284C22.3342 27.6031 22.4252 27.0821 22.6025 26.5822C22.8942 25.751 22.3855 24.8608 21.4639 24.595C20.5375 24.3334 19.5575 24.7891 19.2659 25.6223C18.9812 26.4345 18.8342 27.2741 18.8342 28.1263C18.8295 30.337 19.7815 32.4233 21.5129 33.9949C23.2442 35.5664 25.5449 36.4334 27.9925 36.4356H28.0019ZM41.9536 22.7053C41.7902 22.853 41.6036 22.9796 41.3936 23.064C41.1836 23.1483 40.9502 23.1715 40.7169 23.1715C40.2736 23.1715 39.8302 23.0218 39.4802 22.7053C39.1536 22.41 38.9669 22.0092 38.9669 21.5894C38.9669 21.3975 39.0136 21.1865 39.1069 20.9988C39.2002 20.8089 39.3402 20.6191 39.4802 20.4714C39.6436 20.3427 39.8536 20.2162 40.0636 20.1318C40.4836 19.9841 40.9736 19.9841 41.3936 20.1318C41.6036 20.2162 41.8136 20.3427 41.9536 20.4714C42.1169 20.6191 42.2569 20.8089 42.3502 20.9988C42.4436 21.1865 42.4902 21.3975 42.4902 21.5894C42.4902 22.0092 42.3036 22.41 41.9536 22.7053Z" fill="black"/>
+            </svg>
+          </div>
+          <h3 class="how-works-block-title">Post on Instagram</h3>
+          <p class="how-works-block-data">Take photos enjoying your OwlCrate box and post on Instagram. Don't forget to tag us in every post @owlcrate.</p>
+        </div>
+      </div>
+      <div class="column-4">
+        <div class="how-works-wrapper">
+          <div class="icon-wrapper">
+            <svg class="how-works-icon" width="56" height="51" viewBox="0 0 56 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M40.8284 46.2874C40.5414 46.2937 40.2568 46.2283 40.0071 46.0974L28.0184 40.3831L17.4624 45.5272C15.7404 46.3719 13.5844 45.7933 12.6511 44.2327C12.6394 44.2137 12.6278 44.1947 12.6161 44.1736C12.2498 43.5211 12.1214 42.7841 12.2474 42.0619L14.3008 31.0937L5.71877 23.2296C4.31644 21.9204 4.31644 19.8382 5.71877 18.5269C6.26477 18.0074 6.98811 17.6716 7.77211 17.5745L19.5391 15.9569L24.7728 6.0889C25.5871 4.484 27.6848 3.77869 29.4604 4.51568C30.2304 4.83455 30.8464 5.39415 31.1988 6.0889L36.4558 15.9907L48.2624 17.6273C49.2168 17.7561 50.0731 18.2333 50.6331 18.945C51.6784 20.3049 51.5198 22.1421 50.2551 23.3395L41.7128 31.1105L42.9028 37.0212C43.0684 37.9081 42.4221 38.7549 41.4444 38.9218C40.4831 39.078 39.5638 38.4994 39.3911 37.6273L38.1801 31.7166C37.9771 30.6333 38.3574 29.5268 39.2068 28.7433L47.7701 20.9173L35.9634 19.2596C34.7664 19.0844 33.7514 18.3664 33.2731 17.3591L28.0184 7.49952L22.6984 17.5154C22.2201 18.5248 21.2051 19.2406 20.0081 19.4159L8.24111 21.0335L16.7414 28.8468C17.5884 29.6176 17.9688 30.7093 17.7681 31.78L15.7148 42.7482L26.2684 37.6252C27.3138 37.093 28.5901 37.093 29.6354 37.6252L41.6078 43.3395C42.3381 43.7006 42.7091 44.4629 42.5108 45.1957C42.3288 45.9284 41.6148 46.45 40.7864 46.4627L40.8284 46.2874Z" fill="black"/>
+            </svg>
+          </div>
+          <h3 class="how-works-block-title">Get Rewarded</h3>
+          <p class="how-works-block-data">Get rewarded at the end of the month with a surprise gift!</p>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+<section class="post-rule-section">
+  <div class="custom-container">
+    <div class="custom-row">
+      <div class="column-6">
+        <div class="post-rule-column-wrapper post-rule-image-wrapper">
+            <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/post-rule-image_1024x1024_f5016f98-57bc-440f-a89c-0f76de3ca1d3_1024x1024.webp" class="post-rule-image" />
+        </div>
+      </div>
+      <div class="column-6 align-self-center">
+        <div class="post-rule-column-wrapper">
+          <h2 class="post-rule-main-heading">POST RULES</h2>
+          <ul class="post-rule-list">
+            <li class="post-rule-data">Posts must be made from accounts that are public.</li>
+            <li class="post-rule-data">Posts must visibly display @owlcrate.</li>
+            <li class="post-rule-data">Maximum 5 tags per post (not counting people).</li>
+            <li class="post-rule-data">Posts must not be made from accounts with no previous posts.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="tc-section">
+  <div class="custom-container">
+    <div class="custom-row">
+      <div class="column-6 align-self-center">
+        <div class="tc-column-wrapper">
+          <h2 class="tc-main-heading">TERMS & CONDITIONS</h2>
+          <ul class="tc-list">
+            <li class="tc-data">To be eligible for rewards, you must sign up on this page and follow the post rules above.</li>
+            <li class="tc-data">OwlCrate may repurpose reward member photos/videos for marketing purposes.</li>
+            <li class="tc-data">OwlCrate may update the rewards program at any time.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="column-6">
+        <div class="tc-column-wrapper tc-image-wrapper">
+            <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/tc-image_1024x1024_c5c6fb12-85fc-45b1-97b5-d12822554cd6_1024x1024.webp" class="tc-image" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="insta-post-section">
+  <div class="insta-slider" data-length="5">
+    <div class="insta-slide is-selected">
+      <div class="insta-image-wrapper">
+        <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/c39f3695f8f504d983bac09f87062b94_1024x1024_6a4ca505-4412-462b-85d9-e663bbd92248_1024x1024.png?v=1650265808" class="insta-post" />
+      </div>
+    </div>
+    <div class="insta-slide is-next">
+      <div class="insta-image-wrapper">
+        <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/3dc3db84e5cb22798b854e9cee42b4a6_1024x1024_11b174f2-3279-4c44-8516-c65e518c4c60_1024x1024.png?v=1650265830" class="insta-post" />
+      </div>
+    </div>
+    <div class="insta-slide">
+      <div class="insta-image-wrapper">
+        <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/a3892bee6b9fdedcc6d5be4ff664ceb6_1024x1024_c9cfa346-d33a-4f1e-92e3-f2e803136e5a_1024x1024.png?v=1650265855" class="insta-post" />
+      </div>
+    </div>
+    <div class="insta-slide">
+      <div class="insta-image-wrapper">
+        <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/1824276109c01ea56dbb156988812c8c_1024x1024_2ed50153-ecc7-4ebb-9a64-537db54f6bc7_1024x1024.png?v=1650265911" class="insta-post" />
+      </div>
+    </div>
+    <div class="insta-slide is-prev">
+      <div class="insta-image-wrapper">
+        <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/f9b38bc3eb5ec0e76369d11c3780f3cc_1024x1024_55d164f4-54c8-47ca-abaf-ac0a6ad536d0_1024x1024.png?v=1650265934" class="insta-post" />
+      </div>
+    </div>
+  </div>
+</section>
+<section class="js-faq-section">
+  <h2 class="js-faq-heading text-center">HAVE ANY QUESTIONS?</h2>
+  <div class="custom-container">
+    <div class="custom-row">
+      <div class="column-12">
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-btn">
+              <span class="accordion-caption">How do I get rewarded?</span>
+              <span class="accordion-icon">
+                <svg class="arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><g transform="translate(128 128) scale(0.72 0.72)" style=""><g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(-175.05 -175.05000000000004) scale(3.89 3.89)" >
+                  <path d="M 86.5 41.5 h -38 v -38 C 48.5 1.567 46.933 0 45 0 c -1.933 0 -3.5 1.567 -3.5 3.5 v 38 h -38 C 1.567 41.5 0 43.067 0 45 s 1.567 3.5 3.5 3.5 h 38 v 38 c 0 1.933 1.567 3.5 3.5 3.5 c 1.933 0 3.5 -1.567 3.5 -3.5 v -38 h 38 c 1.933 0 3.5 -1.567 3.5 -3.5 S 88.433 41.5 86.5 41.5 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(29,29,27); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" /></g></g>
+                </svg>
+              </span>
+            </button>
+            <div class="accordion-content">
+              <p class="accordion-content-data">Check your email! Reward notifications will be sent to the email you register with.</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-btn">
+              <span class="accordion-caption">What are my reward credits eligible towards?</span>
+              <span class="accordion-icon">
+                <svg class="arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><g transform="translate(128 128) scale(0.72 0.72)" style=""><g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(-175.05 -175.05000000000004) scale(3.89 3.89)" >
+                  <path d="M 86.5 41.5 h -38 v -38 C 48.5 1.567 46.933 0 45 0 c -1.933 0 -3.5 1.567 -3.5 3.5 v 38 h -38 C 1.567 41.5 0 43.067 0 45 s 1.567 3.5 3.5 3.5 h 38 v 38 c 0 1.933 1.567 3.5 3.5 3.5 c 1.933 0 3.5 -1.567 3.5 -3.5 v -38 h 38 c 1.933 0 3.5 -1.567 3.5 -3.5 S 88.433 41.5 86.5 41.5 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(29,29,27); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" /></g></g>
+                </svg>
+              </span>
+            </button>
+            <div class="accordion-content">
+              <p class="accordion-content-data">Your reward credits/rewards are eligible towards online purchases with OwlCrate.</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-btn">
+              <span class="accordion-caption">When should I expect rewards?</span>
+              <span class="accordion-icon">
+                <svg class="arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><g transform="translate(128 128) scale(0.72 0.72)" style=""><g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(-175.05 -175.05000000000004) scale(3.89 3.89)" >
+                  <path d="M 86.5 41.5 h -38 v -38 C 48.5 1.567 46.933 0 45 0 c -1.933 0 -3.5 1.567 -3.5 3.5 v 38 h -38 C 1.567 41.5 0 43.067 0 45 s 1.567 3.5 3.5 3.5 h 38 v 38 c 0 1.933 1.567 3.5 3.5 3.5 c 1.933 0 3.5 -1.567 3.5 -3.5 v -38 h 38 c 1.933 0 3.5 -1.567 3.5 -3.5 S 88.433 41.5 86.5 41.5 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(29,29,27); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" /></g></g>
+                </svg>
+              </span>
+            </button>
+            <div class="accordion-content">
+              <p class="accordion-content-data">You will receive an email at the end of each month summarizing your rewards!</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-btn">
+              <span class="accordion-caption">How many rewards can I earn in a month?</span>
+              <span class="accordion-icon">
+                <svg class="arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><g transform="translate(128 128) scale(0.72 0.72)" style=""><g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(-175.05 -175.05000000000004) scale(3.89 3.89)" >
+                  <path d="M 86.5 41.5 h -38 v -38 C 48.5 1.567 46.933 0 45 0 c -1.933 0 -3.5 1.567 -3.5 3.5 v 38 h -38 C 1.567 41.5 0 43.067 0 45 s 1.567 3.5 3.5 3.5 h 38 v 38 c 0 1.933 1.567 3.5 3.5 3.5 c 1.933 0 3.5 -1.567 3.5 -3.5 v -38 h 38 c 1.933 0 3.5 -1.567 3.5 -3.5 S 88.433 41.5 86.5 41.5 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(29,29,27); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" /></g></g>
+                </svg>
+              </span>
+            </button>
+            <div class="accordion-content">
+              <p class="accordion-content-data">You will earn one reward per month, the highest reward you qualify for, plus any bonus rewards (when applicable).</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-btn">
+              <span class="accordion-caption">Can I get rewarded on any other social platforms?</span>
+              <span class="accordion-icon">
+                <svg class="arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><g transform="translate(128 128) scale(0.72 0.72)" style=""><g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(-175.05 -175.05000000000004) scale(3.89 3.89)" >
+                  <path d="M 86.5 41.5 h -38 v -38 C 48.5 1.567 46.933 0 45 0 c -1.933 0 -3.5 1.567 -3.5 3.5 v 38 h -38 C 1.567 41.5 0 43.067 0 45 s 1.567 3.5 3.5 3.5 h 38 v 38 c 0 1.933 1.567 3.5 3.5 3.5 c 1.933 0 3.5 -1.567 3.5 -3.5 v -38 h 38 c 1.933 0 3.5 -1.567 3.5 -3.5 S 88.433 41.5 86.5 41.5 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(29,29,27); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" /></g></g>
+                </svg>
+              </span>
+            </button>
+            <div class="accordion-content">
+              <p class="accordion-content-data">While you are more than welcome to share on other platforms, we are only offering rewards for Instagram at the moment.</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-btn">
+              <span class="accordion-caption">Are Instagram stories included? What about IGTV's and Reels?</span>
+              <span class="accordion-icon">
+                <svg class="arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><g transform="translate(128 128) scale(0.72 0.72)" style=""><g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(-175.05 -175.05000000000004) scale(3.89 3.89)" >
+                  <path d="M 86.5 41.5 h -38 v -38 C 48.5 1.567 46.933 0 45 0 c -1.933 0 -3.5 1.567 -3.5 3.5 v 38 h -38 C 1.567 41.5 0 43.067 0 45 s 1.567 3.5 3.5 3.5 h 38 v 38 c 0 1.933 1.567 3.5 3.5 3.5 c 1.933 0 3.5 -1.567 3.5 -3.5 v -38 h 38 c 1.933 0 3.5 -1.567 3.5 -3.5 S 88.433 41.5 86.5 41.5 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(29,29,27); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" /></g></g>
+                </svg>
+              </span>
+            </button>
+            <div class="accordion-content">
+              <p class="accordion-content-data">Only in-feed Instagram posts and stories are currently eligible for rewards.</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-btn">
+              <span class="accordion-caption">What if I didn't receive my reward?</span>
+              <span class="accordion-icon">
+                <svg class="arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><g transform="translate(128 128) scale(0.72 0.72)" style=""><g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(-175.05 -175.05000000000004) scale(3.89 3.89)" >
+                  <path d="M 86.5 41.5 h -38 v -38 C 48.5 1.567 46.933 0 45 0 c -1.933 0 -3.5 1.567 -3.5 3.5 v 38 h -38 C 1.567 41.5 0 43.067 0 45 s 1.567 3.5 3.5 3.5 h 38 v 38 c 0 1.933 1.567 3.5 3.5 3.5 c 1.933 0 3.5 -1.567 3.5 -3.5 v -38 h 38 c 1.933 0 3.5 -1.567 3.5 -3.5 S 88.433 41.5 86.5 41.5 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(29,29,27); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" /></g></g>
+                </svg>
+              </span>
+            </button>
+            <div class="accordion-content">
+              <p class="accordion-content-data">Please contact support@owlcrate.com and we can help you out!</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-btn">
+              <span class="accordion-caption">How do I ensure my post is valid?</span>
+              <span class="accordion-icon">
+                <svg class="arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><g transform="translate(128 128) scale(0.72 0.72)" style=""><g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(-175.05 -175.05000000000004) scale(3.89 3.89)" >
+                  <path d="M 86.5 41.5 h -38 v -38 C 48.5 1.567 46.933 0 45 0 c -1.933 0 -3.5 1.567 -3.5 3.5 v 38 h -38 C 1.567 41.5 0 43.067 0 45 s 1.567 3.5 3.5 3.5 h 38 v 38 c 0 1.933 1.567 3.5 3.5 3.5 c 1.933 0 3.5 -1.567 3.5 -3.5 v -38 h 38 c 1.933 0 3.5 -1.567 3.5 -3.5 S 88.433 41.5 86.5 41.5 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(29,29,27); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" /></g></g>
+                </svg>
+              </span>
+            </button>
+            <div class="accordion-content">
+              <p class="accordion-content-data">Ensure you are posting from a public account, tagging @owlcrate, and following the post guidelines!</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-btn">
+              <span class="accordion-caption">How do I get started?</span>
+              <span class="accordion-icon">
+                <svg class="arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><g transform="translate(128 128) scale(0.72 0.72)" style=""><g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(-175.05 -175.05000000000004) scale(3.89 3.89)" >
+                  <path d="M 86.5 41.5 h -38 v -38 C 48.5 1.567 46.933 0 45 0 c -1.933 0 -3.5 1.567 -3.5 3.5 v 38 h -38 C 1.567 41.5 0 43.067 0 45 s 1.567 3.5 3.5 3.5 h 38 v 38 c 0 1.933 1.567 3.5 3.5 3.5 c 1.933 0 3.5 -1.567 3.5 -3.5 v -38 h 38 c 1.933 0 3.5 -1.567 3.5 -3.5 S 88.433 41.5 86.5 41.5 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(29,29,27); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" /></g></g>
+                </svg>
+              </span>
+            </button>
+            <div class="accordion-content">
+              <p class="accordion-content-data">Once you have signed up just post and tag @owlcrate! Your posts will be automatically tracked. The more you post and tag @owlcrate, the more rewards you can earn!</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-btn">
+              <span class="accordion-caption">Can I earn rewards for posting about OwlCrate Jr?</span>
+              <span class="accordion-icon">
+                <svg class="arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><g transform="translate(128 128) scale(0.72 0.72)" style=""><g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(-175.05 -175.05000000000004) scale(3.89 3.89)" >
+                  <path d="M 86.5 41.5 h -38 v -38 C 48.5 1.567 46.933 0 45 0 c -1.933 0 -3.5 1.567 -3.5 3.5 v 38 h -38 C 1.567 41.5 0 43.067 0 45 s 1.567 3.5 3.5 3.5 h 38 v 38 c 0 1.933 1.567 3.5 3.5 3.5 c 1.933 0 3.5 -1.567 3.5 -3.5 v -38 h 38 c 1.933 0 3.5 -1.567 3.5 -3.5 S 88.433 41.5 86.5 41.5 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(29,29,27); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" /></g></g>
+                </svg>
+              </span>
+            </button>
+            <div class="accordion-content">
+              <p class="accordion-content-data">While we greatly appreciate your support of OwlCrate Jr, currently this program is only eligible for OwlCrate. We hope to expand in the future!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="custom-row">
+      <div class="column-12">
+        <div class="faq-join-wrapper text-center">
+          <div class="lc-signup-container" data-lc-button-text="JOIN NOW"
+               data-lc-button-text-color="#FFFFF"
+               data-lc-button-bg-color="#26bcb4">
+            <script type="text/javascript" src="https://pub.loudcrowd.com/launch.js?hid=cHJvZ3JhbV9ob3N0OjE1NQ"></script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+  $(document).ready (function () {
+    var flkty = new Flickity('.insta-slider', {
+      wrapAround: true,
+      pageDots: false,
+    });
+    flkty.on( 'change', function( index ) {
+      var length = $('.insta-slider').data('length');
+      var nextSlide = index + 1;
+      if ( index > 0 ) {
+        $(`.insta-slider .insta-slide:nth-child(${index})`).addClass('is-prev').siblings('.insta-slide').removeClass('is-prev');
+      } else {
+        $(`.insta-slider .insta-slide:nth-child(${length})`).addClass('is-prev').siblings('.insta-slide').removeClass('is-prev');
+      }
+      if ( nextSlide < length ) {
+        $(`.insta-slider .insta-slide:nth-child(${nextSlide + 1})`).addClass('is-next').siblings('.insta-slide').removeClass('is-next');
+      } else {
+        $('.insta-slider .insta-slide:nth-child(1)').addClass('is-next').siblings('.insta-slide').removeClass('is-next');
+      }
+    });
+  });
+
+  $(document).ready ( function () {
+    const accItems = document.querySelectorAll(".accordion-item");
+    accItems.forEach( (acc) => acc.addEventListener("click", toggleAcc) );
+    function toggleAcc () {
+      accItems.forEach((item) => item != this ? item.classList.remove("accordion-item-active") : null );
+      if (this.classList != "accordion-item-active") {
+        this.classList.toggle("accordion-item-active");
+      }
+    }
+  });
+</script>
+
+
+

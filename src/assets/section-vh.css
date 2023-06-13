@@ -1,0 +1,139 @@
+.vh__wrapper {
+    background-color: #EBFBFA;
+    padding-top: 0;
+}
+
+.vh__video-wrapper {
+    position: relative;
+    border-radius: 30px;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.vh__play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    display: flex;
+    transition: all .15s linear;
+}
+
+.vh__play-icon:hover {
+    opacity: .7;
+}
+
+.vh__play-icon svg {
+    width: 129px;
+    height: 129px;
+}
+
+.vh__image {
+    max-width: 100%;
+    object-fit: cover;
+    height: 289px;
+    object-position: right;
+}
+
+.vh__play-icon {
+    cursor: pointer;
+}
+
+.vh__inner {
+    position: relative;
+}
+
+.vh__book {
+    display: none;
+}
+
+.vh__books {
+    align-items: center;
+    justify-content: center;
+    margin-bottom: -60px;
+}
+
+.vh__books > img {
+    object-fit: contain;
+    height: auto;
+    max-width: 100%;
+    width: 318px;
+}
+
+
+
+@media only screen and (min-width: 1280px) {
+    .vh__video-wrapper {
+        border-radius: 50px;
+    }
+
+    .vh__play-icon svg {
+        width: auto;
+        height: auto;
+    }
+
+    .vh__wrapper {
+        padding-top: 255px;
+    }
+
+    .vh__image {
+        height: auto;
+        object-position: center;
+    }
+    
+    .vh__book {
+        position: absolute;
+        transition: all .15s linear;
+        left: 50%;
+        top: -63.5%;
+        background-color: #EBFBFA;
+        display: block;
+    }
+
+    .vh__book-1 {
+        z-index: 3;
+        transform: translateX(-50%);
+    }
+
+    .vh__book-21 {
+        z-index: 2;
+        left: 38.5%;
+        transform: rotate(-16.99deg) translate(-50%, 0px);
+    }
+
+    .vh__book-22 {
+        z-index: 1;
+        transform: rotate(-33.96deg) translate(-50%, 19%);
+        left: 24.5%;
+    }
+
+    .vh__book-11 {
+        z-index: 2;
+        transform: rotate(33.48deg) translate(-50%, 30%);
+        left: 61.5%; 
+    }
+
+    .vh__book-12 {
+        z-index: 1;
+        transform: rotate(48.53deg) translate(-50%, 93%);
+        left: 83%;
+    }
+
+    .vh__wrapper:not(.focus) .vh__book {
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .vh__book {
+        top: -55.5%;
+    }
+}
+
+@media only screen and (min-width: 1650px) {
+    .vh__book {
+        top: -39.5%;
+    }
+}

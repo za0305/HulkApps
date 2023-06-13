@@ -1,0 +1,85 @@
+<section class="insta-post-section">
+  <div class="insta-slider" data-length="{{ section.blocks.size }}">
+    {% if section.blocks.size > 0 %}
+      {% for block in section.blocks %}
+        <div class="insta-slide{% if forloop.first %} is-selected{% endif %}{% if forloop.index == 2 %} is-next{% endif %}{% if forloop.last %} is-prev{% endif %}">
+          <div class="insta-image-wrapper">
+            {% if block.settings.insta_image != blank %}
+              <img
+                   data-sizes="auto"
+                   src="{{ block.settings.insta_image | img_url: 'original'}}"
+                   data-srcset="{{ block.settings.insta_image | img_url: '320x' }} 320w,
+                                {{ block.settings.insta_image | img_url: '580x' }} 580w,
+                                {{ block.settings.insta_image | img_url: '800x' }} 800w,
+                                {{ block.settings.insta_image | img_url: '1024x' }} 576w
+                                "
+                   class="insta-post" />
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'insta-post'}}
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      {% for i in  (1..6) %}
+        <div class="insta-slide">
+          <div class="insta-image-wrapper">
+            {{ 'image' | placeholder_svg_tag }}
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  $(document).ready (function () {
+    var flkty = new Flickity('.insta-slider', {
+      wrapAround: true,
+      pageDots: false,
+    });
+
+    flkty.on( 'change', function( index ) {
+      var length = $('.insta-slider').data('length');
+      var nextSlide = index + 1;
+      
+      if ( index > 0 ) {
+        $(`.insta-slider .insta-slide:nth-child(${index})`).addClass('is-prev').siblings('.insta-slide').removeClass('is-prev');
+      } else {
+        $(`.insta-slider .insta-slide:nth-child(${length})`).addClass('is-prev').siblings('.insta-slide').removeClass('is-prev');
+      }
+      
+      if ( nextSlide < length ) {
+        $(`.insta-slider .insta-slide:nth-child(${nextSlide + 1})`).addClass('is-next').siblings('.insta-slide').removeClass('is-next');
+      } else {
+        $('.insta-slider .insta-slide:nth-child(1)').addClass('is-next').siblings('.insta-slide').removeClass('is-next');
+      }
+    });
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Insta Post",
+    "settings": [],
+	"blocks": [
+      {
+        "type": "image",
+        "name": "Post Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "insta_image",
+            "label": "Insta Post Image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

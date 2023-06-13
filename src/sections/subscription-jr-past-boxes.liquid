@@ -1,0 +1,199 @@
+{%- liquid
+    assign title = section.settings.title
+    assign bg_color = section.settings.bg_color
+    assign button_url = section.settings.button_url
+    assign button_url_2 = section.settings.button_url_2
+    assign button_type = section.settings.button_type
+    assign button_type_2 = section.settings.button_type_2
+    assign button_label = section.settings.button_label
+    assign button_label_2 = section.settings.button_label_2
+%}
+
+{{ 'section-subscription-jr-past-boxes.css' | asset_url | stylesheet_tag }}
+
+<section id="section-{{ section.id }}" class="hiw__wrapper subscription-jr-past-boxes relative" {% if bg_color != blank %}style="background-color:{{ bg_color }}"{% endif %}>
+    <div class="container-wide">
+        {%- if title != blank -%}
+            <h2 class="section-title">{{ title }}</h2>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+            <div class="pb__boxes carousel">
+                {%- for block in section.blocks -%}
+                    {%- liquid
+                        assign image = block.settings.image
+                        assign title = block.settings.title | escape
+                        assign link = block.settings.link
+                    -%}
+                    {%- if image != blank
+                        and title != blank -%}
+                        <div class="pb__box">
+                            <div class="pb__box-img">
+                              <img src="{{ image | img_url: 'master' }}" alt="">
+                            </div>
+
+                            <h3 class="pb__box-title">{{ title }}</h3>
+
+                            <div class="pb__box-babs-books">Image by Babs Books</div>
+                        </div>
+                    {%- endif -%}
+                {%- endfor -%}
+            </div>
+        {%- endif -%}
+
+      <div class="flex justify-content-center subscription-jr-past-boxes__buttons">
+        <a href="{{ button_url }}" class="button button--{{ button_type }}">{{ button_label }}</a>
+        <a href="{{ button_url_2 }}" class="button button--{{ button_type_2 }}">{{ button_label_2 }}</a>
+      </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/gh/phucbm/flickity-responsive@latest/flickity-responsive.min.js"></script>
+<script>
+    $( document ).ready(function() {
+        function doFlickityCarousel() {
+            let $carousel = $('.subscription-jr-past-boxes:not(.blog) .carousel').flickity({
+                freeScroll: false,
+                wrapAround: true,
+                pageDots: false,
+                prevNextButtons: false,
+                autoPlay: true,
+                groupCells: '80%'
+            });
+            let isFlickity = true;
+
+            // Default state
+            if ( matchMedia('screen and (max-width: 1024px)').matches ) {
+                if ( !isFlickity ) {
+                    $carousel.flickity();
+                }
+            }
+
+            if ( matchMedia('screen and (min-width: 1025px)').matches ) {
+                if ( isFlickity ) {
+                    // destroy Flickity
+                    $carousel.flickity('destroy');
+                }
+            }
+            isFlickity = !isFlickity;
+        } doFlickityCarousel();
+
+        $(window).on('resize', function(){
+            doFlickityCarousel();
+        });
+    });
+</script>
+
+{% schema %}
+{
+	"name": "Past Boxes",
+	"settings":[
+		{
+			"type": "html",
+			"id": "title",
+			"label": "Title"
+		},
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "select",
+      "id": "button_type",
+      "label": "Button Type",
+      "options": [
+        {
+          "value": "white",
+          "label": "White"
+        },
+        {
+          "value": "green",
+          "label": "Green"
+        },
+        {
+          "value": "greendark",
+          "label": "Dark Green"
+        },
+        {
+          "value": "orange",
+          "label": "Orange"
+        }
+      ],
+      "default": "white"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_url_2",
+      "label": "Button URL"
+    },
+    {
+      "type": "select",
+      "id": "button_type_2",
+      "label": "Button Type",
+      "options": [
+        {
+          "value": "white",
+          "label": "White"
+        },
+        {
+          "value": "green",
+          "label": "Green"
+        },
+        {
+          "value": "greendark",
+          "label": "Dark Green"
+        },
+        {
+          "value": "orange",
+          "label": "Orange"
+        }
+      ],
+      "default": "white"
+    },
+    {
+			"type": "color",
+			"id": "bg_color",
+			"label": "Background color"
+		}
+	],
+	"blocks": [
+    {
+      "type": "box",
+      "name": "Box",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Title"
+        },
+        {
+          "id": "link",
+          "type": "url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+	"presets": [
+		{
+			"name": "Past Boxes"
+		}
+	]
+}
+{% endschema %}

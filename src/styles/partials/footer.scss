@@ -1,0 +1,78 @@
+.site-footer {
+  .footer-top {
+    .logo {
+      max-height: 26px;
+    }
+
+    ul.articles-list {
+      padding-left: 10px;
+
+      li {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid transparentize($gray-500, 0.9);
+
+        &:last-child {
+          margin-bottom: 0;
+          padding-bottom: 0;
+          border-style: none;
+        }
+
+        &::before {
+          font-family: "Ionicons";
+          content: "\f287";
+          font-size: 0.6rem;
+          float: left;
+          margin-top: 0.4rem;
+          margin-left: -0.6rem;
+        }
+      }
+    }
+
+    ul.social-links {
+      a {
+        display: inline-block;
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  .footer-bottom {
+    padding: 0.32rem 0;
+    a {
+      transition: $transition-base;
+      opacity: 0.5;
+    }
+
+    ul.payment-icons {
+      font-size: 1.3rem;
+    }
+  }
+}
+.footer_newsletter{
+  margin: auto;
+  // max-width: 330px;
+  .contact-form{
+    @include media-breakpoint-down(sm) {
+      max-width: 250px;
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
+}
+.footer-navigation{
+  li{
+    &:not(:last-child){
+      margin-bottom: 0.8rem;
+    }
+    a{
+      @include media-breakpoint-down(sm) {
+        font-size: 1rem !important;
+      }
+    }
+  }
+}
+.goodreads-icon{
+  width: 1rem;
+  height: 1rem;
+}

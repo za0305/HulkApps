@@ -1,0 +1,258 @@
+{%- assign collection_grid_type = section.settings.collection_grid_type -%}
+
+<section class="section-content pt-0" data-section-id="{{ section.id }}" data-grid-type="{{ collection_grid_type }}">
+    <div class="{% if section.settings.fluid_layout %}container-fluid px-0{% else %}container{% endif %}">
+
+      <div class="row no-gutters">
+          <div class="col-12 text-center">
+
+              {%- if section.settings.heading_txt != '' -%}
+                <h2 class="section-title mb-4">{{ section.settings.heading_txt | escape }}</h2>
+              {%- endif -%}
+
+              {%- if section.settings.lead_txt != '' -%}
+                <p class="lead px-lg-6">
+                    {{- section.settings.lead_txt -}}
+                </p>
+              {%- endif -%}
+
+          </div>
+      </div>
+
+      {% comment %}
+        Loop through products in your Frontpage collection.
+        This collection is created by default, but you must add products to it.
+      {% endcomment %}
+
+        {%- assign collections_per_row = section.settings.grid_size -%}
+        {%- case collections_per_row -%}
+            {%- when '3' -%}
+                {%- assign grid_item_width = 'col-12 col-sm-6 col-md-3' -%}
+            {%- when '4' -%}
+                {%- assign grid_item_width = 'col-12 col-md-4' -%}
+            {%- when '6' -%}
+                {%- assign grid_item_width = 'col-12 col-md-6' -%}
+            {%- when '12' -%}
+                {%- assign grid_item_width = 'col-12' -%}
+        {%- endcase -%}
+        
+        {%- if collection_grid_type == 'collage' -%}
+
+          <div class="row no-gutters justify-content-center index-collection">
+            {%- for block in section.blocks -%}
+              {%- if block.settings.heading != blank and block.settings.image -%}
+                <div class="{{ grid_item_width }}">
+                  <a href="{{ block.settings.home_featured_collection }}" class="product-img position-relative bg-img collection-item">
+                      <img
+                        data-sizes="auto"
+                        src="{{ block.settings.image | img_url: 'pico'}}"
+                        data-srcset="{{ block.settings.image | img_url: '450x' }} 576w"
+                        class="lazyload w-100 h-100" alt="{{ block.settings.heading | escape }}" />
+                    {%- if block.settings.enable_overlay -%}
+                      <div class="overlay" style="background-color: {{ block.settings.overlay_bg_color }}!important; opacity: {{block.settings.overlay_opacity}}!important; {% unless block.settings.overlay_pattern_img == 'none' %}background-image: url({{ block.settings.overlay_pattern_img | append: '.png' | asset_url }}){% endunless %} "></div>
+                    {%- endif -%}
+                    <div class="d-flex align-items-center justify-content-center collection-text p-2">
+                      <div class="text-center">
+                        {%- if block.settings.enable_shop -%}
+                          <h6 class="text-white mb-0 mb-1">Shop</h6>
+                        {%- endif -%}
+                        <h3 class="text-white mb-0">{{ block.settings.heading }}</h6>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+
+        {%- else -%}
+
+          <div class="row justify-content-center">
+            {%- for product in collections[section.settings.home_featured_collection].products limit: 8 -%}
+              <div class="col-sm-6 col-lg-3 my-3 d-flex align-items-stretch justify-content-around">
+                {%- include 'card-product-style-generic' -%}
+              </div>
+            {%- endfor -%}
+          </div>
+
+        {%- endif -%}
+
+    </div>
+</section>
+
+
+
+{% schema %}
+  {
+    "name": "Featured Collection",
+    "class": "index-featured-collection",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "fluid_layout",
+        "label": "Full Width Layout?",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "grid_size",
+        "label": "Grid Size",
+        "options": [{
+            "value": "12",
+            "label": "1 Column"
+          },
+          {
+            "value": "6",
+            "label": "2 Columns"
+          },
+          {
+            "value": "4",
+            "label": "3 Columns"
+          },
+          {
+            "value": "3",
+            "label": "4 Columns"
+          }
+        ],
+        "default": "4"
+      },
+      {
+        "type": "select",
+        "id": "collection_grid_type",
+        "label": "Grid Type",
+        "options": [
+          {
+            "value": "collage",
+            "label": "Collage"
+          },
+          {
+            "value": "grid",
+            "label": "Grid"
+          }
+        ],
+        "default": "collage"
+      },
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "text",
+        "id": "heading_txt",
+        "label": "Heading Text",
+        "default": "Featured Collection"
+      },
+      {
+        "type": "textarea",
+        "id": "lead_txt",
+        "label": "Lead Text"
+      }
+    ],
+    "presets": [{
+      "name": "Featured Collection",
+      "category": "Collection"
+    }],
+    "blocks": [
+        {
+        "type": "content",
+        "name": "Feature Block",
+        "settings": [
+          {
+              "type": "header",
+              "content": "Collection"
+          },
+          {
+              "type": "checkbox", 
+              "id": "enable_shop",
+              "label": "Shop Now Enabled?",
+              "default": false
+          },
+          {
+              "type": "url",
+              "id": "home_featured_collection",
+              "label": "Select Collection"
+          },
+          {
+              "type":"image_picker",
+              "id":"image",
+              "label":"Change Images" 
+          },
+          {
+            "type": "header",
+            "content": "Overlay"
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_overlay",
+            "label": "Enabled?",
+            "default": true
+          },
+          {
+            "type": "color",
+            "id": "overlay_bg_color",
+            "label": "Overlay Background Color",
+            "default": "#000000"
+          },
+          {
+            "type": "range",
+            "id": "overlay_opacity",
+            "label": "Overlay Opacity",
+            "min": 0.1,
+            "max": 1,
+            "step": 0.1,
+            "default": 0.5
+          },
+          {
+            "type": "select",
+            "id": "overlay_pattern_img",
+            "label": "Overlay Pattern Image",
+            "options": [
+              {
+                "value": "none",
+                "label": "None"
+              },
+              {
+                "value": "overlay-pattern-1",
+                "label": "Pattern 1"
+              },
+              {
+                "value": "overlay-pattern-2",
+                "label": "Pattern 2"
+              },
+              {
+                "value": "overlay-pattern-3",
+                "label": "Pattern 3"
+              },
+              {
+                "value": "overlay-pattern-4",
+                "label": "Pattern 4"
+              },
+              {
+                "value": "overlay-pattern-5",
+                "label": "Pattern 5"
+              },
+              {
+                "value": "overlay-pattern-6",
+                "label": "Pattern 6"
+              },
+              {
+                "value": "overlay-pattern-7",
+                "label": "Pattern 7"
+              }
+            ],
+            "default": "none"
+          },
+          {
+              "type": "text",
+              "id": "heading",
+              "label": "Heading"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

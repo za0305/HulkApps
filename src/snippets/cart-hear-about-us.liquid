@@ -1,0 +1,37 @@
+{% assign optionsArray = section.settings.cart_hear_about_us | split: ',' %}
+<div class="cart_hear_about d-flex px-3">
+    <div class="cart_hear_about_main position-relative">
+        <p class="mb-1">{{ section.settings.cart_hear_about_us_title }}</p>
+        <select v-model="hearAboutUs.value" class="form-control font-base ls-base" :class="hearAboutUs.errorSelect ? 'error' : ''" id="how-did-you-hear-about-us" name="attributes[how-did-you-hear-about-us]" style="display:none;">
+            {% for options_str in optionsArray %}
+                {% assign option = options_str | strip %}
+                <option value="{{ option }}"{% if cart.attributes.how-did-you-hear-about-us == option %} selected{% endif %}>{{ option }}</option>
+            {% endfor %}
+            <option value="Other"{% if cart.attributes.how-did-you-hear-about-us == "Other" %} selected{% endif %}>Other</option>
+        </select>
+
+        <div class="how-did-you-hear-about-us_input form-control font-base ls-base" :class="hearAboutUs.openSelect ? 'open' : ''" @click="hearAboutUs.openSelect = !hearAboutUs.openSelect, hearAboutUs.errorSelect = false" v-html="hearAboutUs.value == '' ? 'Please make a selection' : hearAboutUs.value"></div>
+
+        <div class="how-did-you-hear-about-us_window" :style="'height: 0;max-height: 0'">
+            <div class="how-did-you-hear-about-us_wrap" :class="hearAboutUs.openSelect ? 'open' : ''">
+                <div v-if="hearAboutUs.openSelect" class="how-did-you-hear-about-us_select">
+                    <p class="how-did-you-hear-about-us_option_main" v-html="hearAboutUs.value == '' ? 'Please make a selection' : hearAboutUs.value" @click="hearAboutUs.openSelect = false"></p>
+                    <div class="select_inner">
+                        {% for options_str in optionsArray %}
+                            {% assign option = options_str | strip %}
+                            <p class="how-did-you-hear-about-us_option" @click="hearAboutUs.value = '{{ option }}',hearAboutUs.openSelect = false,_validateCartHearAboutUsInputs('select')">{{ option }}</p>
+                        {% endfor %}
+                        <p class="how-did-you-hear-about-us_option" @click="hearAboutUs.value = 'Other', hearAboutUs.openSelect = false,_validateCartHearAboutUsInputs('select')">Other</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span v-if="hearAboutUs.errorSelect" id="how-did-you-hear-about-us--error">{{ section.settings.cart_hear_about_us_error }}</span>
+    </div>
+
+    <div v-if="hearAboutUs.value == 'Other'" id="otherFormWrapper" class="cart_hear_about_other mb-0 ml-0 ml-sm-3 position-relative">
+        <p class="my-0 mr-2 mb-1 display-block">Other</p>
+        <input class="form-control font-base ls-base" v-model="hearAboutUs.value2" @input="_validateCartHearAboutUsInputs('input')" placeholder="Text your source..." id="how-did-you-hear-about-us-other" type="text" name="attributes[how-did-you-hear-about-us-other]" :class="hearAboutUs.errorInput ? 'error' : ''" value=""/>
+        <span v-if="hearAboutUs.errorInput" id="how-did-you-hear-about-us-other--error" >{{ section.settings.cart_hear_about_us_error_other }}</span>
+    </div>
+</div>

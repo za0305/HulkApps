@@ -1,0 +1,71 @@
+{{ 'section-cta.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign title = section.settings.title | escape
+  assign subtitle = section.settings.subtitle | escape
+  assign planType = section.settings.planType
+  assign button_label = section.settings.button_label | escape
+-%}
+
+{%- if title != blank -%}
+  <section id="{{ section.id }}">
+
+    <div class="cta__wrapper">
+      {%- render 'cta-icon-left' -%}
+      {%- render 'cta-icon-right' -%}
+      <div class="container-wide cta__inner">
+        <h2 class="section-title">{{ title }}</h2>
+        {%- if subtitle != blank -%}
+          <p class="cta__subtitle">{{ subtitle }}</p>
+        {%- endif -%}
+        {%- if button_label != blank
+        and planType != blank -%}
+          <div class="cta__btnWrapper">
+            {% if settings.adult_soldout %}
+              <a href="#" @click.prevent="_soldoutProduct('plan_adult', 'type-normal')" class="cta__btn">{{ button_label }}</a>
+            {% else %}
+              <a href="#" @click.prevent="_chooseProductOnPage('{{ planType }}', 2, 'type-normal')" class="cta__btn">{{ button_label }}</a>
+            {% endif %}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+  </section>
+{%- endif -%}
+
+
+{% schema %}
+{
+  "name": "CTA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "planType",
+      "label": "Plan Type",
+      "default": "plan_adult"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CTA",
+      "category": "Content"
+    }
+  ]
+}
+{% endschema %}

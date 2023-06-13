@@ -1,0 +1,447 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-subscription-jr",
+      "settings": {
+        "image": "shopify:\/\/shop_images\/main-image.png",
+        "image_mobile": "shopify:\/\/shop_images\/sjr-main-banner-mobile.png",
+        "title": "A Book Subscription For Kids",
+        "subtitle": "Monthly Bookish Fun Delivered To Your Doorstep!",
+        "subtitle_2": "",
+        "btn_txt": "join us!",
+        "btn_type": "greendark",
+        "page_link": "shopify:\/\/pages\/subscription-plan"
+      }
+    },
+    "2cbe126c-f555-45cd-ad3a-fef7bc203a98": {
+      "type": "subscription-jr-love-of-reading",
+      "blocks": {
+        "template--15784745697455__2cbe126c-f555-45cd-ad3a-fef7bc203a98-1667493370a73ef883-0": {
+          "type": "text",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/lr-img-1.png",
+            "image_shadow": "shopify:\/\/shop_images\/lr-img-bg-1.png",
+            "heading": "Explore New Stories",
+            "text": "<p>Whether reading alone or as a family, OwlCrate Jr brings your reader a brand new middle grade novel and unforgettable characters every month, perfect for ages 8-12.<\/p>",
+            "image_bg": "shopify:\/\/shop_images\/lrt-img-bg-1.png"
+          }
+        },
+        "6994bcc6-52bd-47c1-9f98-40dcae1490e4": {
+          "type": "text",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/lr-img-2.png",
+            "image_shadow": "shopify:\/\/shop_images\/lr-img-bg-2.png",
+            "heading": "Engage Reluctant Readers",
+            "text": "<p>Encourage kids at any step in their reading journey to pick up a book with an exciting box full of interactive and engaging goodies. Great for seasoned bookworms too!<\/p>",
+            "image_bg": "shopify:\/\/shop_images\/lrt-img-bg-2.png"
+          }
+        },
+        "5793f257-271e-4065-8050-6780930d0ff0": {
+          "type": "text",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/lr-img-3.png",
+            "image_shadow": "shopify:\/\/shop_images\/lr-img-bg-3.png",
+            "heading": "Go Beyond The Book",
+            "text": "<p>Every box features a new theme inspired by the book, with 4-6 fun items and activities to encourage curiosity, creativity, and imagination<\/p>",
+            "image_bg": "shopify:\/\/shop_images\/lrt-img-bg-3.png"
+          }
+        },
+        "e8b0dfd0-af92-407a-9b07-764d8cf71e93": {
+          "type": "text",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/lr-img-4.png",
+            "image_shadow": "shopify:\/\/shop_images\/lr-img-bg-4.png",
+            "heading": "Low-Tech Fun",
+            "text": "<p>We all need a break from screens sometimes! OwlCrate Jr supplies everything needed to read and relax away from the computer.<\/p>",
+            "image_bg": "shopify:\/\/shop_images\/lrt-img-bg-4.png"
+          }
+        }
+      },
+      "block_order": [
+        "template--15784745697455__2cbe126c-f555-45cd-ad3a-fef7bc203a98-1667493370a73ef883-0",
+        "6994bcc6-52bd-47c1-9f98-40dcae1490e4",
+        "5793f257-271e-4065-8050-6780930d0ff0",
+        "e8b0dfd0-af92-407a-9b07-764d8cf71e93"
+      ],
+      "settings": {
+        "color": "",
+        "heading": "Grow A Love Of Reading,<br><span>One Box At A Time<\/span>",
+        "button_label": "join now",
+        "button_url": "shopify:\/\/pages\/subscription-plan",
+        "button_type": "greendark"
+      }
+    },
+    "9340efba-da99-4187-af27-06e8b18cd240": {
+      "type": "subscription-jr-what-to-expect",
+      "blocks": {
+        "template--15784745697455__9340efba-da99-4187-af27-06e8b18cd240-16675120635ba0b884-0": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Fun and unique items based on the theme of the month!<\/p>"
+          }
+        },
+        "10ea2d28-2e0f-4dbd-bc64-fd29ab5fd95d": {
+          "type": "text",
+          "settings": {
+            "text": "<p>A brand new hardcover middle grade novel, featuring a signed bookplate and an exclusive letter from the author!<\/p>"
+          }
+        },
+        "a5c8cb40-ea98-4dc2-9a1a-40579c232bdd": {
+          "type": "text",
+          "settings": {
+            "text": "<p>A second book, activity, or game in every box!<\/p>"
+          }
+        },
+        "650ada6b-725f-49ec-9a9d-a0bef04a7c4f": {
+          "type": "text",
+          "settings": {
+            "text": "<p>A collectible character card, plus an online magazine with author interviews, creative activities, and more!<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--15784745697455__9340efba-da99-4187-af27-06e8b18cd240-16675120635ba0b884-0",
+        "10ea2d28-2e0f-4dbd-bc64-fd29ab5fd95d",
+        "a5c8cb40-ea98-4dc2-9a1a-40579c232bdd",
+        "650ada6b-725f-49ec-9a9d-a0bef04a7c4f"
+      ],
+      "settings": {
+        "color": "",
+        "heading": "What To Expect <span>In Every Box<\/span>",
+        "button_label": "subscribe now",
+        "button_url": "shopify:\/\/pages\/subscription-plan",
+        "button_type": "greendark",
+        "image_main": "shopify:\/\/shop_images\/Subscription_JR_Page2.png"
+      }
+    },
+    "c7f01e24-33fc-4395-b628-0e7a677041e0": {
+      "type": "subscription-jr-choose-your-plan",
+      "blocks": {
+        "10be67c1-069f-4d5f-bd1f-c6ba84a9f352": {
+          "type": "plan",
+          "settings": {
+            "product": "owlcrate-jr-monthly",
+            "label": ""
+          }
+        },
+        "14624767-4c60-4ed3-b3ed-6f0a0912b505": {
+          "type": "plan",
+          "settings": {
+            "product": "owlcrate-jr-3-month-prepay-1",
+            "label": "MOST POPULAR!"
+          }
+        },
+        "80ec26cc-1661-438d-9f3f-6733d93c1fba": {
+          "type": "plan",
+          "settings": {
+            "product": "owlcrate-jr-6-month-prepay",
+            "label": "BEST VALUE!"
+          }
+        }
+      },
+      "block_order": [
+        "10be67c1-069f-4d5f-bd1f-c6ba84a9f352",
+        "14624767-4c60-4ed3-b3ed-6f0a0912b505",
+        "80ec26cc-1661-438d-9f3f-6733d93c1fba"
+      ],
+      "settings": {
+        "heading": "Choose Your <span>Plan<\/span>",
+        "text": "<p>Subscribe to OwlCrate Jr on a <strong>Monthly, 3-Month, or 6-Month<\/strong> basis.<br\/> Don’t worry, you can change or cancel your plan online at any time.<\/p>",
+        "bg_color": "#ebfbfa"
+      }
+    },
+    "6697e2e2-9b3e-462c-88da-7db5bf4d06f2": {
+      "type": "subscription-jr-shipping-info",
+      "blocks": {
+        "template--15784745697455__6697e2e2-9b3e-462c-88da-7db5bf4d06f2-16675503650ba6dc7c-0": {
+          "type": "text",
+          "settings": {
+            "text": "<p>*Shipping is $8.99 per box within the US. For International shipping rates, please <a href=\"#\">Click Here<\/a>.<\/p>"
+          }
+        },
+        "a4d3c170-4d34-4064-89ca-8a292ee6e4e7": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Subscriptions auto-renew on the 1st of the month after term. Cancel anytime. Boxes typically ship between the 15th-20th of every month.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--15784745697455__6697e2e2-9b3e-462c-88da-7db5bf4d06f2-16675503650ba6dc7c-0",
+        "a4d3c170-4d34-4064-89ca-8a292ee6e4e7"
+      ],
+      "settings": {
+        "color": ""
+      }
+    },
+    "3f573c1a-3758-4531-aa3a-6abc6c4020a5": {
+      "type": "index-brand-logo",
+      "blocks": {
+        "4fc8c71d-5790-46fa-b4bb-07f0946f8303": {
+          "type": "content",
+          "settings": {
+            "logo_image": "shopify:\/\/shop_images\/TKSST_logo_solid_rainbow700_1.png",
+            "logo_url": ""
+          }
+        },
+        "54ad952a-32f5-4a81-a13b-fc1c3df48af2": {
+          "type": "content",
+          "settings": {
+            "logo_image": "shopify:\/\/shop_images\/Book-Riot-Logo_1.png",
+            "logo_url": ""
+          }
+        },
+        "0e03f140-767e-4fe7-bb44-a4792c4f77b5": {
+          "type": "content",
+          "settings": {
+            "logo_image": "shopify:\/\/shop_images\/RC_MSA_BADGE-COLOR-V2_1024x1024_89f46e5a-bb22-4643-b2b1-b18204bfe52f_1024x1024_1.png",
+            "logo_url": ""
+          }
+        },
+        "c2fce8b9-d590-4b89-b86d-4a6166246d47": {
+          "type": "content",
+          "settings": {
+            "logo_image": "shopify:\/\/shop_images\/PW_1.png",
+            "logo_url": ""
+          }
+        },
+        "8b1eb1c2-9ecf-4fca-a309-dbbf950d49ad": {
+          "type": "content",
+          "settings": {
+            "logo_image": "shopify:\/\/shop_images\/today-com-vector-logo_1.png",
+            "logo_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "4fc8c71d-5790-46fa-b4bb-07f0946f8303",
+        "54ad952a-32f5-4a81-a13b-fc1c3df48af2",
+        "0e03f140-767e-4fe7-bb44-a4792c4f77b5",
+        "c2fce8b9-d590-4b89-b86d-4a6166246d47",
+        "8b1eb1c2-9ecf-4fca-a309-dbbf950d49ad"
+      ],
+      "settings": {
+        "fluid_layout": false,
+        "heading_txt": "As Seen In"
+      }
+    },
+    "42d4b78c-6d37-4840-83a2-e785cce5f61f": {
+      "type": "subscription-jr-how-it-works",
+      "blocks": {
+        "5e9a78a5-909d-43f7-818a-51b612862a0d": {
+          "type": "step",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/img-1-jr.png",
+            "title": "Join The Club!",
+            "text": "<p>Pick your <strong>1, 3 or 6 month<\/strong> subscription<br\/> or gift plan! We'll ship you a<br\/> box a month until you say when.<\/p>"
+          }
+        },
+        "1297a0f6-08e4-4047-a16d-7ad31a994cfa": {
+          "type": "step",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/img-2-jr.png",
+            "title": "A New Theme Every Month",
+            "text": "<p>Each box has a brand new theme inspired by<br\/> our monthly middle grade book pick.<br\/> Themes never repeat!<\/p>"
+          }
+        },
+        "916c1085-3167-4285-a439-28e6f4817146": {
+          "type": "step",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/img-3-jr.png",
+            "title": "Enjoy The Box!",
+            "text": "<p>Snuggle up and read!<br\/> Boxes typically ship between<br\/> the 15th-20th of the month.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "5e9a78a5-909d-43f7-818a-51b612862a0d",
+        "1297a0f6-08e4-4047-a16d-7ad31a994cfa",
+        "916c1085-3167-4285-a439-28e6f4817146"
+      ],
+      "settings": {
+        "title": "How It <span>Works<\/span>",
+        "bg_color": ""
+      }
+    },
+    "3ce61cc1-30b8-43f1-9c13-4889188b7aaa": {
+      "type": "subscription-jr-theme",
+      "settings": {
+        "image": "shopify:\/\/shop_images\/Rectangle_57.png",
+        "date_picker": "12\/24\/2022",
+        "info": "Sales For This Box End In",
+        "title": "<h2>October Theme: <span>MISSION TO SPACE<\/span>\n<\/h2>",
+        "text": "<p>October's book is an incredible tale of exploration, bravery, and science from a Newbery Honor-winning author. This story will be perfect for fans of The Wild Robot, We Dream Of Space, The One And Only Ivan, and of course, all things outer space!<\/p>\n\n<p>Our subscriber edition will come with a signed bookplate, a special letter from the author, and the 10th in our collection of character cards by Andrew Kolb.<\/p>",
+        "links": "<p><a href=\"#\">For more info on this month's theme, Click Here!<\/a><\/p><p><a href=\"#\">Click here to find out this month's book!<\/a><\/p>",
+        "button_label": "subscribe now",
+        "button_url": "shopify:\/\/pages\/subscription-plan",
+        "button_type": "greendark",
+        "bg_color": ""
+      }
+    },
+    "2505646d-41a9-4a88-8bf3-c0982117777f": {
+      "type": "subscription-jr-past-boxes",
+      "blocks": {
+        "ecfbaa36-c2f0-4d14-a4cb-3a0de527b23f": {
+          "type": "box",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Rectangle_58.png",
+            "title": "MYTHICAL BEASTS",
+            "link": "shopify:\/\/products\/owlcrate-jr-mythical-beasts-box"
+          }
+        },
+        "729fccc1-6487-4918-ad9a-058bfc581a81": {
+          "type": "box",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Rectangle_59.png",
+            "title": "Campfire Stories",
+            "link": "#"
+          }
+        },
+        "02fae28b-d81c-4756-8b46-86088445b78d": {
+          "type": "box",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Rectangle_60.png",
+            "title": "MYTHICAL BEASTS",
+            "link": "shopify:\/\/products\/owlcrate-jr-mythical-beasts-box"
+          }
+        },
+        "896107e6-f7c2-4393-b098-7bc161a2dfb4": {
+          "type": "box",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Rectangle_61.png",
+            "title": "Schools Of Wonder",
+            "link": "#"
+          }
+        }
+      },
+      "block_order": [
+        "ecfbaa36-c2f0-4d14-a4cb-3a0de527b23f",
+        "729fccc1-6487-4918-ad9a-058bfc581a81",
+        "02fae28b-d81c-4756-8b46-86088445b78d",
+        "896107e6-f7c2-4393-b098-7bc161a2dfb4"
+      ],
+      "settings": {
+        "title": "Past <span>Boxes<\/span>",
+        "button_label": "VIEW ALL PAST BOXES",
+        "button_url": "https:\/\/www.owlcrate.com\/blogs\/owlcratejr",
+        "button_type": "greendark",
+        "button_label_2": "SHOP PAST BOXES",
+        "button_url_2": "https:\/\/www.owlcrate.com\/collections\/past-boxes?constraint=owlcratejr",
+        "button_type_2": "orange",
+        "bg_color": ""
+      }
+    },
+    "03b87914-039f-4c9d-b0ac-314159ce660c": {
+      "type": "index-reviews-yotpo",
+      "settings": {
+        "fluid_layout": false,
+        "enabled_section": true,
+        "title": "What our Customers are Saying"
+      }
+    },
+    "23c34b79-1a7c-444d-97e5-84bd83b6710d": {
+      "type": "subscription-faq",
+      "blocks": {
+        "template--15784745697455__23c34b79-1a7c-444d-97e5-84bd83b6710d-16675682585f69596f-0": {
+          "type": "text",
+          "settings": {
+            "heading": "What Is OwlCrate Jr?",
+            "answer": "<p>OwlCrate Jr is an award-winning monthly subscription book box that delivers newly published hardcover novels and a collection of bookish goodies to your doorstep. Our original OwlCrate boxes are designed for ages 14+ and OwlCrate Jr is our Middle Grade box, designed for readers ages 8-12, or anyone young at heart! <\/p><p>We understand that it can sometimes be tough to get kids to pick up a book instead of turning on a screen, which is why we carefully curate every box to encourage curiosity, creativity, and imagination. Each one includes a brand new hardcover middle grade novel; an exclusive letter and signed book or bookplate from the author; a cool activity, game, or additional book; plus an assortment of fun goodies related to their theme of the month. Best of all, they ship right to your door starting at only $29.99 a month. Whether you have a voracious young bookworm in your life or are looking for a fun way to encourage a reluctant reader, OwlCrate Jr is the perfect low tech subscription for kids.<\/p><p> <\/p>"
+          }
+        },
+        "c416de1b-ff60-41b1-b3f5-54dd46d67254": {
+          "type": "text",
+          "settings": {
+            "heading": "Who Is OwlCrate Jr Recommended For?",
+            "answer": "<p>OwlCrate Jr is our Middle-Grade box designed for kids of any gender aged 8-12. Our main monthly books tend to lean towards a higher reading level, making them great independent reads for strong readers or fun read-alouds for younger or new readers.<\/p><p>If your reader is in-between ages for our Middle Grade and our original YA box, we recommend taking a look through our Past Boxes section to see which feels like a better fit! If you would like to see the previous books and items we have included, please visit the <a href=\"https:\/\/www.owlcrate.com\/blogs\/owlcratejr\"><span style=\"text-decoration:underline\">Past Jr Boxes<\/span><\/a> page!<\/p>"
+          }
+        },
+        "bf69bc80-41b7-44c6-b795-302400d406a5": {
+          "type": "text",
+          "settings": {
+            "heading": "How much do Jr Boxes cost?",
+            "answer": "<p>We currently offer Monthly, 3-Month and 6-Month plans.<\/p><p>• Monthly Jr Plan = $32.99 USD per month plus shipping.<\/p><p>• 3-Month Jr Plan = $95.97 USD per 3-Month period plus shipping and taxes. <\/p><p>• 6-Month Jr Plan = $185.94 USD per 6-Month period plus shipping and taxes.<\/p><p>Please note that all subscription plans are auto-renewing. Choose the <a href=\"https:\/\/help.owlcrate.com\/en-US\/how-to-order-owlcrate-as-a-gift-113402\" target=\"_blank\" title=\"https:\/\/help.owlcrate.com\/en-US\/how-to-order-owlcrate-as-a-gift-113402\"><span style=\"text-decoration:underline\">GIFT<\/span><\/a> option to avoid an auto-renewal.<\/p><p><strong>Shipping within the US is $8.99 USD per box and you can find a list of International Shipping Rates <\/strong><a href=\"https:\/\/help.owlcrate.com\/en-US\/do-you-ship-to-my-country-114108\" target=\"_blank\" title=\"https:\/\/help.owlcrate.com\/en-US\/do-you-ship-to-my-country-114108\"><strong>HERE<\/strong><\/a><strong> <\/strong><\/p>"
+          }
+        },
+        "d178ac52-4891-4c9f-a7d1-fbce872341b0": {
+          "type": "text",
+          "settings": {
+            "heading": "When do your monthly boxes ship?",
+            "answer": "<p>Our monthly subscription boxes typically ship between the 15th and 20th of each month. Once your box ships, you will receive an email with your shipping notification and tracking number. Delays can happen so be sure to check our <a href=\"https:\/\/www.owlcrate.com\/pages\/shipping-updates\" title=\"https:\/\/www.owlcrate.com\/pages\/shipping-updates\">Shipping Updates Page<\/a> if you are curious about your shipment.<\/p><p>International boxes ship a bit earlier in the month as the process takes a bit longer, but you will receive an email with your shipping notification and tracking number around the time your box leaves the US, usually between the 15th and 20th.<\/p><p>Please make sure your shipping address on file is up to date before your next scheduled renewal, or email <a href=\"mailto:support@owlcrate.com\">support@owlcrate.com<\/a> to get your current month's shipment updated before the 5th of the month. If you are contacting support after the 5th, we may or may not be able to update your address depending on the status of your shipment in our system.<\/p>"
+          }
+        },
+        "5a782869-f296-4b6e-be3e-90b1b8b520b1": {
+          "type": "text",
+          "settings": {
+            "heading": "Can I order just one box instead of a renewing subscription?",
+            "answer": "<p>You can definitely purchase a one-time box! There are three options to choose from:<\/p><p>1. Purchase a Monthly Subscription.<\/p><p>With this option, you can sign up for a regular monthly subscription through the main website. Once your order has gone through, you can log into your customer account and cancel your subscription. Cancelling won't affect the box you just purchase, only future renewals. The upside of this option is that if you love your first box (which we hope you do!), you can easily log into your account and reactivate your subscription to receive more boxes.<\/p><p> 2. You can purchase yourself a Gift! With this option, you can purchase a one-time box without having to worry about an auto-renewal. For details on how to purchase a gift, please see our <a href=\"https:\/\/help.owlcrate.com\/en-US\/how-do-i-purchase-a-one-time-gift-114100\" target=\"_blank\" title=\"https:\/\/help.owlcrate.com\/en-US\/how-do-i-purchase-a-one-time-gift-114100\"><span style=\"text-decoration:underline\">How To Order an One-Time Gift article.<\/span><\/a><\/p><p>3. You can purchase a past box (while quantities are available) in our <a href=\"https:\/\/www.owlcrate.com\/collections\/owlcrate-jr\" title=\"https:\/\/www.owlcrate.com\/collections\/owlcrate-jr\">ONLINE SHOP<\/a>!<\/p>"
+          }
+        },
+        "4b35a1ea-0410-4ac2-9b6f-684a91a268db": {
+          "type": "text",
+          "settings": {
+            "heading": "Have More Questions?",
+            "answer": "<p>Have questions about your account?<\/p><p>You can find more information <a href=\"https:\/\/help.owlcrate.com\/en-US\" target=\"_blank\" title=\"https:\/\/help.owlcrate.com\/en-US\">HERE<\/a>.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--15784745697455__23c34b79-1a7c-444d-97e5-84bd83b6710d-16675682585f69596f-0",
+        "c416de1b-ff60-41b1-b3f5-54dd46d67254",
+        "bf69bc80-41b7-44c6-b795-302400d406a5",
+        "d178ac52-4891-4c9f-a7d1-fbce872341b0",
+        "5a782869-f296-4b6e-be3e-90b1b8b520b1",
+        "4b35a1ea-0410-4ac2-9b6f-684a91a268db"
+      ],
+      "settings": {
+        "color": "",
+        "heading": "Frequently <span>Asked<\/span> Questions",
+        "klaviyo_adult": ""
+      }
+    },
+    "fbc45041-bf8c-41f0-ba9f-df0cf7f44853": {
+      "type": "subscription-jr-latest-posts",
+      "blocks": {
+        "b902c1c9-4ad4-4a16-a853-4ae04fdb946b": {
+          "type": "box",
+          "settings": {
+            "title": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "b902c1c9-4ad4-4a16-a853-4ae04fdb946b"
+      ],
+      "settings": {
+        "title": "Latest From <span>Blog<\/span>",
+        "bg_color": ""
+      }
+    },
+    "0a9a67c8-f592-42d1-a6eb-dfe533490fb1": {
+      "type": "newsletter",
+      "settings": {
+        "title": "Newsletter <span>Signup<\/span>",
+        "subtitle": "Stay in the know about what's going on at OwlCrate HQ!",
+        "logo": "<svg width=\"329\" height=\"158\" viewbox=\"0 0 329 158\" fill=\"none\" xmlns=\"http:\/\/www.w3.org\/2000\/svg\">\n<g clip-path=\"url(#clip0_1110_2143)\">\n<path d=\"M64.0457 1.98231e-06C44.9608 0.00636771 29.4946 15.3428 29.501 34.2549C29.5074 53.1668 44.984 68.4931 64.0689 68.4868C83.1538 68.4804 98.6201 53.144 98.6136 34.2319C98.6072 15.3196 83.1307 -0.00636374 64.0457 1.98231e-06ZM73.2698 48.1942C71.2602 48.871 69.2672 51.2802 68.1866 52.7707C67.7319 53.398 66.8426 53.5178 66.2354 53.0338C64.792 51.8838 62.2218 50.0898 60.1031 49.9698C56.9682 49.792 57.3114 47.5842 57.3114 47.5842C57.3114 47.5842 60.38 45.8096 61.8933 42.1231C62.7522 40.0309 63.6828 38.9348 64.327 38.3778C64.8083 37.9618 65.4973 37.8688 66.0732 38.1423C66.8443 38.5085 68.0366 39.3184 69.4285 41.1069C71.8811 44.2586 75.3165 45.1564 75.3165 45.1564C75.3165 45.1564 76.2424 47.193 73.2698 48.1942ZM79.0116 43.6855C78.6344 42.9357 77.9468 42.3814 77.1195 42.1797L77.1014 42.1752C76.896 42.1145 74.1368 41.2569 72.1876 38.7523C70.6451 36.77 69.0208 35.365 67.3593 34.5761C66.7114 34.2687 65.989 34.1062 65.2697 34.1064C64.1001 34.1066 62.9711 34.5261 62.0906 35.287C60.7028 36.4867 59.5166 38.2707 58.5648 40.5892C57.3619 43.5193 54.9343 45.0762 54.7526 45.1891L54.7382 45.1971C53.9632 45.6282 53.4314 46.3884 53.2962 47.2587L53.2839 47.3376C53.2488 47.5645 53.232 47.8177 53.2364 48.0867C52.1211 48.3431 50.9602 48.4809 49.7663 48.4814C41.3049 48.4839 34.4435 41.6891 34.4405 33.3043C34.4377 24.9195 41.2948 18.12 49.7562 18.1171C55.3101 18.1153 60.1749 21.0421 62.863 25.4254C64.3169 18.5422 70.4738 13.3712 77.8518 13.3687C86.3133 13.366 93.1749 20.1609 93.1779 28.5457C93.1804 36.547 86.9352 43.0998 79.0116 43.6855Z\" fill=\"#26BCB4\"><\/path>\n<path d=\"M49.7574 24.5508C44.8835 24.5524 40.9339 28.4689 40.9355 33.2984C40.9372 38.1282 44.8895 42.042 49.7634 42.0404C54.637 42.039 58.5868 38.1223 58.5852 33.2927C58.5836 28.463 54.6311 24.5492 49.7574 24.5508ZM47.8504 29.7175C46.9685 29.7179 46.2534 29.0097 46.2529 28.1356C46.2527 27.2619 46.9674 26.553 47.8493 26.5528C48.7312 26.5523 49.4465 27.2608 49.4468 28.1345C49.447 29.0086 48.7323 29.7172 47.8504 29.7175ZM53.0201 36.1996C51.0865 36.2003 49.5186 34.6475 49.5179 32.7314C49.5172 30.8151 51.0842 29.2614 53.0178 29.2607C54.9511 29.2603 56.5192 30.8131 56.5199 32.7289C56.5206 34.645 54.9536 36.1989 53.0201 36.1996Z\" fill=\"#282560\"><\/path>\n<path d=\"M79.0308 19.8984C74.1572 19.9003 70.2074 23.8165 70.209 28.6461C70.2106 33.4756 74.1629 37.3896 79.0368 37.388C83.9105 37.3867 87.8603 33.4699 87.8586 28.6404C87.857 23.8109 83.9045 19.8968 79.0308 19.8984ZM77.1239 25.0654C76.2419 25.0656 75.5268 24.3574 75.5264 23.4832C75.5261 22.6096 76.2408 21.9007 77.1227 21.9005C78.0046 21.9002 78.72 22.6084 78.7202 23.4823C78.7204 24.3563 78.0058 25.0649 77.1239 25.0654ZM82.2935 31.5473C80.3599 31.5479 78.792 29.9952 78.7913 28.0791C78.7906 26.163 80.3576 24.6093 82.2912 24.6086C84.2246 24.6082 85.7927 26.1607 85.7934 28.0768C85.7941 29.9927 84.2271 31.5466 82.2935 31.5473Z\" fill=\"#282560\"><\/path>\n<path d=\"M30.3855 69.9145C22.1716 72.1641 18.9484 76.8977 17.9296 82.0903C16.9105 87.2829 23.4587 90.5246 26.3222 87.1985C29.1854 83.8727 25.4189 78.6835 29.9195 77.3844C34.4204 76.0856 39.9369 86.6165 35.3567 100.008C30.5202 114.15 16.5916 112.099 12.1682 100.747C7.74516 89.3945 13.4913 77.1468 23.3006 75.3592C33.1102 73.5718 31.3904 70.2473 29.0987 69.3561C26.8067 68.4647 14.6928 63.9273 5.28711 80.5557C-4.11909 97.1839 -1.73926 116.129 18.6399 119.017C39.019 121.905 48.3791 108.113 45.5087 90.7595C42.6386 73.4051 37.2368 68.0384 30.3855 69.9145Z\" fill=\"#282560\"><\/path>\n<path d=\"M48.9188 73.9922C51.6501 74.8495 57.0506 78.054 61.6645 76.3832C66.2785 74.7122 70.8122 74.5142 67.8101 77.3458C64.8081 80.1776 62.2521 81.3912 62.9137 88.4315C63.5754 95.4717 64.0801 104.282 64.0801 104.282C64.0801 104.282 68.4805 88.5749 70.3104 85.1629C72.1405 81.7509 75.3635 82.1851 76.4636 86.3947C77.5637 90.604 81.0101 101.853 81.0101 101.853C81.0101 101.853 86.7576 80.5696 85.2187 78.1022C83.6795 75.635 82.0258 73.1101 85.1758 73.9799C88.3255 74.85 94.425 75.2642 98.6267 75.0185C102.828 74.7727 102.515 76.3075 97.3617 78.3761C93.8997 79.7661 89.4318 97.1325 88.1888 103.157C86.9456 109.182 86.553 110.558 88.1597 112.445C90.1054 114.731 84.769 113.715 81.0142 114.007C74.3992 114.521 78.2302 112.161 77.7169 110.274C77.2035 108.387 73.3904 95.4686 73.3904 95.4686C73.3904 95.4686 68.9517 108.011 69.4161 110.414C69.8805 112.817 71.712 114.123 68.0497 114.415C64.3876 114.706 60.0524 114.314 57.8272 114.418C52.5407 114.665 57.8421 113.282 57.9976 109.616C58.1144 106.86 54.2479 80.0599 50.7315 78.3918C47.2149 76.7236 45.9152 73.0496 48.9188 73.9922Z\" fill=\"#282560\"><\/path>\n<path d=\"M105.798 50.0891C102.218 53.1492 101.32 58.5487 105.375 59.8159C109.429 61.0832 107.613 56.2625 112.586 53.8069C118.321 50.9749 118.994 56.6895 116.127 64.469C113.642 71.2154 102.115 96.186 100.553 103.799C98.9906 111.411 94.297 113.457 98.9202 112.891C103.543 112.326 106.246 112.466 111.795 114.72C117.343 116.973 119.975 117.043 117.342 114.225C114.71 111.406 110.725 107.037 112.358 98.0153C113.991 88.9928 125.078 63.8707 124.933 54.7565C124.787 45.6424 114.046 43.0382 105.798 50.0891Z\" fill=\"#282560\"><\/path>\n<path d=\"M156.557 86.3919C156.557 86.3919 150.983 81.9966 148.531 86.3947C146.08 90.7925 150.471 93.9969 156.883 91.7621C163.295 89.5273 167.567 80.8815 157.34 75.2174C147.112 69.553 133.831 70.6304 127.564 83.8643C121.298 97.0979 121.336 115.391 140.703 118.318C160.071 121.244 161.569 111.339 162.03 107.275C162.491 103.21 158.62 101.894 157.639 105.731C156.658 109.567 153.713 112.201 146.896 112.432C140.079 112.664 133.779 104.937 136.317 91.1392C138.854 77.3415 153.571 73.6948 156.557 86.3919Z\" fill=\"#282560\"><\/path>\n<path d=\"M168.361 76.1706C172.369 73.4711 176.683 73.5639 179.093 78.6949C179.093 78.6949 182.684 70.0034 192.063 71.9583C201.442 73.9128 204.949 82.337 200.21 89.3852C195.472 96.4334 186.454 94.1386 188.307 89.3893C190.161 84.6398 195.416 85.0976 194.488 80.4002C193.558 75.7027 185.674 75.0416 183.255 83.8252C180.836 92.6087 182.437 103.484 186.252 107.313C190.066 111.141 193.21 113.285 188.676 113.593C184.141 113.9 177.753 117.12 171.159 123.096C164.566 129.073 170.785 119.825 173.057 114.302C175.554 108.233 175.506 93.658 174.577 86.9689C173.647 80.2802 172.382 80.969 169.651 81.9914C166.92 83.0136 165.63 78.0099 168.361 76.1706Z\" fill=\"#282560\"><\/path>\n<path d=\"M241.469 71.8903C245.872 72.5499 249.4 71.2572 252.726 66.6004C256.052 61.9439 256.198 57.9671 255.414 55.7366C254.63 53.5061 254.435 53.5238 259.084 53.4893C263.733 53.4545 265.74 53.3567 264.468 55.3458C263.196 57.3344 262.269 66.6459 262.27 68.5856C262.27 70.5256 267.948 70.4267 272.352 70.2796C276.756 70.1327 276.513 73.5275 272.353 74.7897C268.194 76.0521 261.108 75.2703 261.108 75.2703C261.108 75.2703 258.854 98.557 258.612 104.765C258.369 110.972 263.655 111.843 266.884 109.369C270.113 106.895 270.894 100.299 269.719 97.923C268.543 95.5472 266.537 97.1482 267.076 99.9122C267.616 102.676 261.988 102.921 263.356 97.2461C264.725 91.5716 271.869 90.5023 274.612 97.5819C277.355 104.661 275.059 116.204 265.468 118.293C255.876 120.381 249.904 114.951 250.634 103.652C251.365 92.352 253.561 76.1538 253.561 76.1538C253.561 76.1538 249.301 76.0583 243.868 75.8175C238.436 75.577 239.854 71.6484 241.469 71.8903Z\" fill=\"#282560\"><\/path>\n<path d=\"M290.406 90.2712C290.406 90.2712 310.825 90.3601 314.397 89.8804C317.969 89.4009 315.552 78.8304 312.075 73.8567C308.598 68.8831 294.356 65.4915 286.636 74.8218C278.915 84.1522 277.328 100.139 284.186 109.034C291.043 117.929 305.766 118.929 311.798 112.421C317.83 105.914 315.009 95.3026 306.321 96.5972C297.632 97.8917 298.603 106.82 301.627 107.024C304.274 107.201 301.437 104.701 304.718 102.595C308 100.489 311.892 104.72 308.949 108.882C306.006 113.045 298.475 111.373 294.66 106.974C290.845 102.574 289.441 89.5062 291.949 83.2866C294.457 77.0673 300.876 75.1997 304.835 77.9249C308.795 80.6503 308.024 84.3338 306.817 84.9081C305.61 85.4828 289.605 84.7458 289.605 84.7458\" fill=\"#282560\"><\/path>\n<path d=\"M245.013 100.44C244.402 96.3202 239.331 97.2 240.046 101.122C241.203 107.469 234.378 110.867 233.122 105.019C231.866 99.1716 240.561 79.3089 234.21 72.8318C227.859 66.3549 210.91 67.7608 208.989 77.1532C207.067 86.5458 219.61 87.6232 222.837 84.0818C226.063 80.5405 220.164 76.8381 219.085 78.9027C216.591 83.6744 211.929 82.447 214.796 77.241C217.663 72.0347 224.372 73.1201 227.807 75.8107C231.242 78.5016 230.958 86.125 229.478 87.7376C227.998 89.3502 211.341 88.6161 205.413 96.4516C199.486 104.287 202.272 114.24 211.753 115.236C221.234 116.233 226.698 107.231 226.698 107.231C226.698 107.231 225.473 116.382 234.719 114.714C243.964 113.047 245.623 104.559 245.013 100.44ZM221.788 105.44C217.295 109.055 210.917 108.078 211.26 100.963C211.603 93.848 222.485 92.3439 226.478 92.1356C226.478 92.1356 226.281 101.824 221.788 105.44Z\" fill=\"#282560\"><\/path>\n<path d=\"M278.577 29.1441C278.661 29.5697 280.992 34.1841 281.522 35.1472C282.053 36.1104 289.885 33.1595 289.885 33.1595C289.885 33.1595 293.101 46.427 291.144 51.0199C289.187 55.6127 283.798 52.5279 283.742 46.9497C283.685 41.3713 283.146 42.4084 278.944 43.1575C274.741 43.9069 273.668 44.1892 275.332 47.5317C276.998 50.8741 276.971 60.0408 289.676 59.5779C302.382 59.1153 299.297 43.4985 297.395 31.9657C297.395 31.9657 301.691 30.8351 303.652 30.6161C305.612 30.3972 304.267 23.825 302.976 23.7059C301.685 23.587 284.609 27.3073 282.786 27.6834C280.962 28.0594 278.381 28.1578 278.577 29.1441Z\" fill=\"#F15D31\"><\/path>\n<path d=\"M314.721 38.7156C314.721 38.7156 315.382 37.1974 315.218 35.7592C315.055 34.3212 308.102 33.189 307.769 35.0849C307.435 36.9807 303.998 54.5213 303.594 56.8845C303.19 59.2478 311.734 60.3345 311.768 59.0518C311.802 57.7692 312.263 47.0813 315.021 43.2339C317.779 39.3863 321.865 41.9199 321.743 44.5116C321.621 47.1034 320.119 48.2047 322.405 49.2855C324.692 50.3665 326.787 52.0077 327.814 49.0065C328.841 46.0051 330.013 38.6351 323.471 36.4362C316.929 34.2373 314.721 38.7156 314.721 38.7156Z\" fill=\"#F15D31\"><\/path>\n<path d=\"M328.806 61.1684C329.449 59.2896 328.434 57.2505 326.538 56.6132C324.642 55.976 322.584 56.9822 321.941 58.861C321.298 60.7394 322.314 62.7789 324.209 63.4162C326.105 64.0532 328.163 63.0469 328.806 61.1684Z\" fill=\"#F15D31\"><\/path>\n<path d=\"M245.781 143.248L159.612 147.076C159.425 147.084 159.246 147.119 159.076 147.172C158.905 147.119 158.726 147.085 158.539 147.077L72.3672 143.306C71.2045 143.255 70.2205 144.148 70.1691 145.3C70.1177 146.452 71.0186 147.427 72.1814 147.478L149.051 150.841C150.453 155.001 154.411 157.999 159.079 157.998C163.747 157.996 167.704 154.995 169.103 150.835L245.97 147.42C247.133 147.369 248.033 146.393 247.981 145.241C247.929 144.089 246.944 143.197 245.781 143.248Z\" fill=\"#F15D31\"><\/path>\n<path d=\"M78.459 139.044L149.899 142.17C141.497 138.567 127.281 133.592 108.863 131.33C93.203 129.408 83.276 135.111 78.459 139.044Z\" fill=\"#26BCB4\"><\/path>\n<path d=\"M209.29 131.33C190.883 133.59 176.673 138.561 168.27 142.163L239.631 138.994C234.791 135.062 224.882 129.416 209.29 131.33Z\" fill=\"#26BCB4\"><\/path>\n<path d=\"M165.586 142.287C182.362 127.873 232.755 124.987 232.755 124.987L216.285 120.121C175.939 126.342 163.744 136.898 160.062 142.532L165.586 142.287Z\" fill=\"#26BCB4\"><\/path>\n<path d=\"M158.088 142.534C154.402 136.902 142.199 126.354 101.849 120.16L85.3828 125.037C85.3828 125.037 135.777 127.889 152.563 142.292L158.088 142.534Z\" fill=\"#26BCB4\"><\/path>\n<path d=\"M104.358 32.7016C104.358 32.7016 106.01 20.1604 111.291 13.5839C116.573 7.00744 127.114 10.7948 122.873 18.3537C118.632 25.9123 104.358 32.7016 104.358 32.7016Z\" fill=\"#F15D31\"><\/path>\n<path d=\"M110.476 35.8495C110.476 35.8495 118.655 30.9508 124.475 29.4549C130.295 27.9587 131.805 34.487 126.589 36.6632C122.767 38.258 110.476 35.8495 110.476 35.8495Z\" fill=\"#F15D31\"><\/path>\n<path d=\"M27.5501 54.1286C27.5501 54.1286 23.7028 42.0694 17.3377 36.5139C10.9725 30.9587 1.26669 36.5207 6.78092 43.2243C12.2951 49.9279 27.5501 54.1286 27.5501 54.1286Z\" fill=\"#F15D31\"><\/path>\n<path d=\"M22.0842 58.2851C22.0842 58.2851 13.1644 54.8854 7.16931 54.425C1.17444 53.9648 0.844752 60.6545 6.36472 61.8895C10.4104 62.7946 22.0842 58.2851 22.0842 58.2851Z\" fill=\"#F15D31\"><\/path>\n<\/g>\n<defs>\n<clippath id=\"clip0_1110_2143\">\n<rect width=\"329\" height=\"158\" fill=\"white\"><\/rect>\n<\/clippath>\n<\/defs>\n<\/svg>",
+        "klaviyo_adult": "JGasas",
+        "klaviyo_jr": "RgMy4A"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "2cbe126c-f555-45cd-ad3a-fef7bc203a98",
+    "9340efba-da99-4187-af27-06e8b18cd240",
+    "c7f01e24-33fc-4395-b628-0e7a677041e0",
+    "6697e2e2-9b3e-462c-88da-7db5bf4d06f2",
+    "3f573c1a-3758-4531-aa3a-6abc6c4020a5",
+    "42d4b78c-6d37-4840-83a2-e785cce5f61f",
+    "3ce61cc1-30b8-43f1-9c13-4889188b7aaa",
+    "2505646d-41a9-4a88-8bf3-c0982117777f",
+    "03b87914-039f-4c9d-b0ac-314159ce660c",
+    "23c34b79-1a7c-444d-97e5-84bd83b6710d",
+    "fbc45041-bf8c-41f0-ba9f-df0cf7f44853",
+    "0a9a67c8-f592-42d1-a6eb-dfe533490fb1"
+  ]
+}

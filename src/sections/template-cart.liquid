@@ -1,0 +1,230 @@
+{% assign cart_ajaxed = section.settings.cart_ajaxed %}
+{% assign template_type = 'classic' %}
+
+<section
+    data-section-id="{{ section.id }}"
+    data-template="cart"
+    data-cart-ajaxed="{% if cart_ajaxed %}true{% else %}false{% endif %}">
+  <div class="section-content mt-md-3 min-height d-flex align-items-center">
+    <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+      <div class="row">
+        <div class="col-12 text-center cart-fancy-heder mb-4 mb-lg-6">
+          <h1 class="page-title mb-0">{{ 'cart.general.title' | t }}</h1>
+          <template v-if="cart.item_count > 0">
+            {% if section.settings.show_back_btn %}
+              <a href="/collections/all" class="font-weight-semi-bold ls-2 font-size-sm font-barlow text-uppercase">{{ 'cart.general.continue_browsing' | t }}</a>
+            {% endif %}
+          </template>
+        </div>
+      </div>
+      
+      <div class="row" v-if="cart.item_count == 0" >
+        <div class="col-12 text-center">
+          <p class="lead">{{ 'cart.general.empty' | t }}</p>
+          <a href="/collections/all" class="btn btn-primary text-uppercase">{{ 'cart.general.continue_browsing' | t }}</a>
+        </div>
+      </div>
+
+      <template v-else>
+        <!-- {% include 'app-utilities-cart-promos' %} -->
+               
+          {% if cart_ajaxed %}
+            {% include 'template-cart-ajaxed-classic' %}
+          {% else %}
+            {% include 'template-cart-classic' %}
+          {% endif %}
+
+        <transition name="fade">
+          <template v-if="storeUtilities.cartUpsells.settings.enabled && storeUtilities.cartUpsells.settings.showOnCartPage && storeUtilities.cartUpsells.products.length > 0">
+            {% assign target = 'cart' %}
+            {% include 'app-utilities-cart-upsell' with target %}
+          </template>
+        </transition>
+      </template>
+
+    </div>
+  </div>
+
+  <template v-if="cart.item_count > 0">
+    {% for block in section.blocks %}
+      <div {{ block.shopify_attributes }}></div>
+      {% case block.type %}
+
+      {% when 'shipping-calculator' %}
+        {% if block.settings.enable_shipping_calculator and cart.item_count > 0 %}
+          {% include 'block-shipping-calculator' %}
+        {% endif %}
+      {% endcase %}
+    {% endfor %}
+  </template>
+
+</section>
+
+{% schema %}
+  {
+    "name": "Cart Template",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "fluid_layout",
+        "label": "Full Width Layout?",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_ajaxed",
+        "label": "Ajaxed Cart?",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_back_btn",
+        "label": "Show Continue to Shop Button?"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_cart_notes",
+        "label": "Show Cart Notes?"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_delivery_date_selection",
+        "label": "Show Delivery Date Selection?"
+      },
+      {
+        "type": "header",
+        "content": "Subscription Order Content"
+      },
+      {
+        "type": "text",
+        "id": "subscription_heading",
+        "label": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "subscription_sub_heading",
+        "label": "Sub Text"
+      },
+      {
+        "type": "header",
+        "content": "OneTime Order Content"
+      },
+      {
+        "type": "text",
+        "id": "onetime_heading",
+        "label": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "onetime_sub_heading",
+        "label": "Sub Text"
+      },
+      {
+        "type": "header",
+        "content": "How did you hear about us?"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_hear_about_us",
+        "label": "Show form",
+        "default": true
+      },
+      {
+        "type": "textarea",
+        "id": "cart_hear_about_us",
+        "label": "Comma separated options"
+      },
+      {
+        "type": "text",
+        "id": "cart_hear_about_us_title",
+        "label": "Form Title",
+        "default": "How did you hear about us?"
+      },
+      {
+        "type": "text",
+        "id": "cart_hear_about_us_error",
+        "label": "Form select error message",
+        "default": "Please select an option"
+      },
+      {
+        "type": "text",
+        "id": "cart_hear_about_us_error_other",
+        "label": "Form input error message",
+        "default": "Please fill the text field"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "shipping-calculator",
+        "name": "Shipping Calculator",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "header",
+            "content": "Layout"
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_shipping_calculator",
+            "label": "Enabled?",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "shipping_calculator_fluid_layout",
+            "label": "Full Width Layout?",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "shipping_calculator_section_padding",
+            "label": "Section Padding?",
+            "default": true
+          },
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "text",
+            "id": "shipping_calculator_heading_txt",
+            "label": "Heading text",
+            "default": "Get shipping estimates"
+          },
+          {
+            "type": "text",
+            "id": "shipping_calculator_submit_button_label",
+            "label": "Submit button label",
+            "default": "Calculate shipping"
+          },
+          {
+            "type": "text",
+            "id": "shipping_calculator_submit_button_label_busy",
+            "label": "Submit button label when calculating",
+            "default": "Calculating..."
+          },
+          {
+            "type": "header",
+            "content": "Styling"
+          },
+          {
+            "type": "color",
+            "id": "shipping_calculator_section_bg_color",
+            "label": "Background Color",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "id": "shipping_calculator_section_txt_color",
+            "label": "Text Color",
+            "default": "#343a40"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

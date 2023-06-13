@@ -1,0 +1,387 @@
+{%- assign sidebar_enabled = section.settings.enable_sidebar -%}
+{%- assign sidebar_is_sticky = section.settings.sidebar_is_sticky -%}
+{%- assign number_of_comments = article.comments_count -%}
+{%- assign article_image = article.image.src | img_url -%}
+
+{% comment %}
+  If a comment was just submitted but requires moderation, we have an extra comment to count.
+{% endcomment %}
+{%- if comment and comment.status != 'published' -%}
+  {%- assign number_of_comments = article.comments_count | plus: 1 -%}
+{%- endif -%}
+
+{% comment %} Next/Prev article nagigation {% endcomment %}
+{%- assign current_found = false -%}
+{%- assign done = false -%}
+{%- for a in blog.articles -%}
+  {%- if current_found and done == false -%}
+    {%- assign next_article = a -%}
+    {%- assign done = true -%}
+  {%- endif -%}
+  {%- unless done -%}
+    {%- if a.id == article.id -%}
+      {%- assign current_found = true -%}
+    {%- else -%}
+      {%- assign prev_article = a -%}
+    {%- endif -%}
+  {%- endunless -%}
+{%- endfor -%}
+
+{%- for tag in article.tags -%}
+  {%- if tag contains 'photo_by' -%}
+    {%- assign photo_by = tag | remove: 'photo_by_' -%}
+    {%- assign photo_by_link = tag -%}
+  {%- endif -%}
+{%- endfor -%}
+<section data-section-id="{{ section.id }}" class="section-content" role="article">
+    <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+      <div class="row mt-5">
+          {%- if sidebar_enabled -%}
+              {% comment %} layout with sidebar {% endcomment %}
+              <div class="col-lg-8 article-body has-sidebar pr-lg-5">
+
+                <div class="row m-lg-0">
+                  <div class="col-12">
+                      <div>
+                        <div class="row align-items-center">
+                            <div class="col-12 pl-lg-0 pl-md-3 my-0 mt-5 mt-md-0">
+                              <div class="d-flex"> 
+                                <time datetime="formatDate(article.node.publishedAt)" class="font-size-ex-xs font-size-ex-xs text-gray-800 text-uppercase font-weight-semi-bold"> {{ article.published_at | date: "%a, %b %d, %Y" }}</time>
+                                {% comment %}{%- if article.comments_count > 0 -%}
+                                  <p class="font-size-ex-xs text-gray-800 mb-0 text-uppercase font-weight-semi-bold comments-count">
+                                    {{ article.comments_count }} comments
+                                  </p>
+                                {%- endif -%}{% endcomment %}
+                              </div>
+                              <h1 class="h4 font-barlow" style="text-transform: none;">{{ article.title }}</h1>
+                              <span class="font-size-ex-sm mb-2 d-inline-block font-weight-bold">By: {{ article.author }}</span>
+                              {%- if photo_by != blank -%}
+                                <span class="font-size-ex-sm mb-2 d-inline-block pl-3 font-weight-bold"> Photo By: <a data-link="{{photo_by_link}}" href="https://www.instagram.com/{{ photo_by }}" target="_blank" class="font-size-ex-sm border-bottom border-primary text-primary">@{{ photo_by }}</a></span>
+                              {%- endif -%}
+                              <div class="position-relative">
+                                <img 
+                                  src="{{ article.image.src | img_url: 'pico' }}" 
+                                  data-srcset="
+                                    {{ article.image.src | img_url: 'large' }} 576w,
+                                    {{ article.image.src | img_url: '1280x' }} 768w,
+                                    {{ article.image.src | img_url: '1440x' }} 992w,
+                                    {{ article.image.src | img_url: '1920x' }} 1200w"
+                                  class="lazyload img-fluid"
+                                  alt="{{ article.image.alt | remove: '"' | remove: "'" }}">
+                                  <div class="teg-btn position-absolute d-flex pl-2 flex-wrap">
+                                    {%- for tag in article.tags -%}
+                                      {%- unless tag contains 'photo_by' -%}
+                                        <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="btn-sm btn-primary font-barlow text-nowrap my-1 mx-2">{{ tag }}</a>
+                                      {%- endunless -%}
+                                      {%- endfor -%}
+                                  </div>
+                                  <div class="icon-btn position-absolute d-flex">
+                                    {%- if section.settings.enable_social_sharing -%}
+                                      <div class="text-center">
+                                        {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+                                      </div>
+                                    {% endif %}
+                                  </div>
+                              </div>
+                              {%- if article.content != blank -%}
+                                <div class="mb-0 mb-md-5 mt-3 rte-content">
+                                  {{ article.content }}
+                                </div>
+                              {%- endif -%}
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                 {% comment %} article navigation {% endcomment %}
+                  {%- if section.settings.enable_article_navigation -%}
+                    {%- assign current_found = false -%}
+                    {%- assign done = false -%}
+                    {%- for a in blog.articles -%}
+                      {%- if current_found and done == false -%}
+                        {%- assign next_article = a -%}
+                        {%- assign done = true -%}
+                      {%- endif -%}
+                      {%- unless done -%}
+                        {%- if a.id == article.id -%}
+                          {%- assign current_found = true -%}
+                        {%- else -%}
+                          {%- assign prev_article = a -%}
+                        {%- endif -%}
+                      {%- endunless -%}
+                    {%- endfor -%}
+
+                      <section class="section-content bg-gray-100 py-4">
+                        <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+                          <div class="row">
+                            <div class="col-xl-6 col-md-6 col-6 d-flex align-items-center my-md-0 my-2">
+                             {% if next_article %}
+                                <a href="{{ next_article.url }}" class="d-flex align-items-center" name="{{ next_article.title | remove: '"' | remove: "'" }}" title="{{ next_article.title | remove: '"' | remove: "'" }}" aria-label="{{ next_article.title | remove: '"' | remove: "'" }}">
+                                  <i class="ion ion-ios-arrow-back mr-3 text-gray-600"></i>
+                                  <img src="{{ next_article.image.src | img_url: '100x100', crop: 'center' }}" class="d-none d-md-inline-block mr-3"/>
+                                  <div>
+                                    <p class="m-0 font-barlow font-weight-semi-bold text-uppercase text-gray-600 text-nowrap">Previous Post</p>
+                                    <span class="pr-lg-4 d-none d-lg-block font-weight-bold">{{ next_article.title }}</span>
+                                  </div>
+                                </a>
+                              {% endif %}
+                            </div>
+                            <div class="d-none d-md-flex align-items-center justify-content-center">
+                              <a href="{{ blog.url }}" data-toggle="tooltip" data-placement="top" title="Back to {{ blog.title | downcase }} index"><i class="ion-grid display-4"></i></a>
+                            </div>
+                            <div class="col-xl-6 col-md-6 col-6 d-flex align-items-center my-md-0 my-2 text-right justify-content-end">
+                               {% if prev_article %}
+                                <a href="{{ prev_article.url }}" class="d-flex align-items-center font-weight-bold" name="{{ prev_article.title | remove: '"' | remove: "'" }}" title="{{ prev_article.title | remove: '"' | remove: "'" }}" aria-label="{{ prev_article.title | remove: '"' | remove: "'" }}">
+                                <div>
+                                  <p class="m-0 font-barlow font-weight-semi-bold text-uppercase text-gray-600 text-nowrap">Next Post</p>
+                                  <span class="pl-lg-4 d-none d-lg-block">{{ prev_article.title }}</span>
+                                </div>
+                                  <img src="{{ prev_article.image.src | img_url: '100x100', crop: 'center' }}" class="d-none d-md-inline-block ml-3"/>
+                                  <i class="ion ion-ios-arrow-forward ml-3 text-gray-600"></i>
+                                </a>
+                              {% endif %}
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+
+                  {% endif %}
+
+
+              </div>
+             <div class="col-lg-4">
+                {%- include 'sidebar-jr-blog' -%}
+              </div>
+          {%- else -%}
+              {% comment %} layout without sidebar {% endcomment %}
+              <div class="col-12 article-body">
+                <div class="rte">
+                  {{ article.content }}
+                </div>
+                {%- if section.settings.enable_social_sharing -%}
+                  <div class="mt-5 text-center">
+                    <h6>{{ 'general.social.share' | t }}</h6>
+                    {%- include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image -%}
+                  </div>
+                {%- endif -%}
+              </div>
+
+          {% endif %}
+
+      </div>
+
+    </div>
+</section>
+<section class="section-content pb-0 bg-white" id="comments">
+  <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+    <div class="row">
+      <div class="col-12">
+        {% render "easydisqus" %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Article Template",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "fluid_layout",
+        "label": "Full Width Layout?",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_sidebar",
+        "label": "Enable Sidebar?",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Social share"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_social_sharing",
+        "label": "Enabled Social Share?",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Article Navigation"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_article_navigation",
+        "label": "Enable Article Navigation?",
+        "default": true
+      },
+    {
+        "type": "text",
+        "id": "return_main_blog",
+        "label": "Main Blog Url Title"
+    },
+    {
+        "type": "url",
+        "id": "main_blog_url",
+        "label": "Main Blog Url"
+    },
+    {
+        "type": "link_list",
+        "id": "categories",
+        "label": "Categories Menu"
+    }
+    ],
+    "blocks": [
+      {
+        "type": "socials",
+        "name": "Socials",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "enable_socials",
+            "label": "Enabled?",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "socials_title",
+            "label": "Title",
+            "default": "Connect with Us"
+          },
+          {
+            "type": "paragraph",
+            "content": "Select Networks"
+          },
+          {
+            "type": "checkbox",
+            "id": "social_icon_facebook",
+            "label": "Facebook",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "social_icon_twitter",
+            "label": "Twitter",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "social_icon_googleplus",
+            "label": "Google+",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "social_icon_instagram",
+            "label": "Instagram",
+            "default": true
+          }
+        ]
+      },
+      {
+        "type": "recent_articles",
+        "name": "Recent Articles",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "enable_recent_articles",
+            "label": "Enabled?",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "recent_articles_title",
+            "label": "Title",
+            "default": "Recent Articles"
+          },
+          {
+            "type": "range",
+            "id": "total_recent_articles",
+            "label": "Articles Limit",
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "default": 5
+          }
+        ]
+      },
+      {
+        "type": "newsletter",
+        "name": "Newsletter",
+        "limit": 1,
+        "settings": [
+        {
+            "type": "checkbox",
+            "id": "show_newsletter",
+            "label": "Show Newsletter Subscription?",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "newsletter_heading",
+            "label": "Heading",
+            "default": "Subscribe"
+        },
+        {
+            "type": "text",
+            "id": "newsletter_subHeading",
+            "label": "Text",
+            "default": "Get monthly updates and free resources."
+        },
+        {
+          "type": "text",
+          "id": "which_product",
+          "label": "Which one you want?",
+          "default": "Which do you want to subscribe to?"
+        },
+        {
+            "type": "text",
+            "id": "klaviyo_adult",
+            "label": "Klaviyo List ID For Adult"
+        },
+        {
+            "type": "text",
+            "id": "klaviyo_jr",
+            "label": "Klaviyo List ID For JR"
+        },
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Background Image"
+        }
+        ]
+      },
+      {
+        "type": "tags",
+        "name": "Tags",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Tags"
+          },
+          {
+              "type": "text",
+              "id": "tags_title",
+              "label": "Heading",
+			        "default": "Popular Tags"
+          },
+          {
+            "type": "checkbox",
+            "id": "enabled_tags",
+            "label": "enabled Tags"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

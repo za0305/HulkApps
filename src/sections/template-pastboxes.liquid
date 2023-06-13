@@ -1,0 +1,469 @@
+{% assign logo_first = section.settings.category_Logo_first | img_url: '200x' %}
+{% assign logo_second = section.settings.category_Logo_second | img_url: '200x' %}
+{% assign logo_width = section.settings.category_logo_width %}
+
+{{ 'blog-past-boxes.scss.css' | asset_url | stylesheet_tag }}
+
+<div data-section-id="{{ section.id }}" data-template="blog">
+  <section class="section-content pt-0">
+    <div class="container-wide">
+      {% assign blogYear = ''%}
+      {% for tag in blog.all_tags %}
+        {% if tag contains 'year_' %}
+          {% assign tagValue = tag | replace: 'year_', '' | handle %}
+          {% unless blogYear contains tagValue %}
+            {% if forloop.last %}
+              {% assign blogYear = blogYear | append: tagValue  %}
+            {% else %}
+              {% assign blogYear = blogYear | append: tagValue | append:',' %}
+            {% endif %}
+          {% endunless %}
+        {% endif %}
+      {% endfor %}
+
+      <div class="row">
+        <div class="col-12">
+          <div class="sp__switcher">
+            {% assign firstUrl = section.settings.category_Logo_first_url | remove: '/blogs/' %}
+            {% assign secondUrl = section.settings.category_Logo_second_url | remove: '/blogs/' %}
+            {% assign thirdUrl = section.settings.category_Logo_third_url | remove: '/blogs/' %}
+           
+            <div class="sp__switcher-item{% if firstUrl == blog.handle %} active{% endif %}">
+              <a href="{{ section.settings.category_Logo_first_url }}" class="sp__switcher-item-inner">
+                <div class="hidden xl-flex sp__switcher-item-inner--desktop sp__switcher-item-inner--desktop-v2">
+                            <span>
+                                {%- render 'icon-owl-black-bigger' -%}
+                            </span>
+                  owlcrate
+                </div>
+
+                <div class="sp__switcher-item-inner--mobile xl-hidden">
+                  <div class="flex align-items-center justify-content-center">
+                    {%- render 'icon-owl-black-bigger' -%}
+                  </div>
+                  <p>Owlcrate</p>
+                </div>
+              </a>
+            </div>
+
+            <div class="sp__switcher-item{% if secondUrl == blog.handle %} active{% endif %}">
+              <a href="{{ section.settings.category_Logo_second_url }}" class="sp__switcher-item-inner">
+                <div class="hidden xl-flex sp__switcher-item-inner--desktop sp__switcher-item-inner--desktop-v2">
+                            <span>
+                                {%- render 'icon-owl-green-bigger' -%}
+                            </span>
+                  owlcrate jr
+                </div>
+
+                <div class="sp__switcher-item-inner--mobile xl-hidden">
+                  <div class="flex align-items-center justify-content-center">
+                    {%- render 'icon-owl-green-bigger' -%}
+                  </div>
+                  <p>Owlcrate Jr</p>
+                </div>
+              </a>
+            </div>
+
+            <div class="sp__switcher-item{% if thirdUrl == blog.handle %} active{% endif %}">
+              <a href="{{ section.settings.category_Logo_third_url }}" class="sp__switcher-item-inner">
+                <div class="hidden xl-flex sp__switcher-item-inner--desktop sp__switcher-item-inner--desktop-v2">
+                  <span>
+                    {%- render 'icon-owl-limited-edition' -%}
+                  </span>
+                  LIMITED EDITIONS
+                </div>
+
+                <div class="sp__switcher-item-inner--mobile xl-hidden">
+                  <div class="flex align-items-center justify-content-center">
+                    {%- render 'icon-owl-limited-edition' -%}
+                  </div>
+                  <p>limited editions</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="hidden border-bottom border-secondary align-items-center justify-content-center" v-match-heights="{el: ['.category-logo-item']}">
+            {% assign firstUrl = section.settings.category_Logo_first_url | remove: '/blogs/' %}
+
+            <div class="px-4 py-5 d-flex align-items-center category-logo-item{% if firstUrl == blog.handle %} active{% endif %}">
+              <a href="{{ section.settings.category_Logo_first_url }}" class="d-inline-block">
+                {% if section.settings.category_Logo_first_svg != blank %}
+                  <img src="{{ section.settings.category_Logo_first_svg }}" class="img-fluid" alt="{{blog.title}}"  style="width: {{ logo_width }}px" />
+                {% else %}
+                  <img src="{{ logo_first }}" alt="{{blog.title}}" class="img-fluid"  style="width: {{ logo_width }}px">
+                {% endif %}
+              </a>
+            </div>
+            {% assign secondUrl = section.settings.category_Logo_second_url | remove: '/blogs/' %}
+            <div class="px-4 py-5 d-flex align-items-center category-logo-item{% if secondUrl == blog.handle  %} active{% endif %}">
+              <a href="{{ section.settings.category_Logo_second_url }}" class="d-inline-block">
+                {% if section.settings.category_Logo_second_svg != blank %}
+                  <img src="{{ section.settings.category_Logo_second_svg }}" class="img-fluid" alt="{{blog.title}}"  style="width: {{ logo_width }}px" />
+                {% else %}
+                  <img src="{{ logo_second }}" alt="{{blog.title}}" class="img-fluid"  style="width: {{ logo_width }}px">
+                {% endif %}
+              </a>
+            </div>
+            {% assign thirdUrl = section.settings.category_Logo_third_url | remove: '/blogs/' %}
+
+            {%- if thirdUrl != blank -%}
+              {%- assign logo_third = section.settings.category_Logo_third | img_url: '200x' -%}
+              <div class="px-4 py-5 d-flex align-items-center category-logo-item{% if thirdUrl == blog.handle %} active{% endif %}">
+                <a href="{{ section.settings.category_Logo_third_url }}" class="d-inline-block">
+                  {% if section.settings.category_Logo_third_svg != blank %}
+                    <img src="{{ section.settings.category_Logo_third_svg }}" class="img-fluid" alt="{{blog.title}}"  style="width: {{ logo_width }}px" />
+                  {% else %}
+                    <img src="{{ logo_third }}" alt="{{blog.title}}" class="img-fluid" style="width: {{ logo_width }}px">
+                  {% endif %}
+                </a>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+
+      {% paginate blog.articles by 10 %}
+        <div class="row">
+          {% for article in blog.articles %}
+            {%- assign limited_edition_by = '' -%}
+            {% assign article_image = article.image.src | img_url %}
+            {% if forloop.index == 1 %}
+              <div class="col-12 my-3" data-id="{{article.id}}">
+                <div class="blog-item big">
+                  <div class="row">
+                    <div class="col-12 col-lg-5">
+                      <a href="{{ article.url }}" class="card-img d-block position-relative">
+                        <div class="position-relative product-img">
+                          <img
+                                  data-sizes="auto"
+                                  src="{{ article.image.src | img_url: 'pico'}}"
+                                  data-srcset="{{ article.image.src | img_url: '705x705', crop: 'center' }} 700w"
+                                  class="lazyload"
+                                  alt="{{ article.image.alt | escape }}"/>
+                          {% for tag in article.tags %}
+                            {% if tag == 'enable_purchase' %}
+                              <span class="badges">
+                                          <span class="badge badge-right font-barlow text-uppercase ls-1">Still Available, BUY ME!</span>
+                                        </span>
+                            {% endif %}
+                            {%- if tag contains '_limited_edition' -%}
+                              {%- assign limited_edition_by = tag -%}
+                            {%- endif -%}
+                          {% endfor %}
+
+                          <time datetime="formatDateBlog(article.node.publishedAt)" class=""> {{ article.published_at | date: "%B %Y" }} </time>
+                        </div>
+                      </a>
+                    </div>
+                    <div class="col-12 col-lg-7">
+                      <div class="blog-item__text">
+                        <span class="label">Featured Box</span>
+                        <h3>{{ article.title | downcase }}</h3>
+                        <span class="label-by">By: OwlCrate</span>
+                        <div>{{ article.content }}</div>
+
+                        {% assign producturl_article =  '' %}
+                        {% assign enable_purchase = false %}
+
+                        {% for tag in article.tags %}
+                          {% if tag contains 'product_' %}
+                            {% assign producturl = tag | split: '_' %}
+                            {% assign producturl_article =  producturl[1] %}
+                          {% endif %}
+                          {% if tag == 'enable_purchase' %}
+                            {% assign enable_purchase = true %}
+                          {% endif %}
+                        {% endfor %}
+
+                        {% comment %}
+                        {% if enable_purchase and producturl_article != blank %}
+                          <div class="pur-btn mt-3 text-center text-md-right">
+                            <a href="{{all_products[producturl_article].url}}" class="btn btn-sm btn-primary">PurchASE THIS BOX <i class="ion ion-ios-arrow-forward ml-1"></i></a>
+                          </div>
+                        {% endif %}
+                        {% endcomment %}
+                        {% assign variant_id =  article.metafields.product.variant_id %}
+
+                        {% if variant_id != blank %}
+                          <form method="post" action="/cart/add" class="text-center" id="form-{{ variant_id }}">
+                            <input type="hidden" name="id" value="{{ variant_id }}" />
+                            <input type="hidden" name="properties[cart_limit]" value="1" />
+                            <input type="hidden" name="properties[promo_product]" value="" />
+                            <input type="hidden" name="properties[add_mode]" value="" />
+                            <input type="hidden" name="properties[subscription_id]" value="" />
+                            <input min="1" type="number" id="quantity" name="quantity" value="1" class="hidden"/>
+                            <input type="submit" value="Add to cart" class="button button--green" />
+                          </form>
+                        {% endif %}
+
+                        {% if producturl_article != blank %}
+                          <script id="productData-{{ variant_id }}">
+                              fetch('/products/{{ producturl_article }}.js')
+                                  .then(function(response){ if(response){ return response.json() } })
+                                  .then(
+                                      function(product){
+                                          // console.log(product);
+                                      }
+                                  )
+                                  .catch((error) => {
+                                      $('#form-{{ variant_id }}').addClass('hidden');
+                                  });
+                          </script>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% else %}
+              <div class="col-6 col-md-4" data-id="{{article.id}}">
+                <div class="blog-item">
+                  <a href="{{ article.url }}" class="card-img d-block position-relative" data-toggle="modal" data-target="#post-modal-{{article.id}}">
+                    <div class="position-relative product-img">
+                      <img
+                              data-sizes="auto"
+                              src="{{ article.image.src | img_url: 'pico'}}"
+                              data-srcset="{{ article.image.src | img_url: '705x705', crop: 'center' }} 700w"
+                              class="lazyload"
+                              alt="{{ article.image.alt | escape }}"/>
+
+                      <time datetime="formatDateBlog(article.node.publishedAt)" class=""> {{ article.published_at | date: "%B %Y" }} </time>
+                      <div class="product-img__hover">
+                        <span>quick view</span>
+                      </div>
+                    </div>
+                  </a>
+
+                  <div class="label-by">
+                    <img src="{{ 'icon-photocam-v2.svg' | asset_url }}" alt="By: OwlCrate">
+                    By: OwlCrate
+                  </div>
+
+                  <h3 class="text-center">{{ article.title | downcase }}</h3>
+
+                  {% assign producturl_article =  '' %}
+                  {% assign enable_purchase = false %}
+
+                  {% for tag in article.tags %}
+                    {% if tag contains 'product_' %}
+                      {% assign producturl = tag | split: '_' %}
+                      {% assign producturl_article =  producturl[1] %}
+                    {% endif %}
+                    {% if tag == 'enable_purchase' %}
+                      {% assign enable_purchase = true %}
+                    {% endif %}
+                  {% endfor %}
+
+                  {% assign variant_id = article.metafields.product.variant_id %}
+
+                  {% if variant_id != blank %}
+                    <form method="post" action="/cart/add" class="text-center" id="form-{{ variant_id }}">
+                      <input type="hidden" name="id" value="{{ variant_id }}" />
+                      <input type="hidden" name="properties[cart_limit]" value="1" />
+                      <input type="hidden" name="properties[promo_product]" value="" />
+                      <input type="hidden" name="properties[add_mode]" value="" />
+                      <input type="hidden" name="properties[subscription_id]" value="" />
+                      <input min="1" type="number" id="quantity" name="quantity" value="1" class="hidden"/>
+                      <input type="submit" value="Add to cart" class="button button--green" />
+                    </form>
+                  {% endif %}
+
+                  {% if producturl_article != blank %}
+                    <script id="productData-{{ variant_id }}">
+                        fetch('/products/{{ producturl_article }}.js')
+                            .then(function(response){ if(response){ return response.json() } })
+                            .then(
+                                function(product){
+                                    // console.log(product);
+                                }
+                            )
+                            .catch((error) => {
+                                $('#form-{{ variant_id }}').addClass('hidden');
+                            });
+                    </script>
+                  {% endif %}
+
+                  <div class="modal fade pr-0 modal-post" id="post-modal-{{article.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-soldout-modal>
+                    <div class="modal-dialog modal-dialog-centered mx-auto" role="document">
+                      <div class="modal-content">
+                        <div class="modal-content__circle__ltside circle">
+                          <div></div>
+                        </div>
+                        <div class="modal-content__circle__rtside circle">
+                          <div></div>
+                        </div>
+                        <div class="modal-content__circle__lbside circle">
+                          <div></div>
+                        </div>
+                        <div class="modal-content__circle__rbside circle">
+                          <div></div>
+                        </div>
+
+                        <div class="blog-item inmodal">
+                          <button type="button" class="popup-close close" data-dismiss="modal" aria-label="Close">
+                            <img src="{{ 'icon-close-modal.svg' | asset_url }}" alt="popup-close"/>
+                          </button>
+
+                          <a href="{{ article.url }}" class="card-img d-block position-relative">
+                            <div class="position-relative product-img">
+                              <img
+                                      data-sizes="auto"
+                                      src="{{ article.image.src | img_url: 'pico'}}"
+                                      data-srcset="{{ article.image.src | img_url: '705x705', crop: 'center' }} 700w"
+                                      class="lazyload"
+                                      alt="{{ article.image.alt | escape }}"/>
+
+                              <time datetime="formatDateBlog(article.node.publishedAt)" class=""> {{ article.published_at | date: "%B %Y" }}
+                                {%- if limited_edition_by == 'oc_limited_edition' and settings.main_mobile_logo != blank -%}
+                                  <img src="{{ settings.main_mobile_logo |img_url: '200x'}}" alt="{{article.title}}" class="pl-2" style="max-width: 40px;">
+                                {%- elsif limited_edition_by == 'oc_limited_edition' and settings.main_mobile_svg_logo != blank -%}
+                                  <img src="{{ settings.main_mobile_svg_logo }}" class="pl-2 img-fluid" alt="{{article.title}}" style="max-width: 40px;" />
+                                {%- endif -%}
+                                {%- if limited_edition_by == 'ocjr_limited_edition' and settings.main_jr_mobile_logo != blank -%}
+                                  <img src="{{ settings.main_jr_mobile_logo |img_url: '200x'}}" alt="{{article.title}}" class="pl-2" style="max-width: 40px;">
+                                {%- elsif limited_edition_by == 'ocjr_limited_edition' and settings.main_jr_mobile_svg_logo != blank -%}
+                                  <img src="{{ settings.main_jr_mobile_svg_logo }}" class="pl-2 img-fluid" alt="{{article.title}}" style="max-width: 40px;" />
+                                {%- endif -%}
+                              </time>
+                            </div>
+                          </a>
+
+                          <div class="blog-item__text">
+                            <div class="row blog-item__text__info">
+                              <div class="col-6">
+                                <span class="label">Featured Box</span>
+                              </div>
+                              <div class="col-6 text-right">
+                                By: OwlCrate
+                              </div>
+                            </div>
+
+                            <h3>{{ article.title | downcase }}</h3>
+                            <div>{{ article.content }}</div>
+
+                            <div class="blog-item__text__footer">
+                              {% if article.metafields.product.variant_id != blank %}
+                                <form method="post" action="/cart/add" class="text-center">
+                                  <input type="hidden" name="id" value="{{ article.metafields.product.variant_id }}" />
+                                  <input type="hidden" name="properties[cart_limit]" value="1" />
+                                  <input type="hidden" name="properties[promo_product]" value="" />
+                                  <input type="hidden" name="properties[add_mode]" value="" />
+                                  <input type="hidden" name="properties[subscription_id]" value="" />
+                                  <input min="1" type="number" id="quantity" name="quantity" value="1" class="hidden"/>
+                                  <input type="submit" value="Add to cart" class="button button--green" />
+                                </form>
+                              {% endif %}
+
+                              <div class="blog-item__text__share">
+                                <p>Share:</p>
+                                {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        {% if paginate.pages > 1 %}
+          <div class="row">
+            <div class="col-12 text-center mt-5">
+              {% include 'pagination' %}
+            </div>
+          </div>
+        {% endif %}
+      {% endpaginate %}
+    </div>
+  </section>
+</div>
+
+
+{% schema %}
+{
+  "name": "Blog Template",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading_txt",
+      "label": "Heading Text"
+    },
+    {
+      "type": "richtext",
+      "id": "lead_txt",
+      "label": "Lead Text"
+    },
+    {
+      "type": "header",
+      "content": "Box Category Logo"
+    },
+    {
+      "type": "url",
+      "id": "category_Logo_first_url",
+      "label": "Category Logo First url"
+    },
+    {
+      "type": "text",
+      "id": "category_Logo_first_svg",
+      "label": "Category Logo First Svg Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_Logo_first",
+      "label": "Category Logo First Logo"
+    },
+    {
+      "type": "url",
+      "id": "category_Logo_second_url",
+      "label": "Category Logo Second url"
+    },
+    {
+      "type": "text",
+      "id": "category_Logo_second_svg",
+      "label": "Category Logo Second Svg Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_Logo_second",
+      "label": "Category Logo Second Logo"
+    },
+    {
+      "type": "url",
+      "id": "category_Logo_third_url",
+      "label": "Category Logo Third url"
+    },
+    {
+      "type": "text",
+      "id": "category_Logo_third_svg",
+      "label": "Category Logo Third Svg Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_Logo_third",
+      "label": "Category Logo Third Logo"
+    },
+    {
+      "type": "range",
+      "id": "category_logo_width",
+      "min": 5,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "label": "category Logo width",
+      "default": 140
+    }
+  ]
+}
+{% endschema %}

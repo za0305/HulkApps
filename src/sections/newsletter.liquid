@@ -1,0 +1,119 @@
+{{ 'section-newsletter.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign title = section.settings.title
+  assign subtitle = section.settings.subtitle | escape
+  assign logo = section.settings.logo
+-%}
+
+<section class="newsletter__wrapper" data-section-id="{{ section.id }}">
+  <div class="newsletter__inner">
+    {%- render 'newsletter-moon-left' -%}
+    {%- render 'newsletter-moon-right' -%}
+
+    <div class="container-wide">
+      <div class="newsletter__container">
+        {%- if logo != blank -%}
+          <div class="newsletter__logo">{{ logo }}</div>
+        {%- endif -%}
+
+        {%- if title != blank -%}
+          <h2 class="section-title">{{ title }}</h2>
+        {%- endif -%}
+
+        {%- if subtitle != blank -%}
+          <p class="newsletter__subtitle">{{ subtitle }}</p>
+        {%- endif -%}
+        <div class="klaviyo-form-wrap newsletter__formWrapper">
+          <form data-klaviyo-footer-form id="klaviyo_footer_form" class="validate contact-form klaviyo_gdpr_embed_{% if page.template_suffix != 'subscription-jr' %}{{section.settings.klaviyo_adult}}{% else %}{{section.settings.klaviyo_jr}}{% endif %}"  action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+            <input type="hidden" name="g" value="{% if page.template_suffix != 'subscription-jr' %}{{section.settings.klaviyo_adult}}{% else %}{{section.settings.klaviyo_jr}}{% endif %}" data-input-hidden>
+            <div class="newsletter__inputWrapper">
+              <input type="email" value="" name="email" class="newsletter__input" id="k_id_email" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" aria-label="email">
+              <input type="submit" value="SUBMIT" name="subscribe" class="newsletter__btn" @click="_submitNewsletter($event);">
+            </div>
+            <div class="klaviyo_messages mt-3 text-center">
+              <div class="success_message text-success" style="display:none;" data-success_message></div>
+              <div class="error_message  text-danger" style="display:none;" data-error_message></div>
+            </div>
+          </form>
+          <form data-klaviyo-footer-jr id="klaviyo_footer_jr" class="validate contact-form klaviyo_gdpr_embed_{{section.settings.klaviyo_jr}} d-none"  action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+            <input type="hidden" name="g" value="{{section.settings.klaviyo_jr}}" data-input-hidden>
+            <div class="newsletter__inputWrapper">
+              <input type="email" value="" name="email" class="newsletter__input" id="k_jr_id_email" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" aria-label="email">
+              <input type="submit" value="SUBMIT" name="subscribe" class="newsletter__btn" data-submit>
+            </div>
+          </form>
+        </div>
+
+        <div class="newsletter__selector">
+          <div class="custom-radio2 mx-2 mx-ex-lg-3">
+            <input type="radio" id="owlcrate" name="payment_plan_adult" {% if page.template_suffix != 'subscription-jr' %}checked{% endif %} class="d-none" value="{{section.settings.klaviyo_adult}}" @click="_selectNewsletter('type_adult','{{section.settings.klaviyo_adult}}','{{section.settings.klaviyo_jr}}');">
+            <label class="newsletter__checkbox" for="owlcrate">
+                            <span class="newsletter__checkbox-check">
+                                {%- render 'newsletter-check' -%}
+                            </span>
+              <span class="newsletter__checkbox-title">OwlCrate</span>
+            </label>
+          </div>
+          <div class="custom-radio2 mx-2 mx-ex-lg-3">
+            <input type="radio" id="owlcratejr" name="payment_plan_adult" {% if page.template_suffix == 'subscription-jr' %}checked{% endif %} class="d-none" value="{{section.settings.klaviyo_jr}}" @click="_selectNewsletter('type_jr','{{section.settings.klaviyo_jr}}','{{section.settings.klaviyo_adult}}');">
+            <label class="newsletter__checkbox" for="owlcratejr">
+                            <span class="newsletter__checkbox-check">
+                                {%- render 'newsletter-check' -%}
+                            </span>
+              <span class="newsletter__checkbox-title">OwlCrate Jr.</span>
+            </label>
+          </div>
+          <div class="custom-radio2 mx-2 mx-ex-lg-3">
+            <input type="radio" id="both_opt" name="payment_plan_adult" class="d-none"  value="{{section.settings.klaviyo_adult}}" @click="_selectNewsletter('both','{{section.settings.klaviyo_adult}}','{{section.settings.klaviyo_jr}}');">
+            <label class="newsletter__checkbox" for="both_opt">
+                            <span class="newsletter__checkbox-check">
+                                {%- render 'newsletter-check' -%}
+                            </span>
+              <span class="newsletter__checkbox-title">Both.</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    {
+      "type": "html",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "html",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_adult",
+      "label": "Klaviyo List ID For Adult"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_jr",
+      "label": "Klaviyo List ID For JR"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter",
+      "category": "Content"
+    }
+  ]
+}
+{% endschema %}

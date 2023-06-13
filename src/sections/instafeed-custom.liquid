@@ -1,0 +1,150 @@
+{{ 'section-instafeed.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+    assign heading = section.settings.title
+    assign button_label = section.settings.button_label | escape
+    assign button_link = section.settings.button_link
+    assign instant_token_url = section.settings.instant_token_url | escape
+    assign limit = section.settings.limit
+    assign enable_social_links = section.settings.enable_social_links
+-%}
+
+<script src="{{ instant_token_url }}"></script>
+{{ 'instafeed.min.js' | asset_url | script_tag }}
+
+<section id="section-{{ section.id }}" class="instafeed__wrapper">
+    <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/orn.png?v=1665410729"
+         alt="Ornament"
+         width="1920"
+         height="897"
+         class="instafeed__bg-image hidden xl-d-block"
+         loading="lazy">
+
+    {%- render 'instafeed-ornament' -%}
+
+    <div class="container-wide instafeed__container">
+        <h2 class="section-title instafeed__section-title">{{ heading }}</h2>
+
+        <div class="instafeed__slider">
+            <div id="instafeed" class="instafeed__carousel carousel"></div>
+        </div>
+
+        {% comment %}
+        {%- if button_label != blank
+            and button_link != blank -%}
+            <div class="instafeed__btnWrapper">
+                <a href="{{ button_link }}" class="instafeed__btn">
+                    <span class="flex">
+                        {%- render 'instafeed-icon' -%}
+                    </span>
+                    {{ button_label }}
+                </a>
+            </div>
+        {%- endif -%}
+        {% endcomment %}
+
+        {%- if enable_social_links -%}
+            <ul class="list-unstyled instafeed__social">
+                {%- if settings.social_instagram_link != blank -%}
+                    <li>
+                        <a class="instafeed__social-link" href="{{ settings.social_instagram_link }}" title="Instagram" rel="noreferrer" aria-label="Instagram" target="_blank">
+                            {%- render 'icon-instagram-insta' -%}
+                        </a>
+                    </li>
+                {%- endif -%}
+
+                {%- if settings.social_facebook_link != blank -%}
+                    <li>
+                        <a class="instafeed__social-link" href="{{ settings.social_facebook_link }}" title="Facebook" rel="noreferrer" aria-label="Facebook" target="_blank">
+                            {%- render 'icon-facebook-insta' -%}
+                        </a>
+                    </li>
+                {%- endif -%}
+
+                {%- if settings.social_tiktok_link != blank -%}
+                    <li>
+                        <a class="instafeed__social-link" href="{{ settings.social_tiktok_link }}" title="TikTok" rel="noreferrer" aria-label="TikTok" target="_blank">
+                            {%- render 'icon-tiktok-insta' -%}
+                        </a>
+                    </li>
+                {%- endif -%}
+            </ul>
+        {%- endif -%}
+    </div>
+</section>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+        var feed = new Instafeed({
+            accessToken: InstagramToken,
+            limit: parseInt({{ limit }}),
+            template: '<div class="carousel-cell"><a href="{!!!link!!!}" class="instafeed__inner" target="_blank"><img class="instafeed__img" width="415" height="415" title="{!!!caption!!!}" src="{!!!image!!!}" loading="lazy" alt="{!!!caption!!!}"></a></div>',
+            templateBoundaries: ["{!!!", "!!!}"],
+            after: function() {
+                const $instafeed = document.getElementById('instafeed')
+                let options = {
+                    pageDots: false,
+                    cellAlign: 'center',
+                    groupCells: '100%',
+                    wrapAround: true,
+                }
+                if (matchMedia('screen and (min-width: 1280px)').matches) {
+                    options.cellAlign = 'left'
+                }
+                if ($instafeed !== null) {
+                    new Flickity( $instafeed, options )
+                }
+            }
+        })
+
+        feed.run()
+    })
+</script>
+
+{% schema %}
+{
+    "name":"Instafeed Custom",
+    "settings":[
+        {
+            "type": "richtext",
+            "id": "title",
+            "label": "Title"
+        },
+        {
+            "type": "text",
+            "id": "button_label",
+            "label": "Button label"
+        },
+        {
+            "type": "text",
+            "id": "button_link",
+            "label": "Button link"
+        },
+        {
+            "type": "text",
+            "id": "instant_token_url",
+            "label": "Instant token URL",
+            "info": "Example: https://ig.instant-tokens.com/users/1e2f39b2-9300-4bdc-a8a9-2ec71998b6b3/instagram/17841402230419214/token.js?userSecret=hp0ql3umgxp9a5hejh5j"
+        },
+        {
+            "type": "range",
+            "min": 6,
+            "max": 20,
+            "step": 2,
+            "default": 10,
+            "id": "limit",
+            "label": "Number of posts"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_social_links",
+            "label": "Enable social icons"
+        }
+    ],
+    "presets":[
+        {
+            "name": "Instafeed Custom"
+        }
+    ]
+}
+{% endschema %}

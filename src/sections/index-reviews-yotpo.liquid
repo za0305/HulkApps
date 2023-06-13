@@ -1,0 +1,55 @@
+{% if section.settings.enabled_section %}
+    <div class="reviews__wrapper">
+        {%- liquid
+            assign title = section.settings.title
+        -%}
+        {%- if title != blank -%}
+            <div class="container-wide">
+                <h2 class="section-title">{{ title }}</h2>
+            </div>
+        {%- endif -%}
+        {{ 'section-reviews.css' | asset_url | stylesheet_tag }}
+        {% include 'reviews-yotpo', productID: section.settings.product_id  %}
+    </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Yotpo Reviews",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },           
+      {
+        "type": "checkbox",
+        "id": "fluid_layout",
+        "label": "Full Width Layout?",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "enabled_section",
+        "label": "Enable Section"
+      },
+      {
+        "type": "html",
+        "id": "title",
+        "label": "Title",
+        "default": "Real Reviews From Real Customers"
+      },
+      {
+        "type": "text",
+        "id": "product_id",
+        "label": "Product ID",
+        "info": "Set product ID if need to show reviews only for one product"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Yotpo Reviews",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}  

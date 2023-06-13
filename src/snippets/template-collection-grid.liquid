@@ -1,0 +1,139 @@
+{% paginate collection.products by items_per_page %}
+
+{%- assign productCount = 0 -%}
+{%- for product in collection.products -%}
+{%- assign productExcludeTag = settings.product_exclude_tag_text -%}
+{%- unless product.tags contains productExcludeTag -%}
+{%- assign productCount = productCount | plus: 1 -%}
+{%- endunless -%}
+{%- endfor -%}
+
+<section class="section-content">
+    <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+        {% include 'breadcrumb' %}
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <div class="fancy-heading active">
+                    {% if collection_ajaxed %}
+                      <h1 class="page-title mb-0" v-text="collection.title"></h1>
+                      <p class="mb-5" v-html="collection.description"></p>
+                    {% else %}
+                      <h1 class="page-title mb-0">{{ collection.title }}</h1>
+                      <p class="mb-5">{{ collection.description }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+          <div class="row">
+            <div class="col-lg-3">
+              {% if filters_enabled and filters_type == 'sidebar' %}
+                <div class="filter-nav-drawer d-flex flex-column {% if sidebar_is_sticky %}sticky-top filter-sticky{% endif %}" :class="{'opened shadow-lg': isFilterNavDrawerOpen}">
+                  <div class="drawer-header text-center px-4 py-3 d-lg-none">
+                    <h5 class="mb-0">Filters</h5>
+                    <a href="#" class="btn-close ml-auto float-right" @click.prevent="_toggleFilterNavDrawer" name="close" title="close" rel="nofollow" aria-label="Close">
+                      <i class="icon ion-md-close"></i>
+                    </a>
+                  </div>
+                  <div class="drawer-body py-3 py-lg-0" data-touch-moveable>
+                    {% include 'sidebar-collection-filters' %}
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="col">
+              <div class="d-flex align-items-center justify-content-between" data-collection-content>
+                {% if filters_enabled and filters_type == 'sidebar' %}
+                  <a class="font-barlow font-weight-semi-bold text-uppercase ls-1 d-flex align-items-center d-lg-none" @click.prevent="_toggleFilterNavDrawer" name="filtermenu" title="filtermenu" rel="nofollow" aria-label="FilterMenu">
+                    <img src="{{ 'filter.svg' | asset_url }}" class="mr-3" style="width:20px;" alt="filter-icon" /> Filters
+                  </a>
+                {% else %}
+                  <div class="row my-3">
+                    <div class="col-6 col-sm-4 col-md-3 mx-auto">
+                      {% include 'form-collection-sorting' %}
+                    </div>
+                  </div>
+                {% endif %}
+                <p class="mb-0 text-nowrap" data-product-count>{{ productCount }} {% if productCount > 1  %}products{% else %}Product{% endif %}</p>
+                {% include 'form-collection-sorting' %}
+              </div>
+              <transition-group name="collection-tween" tag="div" class="row custom-mobile-grid">
+                <div v-for="(product, index, key) in collection.products" :key="product.id"
+                     class="col-6 col-md-4 custom-mobile-griditem {% unless filters_enabled and filters_type == 'sidebar' %} col-xl-3 {% endunless %} my-2 d-flex align-items-stretch justify-content-around">               
+                  {% include 'card-product-style-1' %}                                   
+                </div>
+              </transition-group>
+
+              {% if collection_ajaxed %}
+                <div v-if="!isLoading && collection.products.length == 0" class="row mt-5">
+                  <div class="col-12 text-center">
+                    <i class="icon ion-md-information-circle-outline h3 mb-2 text-gray-400"></i>
+                    <h5>{{ 'collections.general.no_matches_within_filters' | t }}</h5>
+
+                    {% if filters_enabled %}
+                      <p>{{ 'collections.general.refine_search' | t }} <a href="#" class="line-hover-primary" @click.prevent="_clearAllFilters($event)" rel="nofollow" aria-label="{{ 'collections.general.reset_filters' | t }}" title="{{ 'collections.general.reset_filters' | t }}">{{ 'collections.general.reset_filters' | t }}</a></p>
+                    {% endif %}
+                  </div>
+                </div>
+              {% else %}
+                {% if collection.products.size == 0 %}
+                  <div class="row mt-5">
+                    <div class="col-12 text-center mt-5">
+                      <i class="icon ion-md-information-circle-outline h3 mb-2 text-gray-400"></i>
+                      <h5>{{ 'collections.general.no_matches_within_filters' | t }}</h5>
+
+                      {% if filters_enabled %}
+                        <p>{{ 'collections.general.refine_search' | t }} <a href="#" class="line-hover-primary" @click.prevent="_clearAllFilters($event)" rel="nofollow" aria-label="{{ 'collections.general.reset_filters' | t }}" title="{{ 'collections.general.reset_filters' | t }}">{{ 'collections.general.reset_filters' | t }}</a></p>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endif %}
+              {% endif %}
+
+              {% if paginate.pages > 1 %}
+                <div class="row">
+                    <div class="col-12 text-center text-lg-right mt-5">
+                      {% if collection_ajaxed %}
+                        {% include 'pagination-collection-ajaxed' %}
+                      {% else %}
+                        {% include 'pagination' %}
+                      {% endif %}
+                    </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          {%- if collection.handle == 'pick-a-product' -%}
+            {% for block in section.blocks %}
+              {% if block.type == 'past-box' %}
+                {% if block.settings.enable_past_box %}
+                  <div class="row justify-content-center d-lg-none">
+                    <div class="col-12 col-sm-8 col-md-6">
+                      <div class="w-100 bg-teal-100 px-5 py-7 text-center past-box mt-5">
+                        <div class="position-relative product-img mb-6">
+                          <img
+                            data-sizes="auto"
+                            src="{{ block.settings.block_img | img_url: 'small'}}"
+                            data-srcset="
+                              {{ block.settings.block_img | img_url: '576x' }} 576w,
+                              {{ block.settings.block_img | img_url: '768x' }} 768w,
+                              {{ block.settings.block_img | img_url: '992x' }} 992w,
+                              {{ block.settings.block_img | img_url: '1200x' }} 1200w"
+                            class="img-fluid w-auto h-100 lazyload" alt="{{ block.settings.block_heading }}" />
+                        </div>
+                        <h5 class="ls-1 font-weight-light mb-4">{{ block.settings.block_heading }}</h5>
+                        <a href="{{ block.settings.block_link_url }}" class="font-barlow line-hover-primary font-weight-semi-bold ls-3 text-uppercase font-size-sm">{{ block.settings.block_link }}</a>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endif %}
+          {% endfor %}
+        {% endif %}
+          
+    </div>
+</section>
+
+{% endpaginate %}

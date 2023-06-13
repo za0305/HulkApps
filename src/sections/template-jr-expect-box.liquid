@@ -1,0 +1,236 @@
+
+{%- if section.settings.enable_box -%}
+	<section class="jr-expect-box section-content">
+		<div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %}">
+			<div class="row">
+					<div class="col-md-11 mx-auto">
+							<div class="row align-items-center">
+								<div class="col-md-6">
+									<div class="row"
+										data-flickity='{
+											"contain": true,
+											"wrapAround": false,
+											"freeScroll": false,
+											"groupCells": "100%",
+											"lazyLoad": false,
+											"cellAlign": "center",
+											"prevNextButtons": false,
+											"pageDots": true
+											}'>
+										{%- for block in section.blocks limit: section.blocks.size -%}
+										<div class="col-12 text-center">
+											{%- if block.settings.box_mob_img != blank-%}
+											<div class="expect-box-wrapper d-flex align-items-center justify-content-center mb-md-0 mb-5">
+													<img
+															data-sizes="auto"
+															src="{{ block.settings.box_mob_img | img_url: 'pico'}}"
+															data-srcset="{{ block.settings.box_mob_img | img_url: '420x' }} 320w,
+																						{{ block.settings.box_mob_img | img_url: '580x' }} 520w,
+																						{{ block.settings.box_mob_img | img_url: '800x' }} 767w"
+															class="lazyload w-100 d-md-none" alt="{{ block.settings.expect_head | escape }}" />
+											</div>
+											{%- endif -%}
+											{%- if block.settings.box_img != blank-%}
+											<div class="expect-box-wrapper d-flex align-items-center justify-content-center pr-lg-3 mb-md-0 mb-5">
+													<img
+															data-sizes="auto"
+															src="{{ block.settings.box_img | img_url: 'pico'}}"
+															data-srcset="{{ block.settings.box_img | img_url: '420x' }} 350w,
+																						{{ block.settings.box_img | img_url: '520x' }} 486w,
+																						{{ block.settings.box_img | img_url: '680x' }} 576w
+																						{{ block.settings.box_img | img_url: '820x' }} 680w"
+															class="lazyload w-100 d-none d-md-block" alt="{{ block.settings.expect_head | escape }}" />
+											</div>
+											{%- endif -%}
+										</div>
+										{%- endfor -%}
+									</div>
+								</div>
+									<div class="col-md-6 mt-md-0 mt-5">
+											<div class="expect-box-content text-md-left text-center pl-lg-3">
+													{%- if section.settings.expect_head != '' -%}
+														<h4 class="text-blurple-100 font-weight-medium f-heading mb-0">{{ section.settings.expect_head }}</h4>
+													{%- endif -%}
+													{%- for i in (1..5) -%}
+														{%- capture expectDesc -%}expect_desc{{i}}{%- endcapture -%}
+														{%- assign expect_Desc = section.settings[expectDesc] -%}
+														{%- if expect_Desc != '' -%}
+															<div class="expect-box shadow py-md-4 py-3 px-md-4 px-3 display-4 d-flex mt-4 border-radius-12 align-items-center" v-match-heights="{el: ['.expect-box']}">
+																{{expect_Desc}}
+															</div>
+														{%- endif -%}
+													{%- endfor -%}
+													{%- if section.settings.btn_txt != '' and section.settings.btn_url != '' -%}
+														<a href="{{ section.settings.btn_url }}" class="btn btn{% if section.settings.btn_type == 'outline' %}-{% endif %}{{ section.settings.btn_type }}-{{ section.settings.btn_variant }} {{ section.settings.btn_size }} mt-5">
+															{{ section.settings.btn_txt }}
+														</a>
+													{%- endif -%}
+											</div>
+									</div>
+							</div>
+					</div>
+			</div>
+		</div>
+	</section>
+{%- endif -%}
+
+
+{% schema %}
+  {
+    "name": "Expect Every Boxes",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+			{
+        "type": "checkbox",
+        "id": "fluid_layout",
+        "label": "Full Width Layout?",
+        "default": false
+      },
+			{
+				"type": "header",
+				"content": "Expect Boxes"
+			},
+			{
+				"type": "checkbox",
+				"id": "enable_box",
+				"label": "Expect boxes Enabled?",
+				"default": true
+			},
+			{
+            "type": "text",
+            "id": "expect_head",
+            "label": "Heading"
+          },
+          {
+            "type": "textarea",
+            "id": "expect_desc1",
+            "label": "Description 1"
+          },
+					{
+            "type": "textarea",
+            "id": "expect_desc2",
+            "label": "Description 2"
+          },
+					{
+            "type": "textarea",
+            "id": "expect_desc3",
+            "label": "Description 3"
+          },
+					{
+            "type": "textarea",
+            "id": "expect_desc4",
+            "label": "Description 4"
+          },
+					{
+            "type": "textarea",
+            "id": "expect_desc5",
+            "label": "Description 5"
+          },
+					{
+						"type": "header",
+						"content": "Button"
+					},
+					{
+						"type": "text",
+						"id": "btn_txt",
+						"label": "Button Text"
+					},
+					{
+						"type": "url",
+						"id": "btn_url",
+						"label": "Button URL"
+					},
+					{
+						"type": "select",
+						"id": "btn_type",
+						"label": "Button Type",
+						"options": [
+							{
+								"value": "outline",
+								"label": "Outline"
+							},
+							{
+								"value": "",
+								"label": "Solid"
+							}
+						],
+						"default": ""
+					},
+					{
+						"type": "select",
+						"id": "btn_variant",
+						"label": "Button Variant",
+						"options": [
+							{
+								"value": "primary",
+								"label": "Primary"
+							},
+							{
+								"value": "secondary",
+								"label": "Secondary"
+							},
+							{
+								"value": "accent",
+								"label": "Accent"
+							},
+							{
+								"value": "light",
+								"label": "Light"
+							},
+							{
+								"value": "dark",
+								"label": "Dark"
+							},
+							{
+								"value": "purple",
+								"label": "Purple"
+							}
+						],
+						"default": "purple"
+					},
+					{
+						"type": "select",
+						"id": "btn_size",
+						"label": "Button Size",
+						"options": [
+							{
+								"value": "",
+								"label": "Default"
+							},
+							{
+								"value": "btn-sm",
+								"label": "Small"
+							},
+							{
+								"value": "btn-lg",
+								"label": "Large"
+							}
+						],
+						"default": ""
+					}
+    ],
+    "blocks": [
+			{
+        "type": "expect_box",
+        "name": "Expect Boxes",
+        "settings": [
+					{
+						"type": "image_picker",
+						"id": "box_mob_img",
+						"label": "Box Mobile Image",
+						"info": "Please add image with size 530x500"
+					},
+					{
+						"type": "image_picker",
+						"id": "box_img",
+						"label": "Box Desktop Image",
+						"info": "Please add image with size 650x630"
+					}
+        ]
+      }
+    ]
+  }
+{% endschema %}

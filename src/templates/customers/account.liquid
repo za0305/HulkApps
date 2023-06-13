@@ -1,0 +1,868 @@
+{% assign collection = collections[settings.choose_collection] %}
+{% assign productLimit = settings.product_limit %}
+
+<section class="section-content mb-4" data-template="account">
+   <div class="account-heading-wrapper">
+     <div class="container">
+        <ul class="list-inline mb-0 nav nav-tabs border-0 justify-content-center account-link mb-6" id="myTab" role="tablist" data-tablist>
+          <li class="list-inline-item mr-0 my-2 my-md-3">
+            <a class="px-3 font-barlow font-size-sm font-weight-medium ls-1 active" id="account" data-toggle="tab" href="#account-tab" role="tab" aria-controls="account" aria-selected="true" @click="_scrollTop();">My Account</a>
+          </li>
+          <template v-if="!rechargeDashboard.subscriptions.length == 0">
+            <li class="list-inline-item mr-0 my-2 my-md-3">
+              <a class="px-3 font-barlow font-size-sm font-weight-medium ls-1" id="subscriptions-tab" data-toggle="tab" href="#subscriptions" role="tab" aria-controls="subscriptions" aria-selected="false" data-subscriptions-tab  @click="_scrollTop();">My Subscriptions</a>
+            </li>
+            <li class="list-inline-item mr-0 my-2 my-md-3">
+              <a class="px-3 font-barlow font-size-sm font-weight-medium ls-1" href="/tools/recurring/login/">Billing Information</a>
+            </li>
+          </template>
+          {% comment %}
+          <li class="list-inline-item mr-0 my-2 my-md-3">
+            <a class="px-3 font-barlow font-size-sm font-weight-medium ls-1" id="refer-friend-tab"  href="https://owlcrate.com/pages/refer">Refer A Friend</a>
+          </li>
+          {% endcomment %}
+          <li class="list-inline-item mr-0 my-2 my-md-3">
+            <a class="px-3 font-barlow font-size-sm font-weight-medium ls-1" id="help-tab" data-toggle="tab" href="#help" role="tab" aria-controls="help" aria-selected="false"  @click="_scrollTop();">Help</a>
+          </li>
+          <li class="list-inline-item mr-0 my-2 my-md-3"><a href="/account/logout" class="px-3 font-barlow font-size-sm font-weight-medium ls-1">Sign out</a></li>
+        </ul>
+         <div class="tab-content" id="myTabContent">
+           <div class="tab-pane active" id="account-tab" role="tabpanel" aria-labelledby="account">
+             <div class="row justify-content-center mb-5">
+               <div class="col-12 col-lg-10 heading-wrapper text-center">
+                 <h2>Welcome To Your Account Dashboard!</h2>
+                 <p>From here you can do a lot of things; you can change your account details, track your orders, review your order history, saved information and access your membership account. If you're a subscription holder, make your way over to the "My Subscriptions" section to make any and all changes to your subscription. If you have any questions, comments or feedback, reach out to our team at <a href="mailto:support@owlcrate.com" class="text-primary">support@owlcrate.com</a></p>
+               </div>
+             </div>
+             <div class="account-content">
+               <div class="row">
+                 <div class="col-12 col-xl-3 my-3 my-xl-4">
+                   {% comment %}
+                   <div class="account-info">
+                     <h5 class="mb-3">Account Details</h5>
+                     <p class="mb-2 mb-lg-4" data-customer-name>{{ customer.name }} <!-- (<a href="#" data-toggle="modal" data-target="#modal-edit-details">edit</a>)--> </p>
+                     <p class="mb-2 mb-lg-4 account-email">{{ customer.email }}</p>
+                     <p class="mb-2 mb-lg-4">Password:  ******   (<a href="/account/login#recover">reset</a>)</p>
+                     <p class="mb-0">Total Orders: {{ customer.orders_count }}</p>
+                   </div>
+                   {% endcomment %}
+                    <div class="account-info border p-2">
+                      <h5 class="mb-3 text-primary font-barlow">Account Details</h5>
+                      <p class="mb-1 mb-lg-2 font-weight-bold text-capitalize font-barlow" data-customer-name>{{ customer.name }}</p>
+                      <p class="mb-1 account-email  font-barlow">{{ customer.email }}</p>
+                      <p class="mb-0"><span class="font-weight-bold  font-barlow">Total Orders:</span> {{ customer.orders_count }}</p>
+                    </div>
+                    <div class="account-info mt-3 border p-2">
+                      <h5 class="mb-3 text-primary font-barlow">Account Options</h5>
+                      <p class="mb-1  font-barlow"><a href="/account/login#recover" style="color: blue;">Reset Password</a></p>
+                      <template v-if="!rechargeDashboard.subscriptions.length == 0">
+                        <p class="mb-1">
+                          <a class="font-barlow font-weight-normal" id="billing-tab"
+                             href="/tools/recurring/login/"
+                             aria-controls="billing-info" aria-selected="false" style="color: blue;">View/Edit Billing Info</a>
+                        </p>
+                      </template>
+                    </div>
+                 </div>
+                 <div class="col-12 col-xl-9 my-3">
+                   <div class="account-subcription pl-xl-3">
+
+                    <template v-if="!rechargeDashboard.isgetsubscription">
+                       <div class="d-flex flex-column align-items-center justify-content-center">
+                         <div class="my-3">
+                           <hollow-dots-spinner
+                             :size="60"
+                             :color="'#26bcb4'"
+                           />
+                         </div>
+                         <p class="small text-gray-700">Please Wait...</p>
+                       </div>
+                     </template>
+                     <template v-else>
+
+                        {% comment %} Claim gift {% endcomment %}
+                        <div class="claim-gift-wrap" v-if="claimGift.giftFound">
+                            <div class="giftbox-custom-wrap-account claim-head">
+                                <div class="claim-head-wrap d-sm-flex text-center flex-wrap align-items-center justify-content-between mb-3">
+                                    <h5 class="mb-2 mb-sm-0">Your gifts</h5>
+                                    <a href="#" class="claim-link font-barlow font-size-sm font-weight-medium text-uppercase ls-1 text-primary" :disabled="isLoading" @click.prevent="_checkAddressEnabled($event, 'multiple')" data-claim="multiple">
+                                        <template v-if="isLoading && loadingEvent == 'claimAllGift'">
+                                            <div class="text-center float-right">
+                                                <hollow-dots-spinner
+                                                :animation-duration="1000"
+                                                :size="60"
+                                                :color="'#26bcb4'"
+                                                />
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                          Claim All Gifts
+                                        </template>
+                                    </a>
+                                </div>
+                                <div class="subscription-order-table mb-5">
+                                  <div class="subscription-header bg-secondary py-2">
+                                    <div class="px-md-3">
+                                      <div class="row align-items-center">
+                                        <div class="col-9 col-md-5"><p class="mb-0 font-barlow font-size-sm font-weight-medium text-white text-uppercase">Gift item</p></div> 
+                                        <div class="d-none d-md-block col-md-4"><p class="mb-0 font-barlow font-size-sm font-weight-medium text-white text-uppercase">Sent by</p></div> 
+                                        <div class="col-3 col-md-2 text-right"><p class="mb-0 font-barlow font-size-sm font-weight-medium text-white text-uppercase"></p></div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="subscription-body border border-secondary">
+                                    <div v-if="claimGift.subscriptionGiftList.length > 0" v-for="gOrder in claimGift.subscriptionGiftList" class="subscription-item px-md-3">
+                                      <div class="row align-items-center accordion" :id="'accordionExample'+gOrder.gift_id">
+
+                                        <div class="col-5 col-md-5">
+                                          <div class="d-flex align-items-center">
+                                            <div class="d-md-none mr-3" :id="'headingOne'+gOrder.gift_id">
+                                              <button class="btn btn-link px-0 py-2 border-0 btn-collapseProduct collapsed" type="button" data-toggle="collapse" :data-target="'#collapse_'+gOrder.gift_id" aria-expanded="true" :aria-controls="'#collapse_'+gOrder.gift_id">
+                                                <i class="ion ion-ios-add h5 mb-0"></i>
+                                                <i class="ion ion-ios-remove h5 mb-0"></i>
+                                              </button>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                              <div class="subscription-img mr-3 mr-lg-4">
+                                                <img class="img-fluid" :src="_getSizedImageUrl(gOrder.product.image.src, 'small')"/>
+                                              </div>
+                                              <div class="subscription-item-text d-none d-md-block">
+                                                <h6 class="mb-0" v-text="gOrder.product.title"></h6>
+                                                <p class="mb-0" v-if="gOrder.gift_type == 'normal'" >Gift box</p>
+                                                <p class="mb-0" v-else >Gift subscription monthly</p>
+
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                        </div>
+
+                                        <div class="col-4 col-md-4 d-none d-md-block">
+                                          <h6 class="sent-name mb-0" v-html="gOrder.sender_name"></h6>
+                                          <p class="sent-email mb-0" v-if="gOrder.sender_email" v-html="gOrder.sender_email"></p>
+                                          <p class="sent-msg mb-0" v-if="gOrder.gift_note" v-html="gOrder.gift_note"></p>
+                                        </div>
+
+                                        <div class="col-7 col-md-3 text-left text-md-right">
+                                          <div class="subscription-item-text mb-3 d-md-none">
+                                            <h6 class="mb-0" v-text="gOrder.product.title"></h6>
+                                            <p class="mb-0" v-if="gOrder.gift_type == 'normal'" >Gift box</p>
+                                            <p class="mb-0" v-else >Gift subscription monthly</p>
+
+                                          </div>
+                                          <button type="submit" class="btn btn-sm btn-primary" :disabled="isLoading" @click.prevent="_checkAddressEnabled($event,'single', gOrder.gift_id)">
+                                            <template v-if="isLoading && loadingEvent == 'activate_'+gOrder.gift_id">
+                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ 'general.wait' | t }}
+                                            </template>
+                                            <template v-else>
+                                                Claim gift
+                                            </template>
+                                          </button>
+                                        </div>
+
+                                        <div :id="'collapse_'+gOrder.gift_id" class="collapse col-12 d-md-none" :aria-labelledby="'headingOne'+gOrder.gift_id" :data-parent="'#accordionExample'+gOrder.gift_id">
+                                          <div class="border-top border-secondary mt-5 pt-5">
+                                            <div class="row mb-2">
+                                              <div class="col-4">
+                                                <p class="mb-0 font-barlow font-weight-medium text-uppercase">Sent by</p>
+                                              </div>
+                                              <div class="col-8">
+                                                 <h6 class="sent-name mb-0" v-html="gOrder.sender_name"></h6>
+                                                  <p class="sent-email mb-0" v-if="gOrder.sender_email" v-html="gOrder.sender_email"></p>
+                                                  <p class="sent-msg mb-0" v-if="gOrder.gift_note" v-html="gOrder.gift_note"></p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                      </div>
+                                    </div>
+
+                                  </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        {% comment %} Recharge Subscriptions {% endcomment %}
+                        <div class="account-subcription-header d-sm-flex text-center flex-wrap align-items-center justify-content-between mb-3">
+                          <h5 class="mb-2 mb-sm-0">Subscriptions</h5>
+                          <template v-if="!rechargeDashboard.subscriptions.length == 0">
+                            <a href="#" class="font-barlow font-size-sm font-weight-medium text-uppercase ls-1 text-primary" @click.prevent="_changeTab();">Manage Subscriptions<i class="ion ion-ios-arrow-forward ml-2"></i></a>
+                          </template>
+                        </div>
+                       <template v-if="!rechargeDashboard.subscriptions.length == 0">
+                         <div class="subscription-order-table mb-5">
+                           <div class="subscription-header bg-secondary py-2">
+                             <div class="px-md-3">
+                               <div class="row align-items-center">
+                                 <div class="col-9 col-md-4">
+                                   <p class="mb-0 font-barlow font-size-sm font-weight-medium text-white text-uppercase">Order</p>
+                                 </div>
+                                 <div class="d-none d-md-block col-md-2">
+                                   <p class="mb-0 font-barlow font-size-sm font-weight-medium text-white text-uppercase">Status</p>
+                                 </div>
+                                 <div class="col-4 col-md-2 d-none d-md-block">
+                                   <p class="mb-0 font-barlow font-size-sm font-weight-medium text-white text-uppercase">TERM</p>
+                                 </div>
+                                 <div class="col-4 col-md-2 d-none d-md-block">
+                                   <p class="mb-0 font-barlow font-size-sm font-weight-medium text-white text-uppercase">Renews</p>
+                                 </div>
+                                 <div class="col-3 col-md-2 text-right">
+                                   <p class="mb-0 font-barlow font-size-sm font-weight-medium text-white text-uppercase">total</p>
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
+                           <div class="subscription-body border border-secondary">
+ 
+                             <div class="subscription-item px-md-3" v-for="(order, index) in rechargeDashboard.subscriptions" :data-index="index" :data-variant-id="order.shopify_variant_id" :data-product-id="order.shopify_product_id">                              
+                               <div class="row align-items-center accordion" :id="'accordionExample_'+order.id">
+                                 <div class="col-9 col-md-4">
+                                   <div class="d-flex align-items-center">
+                                     <div class="d-md-none mr-3" :id="'headingOne_'+order.id">
+                                       <button class="btn btn-link px-0 py-2 border-0 btn-collapseProduct collapsed" type="button" data-toggle="collapse" :data-target="'#collapse_'+order.id" aria-expanded="true" :aria-controls="'collapse_'+order.id">
+                                         <i class="ion ion-ios-add h5 mb-0"></i>
+                                         <i class="ion ion-ios-remove h5 mb-0"></i>
+                                       </button>
+                                     </div>
+                                     <div class="d-flex align-items-center">
+                                       <div class="subscription-img mr-3 mr-lg-4">
+                                         <template v-if="order.image">
+                                           <img :src="order.image" :alt="order.product_title" class="img-fluid">
+                                         </template>
+                                         <template v-else>
+                                           <span class="blank-img d-block w-100" >
+                                             {{ 'product-1' | placeholder_svg_tag: 'img' }}
+                                           </span>
+                                         </template>
+                                       </div>
+                                       <div class="subscription-item-text">
+                                         <h6 class="mb-0" v-text="'#'+order.id"></h6>
+                                         <p class="mb-0" v-text="order.product_title"></p>
+                                       </div>
+                                     </div>
+                                   </div>
+                                 </div>
+                                 <div class="col-4 col-md-2 d-none d-md-block">
+                                   <p class="mb-0" v-text="order.status"></p>
+                                 </div>
+                                 <div class="col-4 col-md-2 d-none d-md-block">
+                                   <p class="mb-0" v-text="order.variant_title"></p>
+                                 </div>
+                                 <div class="col-4 col-md-2 d-none d-md-block">
+                                   <p class="mb-0" v-if="order.next_charge_scheduled_at" v-text="_formatDateRecharge(order.next_charge_scheduled_at)"></p>
+                                   <p class="mb-0" v-else>--</p>
+                                 </div>
+                                 <div class="col-3 col-md-2 text-right">
+                                   <p class="mb-0" v-html="_formatMoney(order.price*100)"></p>
+                                 </div>
+                                 <div :id="'collapse_'+order.id" class="collapse col-12 d-md-none" :aria-labelledby="'headingOne_'+order.id" :data-parent="'#accordionExample_'+order.id">
+                                   <div class="border-top border-secondary mt-5 pt-5">
+                                     <div class="row mb-2">
+                                       <div class="col-6"><p class="mb-0 font-barlow font-weight-medium text-uppercase">Status</p></div>
+                                       <div class="col-6"><p class="mb-0" v-text="order.status"></p></div>
+                                     </div>
+                                     <div class="row mb-2">
+                                       <div class="col-6"><p class="mb-0 font-barlow font-weight-medium text-uppercase">TERM</p></div>
+                                       <div class="col-6"><p class="mb-0" v-text="order.variant_title"></p></div>
+                                     </div>
+                                     <div class="row mb-0">
+                                       <div class="col-6"><p class="mb-0 font-barlow font-weight-medium text-uppercase">Renews</p></div>
+                                       <div class="col-6"><p class="mb-0" v-if="order.next_charge_scheduled_at" v-text="_formatDateRecharge(order.next_charge_scheduled_at)"></p>
+                                         <p class="mb-0" v-else>--</p></div>
+                                     </div>
+                                   </div>
+                                 </div>
+                               </div>
+                             </div>
+
+                           </div>
+                         </div>
+                       </template>
+                       <template v-else>
+                         <p class="ls-1 mb-0">You don't have any subscriptions. <a href="/pages/subscribe" class="line-hover-primary font-weight-semi-bold">Start Shopping</a></p>
+                       </template>
+                     </template>
+
+                    {% if settings.enable_alert_msg %}
+                      {% if customer.tags contains 'cj-import' %}
+                        {% if customer.tags contains 'cj_paypal' or customer.tags contains 'cj-paypal' %}
+                        {% if customer.tags contains 'subr-status-active' or customer.tags contains 'subr-status-mixed' or customer.tags contains 'token_missing' %}
+                          <div class="subcription-infobar d-flex align-items-center px-3 px-md-5 py-4 my-5">
+                            <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/infobar.svg?92414" width="22" class="mr-3 mr-md-5" alt="infobar-icon" style="min-width:22px;">
+                            <div class="subcription-infobar-text">
+                              {% if settings.alert_head_txt != blank %}<h6 class="font-size-sm mb-0">{{ settings.alert_head_txt }}</h6>{% endif %}
+                              {% if settings.alert_caption_txt != blank %}<p class="mb-0 font-size-sm">{{settings.alert_caption_txt }}{% if settings.alert_link_txt %}<a href="{{settings.alert_link_url}}" class="font-barlow font-size-sm font-weight-medium text-uppercase ls-1 text-primary ml-2 d-inline-block align-middle">{{settings.alert_link_txt }}<i class="ion ion-ios-arrow-forward ml-2"></i></a>{% endif %}</p>{% endif %}
+                            </div>
+                          </div>
+                          {% endif %}
+                        {% endif %}
+                      {% endif %}
+                    {% endif %}
+
+                     <div class="account-subcription-header mb-3 pt-lg-3">
+                       <h5 class="mb-0">Order History</h5>
+                     </div>
+
+                     {% paginate customer.orders by 15 %}
+                     {% if customer.orders_count > 0 %}
+                      <div class="subscription-order-table order-history">
+                        <div class="subscription-header bg-secondary py-2">
+                          <div class="px-3">
+                            <div class="row align-items-center">
+                              <div class="col-md-6 pl-md-0">
+                                <p class="mb-0 font-barlow font-size-sm font-weight-medium text-white text-uppercase">Order & Date</p>
+                              </div>
+                              <div class="col-md-3 d-none d-md-block">
+                                <p class="mb-0 font-barlow font-size-sm font-weight-medium text-white text-uppercase">Payment Status</p>
+                              </div>
+                              <div class="col-md-3 text-right d-none d-md-block">
+                                <p class="mb-0 font-barlow font-size-sm font-weight-medium text-white text-uppercase">total</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="subscription-body border border-secondary">
+                          {% for order in customer.orders %}
+                          <div class="subscription-item px-md-3 {% if forloop.last != true %}border-bottom border-secondary{% endif %} accordion" id="accordionThird_{{order.id}}">
+                            <div class="row align-items-center">
+                              <div class="col-md-6 pl-md-0">
+                                <div class="d-flex align-items-center">
+                                  <div class="d-md-none mr-3" id="headingThird_{{order.id}}">
+                                    <button class="btn btn-link px-0 py-2 border-0 btn-collapseProduct collapsed" type="button" data-toggle="collapse" data-target="#collapse_{{order.id}}" aria-expanded="false" aria-controls="collapse_{{order.id}}">
+                                      <i class="ion ion-ios-add h5 mb-0"></i>
+                                      <i class="ion ion-ios-remove h5 mb-0"></i>
+                                    </button>
+                                  </div>
+                                  <p class="mb-0"><a href="{{order.customer_url}}" class="text-primary font-weight-semi-bold">{{ order.name }}</a> on {{ order.created_at | date: "%B %d, %Y" }}</p>
+                                </div>
+                              </div>
+                              <div class="col-md-3 d-none d-md-block">
+                                <p class="mb-0">{{ order.financial_status_label }}</p>
+                              </div>
+                              <div class="col-md-3 text-right d-none d-md-block">
+                                <p class="mb-0">{{ order.total_price | money }}</p>
+                              </div>
+                              <div id="collapse_{{order.id}}" class="collapse col-12 d-md-none" aria-labelledby="headingThird_{{order.id}}" data-parent="#accordionThird_{{order.id}}">
+                                <div class="border-top border-secondary mt-3 pt-3">
+                                  <div class="row mb-2">
+                                    <div class="col-6"><p class="mb-0 font-barlow font-weight-medium text-uppercase">Payment Status</p></div>
+                                    <div class="col-6"><p class="mb-0">{{ order.financial_status_label }}</p></div>
+                                  </div>
+                                  <div class="row mb-0">
+                                    <div class="col-6"><p class="mb-0 font-barlow font-weight-medium text-uppercase">total</p></div>
+                                    <div class="col-6"><p class="mb-0">{{ order.total_price | money }}</p></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+
+                      {% if paginate.pages > 1 %}
+                        <div class="text-center mt-3">
+                        {% include 'pagination' %}
+                        </div>
+                      {% endif %}
+                     {% else %}
+                      <div class="pt-lg-3">
+                        <p class="mb-0 ls-1">You haven't placed any orders yet.</p>
+                      </div>
+                     {% endif %}
+                    {% endpaginate %}
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+
+           <div class="tab-pane" id="subscriptions" role="tabpanel" aria-labelledby="subscriptions-tab">
+             <div class="row justify-content-center mb-3">
+               <div class="col-12 heading-wrapper">
+                 <h2 class=" text-center mb-4">My Subscriptions</h2> 
+
+                {% if settings.enable_alert_msg %}
+                  {% if customer.tags contains 'cj-import' %}
+                    {% if customer.tags contains 'cj_paypal' or customer.tags contains 'cj-paypal' %}
+                    {% if customer.tags contains 'subr-status-active' or customer.tags contains 'subr-status-mixed' or customer.tags contains 'token_missing' %}
+                      <div class="subcription-infobar d-flex align-items-center px-3 px-md-5 py-4">
+                        <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/infobar-icon.png?21120" width="22" alt="" class="mr-3 mr-md-5" style="min-width:22px;"> 
+                        <div class="subcription-infobar-text">
+                          {% if settings.alert_head_txt != blank %}<h6 class="font-size-sm mb-0">{{ settings.alert_head_txt }}</h6>{% endif %}
+                          {% if settings.alert_caption_txt != blank %}<p class="mb-0 font-size-sm">{{settings.alert_caption_txt }}{% if settings.alert_link_txt %}<a href="{{settings.alert_link_url}}" class="font-barlow font-size-sm font-weight-medium text-uppercase ls-1 text-primary ml-2 d-inline-block align-middle">{{settings.alert_link_txt }}<i class="ion ion-ios-arrow-forward ml-2"></i></a>{% endif %}</p>{% endif %}                    
+                        </div>
+                      </div>
+                      {% endif %}
+                    {% endif %}
+                  {% endif %}
+                {% endif %}
+               </div>
+             </div>
+
+              <template v-if="rechargeDashboard.subscriptions.length > 0">
+               <div class="row justify-content-center">
+                <div class="col-12 my-3 {% if settings.enable_productaddon %}col-xl-8{% endif %}">
+
+                   <template v-if="rechargeDashboard.activeSubscription.length > 0">
+                     <div class="shadow px-3 px-md-4 pt-4 pt-md-6 pb-0 change-subscription mb-custom">
+                       <div class="d-sm-flex flex-wrap align-items-center justify-content-between mb-3 text-center">
+                         <h5 class="mb-2 mb-sm-0">Subscription(s):</h5>
+                         {% comment %} <template v-if="!rechargeDashboard.subscriptions.length == 0">  
+                           <a href="#" class="line-hover-gray font-size-ex-sm">Don�t See Your Subscription?</a>
+                         </template> {% endcomment %}
+                       </div>
+
+                       <div class="change-subscription-table border-top border-secondary" v-for="(order, index) in rechargeDashboard.activeSubscription" :class="{ 'border-0': index === 0 }" :data-index="index" :data-variant-id="order.shopify_variant_id" :data-product-id="order.shopify_product_id" :data-subcription="order.id">
+                         <div class="subscription-box-item accordion" :id="'accordion2'+order.id">
+                           <div class="change-subscription-box py-4 d-flex align-items-center justify-content-between">
+                               <div class="d-flex align-items-center subscription-product">
+                                 <template v-if="order.image">
+                                   <img :src="order.image" :alt="order.product_title" class="mr-4 d-none d-sm-block">
+                                 </template>
+                                 <template v-else>
+                                    {{ 'product-1' | placeholder_svg_tag: 'mr-4 d-none d-sm-block' }} 
+                                 </template>
+                                 <div class="order-image-info">
+                                   <h6 class="mb-0" v-text="'#'+order.id"></h6>
+                                   <p class="mb-0" v-text="order.product_title"></p>
+                                 </div>
+                               </div>
+                               <div class="subscription-activity px-2 px-md-3 d-none d-md-block">
+                                 <p class="mb-0"><span class="font-weight-semi-bold mr-2">Status:</span><span v-text="order.status"></span></p>
+                                 <p class="mb-0"><span class="font-weight-semi-bold mr-2">Purchased:</span><span v-if="order.created_at" v-text="_formatDateRecharge(order.created_at)"></span><span v-else>--</span></p>
+                               </div>
+
+                               <div class="change-subscription-btn px-2 px-md-3" >
+                                 <a v-if="!order.subscription_type" href="#" class="text-white btn btn-primary px-3 px-md-4 text-nowrap" data-toggle="modal" data-target="#modal-subscription" data-backdrop="static" data-keyboard="false" @click.prevent="_toggleRechargeDrawer($event,index);_changeModal($event,'switch-plan')">Swap Product</a>
+                                 <p class="mb-0 font-weight-semi-bold text-primary" v-else>Claimed Gift</p>
+                               </div>
+                               <div :id="'headingProduct_'+order.id">
+                                 <button class="btn btn-link text-white bg-primary p-0 border-0 btn-collapseProduct collapsed" type="button" data-toggle="collapse" :data-target="'#collapseProduct_'+order.id" aria-expanded="true" :aria-controls="'collapseProduct_'+order.id">
+                                   <i class="ion ion-ios-add h5 m-1"></i>
+                                   <i class="ion ion-ios-remove h5 m-1"></i>
+                                 </button>
+                             </div>
+                           </div>
+                           <div :id="'collapseProduct_'+order.id" class="collapse" :aria-labelledby="'headingProduct_'+order.id" :data-parent="'#accordionExample_'+order.id">
+                             <div class="subscription-box-details pt-md-3">
+                               <div class="row">
+                                 <div class="col-12 d-md-none">
+                                   <div class="subscription-activity mb-custom">
+                                     <p class="mb-0"><span class="font-weight-semi-bold mr-2">Status:</span><span v-text="order.status"></span></p>
+                                     <p class="mb-0"><span class="font-weight-semi-bold mr-2">Purchased:</span><span v-if="order.created_at" v-text="_formatDateRecharge(order.created_at)"></span><span v-else>--</span></p>
+                                   </div>
+                                 </div>
+                                 <div class="col-md-5 mb-custom">
+                                   <div class="card mb-custom shadow-none border-secondary subscription-card">
+                                     <div class="card-header py-2 bg-secondary">
+                                       <p class="mb-0 font-barlow font-size-sm font-weight-medium text-white text-uppercase">Subscription Term:</p>
+                                     </div>
+                                     <div class="card-body">
+                                       <div class="d-flex align-items-center justify-content-between">
+                                         <p class="mb-0" v-text="order.variant_title"></p>
+                                         <a href="#" class="d-none"><i class="ion ion-ios-arrow-forward"></i></a>
+                                       </div>
+                                     </div>
+                                   </div>
+                                   <div class="card mb-custom shadow-none border-secondary subscription-card" v-if="!order.subscription_type" >
+                                     <div class="card-header py-2 bg-secondary">
+                                       <p class="mb-0 font-barlow font-size-sm font-weight-medium text-white text-uppercase">Renewal Date:</p>
+                                     </div>
+                                     <div class="card-body">
+                                       <div class="d-flex align-items-center justify-content-between mb-3">
+                                         <p class="mb-0" v-if="order.next_charge_scheduled_at" v-text="_formatDateRecharge(order.next_charge_scheduled_at)"></p>
+                                         <p class="mb-0" v-else>--</p>
+                                         <p class="mb-0" v-html="_formatMoney(order.price*100)"></p>
+                                       </div>
+                                       <a href="#" v-if="!order.skip" class="font-barlow font-size-sm font-weight-medium text-uppercase ls-1 text-primary" data-toggle="modal" data-target="#modal-subscription" data-backdrop="static" data-keyboard="false" @click.prevent="_toggleRechargeDrawer($event,index);_changeModal($event,'skip-shipment')">SKip renewal<i class="ion ion-ios-arrow-forward ml-2 text-white bg-primary p-1"></i></a>
+                                       <a href="#" v-else class="font-barlow font-size-sm font-weight-medium text-uppercase ls-1 text-primary" data-toggle="modal" data-target="#modal-subscription" data-backdrop="static" data-keyboard="false" @click.prevent="_toggleRechargeDrawer($event,index);_changeModal($event,'unskip-shipment')">Unskip renewal<i class="ion ion-ios-arrow-forward ml-2 text-white bg-primary p-1"></i></a>
+                                     </div>
+                                   </div>
+                                   {% comment %}
+                                   <div class="card shadow-none border-secondary subscription-card" v-if="!order.subscription_type" >
+                                     <div class="card-header py-2 bg-secondary">
+                                       <p class="mb-0 font-barlow font-size-sm font-weight-medium text-white text-uppercase">Payment Method:</p>
+                                     </div>
+                                     <div class="card-body">
+                                      <p v-if="rechargeDashboard.customerDetails.payment_sources[0].card_last4" v-text="'**** **** ****  '+rechargeDashboard.customerDetails.payment_sources[0].card_last4"></p>
+                                       <p v-else>**** **** **** ****</p>
+                                       <div class="d-flex align-items-center justify-content-between" v-if="rechargeDashboard.customerDetails.token != null">
+                                        <p class="mb-0"><a :href="'https://checkout.owlcrate.com/customer/'+rechargeDashboard.customerDetails.hash+'/card_edit?token='+rechargeDashboard.customerDetails.token" class="font-barlow font-size-sm font-weight-medium text-uppercase ls-1 text-primary">Edit Your Payment Method </a></p>
+                                        <a :href="'https://checkout.owlcrate.com/customer/'+rechargeDashboard.customerDetails.hash+'/card_edit?token='+rechargeDashboard.customerDetails.token" class="text-white bg-primary px-1"><i class="ion ion-ios-arrow-forward"></i></a>
+<!--                                         <p class="mb-0"><a class="font-barlow font-size-sm font-weight-medium text-uppercase ls-1 text-primary" href="https://checkout.owlcrate.com/customer/{{customer.metafields.subscriptions.customer_string}}/card_edit/" >Edit Your Payment Method </a></p>
+                                        <a href="https://checkout.owlcrate.com/customer/{{customer.metafields.subscriptions.customer_string}}/card_edit/" class="text-white bg-primary px-1"><i class="ion ion-ios-arrow-forward"></i></a>
+                                       <p class="mb-0"><a href="javascript:void(0);" class="font-barlow font-size-sm font-weight-medium text-uppercase ls-1 text-primary" @click.prevent="_toggleRechargeDrawer($event,index);_changeModal($event,'editPayment')" data-toggle="modal" data-target="#modal-subscription" data-backdrop="static" data-keyboard="false">Edit Your Payment Method </a></p>
+                                        <a href="javascript:void(0);" @click.prevent="_toggleRechargeDrawer($event,index);_changeModal($event,'editPayment')" data-toggle="modal" data-target="#modal-subscription" data-backdrop="static" data-keyboard="false" class="text-white bg-primary px-1"><i class="ion ion-ios-arrow-forward"></i></a> -->
+                                       </div>
+                                     </div>
+                                   </div>
+ 								                  {% endcomment %}
+                                 </div>
+                                 <div class="col-md-7 mb-custom">
+                                   <div class="card h-100 shadow-none border-secondary subscription-card">
+                                     <div class="card-header py-2 bg-secondary">
+                                       <p class="mb-0 font-barlow font-size-sm font-weight-medium text-white text-uppercase">Address:</p>
+                                     </div>
+                                     <div class="card-body py-3">
+                                       <div class="address-note px-2">
+                                         <h6 class="text-capitalize">Shipping Address:</h6>
+                                         <div class="d-flex align-items-center justify-content-between">
+                                          <!-- <p class="mb-0" v-for="(address, index) in rechargeDashboard.addresses" v-if="address.id == order.address_id" v-show="!rechargeDashboard.isChangeAddress" v-html="address.first_name +' '+ address.last_name +'<br/>'+ address.address1 +' '+ address.address2 +'<br/>'+ address.city +', '+ address.province +' '+ address.zip +'<br/>'+ address.country"></p>
+                                          <p class="mb-0" v-show="rechargeDashboard.isChangeAddress" v-html="rechargeDashboard.address.first_name +' '+ rechargeDashboard.address.last_name +'<br/>'+ rechargeDashboard.address.address1 +' '+ rechargeDashboard.address.address2 +'<br/>'+ rechargeDashboard.address.city +', '+ rechargeDashboard.address.province +' '+ rechargeDashboard.address.zip +'<br/>'+ rechargeDashboard.address.country"></p> -->
+                                          <p class="mb-0" v-for="(address, index) in rechargeDashboard.addresses" v-if="address.id == order.address_id" v-show="!rechargeDashboard.isChangeAddress">
+                                            <span v-html="address.first_name +' '+ address.last_name +'<br/>'"></span>
+                                            <span v-html="address.address1 +' '"></span>
+                                            <span v-if="address.address2 != null" v-html="address.address2"></span>
+                                            <span v-html="'<br/>' + address.city +', '+ address.province +' '+ address.zip +'<br/>'"></span>
+                                            <span v-html="address.country"></span>
+                                          </p>
+                                          <p class="mb-0"  v-show="rechargeDashboard.isChangeAddress">
+                                            <span v-html="rechargeDashboard.address.first_name +' '+ rechargeDashboard.address.last_name +'<br/>'"></span>
+                                            <span v-html="rechargeDashboard.address.address1 +' '"></span>
+                                            <span v-if="rechargeDashboard.address.address2 != null" v-html="rechargeDashboard.address.address2"></span>
+                                            <span v-html="'<br/>' + rechargeDashboard.address.city +', '+ rechargeDashboard.address.province +' '+ rechargeDashboard.address.zip +'<br/>'"></span>
+                                            <span v-html="rechargeDashboard.address.country"></span>
+                                          </p>
+                                          <a href="#" data-toggle="modal" data-target="#modal-address" @click="_getShipAddress(order.address_id);_addressType('shipping');" v-if="!order.subscription_type" class="text-white bg-primary px-1"><i class="ion ion-ios-arrow-forward"></i></a>
+                                         </div>
+                                       </div>
+                                       <div class="address-note border-top border-secondary mt-3 pt-3 px-2 d-none">
+                                         <h6 class="text-capitalize">Billing Address:</h6>
+                                         <div class="d-flex align-items-center justify-content-between">
+                                          <p class="mb-0" v-html="rechargeDashboard.customerDetails.first_name +' '+ rechargeDashboard.customerDetails.last_name +'<br/>'+rechargeDashboard.customerDetails.billing_address1 +' '+ rechargeDashboard.customerDetails.billing_address2 +'<br/>'+rechargeDashboard.customerDetails.billing_city +','+ rechargeDashboard.customerDetails.billing_province +' '+ rechargeDashboard.customerDetails.billing_zip +'<br/>'+ rechargeDashboard.customerDetails.billing_country"></p>
+                                           <a href="#" data-toggle="modal" data-target="#modal-address" @click="_getShipAddress(order.address_id);_addressType('billing');" v-if="!order.subscription_type"><i class="ion ion-ios-arrow-forward"></i></a>
+                                         </div>
+                                       </div>
+                                     </div>
+                                   </div>
+                                 </div>
+                                 <div class="col-12 mb-custom" v-if="order.transaction_history != null">
+                                   <div class="card shadow-none border-secondary subscription-card">
+                                     <div class="card-header py-2 bg-secondary d-flex align-items-center justify-content-between">
+                                       <p class="mb-0 font-barlow font-size-sm font-weight-medium text-white text-uppercase">transaction History:</p>
+                                       <a href="#" class="font-barlow font-size-sm font-weight-medium text-white text-uppercase" v-show="order.transaction_history_length > 3" @click.prevent="_expandHistory(order.id);" data-expand-btn :data-expand-id="order.id">View All<i class="ion ion-ios-arrow-forward ml-2"></i></a>
+                                     </div>
+                                     <div class="card-body py-0 history-lists" data-history-lists>
+                                       <div class="d-none align-items-center border-top border-secondary py-3 justify-content-between history-list" v-for="(orderT,oIndex) in order.transaction_history" :class="{ 'd-flex': oIndex < 4, 'border-0': oIndex === 0 }" data-history-list>                                     
+                                         <p class="mb-0" v-html="_formatDateRecharge(orderT.scheduled_at)"></p>
+                                         <p class="mb-0" v-text="orderT.status"></p>
+                                         <p class="mb-0" v-html="_formatMoney(orderT.price)"></p>
+                                       </div>
+                                     </div>
+                                   </div>
+                                 </div>
+                                 <div class="col-12 text-right mt-n3 mb-3">
+                                  <p class="mb-0 font-weight-semi-bold font-size-ex-sm membership-options-link" v-if="!order.subscription_type"><a href="#" data-toggle="modal" data-target="#modal-subscription" data-backdrop="static" data-keyboard="false" @click.prevent="_toggleRechargeDrawer($event,index);">Membership Options</a></p>                                  
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
+ 
+                         </div>
+                       </div>
+                     </div>
+                   </template>
+
+                  <template v-if="rechargeDashboard.addonsOrders.length != 0">
+                    <div class="shadow px-3 px-md-4 pt-4 pt-md-6 pb-4 onetime-subscription mb-custom" >
+                         <h5 class="mb-3 text-center text-sm-left">Onetime Product(s):</h5>
+                         <div class="previous-box-item accordion"  v-for="(unactorder, index) in rechargeDashboard.addonsOrders"  :id="'accordion3_'+unactorder.id">
+                          <div class="border-top border-secondary" :class="{ 'border-0': index === 0 }">
+                            <div class="change-subscription-box py-4 d-flex align-items-center justify-content-between" :data-index="index" :data-variant-id="unactorder.shopify_variant_id" :data-product-id="unactorder.shopify_product_id">                            
+                              <div class="d-flex align-items-center subscription-product">
+                                  <img v-if="unactorder.featured_image != null" :src="unactorder.featured_image" :alt="unactorder.product_title" class="mr-4 d-none d-sm-block">                                                                                              
+                                  <template v-else>
+                                    {{ 'product-1' | placeholder_svg_tag: 'mr-4 d-none d-sm-block' }}
+                                  </template>
+                                <div class="order-image-info">
+                                  <h6 class="mb-0" v-text="'#'+unactorder.id"></h6>
+                                  <p class="mb-0" v-text="unactorder.product_title"></p>
+                                </div>
+                              </div>
+                              <div class="subscription-activity px-2 d-none d-md-block">
+                                <p class="mb-0"><span class="font-weight-semi-bold mr-2">Status:</span><span v-text="unactorder.status"></span></p>
+                                <p class="mb-0"><span class="font-weight-semi-bold mr-2">Purchased:</span><span v-if="unactorder.created_at" v-text="_formatDateRecharge(unactorder.created_at)"></span><span v-else>--</span></p>
+
+                               </div>
+                              <div class="change-subscription-btn px-2">
+                                <a href="#" class="btn btn-outline-primary text-nowrap" v-if="unactorder.status == 'ONETIME'"  @click.prevent="_cancelAddons(unactorder.id);"  :disabled="isLoading && loadingEvent == 'cancel_'+unactorder.id" :class="{'disabled': isLoading && loadingEvent == 'cancel_'+unactorder.id}">
+                                  <template v-if="isLoading && loadingEvent == 'cancel_'+unactorder.id">
+                                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ 'general.wait' | t }}
+                                  </template>
+                                  <template v-else>Cancel</template>
+                                </a>
+                              </div>
+                              <div class="d-md-none" :id="'headingfive_'+unactorder.id">
+                                  <button class="btn btn-link px-0 py-2 border-0 btn-collapseProduct collapsed" type="button" data-toggle="collapse" :data-target="'#collapse'+unactorder.id" aria-expanded="true" :aria-controls="'collapse'+unactorder.id">
+                                    <i class="ion ion-ios-add h5 mb-0"></i>
+                                    <i class="ion ion-ios-remove h5 mb-0"></i>
+                                  </button>
+                                </div>
+                             </div>
+                            <div :id="'collapse'+unactorder.id" class="collapse w-100 d-md-none" :aria-labelledby="'headingfive_'+unactorder.id" :data-parent="'#accordion3_'+unactorder.id">
+                              <div class="subscription-activity pb-3">
+                                <p class="mb-0"><span class="font-weight-semi-bold mr-2">Status:</span><span v-text="unactorder.status"></span></p>
+                                <p class="mb-0"><span class="font-weight-semi-bold mr-2">Purchased:</span><span v-if="unactorder.created_at" v-text="_formatDateRecharge(unactorder.created_at)"></span><span v-else>--</span></p>
+                               </div>
+                             </div>
+                          </div>
+
+                         </div>
+                     </div>
+                  </template>
+
+                  <template v-if="rechargeDashboard.unactiveSubscription.length != 0">
+                     <div class="shadow px-3 px-md-4 pt-4 pt-md-6 previous-subscription mb-custom" >
+                         <h5 class="mb-3 text-center text-sm-left">Previous Subscription(s):</h5>
+                         <div class="previous-box-item accordion"  v-for="(unactorder, index) in rechargeDashboard.unactiveSubscription" :id="'accordion3'+unactorder.id">
+                          <div class="border-top border-secondary" :class="{ 'border-0': index === 0 }">
+                            <div class="change-subscription-box py-4 d-flex align-items-center justify-content-between" :data-index="index" :data-variant-id="unactorder.shopify_variant_id" :data-product-id="unactorder.shopify_product_id">
+                              <div class="d-flex align-items-center subscription-product">
+                                  <img  v-if="unactorder.image" :src="unactorder.image" :alt="unactorder.product_title" class="mr-4 d-none d-sm-block">
+                                  <template v-else>
+                                    {{ 'product-1' | placeholder_svg_tag: 'mr-4 d-none d-sm-block' }}
+                                  </template>
+                                <div class="order-image-info">
+                                  <h6 class="mb-0" v-text="'#'+unactorder.id"></h6>
+                                  <p class="mb-0" v-text="unactorder.product_title"></p>
+                                </div>
+                              </div>
+                              <div class="subscription-activity px-2 d-none d-md-block">
+                                <p class="mb-0"><span class="font-weight-semi-bold mr-2">Status:</span><span v-text="unactorder.status"></span></p>
+                                <p class="mb-0"><span class="font-weight-semi-bold mr-2">Purchased:</span><span v-if="unactorder.created_at" v-text="_formatDateRecharge(unactorder.created_at)"></span><span v-else>--</span></p>
+
+                               </div>
+                              <div class="change-subscription-btn px-2">
+                                <a href="#" class="btn btn-outline-primary text-nowrap" v-if="unactorder.status == 'CANCELLED' && !unactorder.subscription_type"  @click.prevent="_activateSubscription(unactorder.id);" :disabled="isLoading && loadingEvent == 'activate_'+unactorder.id" :class="{'disabled': isLoading && loadingEvent == 'activate_'+unactorder.id}">
+                                  <template v-if="isLoading && loadingEvent == 'activate_'+unactorder.id">
+                                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ 'general.wait' | t }}
+                                  </template>
+                                  <template v-else>reactivate</template>
+                                </a>
+                                <p v-else-if="unactorder.status == 'EXPIRED'" v-text="unactorder.status"></p>
+                                <p v-else-if="unactorder.subscription_type" class="mb-0 font-weight-semi-bold text-primary">Expired</p>
+                              </div>
+                              <div class="d-md-none" :id="'headingfive'+unactorder.id">
+                                  <button class="btn btn-link px-0 py-2 border-0 btn-collapseProduct collapsed" type="button" data-toggle="collapse" :data-target="'#collapse'+unactorder.id" aria-expanded="true" :aria-controls="'collapse'+unactorder.id">
+                                    <i class="ion ion-ios-add h5 mb-0"></i>
+                                    <i class="ion ion-ios-remove h5 mb-0"></i>
+                                  </button>
+                                </div>
+                             </div>
+                            <div :id="'collapse'+unactorder.id" class="collapse w-100 d-md-none" :aria-labelledby="'headingfive'+unactorder.id" :data-parent="'#accordion3'+unactorder.id">
+                              <div class="subscription-activity pb-3">
+                                <p class="mb-0"><span class="font-weight-semi-bold mr-2">Status:</span><span v-text="unactorder.status"></span></p>
+                                <p class="mb-0"><span class="font-weight-semi-bold mr-2">Purchased:</span><span v-if="unactorder.created_at" v-text="_formatDateRecharge(unactorder.created_at)"></span><span v-else>--</span></p>
+                               </div>
+                             </div>
+                          </div>
+
+                         </div>
+                     </div>
+                   </template>
+
+                 </div>
+
+                {% if settings.enable_productaddon and collection != empty %}
+                 <div class="col-12 col-xl-4 my-3 pt-xl-3" data-addons-wrap>
+                  <template v-if="rechargeDashboard.normalSubscription.length > 0">
+                   <h5 class="mb-3 text-center px-xl-6">Other Products we Know you Will Love</h5>
+                   <div class="row custom-mobile-grid">
+
+                    {% for product in collection.products limit: productLimit %}
+                      {% unless product == empty %}
+                     <div class="col-6 col-md-4 col-xl-6 custom-mobile-griditem my-3" data-card>
+                       <div class="card card-product card-product-style-1 shadow-none border-0 text-left">
+                         <div class="card-img text-center position-relative">
+                          <div class="position-relative product-img">
+                            {% if product.featured_image != blank %}
+                            <img src="{{ product.featured_image | img_url: 'medium' }}" class="img-fluid w-auto h-100 lazyload" alt="{{product.title}}"/>
+                            {% else %}
+                              <span>
+                                  {{ 'product-1' | placeholder_svg_tag: 'img-fluid' }}
+                              </span>
+                            {% endif %}
+                           </div>
+
+                         </div>
+                         <div class="card-body px-0 pb-1 pt-xl-2 text-center">
+                          <h5 class="font-size-sm ls-base" data-card-title>{{product.title}}</h5>
+                          <p class="font-size-sm mb-2">{{product.price | money}}</p>
+                           <a href="#" class="btn btn-sm btn-outline-primary w-100" @click.prevent="_addAddone('{{product.id}}');"  :disabled="isLoading && loadingEvent == 'add_'+'{{product.id}}'" :class="{'disabled': isLoading && loadingEvent == 'add_'+'{{product.id}}'}">
+                              <template v-if="isLoading && loadingEvent == 'add_'+'{{product.id}}'">
+                                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ 'general.wait' | t }}
+                              </template>
+                              <template v-else>
+                                ADD
+                              </template>
+                           </a>
+                           </div>
+                         </div>
+                     </div>
+
+                      <script type="application/json" data-addon-{{product.id}}>
+                        {{product|json}}
+                      </script>
+                      {% endunless %}
+                    {% endfor %}
+
+                   </div>
+                  </template>
+                 </div>
+                {% endif %}
+
+               </div>
+             </template>
+             <template v-else>
+             <div class="no-order">
+                 <h6 class="mb-0">You don't have any subscriptions. <a href="/pages/subscribe" class="btn-secondary-link">Start Shopping</a></h6>
+               </div>
+             </template>
+           </div>
+
+           <div class="tab-pane" id="billing-info" role="tabpanel" aria-labelledby="biiling-tab"  v-if="!rechargeDashboard.subscriptions.length == 0">
+            <div class="row justify-content-center mb-5">
+              <div class="col-12 col-lg-10 heading-wrapper">
+                <h2>Billing Information</h2>
+                <div class="table-responsive">
+                  <table table-responsive="true" class="table biiling_table">
+                    <tbody>
+                      <tr >
+                        <td><strong>Card on file</strong></td>
+                        <td class="rc_text--base">
+                          <template v-if="rechargeDashboard.customerDetails.payment_sources[0].card_last4">
+                            <p>
+                              <span v-text="rechargeDashboard.customerDetails.payment_sources[0].card_brand" class="text-capitalize pr-1"></span><span v-text="'ending in '+rechargeDashboard.customerDetails.payment_sources[0].card_last4"></span>
+                              <br/>
+                              <span v-text="'Expires '+ rechargeDashboard.customerDetails.payment_sources[0].card_exp_month +'/'+ rechargeDashboard.customerDetails.payment_sources[0].card_exp_year"></span>
+                            </p>
+                          </template>
+                          <template v-else>
+                            <p>Sorry, there is no card here.</p>
+                          </template>
+                          <p><a href="/pages/edit-payment-method" class="font-barlow font-size-sm font-weight-medium text-uppercase ls-1 text-primary">Update Card</a></p>
+                        </td>
+                      </tr>
+                      <tr>
+                        {% capture subscription %}
+                        {{ 'customer.addresses.billing_information_note' | t | replace : 'link', '<a href="#subscriptions" class="text-danger font-weight-bold">My Subscriptions</a>' | replace: 'Shipping Address' , '<i>Shipping Address</i>' | replace: 'Billing Address' , '<i>Billing Address</i>' }}
+                        {% endcapture %}
+                        <td><strong>Billing Information</strong>
+                          <p class="text-danger custom-style" style="max-width: 325px;">{{ subscription }}</p>
+                        </td>
+                        <td class="rc_text--base">
+                          <p class="mb-0" data-original-billing-address>
+                            <span v-html="rechargeDashboard.customerDetails.first_name +' '+ rechargeDashboard.customerDetails.last_name +'<br/>'"></span>
+                            <span v-html="rechargeDashboard.customerDetails.billing_address1 +' '"></span>
+                            <span v-if="rechargeDashboard.customerDetails.billing_address2 != null" v-html="rechargeDashboard.customerDetails.billing_address2"></span>
+                            <span v-html="'<br/>' + rechargeDashboard.customerDetails.billing_city +', '+ rechargeDashboard.customerDetails.billing_province +' '+ rechargeDashboard.customerDetails.billing_zip +'<br/>'"></span>
+                            <span v-html="rechargeDashboard.customerDetails.billing_country"></span>
+                          </p>
+                          <p class="mb-0 d-none" data-changed-billing-address></p>
+
+                          <p><a href="#" data-toggle="modal" data-target="#modal-address" @click="_addressType('billing');" class="font-barlow font-size-sm font-weight-medium text-uppercase ls-1 text-primary">Edit</a></p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+               </div>
+             </div>
+          </div>
+
+           <div class="tab-pane" id="help" role="tabpanel" aria-labelledby="help-tab">
+            <div class="row justify-content-center mb-5">
+               <div class="col-12 col-lg-10 heading-wrapper text-center">
+                 <h2>Need Help?</h2>
+               </div>
+             </div>
+
+             <div class="row justify-content-center">
+               <div class="col-12 col-lg-8">
+                <!-- FormCrafts iframe -->
+                <iframe src='https://formcrafts.com/a/50916?iframe=true' data-contact-iframe width='100%' height='920px' style='border:0'></iframe>
+                {% comment %}
+                 {% form 'contact' %}
+                 <div class="form-row">
+                     {% if form.posted_successfully? %}
+                     <p class="form-success">
+                       {{ 'contact.form.post_success' | t }}
+                     </p>
+                     {% endif %}
+
+                     {{ form.errors | default_errors }}
+                     <div class="col-md-6 my-3">
+                       <input type="text" placeholder="Name" name="contact[name]" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}" spellcheck="false" autocomplete="off" autocapitalize="off" required class="form-control font-base ls-base">
+                     </div>
+                     <div class="col-md-6 my-3">
+                       <input type="email" placeholder="Email Address" name="contact[email]" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" class="form-control font-base ls-base" spellcheck="false" autocomplete="off" autocapitalize="off" required>
+                     </div>
+                     <div class="col-md-12 my-3">
+                       <select class="form-control font-base ls-base"  name="contact[subscription]">
+                         <option>What do you need help with?</option>
+                       </select>
+                     </div>
+                     <div class="col-md-12 my-3">
+                       <textarea rows="7" class="form-control font-base ls-base" name="contact[body]" placeholder="Please provide us some additional deatils about what you need help with here." required></textarea>
+                     </div>
+                     <div class="col-md-12 my-3 text-center text-md-right">
+                       <button type="submit" class="btn btn-primary">Submit</button>
+                     </div>
+                 </div>
+                 {% endform %}
+                 {% endcomment %}
+               </div>
+             </div>
+           </div>
+
+         </div>
+     </div>
+   </div>
+
+ </section>
+
+{% include 'modal-subscription' %}
+{% include 'modal-address' %}
+{% include 'modal-claim-gift'%}
+{% include 'modal-edit-details' %}
+
+{% assign collectionSub = collections[settings.choose_ac_collection] %}
+{% unless collectionSub == empty %}
+    {% for product in collectionSub.products %}
+        {% unless product.tags contains 'is_hidden' %}
+            {% unless product.variants[0].metafields.subscription.is_hidden == true  %}
+            <script type="application/json" data-sub-json>
+                {
+                    "variant": {{ product.variants[0] | json }},
+                    "product": {
+                        "product_id": {{product.id}},
+                        "product_title": "{{product.title}}",
+                        "product_price": {{product.metafields.c_f.original_price}},
+                        "product_featured_image": "{{product.featured_image | img_url: 'medium' }}",
+                        "product_type": "{% if product.tags contains 'plan_adult' %}plan_adult{% else %}plan_jr{% endif %}",
+                        "addonType": "{% if product.tags contains 'plan_adult' %}box_adult{% else %}box_junior{% endif %}",
+                        "product_tags": [{% if product.tags.size > 0 %}{% for tag in product.tags %}"{{tag}}"{% unless forloop.last%},{% endunless %}{% endfor %}{% endif %}]
+                    },
+                    "metafields": {
+                        "subscription_id": {{ product.metafields.subscriptions.subscription_id }},
+                        "shipping_interval_unit_type": "{{ product.metafields.subscriptions.shipping_interval_unit_type }}",
+                        "charge_internal_frequency": {{ product.variants[0].metafields.subscription.charge_internal_frequency }},
+                        "shipping_interval_frequency": {{ product.variants[0].metafields.subscription.shipping_interval_frequency }},
+                        "discount_variant_id": {{ product.variants[0].metafields.subscriptions.discount_variant_id }},
+                        "is_hidden": {% if product.variants[0].metafields.subscription.is_hidden != '' %}{{ product.variants[0].metafields.subscription.is_hidden }}{% else %}null{% endif %}
+                    }
+                }
+            </script>
+            {% endunless %}
+        {% endunless %}
+    {% endfor %}
+{% endunless %}
+
+   <!-- My Activity Module-->
+<script src="https://cdn-widgetsrepository.yotpo.com/v1/loader/VfisLjUzAMGFZM2JJS5QKw" async></script>
+<div class="yotpo-widget-instance" data-yotpo-instance-id="163474"></div>
+<div class="yotpo-widget-instance" data-yotpo-instance-id="163477"></div>

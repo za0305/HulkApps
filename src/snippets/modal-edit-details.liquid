@@ -1,0 +1,37 @@
+<div class="modal fade show" id="modal-edit-details" tabindex="-1" role="dialog" aria-labelledby="modal-edit-details" aria-hidden="true" v-if="rechargeDashboard.customerDetails != null">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-address" role="document">
+        <div class="modal-content shipping-popup">
+          <div class="modal-header popup-head bg-secondary justify-content-center">
+              <h4 class="mb-0 text-white">Edit Account Details</h4>
+              <button class="popup-close close" type="button" data-dismiss="modal" aria-label="Close" data-modal-close>
+              <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/close-icon.svg?26005" alt="popup-close" />
+              </button>
+          </div>
+          <div class="modal-body popup-body pb-0" >
+              <div class="row custom-shipping-row align-items-center justify-content-start">
+                <div class="col-12 col-sm-6 custom-shipping-col">
+                    <input type="text" placeholder="First Name" class="form-control form-control-sm font-base ls-base" data-account-first-name v-model="rechargeDashboard.customersFirstName">
+                </div>
+                <div class="col-12 col-sm-6 custom-shipping-col">
+                    <input type="text" placeholder="Last Name" class="form-control form-control-sm font-base ls-base" data-account-last-name v-model="rechargeDashboard.customersLastName">
+                </div>
+              </div>
+          </div>        
+          <div class="modal-footer popup-footer justify-content-center px-5 pb-5 pt-1">
+              <div class="custom-row align-items-center w-100">
+                  <div class="text-center text-md-right order-md-2 my-2 my-md-0">                    
+                      <a href="#" class="btn btn-primary" v-if="rechargeDashboard.isupdateAccount" :disabled="isLoading && loadingEvent == 'updateDetails'" @click.prevent="_updateAccountDetails()" >
+                          <template v-if="isLoading">
+                              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> {{ 'general.wait' | t }}
+                          </template>
+                          <template v-else>
+                              Submit
+                          </template>
+                      </a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  
+    </div>
+  </div>

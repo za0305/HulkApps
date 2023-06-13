@@ -1,0 +1,100 @@
+
+<section class="section-content py-md-0" data-section-id="{{ section.id }}">
+    <div class="{% if section.settings.fluid_layout %}container-fluid{% else %}container{% endif %} animtion-track">
+        {% if section.settings.heading_txt != '' %}
+          <div class="row">
+            <div class="col-12 text-center">
+              <h2 class="mb-3">{{ section.settings.heading_txt }}</h2>
+            </div>
+          </div>
+        {% endif %}
+
+        {% assign blocks_size = section.blocks | size %}
+        {% if blocks_size > 0%}
+
+        <div class="row carousel review-carousel" data-review-carousel role="tree">
+            {% for block in section.blocks %}
+            <div class="carousel-cell col-12 col-md-5 col-lg-4 equal-height d-flex align-items-center py-6" role="treeitem">
+              <div class="review-item text-center p-5" v-match-heights="{el: ['.review-carousel .carousel-cell']}">
+                    {% if block.settings.icon_class != blank %}
+                      <img src="{{block.settings.icon_class}}" alt="Logo-icon" class="h-100 mb-4 mb-lg-6" /> 
+                    {% elsif block.settings.image != blank %}
+                      <img src="{{block.settings.image | img_url :'165x' }}" alt="Logo-icon" class="h-100 mb-4 mb-lg-6" /> 
+                    {% endif %}
+                    <div class="mb-4">{{ block.settings.txt }}</div>
+                    <h3 class="text-capitalize mb-0 font-bad-script display-3 ls-0">- {{ block.settings.review_cre }}</h3>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% endif %}
+    </div>
+</section>
+{% schema %}
+  {
+    "name": "Review",
+    "class": "index-review",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "fluid_layout",
+        "label": "Full Width Layout?",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "text",
+        "id": "heading_txt",
+        "label": "Heading Text"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Review",
+        "category": "Content"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "content",
+        "name": "Logo Block",
+        "settings": [
+          {
+            "type": "text",
+            "id": "icon_class",
+            "label": "SVG URL"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Select Image"
+          },
+          {
+            "type": "text",
+            "id": "txt",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "review_cre",
+            "label": "review creator"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

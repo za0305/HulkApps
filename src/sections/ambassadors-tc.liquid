@@ -1,0 +1,87 @@
+<section class="tc-section">
+  <div class="custom-container">
+    <div class="custom-row">
+      <div class="column-6 align-self-center">
+        <div class="tc-column-wrapper">
+          {% comment %}
+          <h3 class="tc-page-title">{{ section.settings.sub_title }}</h3>
+          {% endcomment %}
+          <h2 class="tc-main-heading">{{ section.settings.main_title }}</h2>
+          <ul class="tc-list">
+            {% if section.blocks.size > 0 %}
+              {% for block in section.blocks %}
+                <li class="tc-data">{{ block.settings.terms_condition }}</li>
+              {% endfor %}
+            {% else %}
+              {% for i in  (1..5) %}
+                <li class="tc-data">To be eligible for rewards, you must sign up on this page and follow the post rules above. </li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      <div class="column-6">
+        <div class="tc-column-wrapper tc-image-wrapper">
+          {% if section.settings.tc_image != blank %}
+            <img
+                 data-sizes="auto"
+                 src="{{ section.settings.tc_image | img_url: 'original'}}"
+                 data-srcset="{{ section.settings.tc_image | img_url: '320x' }} 320w,
+                              {{ section.settings.tc_image | img_url: '580x' }} 580w,
+                              {{ section.settings.tc_image | img_url: '800x' }} 800w,
+                              {{ section.settings.tc_image | img_url: '1024x' }} 576w
+                              "
+                 class="tc-image" />
+          {% else %}
+          	{{ 'image' | placeholder_svg_tag: 'tc-image'}}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Terms & Conditions",
+    "settings": [
+	  {
+        "id": "sub_title",
+        "type": "text",
+        "label": "Sub Title",
+		"default": "Get Rewarded"
+      },
+      {
+        "id": "main_title",
+        "type": "text",
+        "label": "Main Title",
+		"default": "TERMS & CONDITIONS"
+      },
+      {
+        "type": "image_picker",
+        "id": "tc_image",
+        "label": "Image"
+      }
+    ],
+	"blocks": [
+      {
+        "type": "text",
+        "name": "Terms & Conditions",
+        "settings": [
+          {
+            "id": "terms_condition",
+            "type": "text",
+            "label": "Condition",
+			"default": "To be eligible for rewards, you must sign up on this page and follow the post rules above."
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

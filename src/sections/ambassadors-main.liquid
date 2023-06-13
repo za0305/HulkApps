@@ -1,0 +1,125 @@
+<section class="owl-join-section">
+  {% if section.settings.banner_image == blank %}
+    {{ 'lifestyle-2' | placeholder_svg_tag: 'owl-join-section'}}
+  {% endif %}
+  <div class="custom-container">
+    <div class="custom-row">
+      <div class="column-12">
+        <div class="wrapper text-center">
+          <h2 class="join-title">{{ section.settings.banner_title }}</h2>
+          <h1 class="join-heading">{{ section.settings.banner_heading }}</h1>
+          <h6 class="join-description">{{ section.settings.banner_description }}</h6>
+        
+			{% comment %}<a class="owl-join-button text-decoration-none" href="{% if section.settings.button_link != blank %}{{ section.settings.button_link }}{% else %}javascript:void(0);{% endif %}">{{ section.settings.banner_button }}</a>{% endcomment %}
+            <div class="lc-signup-container" data-lc-button-text="{{ section.settings.banner_button }}"
+                 data-lc-button-text-color="#FFFFF"
+                 data-lc-button-bg-color="#26bcb4">
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .owl-join-section {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.7)), url('{{ section.settings.banner_image | img_url: 'master' }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+  }
+  
+  @media only screen and (max-width: 567px) {
+    .owl-join-section {
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url('{{ section.settings.banner_image_mobile | img_url: 'master' }}');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+  }
+  
+  .lc-signup-container {
+    font-family: 'Barlow';
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 0em;
+    filter: drop-shadow(0px 4px 4px rgba(0,0,0,.25));
+  }
+  
+  .signup-button_lcButton__3PS4y {
+    margin: 0px auto;
+    border-radius: 0px;
+  }
+  
+  .signup-button_lcButtonText__1Qqcl {
+    font-family: 'Barlow';
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  
+  .signup-button_lcButtonContainer__1Ws4J {
+    width: normal;
+    height: normal;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    display: inline-block;
+    text-align: center;
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Ambassadors Join Main",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "banner_image",
+        "label": "Banner Image"
+      },
+	  {
+        "type": "image_picker",
+        "id": "banner_image_mobile",
+        "label": "Banner Image Mobile"
+      },
+      {
+        "type": "text",
+        "id": "banner_title",
+        "label": "Banner Title",
+        "default": "JOIN THE"
+      },
+      {
+        "type": "text",
+        "id": "banner_heading",
+        "label": "Banner Heading",
+        "default": "CRATE GROUP"
+      },
+      {
+        "type": "text",
+        "id": "banner_description",
+        "label": "Banner Description",
+		"default": "BE AN OWLCRATE SOCIAL AMBASSADOR!"
+      },
+	  {
+        "type": "text",
+        "id": "banner_button",
+        "label": "Banner Button",
+		"default": "JOIN NOW"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Button link"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

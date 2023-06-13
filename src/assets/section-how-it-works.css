@@ -1,0 +1,155 @@
+.hiw__wrapper {
+    margin-top: -8%;
+    padding-top: calc(8% + 2.214rem);
+}
+
+.hiw__step-title {
+    font-size: 1.428rem;
+    line-height: normal;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.hiw__steps {
+    margin-top: 0.714rem;
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.hiw__step-subtitle {
+    font-size: 1rem;
+    line-height: normal;
+    margin: 0.625rem auto 0 auto;
+    text-align: center;
+    color: rgba(40, 37, 96, 0.7);
+    max-width: 80%;
+}
+
+.hiw__step-note {
+    margin-top: 0.5rem;
+    color: rgba(40, 37, 96, 0.7);
+    font-size: 0.875rem;
+    line-height: normal;
+    text-align: center;
+}
+
+.hiw__videoWrapper {
+    margin-top: 3.4375rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hiw__video {
+    width: 100%;
+    object-fit: contain;
+    height: auto;
+    mix-blend-mode: darken;
+}
+
+.hiw__selector {
+    margin-top: 0.5rem;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hiw__selector-btn {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+    color: #000;
+    transition: all .15s linear;
+}
+
+.hiw__selector-btn > img {
+    position: absolute;
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    object-position: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: all .15s linear;
+    z-index: 0;
+}
+
+.hiw__selector-btn > span {
+    position: relative;
+    z-index: 1;
+}
+
+.hiw__selector-btn.active {
+    color: #26BCB4;
+}
+
+.hiw__selector-btn.active > img {
+    visibility: visible;
+    opacity: 1;
+}
+
+.hiw__step {
+    display: none;
+}
+
+.hiw__step.active {
+    display: block;
+}
+
+@media only screen and (min-width: 1280px) {
+    .hiw__steps {
+        margin-top: 2rem;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 2rem;
+    }
+
+    .hiw__step-subtitle {
+        font-size: 18px;
+        max-width: initial;
+    }
+
+    .hiw__step-title {
+        font-size: 1.6875rem;
+        line-height: 2rem;
+        text-align: center;
+        margin-top: 1.75rem;
+    }
+
+    .hiw__step-icon {
+        height: 15.75rem;
+    }
+
+    .hiw__step {
+        display: block !important;
+    }
+
+    .hiw__wrapper {
+        margin-top: -3%;
+        padding-top: calc(3% + 9.25rem);
+    }
+}
+
+@media only screen and (max-width: 1440px) and (min-width: 1367px) {
+    .hiw__wrapper {
+        zoom: .7;
+    }
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 569px) {
+    .hiw__wrapper {
+        zoom: .6;
+    }
+}

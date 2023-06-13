@@ -1,0 +1,261 @@
+{% assign enable_color_swatches = false %}
+{% assign enable_size_swatches = false %}
+{% assign items_per_page = section.settings.items_per_page %}
+{% assign filters_enabled = section.settings.enable_filters %}
+{% assign filters_type = section.settings.filters_type %}
+{% assign sidebar_is_sticky = section.settings.sidebar_is_sticky %}
+{% assign collection_ajaxed = false %}
+{% assign product_card_type = 'type_1' %}
+{% assign pagination_type = 'page_numbers' %}
+
+
+<div
+     data-section-id="{{ section.id }}"
+     data-template="collection"
+     data-collection-ajaxed="{% if collection_ajaxed %}true{% else %}false{% endif %}"
+     data-product-card-type="{{ product_card_type }}"
+     data-pagination-limit="{{ section.settings.items_per_page }}">
+       
+    {% include "template-collection-grid" %}
+
+  {% paginate collection.products by items_per_page %}
+    {% for product in collection.products %}
+      {% assign productExcludeTag = settings.product_exclude_tag_text %}
+      {% unless product.tags contains productExcludeTag %}
+        <script type="application/json" data-product-json>
+        {
+          "product": {{ product | json }},
+          "options_with_values": {{ product.options_with_values | json }},
+          "review": {{product.metafields.yotpo | json}}
+        }
+        </script>
+      {% endunless %}
+    {% endfor %}
+  {% endpaginate %}
+</div>
+
+{% schema %}
+  {
+    "name": "Collection Template",
+    "settings": [     
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "fluid_layout",
+        "label": "Full Width Layout?",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "items_per_page",
+        "label": "Products Per Page",
+        "min": 1,
+        "max": 50,
+        "step":1,
+        "default": 12,
+        "info": "Only for the non-ajaxed collection."
+      },
+      {
+        "type": "header",
+        "content": "Filter Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_filters",
+        "label": "Enable Filters?",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "filters_type",
+        "label": "Filters Layout",
+        "options": [{
+            "value": "sidebar",
+            "label": "Sidebar"
+          }
+        ],
+        "default": "sidebar"
+      },
+      {
+        "type": "checkbox",
+        "id": "sidebar_is_sticky",
+        "label": "Sticky Sidebar?",
+        "default": false
+      },
+      {
+        "type": "paragraph",
+        "content": "Use the CONTENT section below to add and customize the filters."
+      }
+    ],
+    "blocks": [
+      {
+        "type": "past-box",
+        "name": "Past Box",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "enable_past_box",
+            "label": "Enable Filter?",
+            "default": false
+          },
+          {
+            "type": "image_picker",
+            "id": "block_img",
+            "label": "image"
+          },
+          {
+            "type": "text",
+            "id": "block_heading",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "block_link",
+            "label": "Link Text"
+          },
+          {
+            "type": "url",
+            "id": "block_link_url",
+            "label": "Link url"
+          },
+          {
+            "type": "paragraph",
+            "content": "This section will be only applied for 'Past Boxes - Defunct collection'"
+          }
+        ]
+      },
+      {
+        "type": "collections-filter",
+        "name": "Collections Filter",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "enable_collections_filter",
+            "label": "Enable Filter?",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "collections_filter_title",
+            "label": "Title",
+            "default": "Collections"
+          },
+          {
+            "type": "link_list",
+            "id": "collection_link_list",
+            "label": "Select Collection Menu"
+          },
+          {
+            "type": "paragraph",
+            "content": "This section will be only applied for 'Bookish Goodies'"
+          }
+        ]
+      },
+      {
+        "type": "colors-filter",
+        "name": "Colors Filter",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "enable_colors_filter",
+            "label": "Enable Filter?",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "colors_filter_title",
+            "label": "Title",
+            "default": "Colors"
+          },
+          {
+          "type": "textarea",
+          "id": "colors_list",
+          "label": "List of Colors",
+          "info": "List of color names (e.g. red). Each entry must be on a new line. Color values can be edited at the 'swatches-colorlist.liquid' file."
+          }
+        ]
+      },
+      {
+        "type": "prices-filter",
+        "name": "Prices Filter",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "enable_prices_filter",
+            "label": "Enable Filter?",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "prices_filter_title",
+            "label": "Title",
+            "default": "Price Range"
+          },
+          {
+          "type": "textarea",
+          "id": "prices_list",
+          "label": "List of Price Ranges",
+          "info": "List of price ranges (e.g. 0-100). Each entry must be on a new line."
+          }
+        ]
+      },
+      {
+        "type": "tags-filter",
+        "name": "Tags Filter",
+        "limit": 5,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "enable_tags_filter",
+            "label": "Enable Filter?",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "tags_filter_title",
+            "label": "Title",
+            "default": "Tags"
+          },
+          {
+          "type": "textarea",
+          "id": "tags_list",
+          "label": "List of Tags",
+          "info": "List of tags. Each entry must be on a new line."
+          }
+        ]
+      },
+      {
+        "type": "vendor-filter",
+        "name": "vendor Filter",
+        "limit": 5,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "enable_vendor_filter",
+            "label": "Enable Filter?",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "vendor_filter_title",
+            "label": "Title",
+            "default": "Vendor"
+          },
+          {
+            "type": "textarea",
+            "id": "vendor_list",
+            "label": "List of Vendors",
+            "info": "List of Vendor. Each entry must be on a new line."
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

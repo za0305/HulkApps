@@ -1,0 +1,40 @@
+<div class="pagination">
+
+  {% if paginate.previous %}
+    <a href="{{ paginate.previous.url }}" name="{{ paginate.previous.title }}" title="{{ paginate.previous.title }}" aria-label="{{ paginate.previous.title }}">
+      {% comment %} {{ 'collections.pagination.previous' | t }} {% endcomment %}
+      <i class="ion ion-ios-arrow-back"></i>
+    </a>
+  {% else %}
+    <a href="{{ paginate.previous.url }}" disabled name="« Previous" title="« Previous" aria-label="« Previous" style="opacity:0.3;">
+      {% comment %} {{ 'collections.pagination.previous' | t }} {% endcomment %}
+      <i class="ion ion-ios-arrow-back"></i>
+    </a>
+  {% endif %}
+
+  {% for part in paginate.parts %}
+    {% if part.is_link %}
+      <a href="{{ part.url }}" name="{{ part.title }}" title="{{ part.title }}" aria-label="{{ part.title }}">{{ part.title }}</a>
+      
+    {% else %}
+      {% if part.title == paginate.current_page %}
+        <span class="active">{{ part.title }}</span>
+      
+      {% else %}
+        <span>{{ part.title }}</span>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {% if paginate.next %}
+    <a href="{{ paginate.next.url }}" name="{{ paginate.next.title }}" title="{{ paginate.next.title }}" aria-label="{{ paginate.next.title }}"><i class="ion ion-ios-arrow-forward"></i>
+    {% comment %} {{ 'collections.pagination.next' | t }} {% endcomment %}
+    </a>
+    <link rel="prerender" href="{{ paginate.next.url }}">
+  {% else %}
+    <a href="{{ paginate.next.url }}" disabled name="Next »" title="Next »" aria-label="Next »" style="opacity:0.3;"><i class="ion ion-ios-arrow-forward"></i>
+      {% comment %} {{ 'collections.pagination.next' | t }} {% endcomment %}
+    </a>
+  {% endif %}
+
+</div>

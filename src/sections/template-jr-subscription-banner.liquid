@@ -1,0 +1,285 @@
+{%- if section.settings.enabled -%}
+	<section class="jr_subscription_banner section-content pt-0">
+			<div class="position-relative" style="z-index: 1020;">
+			<div class="row no-gutters d-md-flex d-none">
+					<div class="col-md-4 col-6">
+						<div class="image-wrapper">
+							<img data-sizes="auto"
+							     src="{{ section.settings.desk_img_1 | img_url: 'pico' }}"
+									 data-srcset="{{ section.settings.desk_img_1 | img_url: '320x' }} 300w,
+																{{ section.settings.desk_img_1 | img_url: '520x' }} 480w,
+																{{ section.settings.desk_img_1 | img_url: '720x' }} 576w,
+																{{ section.settings.desk_img_1 | img_url: '900x' }} 768w"
+									 class="lazyload img-wrapper" alt="Jr Desktop Banner Image" />
+						</div>
+					</div>
+					<div class="col-md-4 col-6">
+						<div class="image-wrapper">
+							<img data-sizes="auto"
+							     src="{{ section.settings.desk_img_2 | img_url: 'pico' }}"
+									 data-srcset="{{ section.settings.desk_img_2 | img_url: '320x' }} 300w,
+																{{ section.settings.desk_img_2 | img_url: '520x' }} 480w,
+																{{ section.settings.desk_img_2 | img_url: '720x' }} 576w,
+																{{ section.settings.desk_img_2 | img_url: '900x' }} 768w"
+									 class="lazyload img-wrapper" alt="Jr Desktop Banner Image" />
+						</div>
+					</div>
+					<div class="col-md-4 col-6">
+						<div class="image-wrapper">
+							<img data-sizes="auto"
+							     src="{{ section.settings.desk_img_3 | img_url: 'pico' }}"
+									 data-srcset="{{ section.settings.desk_img_3 | img_url: '320x' }} 300w,
+																{{ section.settings.desk_img_3 | img_url: '520x' }} 480w,
+																{{ section.settings.desk_img_3 | img_url: '720x' }} 576w,
+																{{ section.settings.desk_img_3 | img_url: '900x' }} 768w"
+									 class="lazyload img-wrapper" alt="Jr Desktop Banner Image" />
+						</div>
+					</div>
+			</div>
+			<div class="row no-gutters d-md-none d-flex">
+					<div class="col-6">
+						<div class="image-wrapper">
+							<img data-sizes="auto"
+							     src="{{ section.settings.mob_img_1 | img_url: 'pico' }}"
+									 data-srcset="{{ section.settings.mob_img_1 | img_url: '220x' }} 180w,
+																{{ section.settings.mob_img_1 | img_url: '300x' }} 280w,
+																{{ section.settings.mob_img_1 | img_url: '420x' }} 380w"
+									 class="lazyload img-wrapper" alt="Jr Mobile Banner Image" />
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="image-wrapper">
+							<img data-sizes="auto"
+									src="{{ section.settings.mob_img_2 | img_url: 'pico' }}"
+									data-srcset="{{ section.settings.mob_img_2 | img_url: '220x' }} 180w,
+																{{ section.settings.mob_img_2 | img_url: '300x' }} 280w,
+																{{ section.settings.mob_img_2 | img_url: '420x' }} 380w"
+									class="lazyload img-wrapper" alt="Jr Mobile Banner Image" />
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="image-wrapper">
+							<img data-sizes="auto"
+									src="{{ section.settings.mob_img_3 | img_url: 'pico' }}"
+									data-srcset="{{ section.settings.mob_img_3 | img_url: '220x' }} 180w,
+																{{ section.settings.mob_img_3 | img_url: '300x' }} 280w,
+																{{ section.settings.mob_img_3 | img_url: '420x' }} 380w"
+									class="lazyload img-wrapper" alt="Jr Mobile Banner Image" />
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="image-wrapper">
+							<img data-sizes="auto"
+									src="{{ section.settings.mob_img_4 | img_url: 'pico' }}"
+									data-srcset="{{ section.settings.mob_img_4 | img_url: '220x' }} 180w,
+																{{ section.settings.mob_img_4 | img_url: '300x' }} 280w,
+																{{ section.settings.mob_img_4 | img_url: '420x' }} 380w"
+									class="lazyload img-wrapper" alt="Jr Mobile Banner Image" />
+						</div>
+					</div>
+			</div>
+			<div class="banner-content position-absolute">
+				{%- if section.settings.heading != ''-%}
+					<h1 class="mb-0 d-none d-md-none d-lg-block  h1 font-weight-semi-bold" style="color: {{ section.settings.txt_color }};">{{ section.settings.heading }}</h1>
+				{%- endif -%}
+				{%- if section.settings.mobile_heading != ''-%}
+					<h1 class="mb-0 display-1 d-block d-md-none d-lg-none font-weight-semi-bold" style="color: {{ section.settings.txt_color }};">{{ section.settings.mobile_heading }}</h1>
+				{%- endif -%}
+				{%- if section.settings.caption != ''-%}
+					<p class="mb-3 for-custom-size" style="color: {{ section.settings.txt_color }};">{{ section.settings.caption }}</p>
+				{%- endif -%}
+				{%- if section.settings.btn_txt != '' and section.settings.btn_url != '' -%}
+					<a href="{{ section.settings.btn_url }}" class="btn btn{% if section.settings.btn_type == 'outline' %}-{% endif %}{{ section.settings.btn_type }}-{{ section.settings.btn_variant }} {{ section.settings.btn_size }}" >{{ section.settings.btn_txt }}</a>
+				{%- endif -%}
+			</div>
+			{%- if section.settings.banner_overlay -%}
+				<div class="body_overlay"></div>
+			{%- endif -%}
+			</div>
+	</section>
+{%- endif -%}
+
+{% schema %}
+	{
+		"name": "Jr Subscription Banner",
+		"settings": [
+			{
+				"type": "header",
+				"content": "Layout"
+			},
+			{
+				"type": "checkbox",
+				"id": "enabled",
+				"label": "Enabled?",
+				"default": true
+			},
+			{
+				"type": "header",
+				"content": "Select image for Desktop"
+			},
+			{
+				"type": "image_picker",
+				"id": "desk_img_1",
+				"label": "Desktop Image 1",
+				"info": "Please add image with size 635X830"
+			},
+			{
+				"type": "image_picker",
+				"id": "desk_img_2",
+				"label": "Desktop Image 2",
+				"info": "Please add image with size 635X830"
+			},
+			{
+				"type": "image_picker",
+				"id": "desk_img_3",
+				"label": "Desktop Image 3",
+				"info": "Please add image with size 635X830"
+			},
+			{
+				"type": "header",
+				"content": "Select image for Mobile"
+			},
+			{
+				"type": "image_picker",
+				"id": "mob_img_1",
+				"label": "Mobile Image 1",
+				"info": "Please add image with size 330X190"
+			},
+			{
+				"type": "image_picker",
+				"id": "mob_img_2",
+				"label": "Mobile Image 2",
+				"info": "Please add image with size 330X190"
+			},
+			{
+				"type": "image_picker",
+				"id": "mob_img_3",
+				"label": "Mobile Image 3",
+				"info": "Please add image with size 330X190"
+			},
+				{
+				"type": "image_picker",
+				"id": "mob_img_4",
+				"label": "Mobile Image 4",
+				"info": "Please add image with size 330X190"
+			},
+			{
+				"type": "header",
+				"content": "Content"
+			},
+			{
+				"type": "text",
+				"id": "heading",
+				"label": "Heading"
+			},
+			{
+				"type": "text",
+				"id": "mobile_heading",
+				"label": "Mobile Heading"
+			},
+			{
+				"type": "text",
+				"id": "caption",
+				"label": "Caption"
+			},
+			{
+				"type": "color",
+				"id": "txt_color",
+				"label": "Text Color",
+				"default": "#FFFFFF"
+			},
+			{
+				"type": "checkbox",
+				"id": "banner_overlay",
+				"label": "Enabled Overlay?",
+				"default": true
+			},
+			{
+				"type": "header",
+				"content": "Button"
+			},
+			{
+				"type": "text",
+				"id": "btn_txt",
+				"label": "Button Text"
+			},
+			{
+				"type": "url",
+				"id": "btn_url",
+				"label": "Button URL"
+			},
+			{
+				"type": "select",
+				"id": "btn_type",
+				"label": "Button Type",
+				"options": [
+					{
+						"value": "outline",
+						"label": "Outline"
+					},
+					{
+						"value": "",
+						"label": "Solid"
+					}
+				],
+				"default": ""
+			},
+			{
+				"type": "select",
+				"id": "btn_variant",
+				"label": "Button Variant",
+				"options": [
+					{
+						"value": "primary",
+						"label": "Primary"
+					},
+					{
+						"value": "secondary",
+						"label": "Secondary"
+					},
+					{
+						"value": "accent",
+						"label": "Accent"
+					},
+					{
+						"value": "light",
+						"label": "Light"
+					},
+					{
+						"value": "dark",
+						"label": "Dark"
+					},
+					{
+						"value": "purple",
+						"label": "Purple"
+					},
+					{
+						"value": "orange",
+						"label": "Orange"
+					}
+				],
+				"default": "orange"
+			},
+			{
+				"type": "select",
+				"id": "btn_size",
+				"label": "Button Size",
+				"options": [
+					{
+						"value": "",
+						"label": "Default"
+					},
+					{
+						"value": "btn-sm",
+						"label": "Small"
+					},
+					{
+						"value": "btn-lg",
+						"label": "Large"
+					}
+				],
+				"default": ""
+			}
+		]
+	}
+{% endschema %}

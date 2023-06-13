@@ -1,0 +1,501 @@
+{%- assign footer_linklist = section.settings.footer_linklist -%}
+{%- assign footer_linklist2 = section.settings.footer_linklist2 -%}
+{%- assign footer_linklist4 = section.settings.footer_linklist4 -%}
+{%- assign footer_linklist5 = section.settings.footer_linklist5 -%}
+
+{%- if template contains 'index' or template contains 'product' or template contains 'account' -%}
+  <section class="section-content">
+    <div class="{% if fluid_layout %}container-fluid{% else %}container{% endif %}">
+      <div class="row">
+        <div class="col-12">
+          <div id="y-badges" class="yotpo yotpo-badge badge-init">&nbsp;</div>
+        </div>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+<footer class="site-footer" data-section-id="{{ section.id }}">
+
+  <div data-footer-top class="footer-top section-padding pb-6" style="background: url('https://cdn.shopify.com/s/files/1/1091/8372/files/Union_3.png?v=1639561428') center top no-repeat;background-size:cover;">
+    <div class="{% if section.settings.fluid_footer %}container-fluid{% else %}container{% endif %}">
+
+      <div class="row">
+        <div class="col-12 col-md-4 order-md-2 text-center">
+          <div class="footer_newsletter">
+            {%- if section.settings.show_newsletter -%}
+              {%- if section.settings.col_3_heading != '' -%}
+                <h4 class="mb-2 font-weight-medium f-heading text-uppercase">{{- section.settings.col_3_heading -}}</h4>
+              {%- endif -%}
+
+              {%- if section.settings.col_3_txt !='' -%}
+                <p class="mb-2 font-weight-medium">{{- section.settings.col_3_txt -}}</p>
+              {%- endif -%}
+              <div class="justify-content-center mb-3 d-none">
+                <div class="custom-radio mx-2 mx-ex-lg-3">
+                  <input type="radio" id="owlcrate" name="payment_plan_adult" checked class="d-none" value="{{section.settings.klaviyo_adult}}" @click="_selectNewsletter('type_adult','{{section.settings.klaviyo_adult}}','{{section.settings.klaviyo_jr}}');">
+                  <label class="mb-0 font-size-sm" for="owlcrate">
+                    <span class="mr-2"></span>OwlCrate
+                  </label>
+                </div>
+                <div class="custom-radio mx-2 mx-ex-lg-3">
+                  <input type="radio" id="owlcratejr" name="payment_plan_adult" class="d-none" value="{{section.settings.klaviyo_jr}}" @click="_selectNewsletter('type_jr','{{section.settings.klaviyo_jr}}','{{section.settings.klaviyo_adult}}');">
+                  <label class="mb-0 font-size-sm" for="owlcratejr">
+                    <span class="mr-2"></span>OwlCrate Jr.
+                  </label>
+                </div>
+                <div class="custom-radio mx-2 mx-ex-lg-3">
+                  <input type="radio" id="both_opt" name="payment_plan_adult" class="d-none"  value="{{section.settings.klaviyo_adult}}"  @click="_selectNewsletter('both','{{section.settings.klaviyo_adult}}','{{section.settings.klaviyo_jr}}');">
+                  <label class="mb-0 font-size-sm" for="both_opt">
+                    <span class="mr-2"></span>Both.
+                  </label>
+                </div>
+              </div>
+
+              <div class="klaviyo-form-wrap">
+                <form data-klaviyo-footer-form id="klaviyo_footer_form" class="validate contact-form klaviyo_gdpr_embed_{{section.settings.klaviyo_adult}}"  action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+                  <input type="hidden" name="g" value="{{section.settings.klaviyo_adult}}" data-input-hidden>
+                  <div class="input-group input-group-sm">
+                    <input type="email" value="" name="email" class="form-control font-base ls-base" id="k_id_email" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" aria-label="email">
+                    <div class="input-group-append">
+                      <input type="submit" value="SUBMIT" name="subscribe" class="btn btn-dark font-size-ex-sm px-lg-3 py-2" @click="_submitNewsletter($event);">
+                    </div>
+                  </div>
+                  <div class="klaviyo_messages mt-3 text-center">
+                    <div class="success_message text-success" style="display:none;" data-success_message></div>
+                    <div class="error_message  text-danger" style="display:none;" data-error_message></div>
+                  </div>
+                </form>
+                <form data-klaviyo-footer-jr id="klaviyo_footer_jr" class="validate contact-form klaviyo_gdpr_embed_{{section.settings.klaviyo_jr}} d-none"  action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+                  <input type="hidden" name="g" value="{{section.settings.klaviyo_jr}}" data-input-hidden>
+                  <div class="input-group input-group-sm">
+                    <input type="email" value="" name="email" class="form-control font-base ls-base" id="k_jr_id_email" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" aria-label="email">
+                    <div class="input-group-append"><input type="submit" value="SUBMIT" name="subscribe" class="btn btn-dark font-size-ex-sm px-lg-3 py-2" data-submit></div>
+                  </div>
+                </form>
+              </div>
+
+            {%- endif -%}
+          </div>
+          {%- if section.settings.show_social_links -%}
+            {%- if section.settings.col_3_heading != '' -%}
+              <h6>{{- section.settings.col_3_social_heading -}}</h6>
+            {%- endif -%}
+
+            <ul class="social-links list-unstyled list-inline mt-4 mt-md-3 mb-5 mb-md-0">
+              {%- if section.settings.social_icon_facebook -%}
+                <li class="list-inline-item mr-3">
+                  <a href="{{ settings.social_facebook_link }}" name="Facebook" title="Facebook" rel="noreferrer" aria-label="Facebook" target="_blank">
+                    <i class="fa fa-facebook"></i>
+                  </a>
+                </li>
+              {%- endif -%}
+
+              {%- if section.settings.social_icon_twitter -%}
+                <li class="list-inline-item mr-3">
+                  <a href="{{ settings.social_twitter_link }}" name="Twitter" title="Twitter" rel="noreferrer" aria-label="Twitter" target="_blank">
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                </li>
+              {%- endif -%}
+
+              {%- if section.settings.social_icon_instagram -%}
+                <li class="list-inline-item mr-3">
+                  <a href="{{ settings.social_instagram_link }}" name="Instagram" title="Instagram" rel="noreferrer" aria-label="Instagram" target="_blank">
+                    <i class="fa fa-instagram"></i>
+                  </a>
+                </li>
+              {%- endif -%}
+
+              {%- if section.settings.social_icon_googleplus -%}
+                <li class="list-inline-item">
+                  <a href="{{ settings.social_googleplus_link }}" name="Google+" title="Google+" rel="noreferrer" aria-label="Google+" target="_blank">
+                    <i class="fa fa-google-plus"></i>
+                  </a>
+                </li>
+              {%- endif -%}
+              {%- if section.settings.social_icon_goodreads -%}
+                <li class="list-inline-item">
+                  <a href="{{ settings.social_goodreads_link }}" name="Goodreads" title="Goodreads" rel="noreferrer" aria-label="Goodreads" target="_blank">
+                    <svg class="goodreads-icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         viewBox="0 0 332 332" style="enable-background:new 0 0 332 332;" xml:space="preserve">
+  
+                            <g id="Edges">
+                            </g>
+                      <g id="Symbol">
+                        <path class="st0" fill="#231F20" stroke="#231F20" stroke-width="5px" stroke-miterlimit="10" d="M256.6,39.5c0-4.3-0.4-8.6-0.6-12.8c-9.2,0-16.9,0-25.6,0c0,9.8,0,18.9,0,28.1C189.3-2.5,104.8,15.6,81,72.7
+                                    c-15.2,36.6-14.4,73.4,1.5,109.4c16.8,38,65,54.1,102.8,43.4c2-0.3,4.3-0.9,6.8-1.7c3.6-1.1,6.7-2.5,8.7-3.6
+                                    c5.2-2.1,11.4-5.6,17.5-10.3c4.9-3.8,9.1-7.8,12.4-11.5c-0.9,14.3-1.3,28.7-3.6,42.8c-2.8,17.4-10.8,32.4-27.4,41.2
+                                    c-36.2,19.2-79.6,4.6-96-32.4c-8.2,0-16.6,0-25.4,0c1.8,24.4,14.7,40.3,34.7,50.6c24.1,12.4,49.9,13.7,76.2,9.4
+                                    c33.5-5.5,55.3-24.4,63-57.8c2.7-11.9,4.2-24.2,4.3-36.4C256.8,157,256.6,98.2,256.6,39.5z M226.5,162.3
+                                    c-4.8,13.8-12.8,24.7-23.3,32.2c-2.6,1.9-15.4,10.8-34.1,11.7c-1.1,0.1-4.2,0.2-8,0c-0.1,0.1-0.3,0.1-0.4,0.1
+                                    c-27.3-1.7-48.2-17.6-57.4-43.9c-7.7-22.1-7.9-44.6-2.3-67.1c8.1-32.5,31.6-52.4,61.6-53.2c0.7-0.1,1.1-0.1,1.1-0.1
+                                    c15.6-1.4,27.8,5.1,31.6,7.2c16.1,8.6,28.2,24.6,33.5,46C234.4,117.7,234.2,140.2,226.5,162.3z"/>
+                      </g>
+                            </svg>
+                  </a>
+                </li>
+              {%- endif -%}
+
+            </ul>
+          {%- endif -%}
+
+        </div>
+
+        <div class="order-md-1 col-md-4 text-center text-md-left mt-lg-4">
+          <div class="row">
+            <div class="col-12 col-md-6 my-1 my-md-0">
+              {%- if section.settings.col_1_heading != '' -%}
+                <h6 class="font-barlow font-weight-semi-bold mb-3 text-uppercase">{{ section.settings.col_1_heading }}</h6>
+              {%- endif -%}
+
+              {%- if linklists[footer_linklist].links.size > 0 -%}
+                <ul class="list-unstyled footer-navigation mb-4 mb-md-0">
+                  {%- for link in linklists[footer_linklist].links -%}
+                    <li>
+                      <a class="font-barlow font-size-sm ls-1" href="{{ link.url }}" name="{{ link.title }}" title="{{ link.title }}" aria-label="{{ link.title }}">
+                        <span>{{ link.title }}</span>
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+            <div class="col-12 col-md-6 my-1 my-md-0">
+              {%- if section.settings.col_2_heading != '' -%}
+                <h6 class="font-barlow font-weight-semi-bold mb-3 text-uppercase">{{ section.settings.col_2_heading }}</h6>
+              {%- endif -%}
+
+              {%- if linklists[footer_linklist2].links.size > 0 -%}
+                <ul class="list-unstyled footer-navigation mb-4 mb-md-0">
+                  {%- for link in linklists[footer_linklist2].links -%}
+                    <li>
+                      <a class="font-barlow font-size-sm ls-1" href="{{ link.url }}" name="{{ link.title }}" title="{{ link.title }}" aria-label="{{ link.title }}">
+                        <span>{{ link.title }}</span>
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+
+            </div>
+          </div>
+        </div>
+
+        <div class="order-md-3 col-md-4 text-center text-md-left mt-lg-4">
+          <div class="row justify-content-end">
+            <div class="col-12 col-md-6 col-lg-5 my-1 my-md-0">
+              {%- if section.settings.col_4_heading != '' -%}
+                <h6 class="font-barlow font-weight-semi-bold mb-3 text-uppercase">{{ section.settings.col_4_heading }}</h6>
+              {%- endif -%}
+
+              {%- if linklists[footer_linklist].links.size > 0 -%}
+                <ul class="list-unstyled footer-navigation mb-4 mb-md-0">
+                  {%- for link in linklists[footer_linklist4].links -%}
+                    <li>
+                      <a class="font-barlow font-size-sm ls-1" href="{{ link.url }}" name="{{ link.title }}" title="{{ link.title }}" aria-label="{{ link.title }}" {% if link.title == 'FAQs' %}target="_blank" rel="noopener noreferrer"{% endif %}>
+                        <span>{{ link.title }}</span>
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+            <div class="col-12 col-md-6 col-lg-5 my-1 my-md-0">
+              {%- if section.settings.col_5_heading != '' -%}
+                <h6 class="font-barlow font-weight-semi-bold mb-3 text-uppercase">{{ section.settings.col_5_heading }}</h6>
+              {%- endif -%}
+
+              {%- if linklists[footer_linklist5].links.size > 0 -%}
+                <ul class="list-unstyled footer-navigation mb-3 mb-md-0">
+                  {%- for link in linklists[footer_linklist5].links -%}
+                    <li>
+                      <a class="font-barlow font-size-sm ls-1" href="{{ link.url }}" name="{{ link.title }}" title="{{ link.title }}" aria-label="{{ link.title }}">
+                        <span>{{ link.title }}</span>
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--end of row-->
+
+    </div>
+    <!--end of container-->
+  </div>
+
+  <div data-footer-bottom class="footer-bottom" style="background-color: {{ section.settings.footer_bottom_bg_color }}; color: {{ section.settings.footer_bottom_txt_color }};">
+    <div class="{% if section.settings.fluid_footer %}container-fluid{% else %}container{% endif %}">
+      <div class="row d-flex align-items-center">
+        <div class="col-md-12 text-center">
+          <span class="font-size-ex-sm copyright font-secondary">&copy; {{ 'now' | date: "%Y" }} {{ shop.name }} Enterprises Inc., {{ 'layout.footer.all_rights_reserved' | t }}</span>
+        </div>
+        {%- if section.settings.show_payment_icons -%}
+          <div class="col-md-12 text-center mt-1">
+            <ul class="list-inline payment-icons my-0">
+              {%- if section.settings.payment_icon_visa -%}<li class="list-inline-item"><i class="pf pf-visa"></i></li>{%- endif -%}
+              {%- if section.settings.payment_icon_mastercard -%}<li class="list-inline-item"><i class="pf pf-mastercard"></i></li>{%- endif -%}
+              {%- if section.settings.payment_icon_ae -%}<li class="list-inline-item"><i class="pf pf-american-express"></i></li>{%- endif -%}
+              {%- if section.settings.payment_icon_diners -%}<li class="list-inline-item"><i class="pf pf-diners"></i></li>{%- endif -%}
+              {%- if section.settings.payment_icon_paypal -%}<li class="list-inline-item"><i class="pf pf-paypal"></i></li>{%- endif -%}
+              {%- if section.settings.payment_icon_stripe -%}<li class="list-inline-item"><i class="pf pf-stripe"></i></li>{%- endif -%}
+              {%- if section.settings.payment_icon_applepay -%}<li class="list-inline-item"><i class="pf pf-apple-pay"></i></li>{%- endif -%}
+              {%- if section.settings.payment_icon_amazonpay -%}<li class="list-inline-item"><i class="pf pf-amazon-pay"></i></li>{%- endif -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      </div>
+      <!--end of row-->
+    </div>
+    <!--end of container-->
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "fluid_footer",
+      "label": "Full Width Footer?",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "color",
+      "id": "footer_top_bg_color",
+      "label": "Footer Top Background Color",
+      "default": "#343a40"
+    },
+    {
+      "type": "color",
+      "id": "footer_bottom_bg_color",
+      "label": "Footer Bottom Background Color",
+      "default": "#212529"
+    },
+    {
+      "type": "color",
+      "id": "footer_bottom_txt_color",
+      "label": "Footer Bottom Text Color",
+      "default": "#fff"
+    },
+    {
+      "type": "header",
+      "content": "Column 1"
+    },
+    {
+      "type": "text",
+      "id": "col_1_heading",
+      "label": "Subscribe"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_linklist",
+      "label": "Select Menu",
+      "default": "footer"
+    },
+    {
+      "type": "header",
+      "content": "Column 2"
+    },
+    {
+      "type": "text",
+      "id": "col_2_heading",
+      "label": "Heading",
+      "default": "Shop"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_linklist2",
+      "label": "Select Menu",
+      "default": "footer"
+    },
+    {
+      "type": "header",
+      "content": "Column 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show Newsletter Subscription?",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "col_3_heading",
+      "label": "Heading",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "col_3_txt",
+      "label": "Text",
+      "default": "Get monthly updates and free resources."
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_adult",
+      "label": "Klaviyo List ID For Adult"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_jr",
+      "label": "Klaviyo List ID For JR"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_links",
+      "label": "Show Social Links?",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "col_3_social_heading",
+      "label": "Heading",
+      "default": "Connect with Us"
+    },
+    {
+      "type": "paragraph",
+      "content": "Select Networks"
+    },
+    {
+      "type": "checkbox",
+      "id": "social_icon_facebook",
+      "label": "Facebook",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "social_icon_twitter",
+      "label": "Twitter",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "social_icon_instagram",
+      "label": "Instagram",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "social_icon_googleplus",
+      "label": "Google+",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "social_icon_goodreads",
+      "label": "Goodreads",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Column 4"
+    },
+    {
+      "type": "text",
+      "id": "col_4_heading",
+      "label": "Heading",
+      "default": "Learn"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_linklist4",
+      "label": "Select Menu",
+      "default": "footer"
+    },
+    {
+      "type": "header",
+      "content": "Column 5"
+    },
+    {
+      "type": "text",
+      "id": "col_5_heading",
+      "label": "Heading",
+      "default": "More"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_linklist5",
+      "label": "Select Menu",
+      "default": "footer"
+    },
+    {
+      "type": "header",
+      "content": "Payment Icons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show Payment Icons?",
+      "default": true
+    },
+    {
+      "type": "paragraph",
+      "content": "Select Payment Methods"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_icon_visa",
+      "label": "Visa",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_icon_mastercard",
+      "label": "Mastercard",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_icon_ae",
+      "label": "American Express",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_icon_diners",
+      "label": "Diners",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_icon_paypal",
+      "label": "Paypal",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_icon_stripe",
+      "label": "Stripe",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_icon_applepay",
+      "label": "Apple Pay",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_icon_amazonpay",
+      "label": "Amazon Pay",
+      "default": true
+    }
+  ]
+}
+
+{% endschema %}
+

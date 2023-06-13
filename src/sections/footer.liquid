@@ -1,0 +1,398 @@
+{%- assign footer_linklist = section.settings.footer_linklist -%}
+{%- assign footer_linklist2 = section.settings.footer_linklist2 -%}
+{%- assign footer_linklist4 = section.settings.footer_linklist4 -%}
+{%- assign footer_linklist5 = section.settings.footer_linklist5 -%}
+
+{{ 'section-footer.css' | asset_url | stylesheet_tag }}
+
+<footer class="footer__wrapper" data-section-id="{{ section.id }}">
+    <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/Waves3.png?v=1665059375"
+        alt="Waves 3"
+        width="1920"
+        height="439"
+        class="footer__image footer__image--desktop"
+        loading="lazy">
+
+    <img src="https://cdn.shopify.com/s/files/1/1091/8372/files/waves-mobile.png?v=1665408725"
+        alt="Waves Mobile"
+        width="375"
+        height="543"
+        class="footer__image footer__image--mobile"
+        loading="lazy">
+
+    <div class="container-wide relative">
+        <div data-footer-top class="footer__top">
+            <div class="footer__menus">
+                <div class="footer__menu">
+                    {%- if section.settings.col_1_heading != blank -%}
+                        <h6 class="footer__menu-title">{{ section.settings.col_1_heading }}</h6>
+                    {%- endif -%}
+                    {%- if linklists[footer_linklist].links.size > 0 -%}
+                        <ul class="list-unstyled footer__menu-items">
+                          {%- for link in linklists[footer_linklist].links -%}
+                            <li>
+                                <a href="{{ link.url }}" name="{{ link.title }}" title="{{ link.title }}" aria-label="{{ link.title }}">
+                                    {{ link.title }}
+                                </a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                    {%- endif -%}
+                </div>
+
+                <div class="footer__menu">
+                    {%- if section.settings.col_2_heading != blank -%}
+                        <h6 class="footer__menu-title">{{ section.settings.col_2_heading }}</h6>
+                    {%- endif -%}
+                    {%- if linklists[footer_linklist2].links.size > 0 -%}
+                        <ul class="list-unstyled footer__menu-items">
+                          {%- for link in linklists[footer_linklist2].links -%}
+                            <li>
+                                <a href="{{ link.url }}" name="{{ link.title }}" title="{{ link.title }}" aria-label="{{ link.title }}">
+                                    {{ link.title }}
+                                </a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                    {%- endif -%}
+                </div>
+
+                <div class="footer__menu">
+                    {%- if section.settings.col_4_heading != blank -%}
+                        <h6 class="footer__menu-title">{{ section.settings.col_4_heading }}</h6>
+                    {%- endif -%}
+                    {%- if linklists[footer_linklist4].links.size > 0 -%}
+                        <ul class="list-unstyled footer__menu-items">
+                          {%- for link in linklists[footer_linklist4].links -%}
+                            <li>
+                                <a href="{{ link.url }}" name="{{ link.title }}" title="{{ link.title }}" aria-label="{{ link.title }}">
+                                    {{ link.title }}
+                                </a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                    {%- endif -%}
+                </div>
+
+                <div class="footer__menu">
+                    {%- if section.settings.col_5_heading != blank -%}
+                        <h6 class="footer__menu-title">{{ section.settings.col_5_heading }}</h6>
+                    {%- endif -%}
+                    {%- if linklists[footer_linklist5].links.size > 0 -%}
+                        <ul class="list-unstyled footer__menu-items">
+                          {%- for link in linklists[footer_linklist5].links -%}
+                            <li>
+                                <a href="{{ link.url }}" name="{{ link.title }}" title="{{ link.title }}" aria-label="{{ link.title }}">
+                                    {{ link.title }}
+                                </a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                    {%- endif -%}
+                </div>
+            </div>
+
+            <div class="footer__social">
+                <ul class="list-unstyled footer__social-list">
+                    {%- if section.settings.social_icon_tiktok -%}
+                        <li>
+                            <a class="footer__social-link" href="{{ settings.social_tiktok_link }}" title="TikTok" rel="noreferrer" aria-label="TikTok" target="_blank">
+                                <span class="footer__social-icon">
+                                    {%- render 'icon-tiktok' -%}
+                                </span>
+                                <span class="footer__social-title">tiktok</span>
+                            </a>
+                        </li>
+                    {%- endif -%}
+
+                    {%- if section.settings.social_icon_instagram -%}
+                        <li>
+                            <a class="footer__social-link" href="{{ settings.social_instagram_link }}" title="Instagram" rel="noreferrer" aria-label="Instagram" target="_blank">
+                                <span class="footer__social-icon">
+                                    {%- render 'icon-instagram' -%}
+                                </span>
+                                <span class="footer__social-title">instagram</span>
+                            </a>
+                        </li>
+                    {%- endif -%}
+
+                    {%- if section.settings.social_icon_facebook -%}
+                        <li>
+                            <a class="footer__social-link" href="{{ settings.social_facebook_link }}" title="Facebook" rel="noreferrer" aria-label="Facebook" target="_blank">
+                                <span class="footer__social-icon">
+                                    {%- render 'icon-facebook' -%}
+                                </span>
+                                <span class="footer__social-title">facebook</span>
+                            </a>
+                        </li>
+                    {%- endif -%}
+                </ul>
+            </div>
+        </div>
+
+        {%- if section.settings.copyright != blank -%}
+            <div data-footer-bottom class="footer__bottom">
+                {{ section.settings.copyright }}
+            </div>
+        {%- endif -%}
+    </div>
+</footer>
+
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "fluid_footer",
+        "label": "Full Width Footer?",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Styling"
+      },
+      {
+        "type": "color",
+        "id": "footer_top_bg_color",
+        "label": "Footer Top Background Color",
+        "default": "#343a40"
+      },
+      {
+        "type": "color",
+        "id": "footer_bottom_bg_color",
+        "label": "Footer Bottom Background Color",
+        "default": "#212529"
+      },
+      {
+        "type": "color",
+        "id": "footer_bottom_txt_color",
+        "label": "Footer Bottom Text Color",
+        "default": "#fff"
+      },
+      {
+        "type": "header",
+        "content": "Column 1"
+      },
+      {
+        "type": "text",
+        "id": "col_1_heading",
+        "label": "Subscribe"
+      },
+      {
+        "type": "link_list",
+        "id": "footer_linklist",
+        "label": "Select Menu",
+        "default": "footer"
+      },
+      {
+        "type": "header",
+        "content": "Column 2"
+      },
+      {
+        "type": "text",
+        "id": "col_2_heading",
+        "label": "Heading",
+        "default": "Shop"
+      },
+      {
+        "type": "link_list",
+        "id": "footer_linklist2",
+        "label": "Select Menu",
+        "default": "footer"
+      },
+      {
+        "type": "header",
+        "content": "Column 3"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_newsletter",
+        "label": "Show Newsletter Subscription?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "col_3_heading",
+        "label": "Heading",
+        "default": "Subscribe"
+      },
+      {
+        "type": "text",
+        "id": "col_3_txt",
+        "label": "Text",
+        "default": "Get monthly updates and free resources."
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_adult",
+        "label": "Klaviyo List ID For Adult"
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_jr",
+        "label": "Klaviyo List ID For JR"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_social_links",
+        "label": "Show Social Links?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "col_3_social_heading",
+        "label": "Heading",
+        "default": "Connect with Us"
+      },
+      {
+        "type": "paragraph",
+        "content": "Select Networks"
+      },
+      {
+        "type": "checkbox",
+        "id": "social_icon_facebook",
+        "label": "Facebook",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "social_icon_tiktok",
+        "label": "TikTok",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "social_icon_twitter",
+        "label": "Twitter",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "social_icon_instagram",
+        "label": "Instagram",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "social_icon_googleplus",
+        "label": "Google+",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "social_icon_goodreads",
+        "label": "Goodreads",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Column 4"
+      },
+      {
+        "type": "text",
+        "id": "col_4_heading",
+        "label": "Heading",
+        "default": "Learn"
+      },
+      {
+        "type": "link_list",
+        "id": "footer_linklist4",
+        "label": "Select Menu",
+        "default": "footer"
+      },
+      {
+        "type": "header",
+        "content": "Column 5"
+      },
+      {
+        "type": "text",
+        "id": "col_5_heading",
+        "label": "Heading",
+        "default": "More"
+      },
+      {
+        "type": "link_list",
+        "id": "footer_linklist5",
+        "label": "Select Menu",
+        "default": "footer"
+      },
+      {
+        "type": "header",
+        "content": "Payment Icons"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_payment_icons",
+        "label": "Show Payment Icons?",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "Select Payment Methods"
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_icon_visa",
+        "label": "Visa",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_icon_mastercard",
+        "label": "Mastercard",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_icon_ae",
+        "label": "American Express",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_icon_diners",
+        "label": "Diners",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_icon_paypal",
+        "label": "Paypal",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_icon_stripe",
+        "label": "Stripe",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_icon_applepay",
+        "label": "Apple Pay",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_icon_amazonpay",
+        "label": "Amazon Pay",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Copyright"
+      },
+      {
+        "type": "richtext",
+        "id": "copyright",
+        "label": "Copyright text"
+      }
+    ]
+  }
+
+{% endschema %}
